@@ -1,0 +1,2 @@
+# eslint 적용 안 할 폴더 및 파일 설정
+node_modules
