@@ -1,7 +1,12 @@
 import React from 'react';
+import ColumnInput from '../../components/ColumnInput/ColumnInput';
 
 const MyPage = () => {
-  return <div>MyPage</div>;
+  return (
+    <>
+      <ColumnInput />
+    </>
+  );
 };
 
 export default MyPage;
