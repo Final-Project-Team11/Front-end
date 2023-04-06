@@ -1,35 +1,28 @@
 import React from 'react';
 import ButtonInput from '../../components/Inputs/ButtonInput';
-import HalfInput from '../../components/Inputs/HalfInput';
-import ValidInput from '../../components/Inputs/ValidInput';
-import MaxInput from '../../components/Inputs/MaxInput';
+import MaxInput from '../../components/Inputs/Input/MaxInput';
+import useInput from '../../hooks/common/useInput';
 
 const MyPage = () => {
+  const [number1, number1Handler] = useInput();
+  const [number2, number2Handler] = useInput();
   return (
     <>
-      <MaxInput types="maxInput">맥스</MaxInput>
-      <HalfInput types="halfInput" Bgcolor="yellow" type="password">
-        하프
-      </HalfInput>
-      <HalfInput types="halfInput" type="time">
-        하프
-      </HalfInput>
+      <MaxInput types="max" value={number1} onChange={number1Handler}>
+        맥스
+      </MaxInput>
+      <MaxInput types="half" value={number2} onChange={number2Handler}>
+        맥스
+      </MaxInput>
       <ButtonInput
-        types="buttonInput"
-        buttonTag="버튼"
+        types="button"
+        buttonTag="버튼123"
         onClick={() => console.log('abdac')}
         placeholder={'adsfasd'}
         Bgcolor="yellow"
       >
-        버튼
+        버튼1
       </ButtonInput>
-      <ValidInput
-        types="validationInput"
-        buttonTag="유효성"
-        onClick={() => console.log('abdac')}
-      >
-        유효성
-      </ValidInput>
     </>
   );
 };

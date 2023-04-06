@@ -4,12 +4,14 @@ export interface InputProps {
   Bgcolor?: string;
   type?: string;
   buttonTag?: string;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   placeholder?: string;
   inputId?: string;
+  value?: string;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export interface Type {
-  types: 'maxInput' | 'halfInput' | 'buttonInput' | 'validationInput';
+  types: 'button' | 'valid';
 }
 
 export interface ButtonProps {
@@ -25,6 +27,5 @@ export interface InputStyle {
 export interface CssProps {
   types: Type['types'];
   Bgcolor?: string;
-  background?: string;
   border?: string;
 }
