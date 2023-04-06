@@ -8,25 +8,26 @@ const TextArea = ({
   background,
   border,
   children,
-  type,
   name,
   value,
   required,
   placeholder,
+  onChange,
 }: interfaces.TextAreaProps) => {
   return (
-    <label>
+    <label htmlFor="TextArea">
       <p>{children}</p>
       <StTextArea
         inputSize={inputSize}
         color={color}
         background={background}
         border={border}
-        // type={type}
         name={name}
         value={value}
         required={required}
         placeholder={placeholder}
+        onChange={onChange}
+        id="TextArea"
       />
     </label>
   );

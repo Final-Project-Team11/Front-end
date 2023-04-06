@@ -6,11 +6,11 @@ export interface TextAreaProps {
   color?: 'string';
   background?: 'string';
   border?: 'string';
-  type?: 'text';
   name?: string;
   value?: string;
   required?: boolean;
   placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   // maxlength?: number;
   // minlength?: number;
 }
