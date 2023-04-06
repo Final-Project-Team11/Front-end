@@ -1,4 +1,4 @@
-export interface ColumnInputProps {
+export interface InputProps {
   types: Type['types'];
   children?: React.ReactNode;
   Bgcolor?: string;
@@ -6,14 +6,14 @@ export interface ColumnInputProps {
   buttonTag?: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   placeholder?: string;
+  inputId?: string;
+}
+export interface Type {
+  types: 'maxInput' | 'halfInput' | 'buttonInput' | 'validationInput';
 }
 
 export interface ButtonProps {
   children?: React.ReactNode;
-}
-
-export interface Type {
-  types: 'maxInput' | 'halfInput' | 'buttonInput' | 'validationInput';
 }
 
 export interface InputStyle {
