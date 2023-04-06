@@ -2,6 +2,7 @@ import React from 'react';
 import ButtonInput from '../../components/Inputs/ButtonInput';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import useInput from '../../hooks/common/useInput';
+import Tag from '../../components/Tag/Tag';
 
 const MyPage = () => {
   const [number1, number1Handler] = useInput();
@@ -23,6 +24,7 @@ const MyPage = () => {
       >
         버튼1
       </ButtonInput>
+      <Tag />
     </>
   );
 };
