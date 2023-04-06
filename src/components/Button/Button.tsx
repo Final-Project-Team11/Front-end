@@ -1,3 +1,4 @@
+import React from 'react';
 import * as interfaces from './interfaces';
 import { StButton } from './styles';
 
