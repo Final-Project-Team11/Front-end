@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CategoryBox from './CategoryBox';
-import AddCategory from './AddCategory';
-import * as UI from './style';
+import CategoryBox from './Category/CategoryBox';
+import AddCategory from './Category/AddCategory';
+import { StWrapperBlock, StFeedBlock } from './style';
 import FeedTitle from './FeedTitle';
 
 const Feed = () => {
@@ -12,13 +12,13 @@ const Feed = () => {
   };
 
   return (
-    <UI.Wrapper>
-      <UI.FeedBox>
+    <StWrapperBlock>
+      <StFeedBlock>
         <FeedTitle onClick={categoryPlusHandler} />
         <CategoryBox />
         {openCategoryInput && <AddCategory />}
-      </UI.FeedBox>
-    </UI.Wrapper>
+      </StFeedBlock>
+    </StWrapperBlock>
   );
 };
 

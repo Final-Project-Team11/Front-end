@@ -4,10 +4,10 @@ import { FeedTitleProps } from './interfaces';
 
 const FeedTitle = ({ onClick }: FeedTitleProps) => {
   return (
-    <UI.FeedTitleBox>
-      <UI.FeedTitle>feed</UI.FeedTitle>
-      <UI.TestPlusButton onClick={onClick}>+</UI.TestPlusButton>
-    </UI.FeedTitleBox>
+    <UI.StFeedTitleBlock>
+      <UI.StFeedTitleH1>feed</UI.StFeedTitleH1>
+      <UI.StTestPlusBlock onClick={onClick}>+</UI.StTestPlusBlock>
+    </UI.StFeedTitleBlock>
   );
 };
 

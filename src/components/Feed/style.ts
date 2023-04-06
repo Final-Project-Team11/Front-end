@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 // 공통
 
-export const Wrapper = styled.div`
+export const StWrapperBlock = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const FeedBox = styled.div`
+export const StFeedBlock = styled.div`
   width: 400px;
   height: 700px;
 
@@ -24,7 +24,7 @@ export const FeedBox = styled.div`
   align-items: flex-start;
 `;
 
-export const FeedTitleBox = styled.div`
+export const StFeedTitleBlock = styled.div`
   background-color: green;
 
   width: 100%;
@@ -34,7 +34,7 @@ export const FeedTitleBox = styled.div`
   align-items: center;
 `;
 
-export const Circle = styled.div`
+export const StCircleBlock = styled.div`
   background-color: green;
 
   width: 16px;
@@ -43,105 +43,15 @@ export const Circle = styled.div`
   margin-right: 10px;
 `;
 
-export const TestPlusButton = styled.div`
+export const StTestPlusBlock = styled.div`
   font-size: 40px;
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const FeedTitle = styled.h1`
+export const StFeedTitleH1 = styled.h1`
   color: #dc3232;
 `;
 
-//
-
-//categoryBox 에서 사용
-
-export const CategoryDiv = styled.div`
-  background-color: yellow;
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Category = styled.h3`
-  background-color: #dc3232;
-  width: fit-content;
-  color: white;
-
-  padding-left: 10px;
-  padding-right: 13px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-
-  box-sizing: border-box;
-  border-radius: 15px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Todo = styled.div`
-  background-color: pink;
-  width: 100%;
-  height: 30px;
-
-  padding-left: 10px;
-  padding-right: 10px;
-
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const TodoBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const TestDeleteButton = styled.span``;
-
-////////////////////////////////
-
-// AddCategory
-export const CategoryInputBox = styled.div`
-  background-color: #c17f7f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: fit-content;
-`;
-
-export const CategoryInput = styled.input`
-  background-color: #dc3232;
-  width: auto;
-  color: white;
-
-  padding-left: 10px;
-  padding-right: 13px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-
-  box-sizing: border-box;
-  border-radius: 15px;
-  border: none;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: 18px;
-  font-weight: bold;
-`;
-////////////////////////////////
-
-// AddTodo
-export const TodoInput = styled.input`
-  border: none;
-  font-size: 16px;
-`;
+export const StTestDeleteBlock = styled.div``;
