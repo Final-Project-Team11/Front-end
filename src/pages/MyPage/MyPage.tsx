@@ -2,6 +2,7 @@ import React from 'react';
 import Tag from '../../components/Tag/Tag';
 import styled from 'styled-components';
 import Feed from '../../components/Feed/Feed';
+import VacationTab from '../../components/VacationTab/VacationTab';
 
 const MyPage = () => {
   return (
@@ -14,6 +15,7 @@ const MyPage = () => {
         <MainArea>
           <Feed></Feed>
           <Tag />
+          <VacationTab />
         </MainArea>
       </Wrapper>
     </Frame>
