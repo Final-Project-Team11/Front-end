@@ -2,8 +2,8 @@ import styled from 'styled-components';
 // 공통
 
 export const StWrapperBlock = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 260px;
+  height: 700px;
   display: flex;
   justify-content: center;
   align-items: center;

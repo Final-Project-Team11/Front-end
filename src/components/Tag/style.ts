@@ -4,7 +4,7 @@ export const StTagBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 330px;
+  width: 260px;
   height: 700px;
 
   padding: 15px;

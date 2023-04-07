@@ -24,4 +24,5 @@ export const StTagsSpan = styled.span<CssProps>`
           font-weight: bolder;
         `
       : ''}
+  font-size: 15px;
 `;
