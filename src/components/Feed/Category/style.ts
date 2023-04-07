@@ -47,6 +47,7 @@ export const StCategoryH3 = styled.h3`
   justify-content: space-between;
   align-items: center;
 `;
+
 export const StCategoryBlock = styled.div`
   background-color: yellow;
   width: 100%;
