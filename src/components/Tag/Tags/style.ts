@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { CssProps } from './interfaces';
 
 export const StTagsBlock = styled.div`
   width: 100%;
@@ -9,18 +10,18 @@ export const StTagsBlock = styled.div`
   display: flex;
   align-items: center;
 `;
-
-export const StAtSpan = styled.span``;
-
-export const StFileSpan = styled.span``;
 export const StDeviderBlock = styled.div`
   height: 80%;
   width: 0;
   border: 1px solid black;
 `;
 
-export const StScheduleSpan = styled.span``;
-
-export const StDaySpan = styled.span``;
-
-export const StMentionerSapn = styled.span``;
+export const StTagsSpan = styled.span<CssProps>`
+  ${({ isChecked }) =>
+    isChecked
+      ? css`
+          color: red;
+          font-weight: bolder;
+        `
+      : ''}
+`;

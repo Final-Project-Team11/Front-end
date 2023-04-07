@@ -1,14 +1,7 @@
 import React from 'react';
 import * as interfaces from './interfaces';
 
-import {
-  StAtSpan,
-  StDaySpan,
-  StFileSpan,
-  StMentionerSapn,
-  StScheduleSpan,
-  StTagsBlock,
-} from './style';
+import { StTagsBlock, StTagsSpan } from './style';
 import { StDeviderBlock } from './style';
 
 const Tags = ({
@@ -19,28 +12,40 @@ const Tags = ({
   endDay,
   startTime,
   userName,
+  isChecked,
 }: interfaces.TagsProps) => {
   return (
     <StTagsBlock>
-      <StAtSpan>@</StAtSpan>
+      <StTagsSpan isChecked={isChecked}>@</StTagsSpan>
+
+      {/* 파일 있을 때 파일명 */}
       {file && (
         <>
-          <StFileSpan>{file}</StFileSpan>
+          <StTagsSpan isChecked={isChecked}>{file}</StTagsSpan>
           <StDeviderBlock />
         </>
       )}
-      <StScheduleSpan>{title}</StScheduleSpan>
+
+      <StTagsSpan isChecked={isChecked}>{title}</StTagsSpan>
 
       {/* startTime 있을 시 하루짜리 일정 => startDay 만 언급 */}
       {startTime && (
         <>
-          <StDaySpan>{startDay}</StDaySpan>
-          <StDaySpan>{startTime}</StDaySpan>
+          <StTagsSpan isChecked={isChecked}>{startDay}</StTagsSpan>
+          <StTagsSpan isChecked={isChecked}>{startTime}</StTagsSpan>
         </>
       )}
 
-      <StDaySpan>날짜/시간</StDaySpan>
-      <StMentionerSapn>{userName}</StMentionerSapn>
+      {/* startDay, endDay 모두 있을 때 */}
+      {startDay && endDay && (
+        <>
+          <StTagsSpan isChecked={isChecked}>{startDay}</StTagsSpan>
+          <StTagsSpan isChecked={isChecked}>~</StTagsSpan>
+          <StTagsSpan isChecked={isChecked}>{endDay}</StTagsSpan>
+        </>
+      )}
+
+      <StTagsSpan isChecked={isChecked}>{userName}</StTagsSpan>
     </StTagsBlock>
   );
 };

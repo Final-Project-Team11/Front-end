@@ -6,5 +6,13 @@ export interface TagsProps {
   endDay?: string;
   startTime?: string;
   userName: string;
+  isChecked?: Type['isChecked'];
+}
+
+export interface Type {
   isChecked?: boolean;
+}
+
+export interface CssProps {
+  isChecked: Type['isChecked'];
 }
