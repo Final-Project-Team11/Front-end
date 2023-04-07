@@ -2,7 +2,6 @@ import React from 'react';
 import * as interfaces from './interfaces';
 
 import { StTagsBlock, StTagsSpan } from './style';
-import { StDeviderBlock } from './style';
 
 const Tags = ({
   eventId,
@@ -21,8 +20,7 @@ const Tags = ({
       {/* 파일 있을 때 파일명 */}
       {file && (
         <>
-          <StTagsSpan isChecked={isChecked}>{file}</StTagsSpan>
-          <StDeviderBlock />
+          <StTagsSpan isChecked={isChecked}>{`${file} |`}</StTagsSpan>
         </>
       )}
 

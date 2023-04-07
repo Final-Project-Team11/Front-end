@@ -10,11 +10,6 @@ export const StTagsBlock = styled.div`
   display: flex;
   align-items: center;
 `;
-export const StDeviderBlock = styled.div`
-  height: 80%;
-  width: 0;
-  border: 1px solid black;
-`;
 
 export const StTagsSpan = styled.span<CssProps>`
   ${({ isChecked }) =>

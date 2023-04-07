@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StTagBlock = styled.div`
+export const StVacationTabBlock = styled.div`
   display: flex;
   flex-direction: column;
 
