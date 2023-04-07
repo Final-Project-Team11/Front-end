@@ -27,21 +27,10 @@ const Tags = ({
       <StTagsSpan>{title}</StTagsSpan>
 
       {/* startTime 있을 시 하루짜리 일정 => startDay 만 언급 */}
-      {startTime && (
-        <>
-          <StTagsSpan>{startDay}</StTagsSpan>
-          <StTagsSpan>{startTime}</StTagsSpan>
-        </>
-      )}
+      {startTime && <StTagsSpan>{`${startDay} ${startTime}`}</StTagsSpan>}
 
       {/* startDay, endDay 모두 있을 때 */}
-      {startDay && endDay && (
-        <>
-          <StTagsSpan>{startDay}</StTagsSpan>
-          <StTagsSpan>~</StTagsSpan>
-          <StTagsSpan>{endDay}</StTagsSpan>
-        </>
-      )}
+      {startDay && endDay && <StTagsSpan>{`${startDay} ~ ${endDay}`}</StTagsSpan>}
 
       <StTagsSpan>{userName}</StTagsSpan>
     </StTagsBlock>
