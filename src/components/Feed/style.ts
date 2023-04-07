@@ -25,8 +25,6 @@ export const StFeedBlock = styled.div`
 `;
 
 export const StFeedTitleBlock = styled.div`
-  background-color: green;
-
   width: 100%;
   height: fit-content;
   display: flex;
