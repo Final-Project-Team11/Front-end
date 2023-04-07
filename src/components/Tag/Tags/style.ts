@@ -21,6 +21,6 @@ export const StDeviderBlock = styled.div`
 
 export const StScheduleSpan = styled.span``;
 
-export const StDateSpan = styled.span``;
+export const StDaySpan = styled.span``;
 
 export const StMentionerSapn = styled.span``;

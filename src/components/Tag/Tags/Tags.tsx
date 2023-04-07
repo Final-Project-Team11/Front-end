@@ -1,7 +1,9 @@
 import React from 'react';
+import * as interfaces from './interfaces';
+
 import {
   StAtSpan,
-  StDateSpan,
+  StDaySpan,
   StFileSpan,
   StMentionerSapn,
   StScheduleSpan,
@@ -9,15 +11,36 @@ import {
 } from './style';
 import { StDeviderBlock } from './style';
 
-const Tags = () => {
+const Tags = ({
+  eventId,
+  file,
+  title,
+  startDay,
+  endDay,
+  startTime,
+  userName,
+}: interfaces.TagsProps) => {
   return (
     <StTagsBlock>
       <StAtSpan>@</StAtSpan>
-      <StFileSpan>파일이름</StFileSpan>
-      <StDeviderBlock />
-      <StScheduleSpan>일정이름</StScheduleSpan>
-      <StDateSpan>날짜/시간</StDateSpan>
-      <StMentionerSapn>언급한사람</StMentionerSapn>
+      {file && (
+        <>
+          <StFileSpan>{file}</StFileSpan>
+          <StDeviderBlock />
+        </>
+      )}
+      <StScheduleSpan>{title}</StScheduleSpan>
+
+      {/* startTime 있을 시 하루짜리 일정 => startDay 만 언급 */}
+      {startTime && (
+        <>
+          <StDaySpan>{startDay}</StDaySpan>
+          <StDaySpan>{startTime}</StDaySpan>
+        </>
+      )}
+
+      <StDaySpan>날짜/시간</StDaySpan>
+      <StMentionerSapn>{userName}</StMentionerSapn>
     </StTagsBlock>
   );
 };
