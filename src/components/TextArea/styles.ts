@@ -25,9 +25,9 @@ export const StTextArea = styled.textarea<interfaces.CssProps>`
       width: ${sizes[inputSize].width};
       height: ${sizes[inputSize].height};
     `}
-  ${({ color }) => (color ? color : 'purple')}
-  ${({ background }) => (background ? background : 'white')}
-  ${({ border }) => (border ? border : '1px solid black')};
+  color : ${({ color }) => (color ? color : 'purple')};
+  background: ${({ background }) => (background ? background : 'white')};
+  border: ${({ border }) => (border ? border : '1px solid black')};
 
   padding: 10px;
   // textarea 내의 텍스트를 상단으로 올려줌
