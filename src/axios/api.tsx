@@ -1,7 +1,9 @@
-import React from 'react';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-function api() {
-  return <div>api</div>;
-}
+const config: AxiosRequestConfig = {
+  baseURL: process.env.REACT_APP_SERVER,
+};
 
-export default api;
+const instnace: AxiosInstance = axios.create(config);
+
+export default instnace;
