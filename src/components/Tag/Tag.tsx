@@ -5,7 +5,7 @@ import Tags from './Tags/Tags';
 const Tag = () => {
   return (
     <StTagBlock>
-      👺
+      📌
       <StDeviderBlock />
       <Tags title="아침회의" userName="류현주" isChecked={false}></Tags>
       <Tags title="아침회의" userName="류현주" isChecked={true}></Tags>

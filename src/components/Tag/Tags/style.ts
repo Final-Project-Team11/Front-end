@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { CssProps } from './interfaces';
 
-export const StTagsBlock = styled.div`
+export const StTagsBlock = styled.div<CssProps>`
   width: 100%;
   height: fit-content;
 
@@ -9,20 +9,15 @@ export const StTagsBlock = styled.div`
 
   display: flex;
   align-items: center;
-`;
-export const StDeviderBlock = styled.div`
-  height: 80%;
-  width: 0;
-  border: 1px solid black;
-`;
-
-export const StTagsSpan = styled.span<CssProps>`
   ${({ isChecked }) =>
     isChecked
       ? css`
           color: red;
-          font-weight: bolder;
+          font-weight: bold;
         `
       : ''}
+`;
+
+export const StTagsSpan = styled.span`
   font-size: 15px;
 `;
