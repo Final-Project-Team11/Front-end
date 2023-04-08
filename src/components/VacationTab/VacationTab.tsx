@@ -7,9 +7,27 @@ const VacationTab = () => {
     <StVacationTabBlock>
       🏖️
       <StDeviderBlock />
-      <Vacation title="연차" userName="송철환" startDay="오늘" endDay="내일" />
-      <Vacation title="반차" userName="최다현" startDay="4.10" endDay="4.13" />
-      <Vacation title="연차" userName="송철환" startDay="4.15" endDay="4.17" />
+      <Vacation
+        title="연차"
+        userName="송철환"
+        startDay="오늘"
+        endDay="내일"
+        status="submit"
+      />
+      <Vacation
+        title="반차"
+        userName="최다현"
+        startDay="4.10"
+        endDay="4.13"
+        status="accept"
+      />
+      <Vacation
+        title="연차"
+        userName="송철환"
+        startDay="4.15"
+        endDay="4.17"
+        status="deny"
+      />
     </StVacationTabBlock>
   );
 };

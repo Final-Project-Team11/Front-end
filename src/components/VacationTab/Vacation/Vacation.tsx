@@ -1,5 +1,15 @@
 import React from 'react';
-import { StPermissionBlock, StSpanBlock, StVacateBlock, StVacateSpan } from './style';
+import {
+  StSubmitBlock,
+  StSpanBlock,
+  StVacateBlock,
+  StVacateSpan,
+  StAcceptBlock,
+  StDenyBlock,
+  StDecideBlock,
+  StDecAcceptBlock,
+  StDecDenyBlock,
+} from './style';
 import { VacateProps } from './interfaces';
 
 const Vacation = ({
@@ -12,13 +22,31 @@ const Vacation = ({
   status,
   children,
 }: VacateProps) => {
+  // status 타입에 따라 바뀌는 변수 requestStatus
+  let requestStatus: React.ReactNode;
+  switch (status) {
+    case 'accept':
+      requestStatus = <StAcceptBlock>V</StAcceptBlock>;
+      break;
+    case 'deny':
+      requestStatus = <StDenyBlock>X</StDenyBlock>;
+      break;
+    default:
+      requestStatus = <StSubmitBlock />;
+      break;
+  }
+
   return (
     <StVacateBlock>
       <StSpanBlock>
         <StVacateSpan>{`${title} | ${userName}`}</StVacateSpan>
         <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
       </StSpanBlock>
-      <StPermissionBlock />
+      {/* {requestStatus} */}
+      <StDecideBlock>
+        <StDecAcceptBlock>V</StDecAcceptBlock>
+        <StDecDenyBlock>X</StDecDenyBlock>
+      </StDecideBlock>
     </StVacateBlock>
   );
 };
