@@ -3,7 +3,6 @@ import Tag from '../../components/Tag/Tag';
 import styled from 'styled-components';
 import Feed from '../../components/Feed/Feed';
 import VacationTab from '../../components/VacationTab/VacationTab';
-import UploadedFile from '../../components/Uploaded/UploadedFile';
 
 const MyPage = () => {
   return (
@@ -16,7 +15,6 @@ const MyPage = () => {
         <MainArea>
           <Feed />
           <Tag />
-          <UploadedFile />
           <VacationTab />
         </MainArea>
       </Wrapper>
