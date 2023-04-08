@@ -61,6 +61,7 @@ export const StDenyBlock = styled.div`
   border: 1px solid red;
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭
 export const StDecideBlock = styled.div`
   background-color: red;
 
@@ -79,6 +80,7 @@ export const StDecideBlock = styled.div`
   border: 1px solid red;
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
 export const StDecAcceptBlock = styled.div`
   background-color: white;
   color: red;
@@ -97,6 +99,7 @@ export const StDecAcceptBlock = styled.div`
   }
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
 export const StDecDenyBlock = styled.div`
   background-color: white;
   color: red;

@@ -22,10 +22,13 @@ const Vacation = ({
   status,
   children,
 }: VacateProps) => {
+  // 선택창 등장, 퇴장을 위한 state
   const [hover, setHover] = useState(false);
 
   // status 타입에 따라 바뀌는 변수 requestStatus
   let requestStatus: React.ReactNode;
+
+  // 요소에 마우스 진입 시 hover state 변경되며 선택창 등장
   switch (status) {
     case 'accept':
       requestStatus = (
@@ -47,6 +50,7 @@ const Vacation = ({
         <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
       </StSpanBlock>
 
+      {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
       {hover ? (
         <StDecideBlock onMouseLeave={() => setHover(false)}>
           <StDecAcceptBlock>V</StDecAcceptBlock>
