@@ -1,13 +1,18 @@
 import React, { useCallback, useRef, useState } from 'react';
-import styled from 'styled-components';
-
-interface ISchedule {
-  eventId: number;
-  userName: string;
-  startDay: Date;
-  endDay: Date;
-  title: string;
-}
+import { ISchedule } from './interfaces';
+import {
+  Styear,
+  StMonth,
+  StTitleDateBlock,
+  StWeek,
+  StWeekdayBlock,
+  StContainer,
+  StTitle,
+  Stpagination,
+  StWeekBlock,
+  StDateBlcok,
+} from './styles';
+import Weekday from './Weekday';
 
 const Calendar = () => {
   const today = {
@@ -28,9 +33,15 @@ const Calendar = () => {
       endDay: end,
       title: 'text',
     },
+    {
+      eventId: 2,
+      userName: '우찬',
+      startDay: start,
+      endDay: end,
+      title: 'text',
+    },
   ];
 
-  console.log();
   const week = ['SUN', 'MON', 'TUE', 'WEN', 'THU', 'FRI', 'SAT']; //일주일
   const [selectedYear, setSelectedYear] = useState(today.year); //현재 선택된 연도
   const [selectedMonth, setSelectedMonth] = useState(today.month); // 현재 선택된 달
@@ -62,7 +73,6 @@ const Calendar = () => {
     //달 선택 박스 고르기
 
     const monthArr = [];
-
     for (let i = 0; i < 12; i++) {
       monthArr.push(
         <option key={i + 1} value={i + 1}>
@@ -120,67 +130,12 @@ const Calendar = () => {
   const returnDay = useCallback(() => {
     //선택된 달의 날짜들 반환 함수
     const dayArr = [];
-
     //나중에 컴포넌트로 빼야겠다.
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
       if (week[day] == nowDay) {
         for (let i = 0; i < dateTotalCount; i++) {
-          if (
-            schedules[0].startDay.getDate() <= i &&
-            i <= schedules[0].endDay.getDate()
-          ) {
-            if (schedules[0].startDay.getDate() === i) {
-              dayArr.push(
-                <StWeekdayBlock key={i + 1}>
-                  {i + 1}
-                  <div
-                    style={{
-                      backgroundColor: 'tomato',
-                      borderTopLeftRadius: '10px',
-                      borderBottomLeftRadius: '10px',
-                      padding: 0,
-                    }}
-                  >
-                    박찬우
-                  </div>
-                </StWeekdayBlock>
-              );
-            } else if (schedules[0].endDay.getDate() === i) {
-              dayArr.push(
-                <StWeekdayBlock key={i + 1}>
-                  {i + 1}
-                  <div
-                    style={{
-                      backgroundColor: 'tomato',
-                      borderTopRightRadius: '10px',
-                      borderBottomRightRadius: '10px',
-                      padding: 0,
-                    }}
-                  >
-                    박찬우
-                  </div>
-                </StWeekdayBlock>
-              );
-            } else {
-              dayArr.push(
-                <StWeekdayBlock key={i + 1}>
-                  {i + 1}
-                  <div
-                    style={{
-                      backgroundColor: 'tomato',
-
-                      padding: 0,
-                    }}
-                  >
-                    박찬우
-                  </div>
-                </StWeekdayBlock>
-              );
-            }
-          } else {
-            dayArr.push(<StWeekdayBlock key={i + 1}>{i + 1}</StWeekdayBlock>);
-          }
+          dayArr.push(<Weekday id={i} schedules={schedules} />);
         }
       } else {
         dayArr.push(<StWeekdayBlock></StWeekdayBlock>);
@@ -199,9 +154,9 @@ const Calendar = () => {
           </Styear>
           <StMonth>
             <div style={{ marginRight: '10px' }}>
-              {today.year.toString().split('').splice(2, 4)}
+              {selectedYear.toString().split('').splice(2, 4)}
             </div>
-            /{today.month.toString().padStart(2, '0')}
+            /{selectedMonth.toString().padStart(2, '0')}
           </StMonth>
         </StTitleDateBlock>
         <Stpagination>
@@ -216,75 +171,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-
-const DAY_WIDTH = 150;
-const DAY_HEIGHT = 100;
-
-const Styear = styled.div`
-  font-size: 80px;
-  width: 50px;
-  text-align: left;
-  color: #e64042;
-  font-weight: 900;
-  margin-bottom: -30px;
-`;
-const StMonth = styled.div`
-  font-size: 80px;
-  width: 50px;
-  display: flex;
-  color: #e64042;
-  font-weight: 900;
-`;
-
-const StTitleDateBlock = styled.div`
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-`;
-
-const StWeek = styled.div`
-  width: ${DAY_WIDTH}px;
-  height: 30px;
-  text-align: center;
-  border-top: 5px solid #e64042;
-  padding-top: 20px;
-  color: #e64042;
-  font-weight: bold;
-`;
-
-const StWeekdayBlock = styled.div`
-  width: ${DAY_WIDTH}px;
-  height: ${DAY_HEIGHT}px;
-  text-align: center;
-  border: none;
-`;
-
-const StContainer = styled.div`
-  padding: 20px 20px;
-  border: 1px solid rgba(128, 128, 128, 0.267);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const StTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const Stpagination = styled.div``;
-
-const StWeekBlock = styled.div`
-  display: flex;
-`;
-
-const StDateBlcok = styled.div`
-  width: 1050px;
-  display: flex;
-  flex-wrap: wrap;
-`;
