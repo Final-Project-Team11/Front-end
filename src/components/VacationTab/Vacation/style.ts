@@ -90,6 +90,11 @@ export const StDecAcceptBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: 0.5s;
+  &:hover {
+    background-color: green;
+  }
 `;
 
 export const StDecDenyBlock = styled.div`
@@ -104,5 +109,8 @@ export const StDecDenyBlock = styled.div`
   align-items: center;
   justify-content: center;
 
-  border: 1px solid red;
+  transition: 0.5s;
+  &:hover {
+    background-color: orange;
+  }
 `;

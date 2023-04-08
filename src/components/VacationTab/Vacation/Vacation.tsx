@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StSubmitBlock,
   StSpanBlock,
@@ -22,17 +22,21 @@ const Vacation = ({
   status,
   children,
 }: VacateProps) => {
+  const [hover, setHover] = useState(false);
+
   // status 타입에 따라 바뀌는 변수 requestStatus
   let requestStatus: React.ReactNode;
   switch (status) {
     case 'accept':
-      requestStatus = <StAcceptBlock>V</StAcceptBlock>;
+      requestStatus = (
+        <StAcceptBlock onMouseEnter={() => setHover(true)}>V</StAcceptBlock>
+      );
       break;
     case 'deny':
-      requestStatus = <StDenyBlock>X</StDenyBlock>;
+      requestStatus = <StDenyBlock onMouseEnter={() => setHover(true)}>X</StDenyBlock>;
       break;
     default:
-      requestStatus = <StSubmitBlock />;
+      requestStatus = <StSubmitBlock onMouseEnter={() => setHover(true)} />;
       break;
   }
 
@@ -42,11 +46,15 @@ const Vacation = ({
         <StVacateSpan>{`${title} | ${userName}`}</StVacateSpan>
         <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
       </StSpanBlock>
-      {/* {requestStatus} */}
-      <StDecideBlock>
-        <StDecAcceptBlock>V</StDecAcceptBlock>
-        <StDecDenyBlock>X</StDecDenyBlock>
-      </StDecideBlock>
+
+      {hover ? (
+        <StDecideBlock onMouseLeave={() => setHover(false)}>
+          <StDecAcceptBlock>V</StDecAcceptBlock>
+          <StDecDenyBlock>X</StDecDenyBlock>
+        </StDecideBlock>
+      ) : (
+        requestStatus
+      )}
     </StVacateBlock>
   );
 };

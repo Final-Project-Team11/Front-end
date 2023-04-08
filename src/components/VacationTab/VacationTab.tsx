@@ -23,7 +23,7 @@ const VacationTab = () => {
       />
       <Vacation
         title="연차"
-        userName="송철환"
+        userName="박찬우"
         startDay="4.15"
         endDay="4.17"
         status="deny"
