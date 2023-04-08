@@ -49,6 +49,10 @@ export const StTestPlusBlock = styled.div`
 `;
 
 export const StFeedTitleH1 = styled.h1`
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
   color: #dc3232;
 `;
 
