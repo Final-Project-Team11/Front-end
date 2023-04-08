@@ -53,8 +53,8 @@ const Vacation = ({
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
       {hover ? (
         <StDecideBlock onMouseLeave={() => setHover(false)}>
-          <StDecAcceptBlock>V</StDecAcceptBlock>
-          <StDecDenyBlock>X</StDecDenyBlock>
+          <StDecAcceptBlock className="decision">V</StDecAcceptBlock>
+          <StDecDenyBlock className="decision">X</StDecDenyBlock>
         </StDecideBlock>
       ) : (
         requestStatus
