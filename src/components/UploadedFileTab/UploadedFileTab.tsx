@@ -1,13 +1,15 @@
 import React from 'react';
 import { StDeviderBlock, StUploadedBlock } from './style';
+import UploadedFile from './UplodedFile';
 
-const UploadedFile = () => {
+const UploadedFileTab = () => {
   return (
     <StUploadedBlock>
       🗂️
       <StDeviderBlock />
+      <UploadedFile />
     </StUploadedBlock>
   );
 };
 
-export default UploadedFile;
+export default UploadedFileTab;
