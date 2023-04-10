@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from '../../components/Modal/Modal';
+import DropdownHeader from '../../components/Dropdown/DropdownHeader/DropdownHeader';
 
 const Login = () => {
   const [open, setOepn] = React.useState(false);
@@ -24,6 +25,9 @@ const Login = () => {
           테스트
         </Modal>
       )}
+      <DropdownHeader>
+        드롭다운 입니다!
+      </DropdownHeader>
     </>
   );
 };
