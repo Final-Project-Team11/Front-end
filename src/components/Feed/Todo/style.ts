@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TodoBoxStProps } from './interfaces';
 
 export const StTodoBlock = styled.div`
   width: 100%;
@@ -14,11 +15,12 @@ export const StTodoBlock = styled.div`
   align-items: center;
 `;
 
-export const StTodoAreaBlock = styled.div`
+export const StTodoAreaBlock = styled.div<TodoBoxStProps>`
   display: flex;
   align-items: center;
 
   font-size: 15px;
+  color: ${({ isDone }) => (isDone ? 'green' : 'red')};
 `;
 
 export const StTodoInput = styled.input`

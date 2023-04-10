@@ -6,7 +6,7 @@ import { TodoBoxProps } from './interfaces';
 const TodoBox = ({ content, isDone }: TodoBoxProps) => {
   return (
     <StTodoBlock>
-      <StTodoAreaBlock>
+      <StTodoAreaBlock isDone={isDone}>
         <StCircleBlock />
         {content}
       </StTodoAreaBlock>

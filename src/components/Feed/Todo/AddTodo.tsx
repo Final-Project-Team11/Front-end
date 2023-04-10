@@ -5,10 +5,8 @@ import { StCircleBlock } from '../style';
 const AddTodo = () => {
   return (
     <StTodoBlock>
-      <StTodoAreaBlock>
-        <StCircleBlock />
-        <StTodoInput type="text" maxLength={10} />
-      </StTodoAreaBlock>
+      <StCircleBlock />
+      <StTodoInput type="text" maxLength={10} />
     </StTodoBlock>
   );
 };

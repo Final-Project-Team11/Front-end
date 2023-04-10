@@ -9,7 +9,7 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
 
   const TodoPlusHandler = () => {
-    setOpenTodoInput(prev => !prev);
+    setOpenTodoInput(true);
   };
 
   console.log('!!!!!!!', todos);
