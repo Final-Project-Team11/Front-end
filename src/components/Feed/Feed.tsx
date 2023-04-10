@@ -3,7 +3,7 @@ import CategoryBox from './Category/CategoryBox';
 import AddCategory from './Category/AddCategory';
 import { StWrapperBlock, StFeedBlock } from './style';
 import FeedTitle from './FeedTitle';
-import { useGetPosts } from '../../api/hooks/useGetFeed';
+import { useGetPosts } from '../../api/hooks/Feed/useGetFeed';
 import { Category } from './interfaces';
 
 const Feed = () => {
