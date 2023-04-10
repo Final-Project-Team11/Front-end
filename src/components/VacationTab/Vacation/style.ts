@@ -61,10 +61,11 @@ export const StDenyBlock = styled.div`
   border: 1px solid red;
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭
 export const StDecideBlock = styled.div`
   background-color: red;
 
-  width: 60px;
+  width: 24px;
   height: fit-content;
   border-radius: 20px;
   margin-right: 10px;
@@ -77,8 +78,17 @@ export const StDecideBlock = styled.div`
   box-sizing: border-box;
 
   border: 1px solid red;
+  transition: all 0.1s;
+  &:hover {
+    width: 60px;
+  }
+
+  &:hover .decision {
+    opacity: 1;
+  }
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
 export const StDecAcceptBlock = styled.div`
   background-color: white;
   color: red;
@@ -90,8 +100,15 @@ export const StDecAcceptBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+
+  transition: 0.3s;
+  &:hover {
+    background-color: green;
+  }
 `;
 
+// 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
 export const StDecDenyBlock = styled.div`
   background-color: white;
   color: red;
@@ -103,6 +120,10 @@ export const StDecDenyBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 
-  border: 1px solid red;
+  transition: 0.3s;
+  &:hover {
+    background-color: orange;
+  }
 `;
