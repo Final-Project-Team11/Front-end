@@ -14,7 +14,7 @@ import {
 } from './styles';
 import Weekday from './Weekday';
 
-const Calendar = () => {
+const CustomCalendar = () => {
   const today = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
@@ -34,8 +34,8 @@ const Calendar = () => {
       title: 'text',
     },
     {
-      eventId: 2,
-      userName: '우찬',
+      eventId: 0,
+      userName: '찬우',
       startDay: start,
       endDay: end,
       title: 'text',
@@ -170,4 +170,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default CustomCalendar;
