@@ -15,13 +15,27 @@ const Dropdown : React.FC<DropdownProps> = ({items, children, size, color, backg
 
   return (
     <>
-      <StUl onClick={() => setIsOpen(!isOpen)} size={size} color={color} background={background} border={border}>
+      <StUl
+      onClick={() => setIsOpen(!isOpen)}
+      size={size} color={color}
+      background={background}
+      border={border}>
         {children}{'  '}{isOpen ? <IoIosArrowUp/> : <IoIosArrowDown/>}
       </StUl>
       {isOpen && (
-        <StUl size={size} color={color} background={background} border={border}>
+        <StUl
+        size={size}
+        color={color}
+        background={background}
+        border={border}>
           {items.map((item : string) => (
-            <StLi key={item} onClick={()=> clickItemHandler(item)} size={size} color={color} background={background} border={border}>{item}</StLi>
+            <StLi
+            key={item}
+            onClick={()=> clickItemHandler(item)}
+            size={size}
+            color={color}
+            background={background}
+            border={border}>{item}</StLi>
           ))}
         </StUl>
       )}
