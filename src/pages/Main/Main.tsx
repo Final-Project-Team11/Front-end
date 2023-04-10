@@ -7,11 +7,12 @@ import type { ChangeEvent, MouseEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
-
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { theme } from './theme';
 import { addDate, addHours, subtractDate } from './utils';
 import Feed from '../../components/Feed/Feed';
+import Header from './Header';
+import Detail from './Detail/Detail';
 
 type ViewType = 'month' | 'week' | 'day';
 
@@ -234,55 +235,7 @@ export function Main({ view }: { view: ViewType }) {
   }, [DateClick]);
   return (
     <div>
-      <div className="headerContainer">
-        <div
-          style={{
-            marginRight: '30px',
-            width: '350px',
-            height: '100px',
-            backgroundColor: '#BADAFF',
-          }}
-        ></div>
-        <div
-          style={{ width: '100%', height: '100px', borderBottom: '3px solid #BADAFF' }}
-        >
-          <div
-            style={{
-              fontSize: '50px',
-              fontWeight: 'bold',
-              display: 'flex',
-              color: '#BADAFF',
-            }}
-          >
-            <div>
-              <div>
-                {selectedDateRangeText
-                  .toString()
-                  .split('-')
-                  .splice(0, 1)
-                  .join('')
-                  .slice(0, 2)}
-              </div>
-              <div>
-                {selectedDateRangeText
-                  .toString()
-                  .split('-')
-                  .splice(0, 1)
-                  .join('')
-                  .slice(2, 4)}
-              </div>
-            </div>
-            <div style={{ margin: '50px 0' }}>
-              {selectedDateRangeText
-                .toString()
-                .split('-')
-                .splice(1, 2)
-                .join('')
-                .padStart(2, '0')}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header selectedDateRangeText={selectedDateRangeText} />
       <div className="bodyContainer">
         <div style={{ marginTop: '30px', marginRight: '30px' }}>
           <Feed />
@@ -338,33 +291,7 @@ export function Main({ view }: { view: ViewType }) {
           />
         </div>
       </div>
-      {DateClick === true && (
-        <div style={{ margin: '10px 360px 0', borderTop: '3px solid #BADAFF' }}>
-          <div
-            style={{
-              display: 'flex',
-              gap: '30px',
-              lineHeight: '50px',
-              fontSize: '20px',
-              textAlign: 'center',
-            }}
-          >
-            <div>2023/04/08</div>
-            <div>찬우</div>
-            <div>디자인 회의</div>
-          </div>
-          <div
-            style={{
-              height: '150px',
-              borderTop: '3px solid #BADAFF',
-              borderBottom: '3px solid #BADAFF',
-            }}
-          >
-            asdasasdsa
-          </div>
-          <div style={{ borderBottom: '3px solid #BADAFF', height: '50px' }}>멘션들</div>
-        </div>
-      )}
+      {DateClick === true && <Detail />}
     </div>
   );
 }

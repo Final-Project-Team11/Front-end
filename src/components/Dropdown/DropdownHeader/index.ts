@@ -1,1 +1,1 @@
-export {default as App} from './DropdownHeader';
+export { default as App } from './DropdownHeader';
