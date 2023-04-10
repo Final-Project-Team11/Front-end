@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import Feed from '../../components/Feed/Feed';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import UploadedFileTab from '../../components/UploadedFileTab';
+import Card from '../../components/Card';
 
 const MyPage = () => {
   return (
     <Frame>
       <Wrapper>
         <Header>
-          <Card>명함? 카드구역</Card>
+          <Card />
           <Calendar>캘린더영역</Calendar>
         </Header>
         <MainArea>
@@ -51,12 +52,6 @@ const Header = styled.div`
 
   padding: 15px;
   box-sizing: border-box;
-`;
-
-const Card = styled.div`
-  background-color: #befbe7;
-  width: 255px;
-  height: 120px;
 `;
 
 const Calendar = styled.div`
