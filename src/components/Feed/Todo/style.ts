@@ -17,9 +17,11 @@ export const StTodoBlock = styled.div`
 export const StTodoAreaBlock = styled.div`
   display: flex;
   align-items: center;
+
+  font-size: 15px;
 `;
 
 export const StTodoInput = styled.input`
-  border: none;
+  border: 0.5px solid green;
   font-size: 16px;
 `;

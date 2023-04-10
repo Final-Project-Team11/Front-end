@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const StCategoryInputBlock = styled.div`
-  background-color: #c17f7f;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,7 +9,7 @@ export const StCategoryInputBlock = styled.div`
 
 export const StCategoryInput = styled.input`
   background-color: #dc3232;
-  width: auto;
+  width: 180px;
   color: white;
 
   padding-left: 10px;
@@ -34,6 +33,8 @@ export const StCategoryH3 = styled.h3`
   background-color: #dc3232;
   width: fit-content;
   color: white;
+
+  font-size: 20px;
 
   padding-left: 10px;
   padding-right: 13px;

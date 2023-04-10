@@ -3,21 +3,26 @@ import { StCategoryBlock, StCategoryH3 } from './style';
 import { StCircleBlock, StTestPlusBlock } from '../style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
+import { CategoryBoxProps } from './interfaces';
 
-const CategoryBox = () => {
+const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
 
   const TodoPlusHandler = () => {
     setOpenTodoInput(prev => !prev);
   };
 
+  console.log('!!!!!!!', todos);
+
   return (
     <StCategoryBlock>
       <StCategoryH3>
         <StCircleBlock />
-        카테고리
+        {category}
       </StCategoryH3>
-      <TodoBox />
+      {todos?.map(todo => {
+        return <TodoBox key={todo.todoId} content={todo.content} isDone={todo.isDone} />;
+      })}
       {openTodoInput && <AddTodo />}
       <StTestPlusBlock onClick={TodoPlusHandler}>+</StTestPlusBlock>
     </StCategoryBlock>

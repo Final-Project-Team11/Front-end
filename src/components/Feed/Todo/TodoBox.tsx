@@ -1,13 +1,14 @@
 import React from 'react';
 import { StTodoBlock, StTodoAreaBlock } from './style';
 import { StCircleBlock, StTestDeleteBlock } from '../style';
+import { TodoBoxProps } from './interfaces';
 
-const TodoBox = () => {
+const TodoBox = ({ content, isDone }: TodoBoxProps) => {
   return (
     <StTodoBlock>
       <StTodoAreaBlock>
         <StCircleBlock />
-        할일
+        {content}
       </StTodoAreaBlock>
       <StTestDeleteBlock>x</StTestDeleteBlock>
     </StTodoBlock>
