@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from '../../components/Modal/Modal';
-import DropdownHeader from '../../components/Dropdown/DropdownHeader/DropdownHeader';
+import Dropdown from '../../components/Dropdown/Dropdown';
+
 
 const Login = () => {
   const [open, setOepn] = React.useState(false);
@@ -10,6 +11,8 @@ const Login = () => {
   const closeModal = () => {
     setOepn(false);
   };
+
+  const items : string[] = ['item1','item2','item3']
 
   return (
     <>
@@ -25,7 +28,7 @@ const Login = () => {
           테스트
         </Modal>
       )}
-      <DropdownHeader>드롭다운 입니다!</DropdownHeader>
+      <Dropdown items={items} size='medium'>드롭</Dropdown>
     </>
   );
 };
