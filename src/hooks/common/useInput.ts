@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 // 평범한 useInput
-export function useInput(): [string, (e: React.ChangeEvent<HTMLInputElement>) => void] {
+export function useInput(): [
+  string,
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  (value: string) => void
+] {
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,7 +13,7 @@ export function useInput(): [string, (e: React.ChangeEvent<HTMLInputElement>) =>
     console.log(inputValue);
   };
 
-  return [inputValue, handleChange];
+  return [inputValue, handleChange, setInputValue];
 }
 
 // 유효성 검사 useInput
