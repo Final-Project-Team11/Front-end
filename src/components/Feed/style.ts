@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const StWrapperBlock = styled.div`
   width: 260px;
-  height: 700px;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@ export const StWrapperBlock = styled.div`
 
 export const StFeedBlock = styled.div`
   width: 400px;
-  height: 700px;
+  height: 600px;
 
   border: 1px solid black;
 
