@@ -25,9 +25,7 @@ const Login = () => {
           테스트
         </Modal>
       )}
-      <DropdownHeader>
-        드롭다운 입니다!
-      </DropdownHeader>
+      <DropdownHeader>드롭다운 입니다!</DropdownHeader>
     </>
   );
 };
