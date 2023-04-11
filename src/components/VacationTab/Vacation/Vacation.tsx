@@ -12,16 +12,7 @@ import {
 } from './style';
 import { VacateProps } from './interfaces';
 
-const Vacation = ({
-  eventId,
-  userName,
-  title,
-  file,
-  startDay,
-  endDay,
-  status,
-  children,
-}: VacateProps) => {
+const Vacation = ({ type, userName, startDay, endDay, status }: VacateProps) => {
   // 선택창 등장, 퇴장을 위한 state
   const [hover, setHover] = useState(false);
 
@@ -46,7 +37,7 @@ const Vacation = ({
   return (
     <StVacateBlock>
       <StSpanBlock>
-        <StVacateSpan>{`${title} | ${userName}`}</StVacateSpan>
+        <StVacateSpan>{`${type} | ${userName}`}</StVacateSpan>
         <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
       </StSpanBlock>
 
