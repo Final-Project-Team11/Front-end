@@ -1,22 +1,22 @@
-export interface DropdownBodyProps {
-    children? : string;
+export interface DropdownProps {
+    children : string
+    items : string[]
     size? : 'small' | 'medium'
     color? : string
     background? : string
     border? : string
 }
 
-export interface Cssprops {
+export interface CssProps {
     size? : 'small' | 'medium'
     color? : string
     background? : string
     border? : string
 }
 
-export interface Sizes { 
+export interface Sizes {
     [key: string]: {
         width: string;
         height: string;
-      };
+        };
 }
-

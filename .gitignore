@@ -29,5 +29,5 @@ yarn-error.log*
 .eslintrc.js
 
 
-#db.json
+#json-server
 db.json

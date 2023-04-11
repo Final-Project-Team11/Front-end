@@ -1,14 +1,14 @@
 import React from 'react';
-import { StDeviderBlock, StUploadedBlock } from './style';
-import UploadedFile from './UplodedFile';
+import Category from './FileCategory';
+import { StUploadedTab } from './style';
 
 const UploadedFileTab = () => {
   return (
-    <StUploadedBlock>
-      🗂️
-      <StDeviderBlock />
-      <UploadedFile />
-    </StUploadedBlock>
+    <StUploadedTab>
+      <Category>🗂️</Category>
+      <Category>🗂️</Category>
+      <Category>🗂️</Category>
+    </StUploadedTab>
   );
 };
 
