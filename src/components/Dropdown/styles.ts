@@ -12,7 +12,7 @@ const sizes: interfaces.Sizes = {
   },
 };
 
-export const StUl = styled.ul<interfaces.CssProps>`
+export const StBlock = styled.div<interfaces.CssProps>`
   ${({ size }) =>
     size &&
     css`

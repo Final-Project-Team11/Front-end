@@ -1,6 +1,6 @@
 import React from 'react';
 import { DropdownProps } from './interfaces';
-import { StUl, StLi } from './styles';
+import { StBlock, StLi } from './styles';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -22,7 +22,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <>
-      <StUl
+      <StBlock
         onClick={() => setIsOpen(!isOpen)}
         size={size}
         color={color}
@@ -32,23 +32,27 @@ const Dropdown: React.FC<DropdownProps> = ({
         {children}
         {'  '}
         {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-      </StUl>
-      {isOpen && (
-        <StUl size={size} color={color} background={background} border={border}>
-          {items.map((item: string) => (
-            <StLi
-              key={item}
-              onClick={() => clickItemHandler(item)}
-              size={size}
-              color={color}
-              background={background}
-              border={border}
-            >
-              {item}
-            </StLi>
-          ))}
-        </StUl>
-      )}
+      </StBlock>
+      <ul>
+        {isOpen && (
+          <>
+            {items.map((item: string) => {
+              return (
+                <StLi
+                  key={item}
+                  onClick={() => clickItemHandler(item)}
+                  size={size}
+                  color={color}
+                  background={background}
+                  border={border}
+                >
+                  {item}
+                </StLi>
+              );
+            })}
+          </>
+        )}
+      </ul>
     </>
   );
 };

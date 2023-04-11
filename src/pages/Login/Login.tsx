@@ -1,36 +1,75 @@
 import React from 'react';
-import Modal from '../../components/Modal/Modal';
-import Dropdown from '../../components/Dropdown/Dropdown';
+import {
+  StBlock,
+  TapButton,
+  TapButtonWrapper,
+  InputWrapper,
+  TextWrapper,
+  Tap,
+} from './styles';
+import MaxInput from '../../components/Inputs/Input/MaxInput';
+import Button from '../../components/Button/Button';
+
+enum Tabs {
+  Tab1 = 'Tab1',
+  Tab2 = 'Tab2',
+}
+
+const Tabconent1 = () => {
+  return (
+    <Tap>
+      <InputWrapper>
+        <MaxInput types="half" type="text">
+          대표자 아이디
+        </MaxInput>
+        <MaxInput types="half" type="text">
+          아이디
+        </MaxInput>
+        <MaxInput types="half" type="password">
+          비밀번호
+        </MaxInput>
+      </InputWrapper>
+      <TextWrapper>
+        <span>미어캣린더가 처음이면! 회원가입</span>
+        <span>아이디 / 비밀번호 찾기</span>
+      </TextWrapper>
+      <Button size="example">로그인</Button>
+    </Tap>
+  );
+};
+
+const Tabconent2 = () => {
+  return (
+    <Tap>
+      <InputWrapper>
+        <MaxInput types="half" type="text">
+          아이디
+        </MaxInput>
+        <MaxInput types="half" type="password">
+          비밀번호
+        </MaxInput>
+      </InputWrapper>
+      <div style={{ marginTop: '30px' }}>
+        <Button size="example">로그인</Button>
+      </div>
+    </Tap>
+  );
+};
 
 const Login = () => {
-  const [open, setOepn] = React.useState(false);
-  const openModal = () => {
-    setOepn(true);
+  const [currentTab, setCurrentTab] = React.useState<Tabs>(Tabs.Tab1);
+  const ClickTabHandler = (tab: Tabs) => {
+    setCurrentTab(tab);
   };
-  const closeModal = () => {
-    setOepn(false);
-  };
-
-  const items: string[] = ['item1', 'item2', 'item3'];
-
   return (
-    <>
-      <button
-        onClick={() => {
-          openModal();
-        }}
-      >
-        테스트
-      </button>
-      {open && (
-        <Modal size="small" closeModal={closeModal}>
-          테스트
-        </Modal>
-      )}
-      <Dropdown items={items} size="medium">
-        드롭
-      </Dropdown>
-    </>
+    <StBlock>
+      <TapButtonWrapper>
+        <TapButton onClick={() => ClickTabHandler(Tabs.Tab1)}>대표 운영자</TapButton>
+        <TapButton onClick={() => ClickTabHandler(Tabs.Tab2)}>팀원</TapButton>
+      </TapButtonWrapper>
+      {currentTab === Tabs.Tab1 && <Tabconent1 />}
+      {currentTab === Tabs.Tab2 && <Tabconent2 />}
+    </StBlock>
   );
 };
 
