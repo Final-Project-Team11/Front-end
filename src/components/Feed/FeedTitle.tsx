@@ -1,13 +1,14 @@
 import React from 'react';
-import * as UI from './style';
+
 import { FeedTitleProps } from './interfaces';
+import { StFeedTitleBlock, StFeedTitleH1, StPlusBlock } from './style';
 
 const FeedTitle = ({ onClick }: FeedTitleProps) => {
   return (
-    <UI.StFeedTitleBlock>
-      <UI.StFeedTitleH1>feed</UI.StFeedTitleH1>
-      <UI.StTestPlusBlock onClick={onClick}>+</UI.StTestPlusBlock>
-    </UI.StFeedTitleBlock>
+    <StFeedTitleBlock>
+      <StFeedTitleH1>feed</StFeedTitleH1>
+      <StPlusBlock onClick={onClick}>+</StPlusBlock>
+    </StFeedTitleBlock>
   );
 };
 
