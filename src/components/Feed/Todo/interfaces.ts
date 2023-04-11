@@ -1,5 +1,5 @@
 export interface TodoBoxProps {
-  content: string;
+  todo: string;
   isDone: boolean;
 }
 

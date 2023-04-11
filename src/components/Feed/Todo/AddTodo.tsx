@@ -1,6 +1,6 @@
 import React from 'react';
 import { StTodoBlock, StTodoInput } from './style';
-import { StCircleBlock } from '../style';
+import { StCircleBlock } from './style';
 import { AddTodoProps } from './interfaces';
 
 const AddTodo = ({ value, setValue, onChange }: AddTodoProps) => {

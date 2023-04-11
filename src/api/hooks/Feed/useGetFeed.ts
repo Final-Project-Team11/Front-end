@@ -6,8 +6,7 @@ export const useGetPosts = () => {
     queryKey: ['GET_POSTS'], //posts get요청 key
     queryFn: async () => {
       const data = await axios.get('http://localhost:3001/feed');
-      // console.log(data.data.categorys[0]);
-      return data.data.categorys;
+      return data.data;
     },
   });
 

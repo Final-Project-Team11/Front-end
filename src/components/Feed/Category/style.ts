@@ -1,45 +1,63 @@
 import styled from 'styled-components';
 
-export const StCategoryInputBlock = styled.div`
+export const StCategoryBlock = styled.div`
+  /* background-color: yellow; */
+  width: 100%;
+  height: fit-content;
+  max-height: 100px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: fit-content;
+  flex-direction: column;
+
+  overflow-y: scroll;
+
+  margin-bottom: 5px;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    background-color: gray;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #dc3232; /* 다른 색상으로 변경 */
+  }
 `;
 
-export const StCategoryInput = styled.input`
+export const StCategoryInputBlock = styled.div`
   background-color: #dc3232;
-  width: 180px;
-  color: white;
+  width: fit-content;
+  height: 30px;
 
-  padding-left: 10px;
+  font-size: 20px;
+  margin-bottom: 5px;
+
+  padding-left: 13px;
   padding-right: 13px;
-  padding-top: 3px;
-  padding-bottom: 3px;
 
   box-sizing: border-box;
   border-radius: 15px;
-  border: none;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  font-size: 18px;
-  font-weight: bold;
 `;
 
-export const StCategoryH3 = styled.h3`
+export const StCategoryInput = styled.input`
+  width: 100px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+`;
+
+export const StCategoryTitleBlock = styled.div`
   background-color: #dc3232;
   width: fit-content;
+  height: 30px;
   color: white;
 
   font-size: 20px;
 
-  padding-left: 10px;
+  padding-left: 13px;
   padding-right: 13px;
-  padding-top: 3px;
-  padding-bottom: 3px;
 
   box-sizing: border-box;
   border-radius: 15px;
@@ -49,10 +67,22 @@ export const StCategoryH3 = styled.h3`
   align-items: center;
 `;
 
-export const StCategoryBlock = styled.div`
-  background-color: yellow;
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
+export const StCategoryH3 = styled.h3``;
+
+export const StCircleBlock = styled.div`
+  background-color: green;
+
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+export const StPlusBlock = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -5,15 +5,25 @@ export const StWrapperBlock = styled.div`
   width: 260px;
   height: 600px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
+
+  border: 1px solid black;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    background-color: grey;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: red;
+  }
 `;
 
 export const StFeedBlock = styled.div`
   width: 400px;
-  height: 600px;
-
-  border: 1px solid black;
+  height: fit-content;
 
   padding: 20px;
   box-sizing: border-box;
@@ -41,19 +51,22 @@ export const StCircleBlock = styled.div`
   margin-right: 10px;
 `;
 
-export const StTestPlusBlock = styled.div`
-  font-size: 40px;
+export const StPlusBlock = styled.div`
+  font-size: 25px;
   &:hover {
     cursor: pointer;
   }
 `;
 
 export const StFeedTitleH1 = styled.h1`
-  font-size: 2em;
+  font-size: 30px;
   font-weight: bold;
-  margin-top: 0.67em;
   margin-bottom: 0.67em;
   color: #dc3232;
 `;
 
-export const StTestDeleteBlock = styled.div``;
+export const StTestDeleteBlock = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
