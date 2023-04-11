@@ -50,7 +50,7 @@ body {
   
   /** custom fontawesome */
   .fa {
-    width: 12px;
+    width: 15px;
     height: 12px;
     margin-right: 2px;
   }
@@ -61,7 +61,3 @@ body {
     margin: 0 360px;
   }
 
-  .headerContainer{
-    margin: 50px 360px 0;
-    display: flex;
-  }

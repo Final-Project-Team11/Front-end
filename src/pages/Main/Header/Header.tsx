@@ -11,7 +11,7 @@ import {
   StMonthBlock,
 } from './styles';
 
-function index(porps: HeaderProps) {
+function Header(porps: HeaderProps) {
   return (
     <StWrap>
       <StCardBlock />
@@ -49,4 +49,4 @@ function index(porps: HeaderProps) {
   );
 }
 
-export default index;
+export default Header;

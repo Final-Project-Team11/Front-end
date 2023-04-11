@@ -13,6 +13,8 @@ import { addDate, addHours, subtractDate } from './utils';
 import Feed from '../../components/Feed/Feed';
 import Header from './Header';
 import Detail from './Detail/Detail';
+import useGetMain from '../../api/hooks/useGetMain';
+import { switchCase } from '@babel/types';
 
 type ViewType = 'month' | 'week' | 'day';
 
@@ -32,46 +34,112 @@ const viewModeOptions = [
   },
 ];
 
+interface ScheduleProps {
+  eventId?: number;
+  eventType?: string;
+  title?: string;
+  userName?: string;
+  startDay?: Date;
+  endDay?: Date;
+  body?: string;
+  mention?: string[];
+}
+const ISSUE = 0;
+const OTHER = 1;
+const BUSINESS_TRIP = 2;
+const MEETING = 3;
+
 export function Main({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
-  const [DateClick, setDateClick] = useState(false);
+  const [ClickData, setClickData] = useState<ScheduleProps>();
+  const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
+  const [ClickDetail, setClickDetail] = useState(false);
+  const { data, isLoading } = useGetMain();
+  const detailRef = useRef<HTMLDivElement>(null);
+
   const initialCalendars: Options['calendars'] = [
     {
       id: '0',
-      name: 'Private',
-      backgroundColor: '#9e5fff',
-      borderColor: '#9e5fff',
-      dragBackgroundColor: '#9e5fff',
+      name: '회의',
+      backgroundColor: '#1F1F1F',
+      borderColor: '#1F1F1F',
+      dragBackgroundColor: '#1F1F1F',
+      color: '#FFFFFF',
     },
     {
       id: '1',
-      name: 'Company',
-      backgroundColor: '#00a9ff',
-      borderColor: '#00a9ff',
-      dragBackgroundColor: '#00a9ff',
-    },
-  ];
-  const initialEvents: Partial<EventObject>[] = [
-    {
-      id: '1',
-      calendarId: '0',
-      title: 'TOAST UI Calendar Study',
-      category: 'time',
-      start: today,
-      end: addHours(today, 3),
+      name: '기타',
+      backgroundColor: '#FFFFFF',
+      borderColor: '#FFFFFF',
+      dragBackgroundColor: '#FFFFFF',
     },
     {
       id: '2',
-      calendarId: '0',
-      title: 'Practice',
-      category: 'milestone',
-      start: addDate(today, 1),
-      end: addDate(today, 1),
-      isReadOnly: true,
+      name: '출장',
+      backgroundColor: '#BADAFF',
+      borderColor: '#BADAFF',
+      dragBackgroundColor: '#BADAFF',
+    },
+    {
+      id: '3',
+      name: '미팅',
+      backgroundColor: '#E64042',
+      borderColor: '#E64042',
+      dragBackgroundColor: '#E64042',
     },
   ];
+
+  useEffect(() => {
+    const events: Partial<EventObject>[] = data?.schedules.map(
+      (schedule: ScheduleProps) => {
+        const newData = {
+          id: schedule?.eventId,
+          calendarId: schedule?.eventType,
+          title: schedule?.title,
+          start: today,
+          end: addDate(today, 3),
+          body: schedule.userName + '/' + schedule.body,
+          attendees: schedule.mention,
+        };
+
+        switch (Number(schedule?.eventType)) {
+          case ISSUE:
+            return {
+              ...newData,
+              backgroundColor: '#1F1F1F',
+              borderColor: '#1F1F1F',
+              dragBackgroundColor: '#1F1F1F',
+              color: '#FFFFFF',
+            };
+          case OTHER:
+            return {
+              ...newData,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#1F1F1F',
+              dragBackgroundColor: '#1F1F1F',
+            };
+          case BUSINESS_TRIP:
+            return {
+              ...newData,
+              backgroundColor: '#BADAFF',
+              borderColor: '#BADAFF',
+              dragBackgroundColor: '#BADAFF',
+            };
+          case MEETING:
+            return {
+              ...newData,
+              backgroundColor: '#E64042',
+              borderColor: '#E64042',
+              dragBackgroundColor: '#E64042',
+            };
+        }
+      }
+    );
+
+    setInitialEvents(events);
+  }, [data]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -174,8 +242,17 @@ export function Main({ view }: { view: ViewType }) {
     console.log('Event Info : ', res.event);
     console.groupEnd();
 
-    setDateClick(true);
-    console.log('setDateClick', true);
+    const newData = {
+      eventId: res.event.id,
+      eventType: res.event.calendarId,
+      title: res.event.title,
+      startDay: res.event.start,
+      endDay: res.event.end,
+      body: res.event.body,
+      mention: res.event.attendees,
+    };
+    setClickData(newData);
+    setClickDetail(true);
   };
 
   const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
@@ -222,17 +299,26 @@ export function Main({ view }: { view: ViewType }) {
     getCalInstance().createEvents([event]);
   };
 
-  const ClickBkHandler = (e: globalThis.MouseEvent) => {
-    console.log(e);
-    DateClick === true && setDateClick(false);
+  const clickBkHandler = (e: globalThis.MouseEvent) => {
+    console.log('clickBkHandler', e.target);
+    const node: Node | null = e.target as Node | null;
+    if (
+      !(node instanceof Element && node.tagName === 'SPAN') &&
+      ClickDetail === true &&
+      !detailRef.current?.contains(node)
+    ) {
+      setClickDetail(false);
+      console.log('test');
+    }
   };
 
   useEffect(() => {
-    window.addEventListener('click', ClickBkHandler);
+    window.addEventListener('click', clickBkHandler);
     return () => {
-      window.removeEventListener('click', ClickBkHandler);
+      window.removeEventListener('click', clickBkHandler);
     };
-  }, [DateClick]);
+  }, [ClickDetail]);
+
   return (
     <div>
       <Header selectedDateRangeText={selectedDateRangeText} />
@@ -285,13 +371,25 @@ export function Main({ view }: { view: ViewType }) {
             onBeforeDeleteEvent={onBeforeDeleteEvent}
             onClickDayname={onClickDayName}
             onClickEvent={onClickEvent}
+            clickMoreEventsBtn={true}
             onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
             onBeforeUpdateEvent={onBeforeUpdateEvent}
             onBeforeCreateEvent={onBeforeCreateEvent}
           />
         </div>
       </div>
-      {DateClick === true && <Detail />}
+      {ClickDetail === true && (
+        <Detail
+          eventId={ClickData?.eventId}
+          eventType={ClickData?.eventType}
+          title={ClickData?.title}
+          startDay={ClickData?.startDay}
+          endDay={ClickData?.endDay}
+          body={ClickData?.body}
+          mention={ClickData?.mention}
+          detailRef={detailRef}
+        />
+      )}
     </div>
   );
 }

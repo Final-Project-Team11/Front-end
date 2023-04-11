@@ -58,18 +58,15 @@ const Tabconent2 = () => {
 
 const Login = () => {
   const [currentTab, setCurrentTab] = React.useState<Tabs>(Tabs.Tab1);
-
   const ClickTabHandler = (tab: Tabs) => {
     setCurrentTab(tab);
   };
-
   return (
     <StBlock>
       <TapButtonWrapper>
         <TapButton onClick={() => ClickTabHandler(Tabs.Tab1)}>대표 운영자</TapButton>
         <TapButton onClick={() => ClickTabHandler(Tabs.Tab2)}>팀원</TapButton>
       </TapButtonWrapper>
-
       {currentTab === Tabs.Tab1 && <Tabconent1 />}
       {currentTab === Tabs.Tab2 && <Tabconent2 />}
     </StBlock>

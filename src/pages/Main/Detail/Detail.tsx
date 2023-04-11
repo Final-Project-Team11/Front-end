@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StContainer, StTitleBlock, StContentBlock, StMentionBlock } from './styles';
 
-interface DetailProps {
-  children?: React.ReactNode;
+interface ScheduleProps {
+  eventId?: number;
+  eventType?: string;
+  title?: string;
+  username?: string;
+  startDay?: Date;
+  endDay?: Date;
+  body?: string;
+  mention?: string[];
+  detailRef?: any;
 }
-
-function Detail(props: DetailProps) {
+function Detail(props: ScheduleProps) {
   return (
-    <StContainer>
+    <StContainer ref={props.detailRef}>
       <StTitleBlock>
-        <div>2023/04/08</div>
-        <div>찬우</div>
-        <div>디자인 회의</div>
+        <div>
+          <span>{props.startDay?.getFullYear()}/</span>
+          <span>{props.startDay && props.startDay?.getMonth() + 1}/</span>
+          <span>{props.startDay?.getDate()}</span>
+        </div>
+        <div>
+          <span>{props.body?.split('/')[0]}</span>
+        </div>
+        <div>
+          <span>{props.title}</span>
+        </div>
       </StTitleBlock>
-      <StContentBlock>asdasasdsa</StContentBlock>
-      <StMentionBlock>멘션들</StMentionBlock>
+      <StContentBlock>{props.body?.split('/')[1]}</StContentBlock>
+      <StMentionBlock>{props.mention?.map(item => item + '-')}</StMentionBlock>
     </StContainer>
   );
 }
