@@ -35,10 +35,10 @@ const MasterSignup = () => {
         <ButtonInput types="button" onClick={test} buttonTag="중복확인">
           아이디
         </ButtonInput>
-        <MaxInput types="max" type="text">
+        <MaxInput types="max" type="password">
           비밀번호
         </MaxInput>
-        <MaxInput types="max" type="text">
+        <MaxInput types="max" type="password">
           비밀번호 확인
         </MaxInput>
       </InputWrapper>
