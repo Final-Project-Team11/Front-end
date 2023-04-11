@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from '../../components/Modal/Modal';
 import Dropdown from '../../components/Dropdown/Dropdown';
 
-
 const Login = () => {
   const [open, setOepn] = React.useState(false);
   const openModal = () => {
@@ -12,7 +11,7 @@ const Login = () => {
     setOepn(false);
   };
 
-  const items : string[] = ['item1','item2','item3']
+  const items: string[] = ['item1', 'item2', 'item3'];
 
   return (
     <>
@@ -28,7 +27,9 @@ const Login = () => {
           테스트
         </Modal>
       )}
-      <Dropdown items={items} size='medium'>드롭</Dropdown>
+      <Dropdown items={items} size="medium">
+        드롭
+      </Dropdown>
     </>
   );
 };

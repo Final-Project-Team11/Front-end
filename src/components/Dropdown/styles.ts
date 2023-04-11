@@ -1,16 +1,16 @@
-import styled, {css} from 'styled-components'
-import * as interfaces from './interfaces'
+import styled, { css } from 'styled-components';
+import * as interfaces from './interfaces';
 
-const sizes : interfaces.Sizes = {
-    small : {
-        width : '100px',
-        height : '50px'
-    },
-    medium : {
-        width : '276px',
-        height : '86px'
-    }
-}
+const sizes: interfaces.Sizes = {
+  small: {
+    width: '100px',
+    height: '50px',
+  },
+  medium: {
+    width: '276px',
+    height: '86px',
+  },
+};
 
 export const StUl = styled.ul<interfaces.CssProps>`
   ${({ size }) =>
@@ -21,16 +21,15 @@ export const StUl = styled.ul<interfaces.CssProps>`
     `};
   color: ${({ color }) => (color ? color : 'black')};
   background: ${({ background }) => (background ? background : 'white')};
-  border : ${({border})=>(border ? border : '1px solid black')};
-  box-sizing : border-box;
-  
+  border: ${({ border }) => (border ? border : '1px solid black')};
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: row;
-  flex-wrap : wrap;
-  align-items : center;
-  justify-content : center;
-
-`
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const StLi = styled.li<interfaces.CssProps>`
   ${({ size }) =>
@@ -41,10 +40,10 @@ export const StLi = styled.li<interfaces.CssProps>`
     `};
   color: ${({ color }) => (color ? color : 'black')};
   background: ${({ background }) => (background ? background : 'white')};
-  border : ${({border})=>(border ? border : '1px solid black')};
-  box-sizing : border-box;
+  border: ${({ border }) => (border ? border : '1px solid black')};
+  box-sizing: border-box;
 
   display: flex;
-  align-items : center;
-  justify-content : center;
-`
+  align-items: center;
+  justify-content: center;
+`;
