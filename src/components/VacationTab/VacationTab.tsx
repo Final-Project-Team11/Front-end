@@ -6,7 +6,6 @@ import { VacationList } from './interfaces';
 
 const VacationTab = () => {
   const { vacations, vacationsIsLoading } = useGetVacations();
-  console.log('vacations--------', vacations);
 
   if (vacationsIsLoading && !vacations) {
     return <div>Loading...</div>;

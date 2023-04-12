@@ -15,26 +15,37 @@ export const StTodoBlock = styled.div`
   align-items: center;
 `;
 
-export const StTodoAreaBlock = styled.div<TodoBoxStProps>`
+export const StTodoAreaBlock = styled.div`
   display: flex;
   align-items: center;
 
   margin: 3px 0 3px 0;
 
   font-size: 15px;
-  color: ${({ isDone }) => (isDone ? 'green' : 'red')};
 `;
 
 export const StTodoInput = styled.input`
-  border: 0.5px solid green;
+  width: 60%;
+  margin-right: 25%;
+  border: 0.5px solid #dc3232;
+  border-radius: 5px;
   font-size: 16px;
 `;
 
-export const StCircleBlock = styled.div`
-  background-color: green;
+export const StCircleBlock = styled.div<TodoBoxStProps>`
+  background-color: ${({ isDone }) => (isDone ? '#dc3232' : null)};
+
+  border: 1px solid ${({ isDone }) => (isDone ? '#dc3232' : '#dc3232')};
 
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-right: 10px;
+`;
+
+export const StTestDeleteBlock = styled.div`
+  font-size: 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;

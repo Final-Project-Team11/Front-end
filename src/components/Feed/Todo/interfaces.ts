@@ -4,7 +4,7 @@ export interface TodoBoxProps {
 }
 
 export interface TodoBoxStProps {
-  isDone: boolean;
+  isDone?: boolean;
 }
 
 export interface AddTodoProps {

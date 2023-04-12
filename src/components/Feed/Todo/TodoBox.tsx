@@ -1,16 +1,26 @@
-import React from 'react';
-import { StTodoBlock, StTodoAreaBlock } from './style';
-import { StCircleBlock, StTestDeleteBlock } from '../style';
+import React, { useState } from 'react';
+import { StTodoBlock, StTodoAreaBlock, StCircleBlock, StTestDeleteBlock } from './style';
+
 import { TodoBoxProps } from './interfaces';
+import { BsX } from 'react-icons/bs';
 
 const TodoBox = ({ todo, isDone }: TodoBoxProps) => {
+  const [showDeleteBtn, setShowDeleteBtn] = useState<boolean>(false);
+
   return (
-    <StTodoBlock>
-      <StTodoAreaBlock isDone={isDone}>
-        <StCircleBlock />
+    <StTodoBlock
+      onMouseEnter={() => setShowDeleteBtn(true)}
+      onMouseLeave={() => setShowDeleteBtn(false)}
+    >
+      <StTodoAreaBlock>
+        <StCircleBlock isDone={isDone} />
         {todo}
       </StTodoAreaBlock>
-      <StTestDeleteBlock>x</StTestDeleteBlock>
+      {showDeleteBtn && (
+        <StTestDeleteBlock>
+          <BsX />
+        </StTestDeleteBlock>
+      )}
     </StTodoBlock>
   );
 };
