@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface RequestStatusProps {
+  status: boolean;
+}
+
 export const StVacateBlock = styled.div`
   width: 100%;
   height: fit-content;
@@ -24,19 +28,7 @@ export const StVacateSpan = styled.span`
 `;
 
 export const StSubmitBlock = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-right: 10px;
-
-  border: 1px solid red;
-`;
-export const StAcceptBlock = styled.div`
-  background-color: red;
-  color: white;
-
-  width: 24px;
-  height: 24px;
+  font-size: 25px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -45,20 +37,17 @@ export const StAcceptBlock = styled.div`
   justify-content: center;
 `;
 
-export const StDenyBlock = styled.div`
-  background-color: red;
-  color: white;
+export const StAcceptBlock = styled.div<RequestStatusProps>`
+  /* color: ${({ status }) => (status ? 'green' : 'red')}; */
+  color: gray;
 
-  width: 24px;
-  height: 24px;
+  font-size: 25px;
   border-radius: 50%;
   margin-right: 10px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid red;
 `;
 
 // 선택 블럭 호버 시 나오는 요소 블럭
@@ -66,21 +55,22 @@ export const StDecideBlock = styled.div`
   background-color: red;
 
   width: 24px;
-  height: fit-content;
+  height: 24px;
   border-radius: 20px;
   margin-right: 10px;
 
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 5px;
+  /* gap: 5px; */
 
-  padding: 0 5px 0 5px;
+  /* padding: 0 5px 0 5px; */
   box-sizing: border-box;
 
   border: 1px solid red;
   transition: all 0.1s;
   &:hover {
-    width: 60px;
+    width: 50px;
   }
 
   &:hover .decision {
@@ -89,12 +79,11 @@ export const StDecideBlock = styled.div`
 `;
 
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
-export const StDecAcceptBlock = styled.div`
+export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   background-color: white;
-  color: red;
+  color: ${({ status }) => (status ? 'green' : 'red')};
 
-  width: 24px;
-  height: 24px;
+  font-size: 20px;
   border-radius: 50%;
 
   display: flex;
@@ -103,9 +92,9 @@ export const StDecAcceptBlock = styled.div`
   opacity: 0;
 
   transition: 0.3s;
-  &:hover {
+  /* &:hover {
     background-color: green;
-  }
+  } */
 `;
 
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
@@ -113,8 +102,7 @@ export const StDecDenyBlock = styled.div`
   background-color: white;
   color: red;
 
-  width: 24px;
-  height: 24px;
+  font-size: 20px;
   border-radius: 50%;
 
   display: flex;
@@ -123,7 +111,7 @@ export const StDecDenyBlock = styled.div`
   opacity: 0;
 
   transition: 0.3s;
-  &:hover {
-    background-color: orange;
-  }
+  /* &:hover {
+    background-color: #fb6e52;
+  } */
 `;

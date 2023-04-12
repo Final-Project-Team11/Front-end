@@ -5,23 +5,14 @@ import {
   StVacateBlock,
   StVacateSpan,
   StAcceptBlock,
-  StDenyBlock,
   StDecideBlock,
   StDecAcceptBlock,
   StDecDenyBlock,
 } from './style';
 import { VacateProps } from './interfaces';
+import { BsCheckCircle, BsXCircle, BsCircle, BsCheck, BsX } from 'react-icons/bs';
 
-const Vacation = ({
-  eventId,
-  userName,
-  title,
-  file,
-  startDay,
-  endDay,
-  status,
-  children,
-}: VacateProps) => {
+const Vacation = ({ type, userName, startDay, endDay, status }: VacateProps) => {
   // 선택창 등장, 퇴장을 위한 state
   const [hover, setHover] = useState(false);
 
@@ -32,29 +23,47 @@ const Vacation = ({
   switch (status) {
     case 'accept':
       requestStatus = (
-        <StAcceptBlock onMouseEnter={() => setHover(true)}>V</StAcceptBlock>
+        // BsCheckCircleFill
+        // BsCheckCircle
+        <StAcceptBlock onMouseEnter={() => setHover(true)} status={true}>
+          <BsCheckCircle />
+        </StAcceptBlock>
       );
       break;
     case 'deny':
-      requestStatus = <StDenyBlock onMouseEnter={() => setHover(true)}>X</StDenyBlock>;
+      // BsXCircleFill
+      // BsXCircle
+      requestStatus = (
+        <StAcceptBlock onMouseEnter={() => setHover(true)} status={false}>
+          <BsXCircle />
+        </StAcceptBlock>
+      );
       break;
     default:
-      requestStatus = <StSubmitBlock onMouseEnter={() => setHover(true)} />;
+      requestStatus = (
+        <StSubmitBlock onMouseEnter={() => setHover(true)}>
+          <BsCircle />
+        </StSubmitBlock>
+      );
       break;
   }
 
   return (
     <StVacateBlock>
       <StSpanBlock>
-        <StVacateSpan>{`${title} | ${userName}`}</StVacateSpan>
+        <StVacateSpan>{`${type} | ${userName}`}</StVacateSpan>
         <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
       </StSpanBlock>
 
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
       {hover ? (
         <StDecideBlock onMouseLeave={() => setHover(false)}>
-          <StDecAcceptBlock className="decision">V</StDecAcceptBlock>
-          <StDecDenyBlock className="decision">X</StDecDenyBlock>
+          <StDecAcceptBlock className="decision" status={true}>
+            <BsCheck />
+          </StDecAcceptBlock>
+          <StDecAcceptBlock className="decision" status={false}>
+            <BsX />
+          </StDecAcceptBlock>
         </StDecideBlock>
       ) : (
         requestStatus
