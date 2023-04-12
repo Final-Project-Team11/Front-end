@@ -4,8 +4,10 @@ export const theme: Options['theme'] = {
   common: {
     border: '1px solid #ddd',
     backgroundColor: 'white',
-    holiday: { color: '#f54f3d' },
-    saturday: { color: '#135de6' },
+    // holiday: { color: '#f54f3d' },
+    holiday: { color: '#878787' },
+    saturday: { color: '#878787' },
+    // saturday: { color: '#135de6' },
     dayName: { color: '#333' },
     today: { color: '#009688' },
     gridSelection: {
@@ -20,7 +22,8 @@ export const theme: Options['theme'] = {
     },
     holidayExceptThisMonth: { color: '#f3acac' },
     dayExceptThisMonth: { color: '#bbb' },
-    weekend: { backgroundColor: '#fafafa' },
+    // weekend: { backgroundColor: '#fafafa' },
+    weekend: { backgroundColor: 'inherit' },
     moreView: { boxShadow: 'none' },
     moreViewTitle: { backgroundColor: '#f4f4f4' },
   },

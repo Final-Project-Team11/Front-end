@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../constants/colors';
 
 const StContainer = styled.div`
-  margin: 10px 360px 0;
-  border-top: 3px solid #badaff;
+  border-top: 3px solid ${COLOR.DETAIL_GRAY};
 `;
 
 const StTitleBlock = styled.div`
@@ -15,12 +15,12 @@ const StTitleBlock = styled.div`
 
 const StContentBlock = styled.div`
   height: 150px;
-  border-top: 3px solid #badaff;
-  border-bottom: 3px solid #badaff;
+  border-top: 3px solid ${COLOR.DETAIL_GRAY};
+  border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
 `;
 
 const StMentionBlock = styled.div`
-  border-bottom: 3px solid #badaff;
+  border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
   height: 50px;
 `;
 
