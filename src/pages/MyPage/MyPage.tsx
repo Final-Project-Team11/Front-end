@@ -17,8 +17,14 @@ const MyPage = () => {
         <MainArea>
           <Feed />
           <Tag />
-          <UploadedFileTab />
-          <VacationTab />
+          <MiddleArea>
+            <UploadedFileTab type="Myfile" icon="📕" />
+            <UploadedFileTab type="meeting" icon="📗" />
+          </MiddleArea>
+          <MiddleArea>
+            <VacationTab />
+            <UploadedFileTab type="report" icon="📘" />
+          </MiddleArea>
         </MainArea>
       </Wrapper>
     </Frame>
@@ -34,7 +40,7 @@ const Frame = styled.div`
 `;
 
 const Wrapper = styled.div`
-  background-color: beige;
+  /* background-color: beige; */
   width: 1200px;
   height: 100vh;
 
@@ -61,7 +67,7 @@ const Calendar = styled.div`
 `;
 
 const MainArea = styled.div`
-  background-color: #ffeff2;
+  /* background-color: #ffeff2; */
   width: 100%;
   height: 100%;
 
@@ -71,6 +77,15 @@ const MainArea = styled.div`
   display: flex;
   /* justify-content: space-between; */
   gap: 15px;
+`;
+
+const MiddleArea = styled.div`
+  width: 260px;
+  height: 700px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export default MyPage;
