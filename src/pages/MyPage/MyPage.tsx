@@ -1,10 +1,10 @@
 import React from 'react';
-import Tag from '../../components/Tag/Tag';
+import Tag from '../../components/Tag';
 import styled from 'styled-components';
-import Feed from '../../components/Feed/Feed';
-import VacationTab from '../../components/VacationTab/VacationTab';
+import Feed from '../../components/Feed';
 import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
+import MyRequest from '../../components/MyRequest';
 
 const MyPage = () => {
   return (
@@ -22,7 +22,7 @@ const MyPage = () => {
             <UploadedFileTab type="meeting" icon="📗" />
           </MiddleArea>
           <MiddleArea>
-            <VacationTab />
+            <MyRequest />
             <UploadedFileTab type="report" icon="📘" />
           </MiddleArea>
         </MainArea>
