@@ -11,6 +11,7 @@ const Styear = styled.div`
   font-weight: 900;
   margin-bottom: -30px;
 `;
+
 const StMonth = styled.div`
   font-size: 80px;
   width: 50px;

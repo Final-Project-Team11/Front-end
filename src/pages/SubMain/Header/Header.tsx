@@ -6,34 +6,17 @@ import {
   StContainer,
   StDateBlock,
   StYearBlock,
-  StYearFrist,
-  StYearSecond,
   StMonthBlock,
 } from './styles';
 
 function Header(porps: HeaderProps) {
   return (
     <StWrap>
-      <StCardBlock />
-      <StContainer>
-        <StDateBlock>
+      <StCardBlock tab={porps.tab} />
+      <StContainer tab={porps.tab}>
+        <StDateBlock tab={porps.tab}>
           <StYearBlock>
-            <StYearFrist>
-              {porps.selectedDateRangeText
-                .toString()
-                .split('-')
-                .splice(0, 1)
-                .join('')
-                .slice(0, 2)}
-            </StYearFrist>
-            <StYearSecond>
-              {porps.selectedDateRangeText
-                .toString()
-                .split('-')
-                .splice(0, 1)
-                .join('')
-                .slice(2, 4)}
-            </StYearSecond>
+            {porps.selectedDateRangeText.toString().split('-').splice(0, 1)}/
           </StYearBlock>
           <StMonthBlock>
             {porps.selectedDateRangeText
