@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import CategoryBox from './Category/CategoryBox';
 import AddCategory from './Category/AddCategory';
-import { StWrapperBlock, StFeedBlock } from './style';
+import * as UI from './style';
 import FeedTitle from './FeedTitle';
-import { useGetPosts } from '../../api/hooks/Feed/useGetFeed';
+import { useGetFeed } from '../../api/hooks/Feed/useGetFeed';
 import { Category } from './interfaces';
 import useInput from '../../hooks/common/useInput';
 
@@ -26,15 +26,15 @@ const Feed = () => {
     else setOpenCategoryInput(false);
   };
 
-  const { feed, feedIsLoading } = useGetPosts();
+  const { feed, feedIsLoading } = useGetFeed();
 
   if (feedIsLoading) {
     return <div>Loading...</div>;
   }
   return (
-    <StWrapperBlock>
-      <StFeedBlock>
-        <FeedTitle onClick={categoryPlusHandler} />
+    <UI.StWrapperBlock>
+      <FeedTitle onClick={categoryPlusHandler} />
+      <UI.StFeedBlock>
         {feed?.map((category: Category) => {
           return (
             <CategoryBox
@@ -45,14 +45,10 @@ const Feed = () => {
           );
         })}
         {openCategoryInput && (
-          <AddCategory
-            value={categoryState}
-            onChange={categoryStateHandler}
-            setValue={setCategoryState}
-          />
+          <AddCategory value={categoryState} onChange={categoryStateHandler} />
         )}
-      </StFeedBlock>
-    </StWrapperBlock>
+      </UI.StFeedBlock>
+    </UI.StWrapperBlock>
   );
 };
 

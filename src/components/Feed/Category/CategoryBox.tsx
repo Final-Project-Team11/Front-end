@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import {
-  StCategoryBlock,
-  StCategoryH3,
-  StCategoryTitleBlock,
-  StCircleBlock,
-  StPlusBlock,
-} from './style';
+import React, { useState } from 'react';
+import * as UI from './style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
 import { CategoryBoxProps } from './interfaces';
 import useInput from '../../../hooks/common/useInput';
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
+import { BsX } from 'react-icons/bs';
 
 const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput();
+  const [showCategoryDeleteBtn, setShowCategoryDeleteBtn] = useState<boolean>(false);
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {
@@ -45,15 +41,25 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
 
   return (
     <>
-      <StCategoryTitleBlock>
-        <StCircleBlock />
-        <StCategoryH3>{category}</StCategoryH3>
-      </StCategoryTitleBlock>
-      <StCategoryBlock>
+      <UI.StCategoryWrapper
+        onMouseEnter={() => setShowCategoryDeleteBtn(true)}
+        onMouseLeave={() => setShowCategoryDeleteBtn(false)}
+      >
+        <UI.StCategoryTitleBlock>
+          <UI.StCircleBlock />
+          <UI.StCategoryH3>{category}</UI.StCategoryH3>
+        </UI.StCategoryTitleBlock>
+        {showCategoryDeleteBtn && (
+          <UI.StDeleteBlock>
+            <BsX />
+          </UI.StDeleteBlock>
+        )}
+      </UI.StCategoryWrapper>
+      <UI.StCategoryBlock>
         {todos?.map(todo => {
           return <TodoBox key={todo.todoId} todo={todo.todo} isDone={todo.isDone} />;
         })}
-      </StCategoryBlock>
+      </UI.StCategoryBlock>
       {openTodoInput && (
         <AddTodo
           value={AddTodoState}
@@ -61,7 +67,7 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
           onChange={setAddTodoHandler}
         />
       )}
-      <StPlusBlock onClick={TodoPlusHandler}>+</StPlusBlock>
+      <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>
     </>
   );
 };

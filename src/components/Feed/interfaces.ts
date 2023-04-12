@@ -5,5 +5,5 @@ export interface FeedTitleProps {
 export interface Category {
   categoryId: number;
   categoryName: string;
-  todos: [];
+  todos: { todoId: number; todo: string; isDone: boolean }[];
 }

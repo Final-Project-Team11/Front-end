@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { StCategoryInputBlock, StCategoryInput } from './style';
-import { StCircleBlock } from '../style';
+import * as UI from './style';
 import { AddCategoryProps } from './interfaces';
 
-const AddCategory = ({ value, onChange, setValue }: AddCategoryProps) => {
+const AddCategory = ({ value, onChange }: AddCategoryProps) => {
   // AddCategory 인풋 생기면 focus
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -13,16 +12,16 @@ const AddCategory = ({ value, onChange, setValue }: AddCategoryProps) => {
   });
 
   return (
-    <StCategoryInputBlock>
-      <StCircleBlock />
-      <StCategoryInput
+    <UI.StCategoryInputBlock>
+      <UI.StCircleBlock />
+      <UI.StCategoryInput
         ref={inputRef}
         type="text"
         maxLength={10}
         value={value}
         onChange={onChange}
       />
-    </StCategoryInputBlock>
+    </UI.StCategoryInputBlock>
   );
 };
 

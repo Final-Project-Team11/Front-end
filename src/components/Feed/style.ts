@@ -4,15 +4,16 @@ import styled from 'styled-components';
 export const StWrapperBlock = styled.div`
   width: 260px;
   height: 600px;
+
   display: flex;
+  flex-direction: column;
 
-  border: 1px solid black;
+  /* border: 1px solid black; */
 
-  overflow-y: auto;
   box-shadow: rgba(251, 110, 82, 0.2) 10px 0px 10px 0px;
 
   ::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
     background-color: transparent;
     &:hover {
       background-color: grey;
@@ -24,24 +25,31 @@ export const StWrapperBlock = styled.div`
 `;
 
 export const StFeedBlock = styled.div`
-  width: 400px;
+  width: 100%;
   height: fit-content;
+  max-height: 550px;
 
   padding: 20px;
   box-sizing: border-box;
+
+  overflow-y: scroll;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StFeedTitleBlock = styled.div`
-  width: 95%;
+  width: 260px;
   height: fit-content;
 
-  margin: 5px;
-  margin-bottom: 10px;
+  padding: 20px 20px 10px 20px;
+  box-sizing: border-box;
 
   display: flex;
   justify-content: space-between;
@@ -59,9 +67,7 @@ export const StCircleBlock = styled.div`
 
 export const StPlusBlock = styled.div`
   font-size: 25px;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const StFeedTitleH1 = styled.h1`

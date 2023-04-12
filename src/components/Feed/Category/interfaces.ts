@@ -6,5 +6,5 @@ export interface CategoryBoxProps {
 export interface AddCategoryProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setValue: (value: string) => void;
+  // setValue: (value: string) => void;
 }
