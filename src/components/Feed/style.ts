@@ -5,8 +5,6 @@ export const StWrapperBlock = styled.div`
   width: 260px;
   height: 600px;
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
 
   border: 1px solid black;
 
@@ -14,7 +12,10 @@ export const StWrapperBlock = styled.div`
 
   ::-webkit-scrollbar {
     width: 5px;
-    background-color: grey;
+    background-color: transparent;
+    &:hover {
+      background-color: grey;
+    }
   }
   ::-webkit-scrollbar-thumb {
     background-color: red;
@@ -35,8 +36,12 @@ export const StFeedBlock = styled.div`
 `;
 
 export const StFeedTitleBlock = styled.div`
-  width: 100%;
+  width: 95%;
   height: fit-content;
+
+  margin: 5px;
+  margin-bottom: 10px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,7 +66,6 @@ export const StPlusBlock = styled.div`
 export const StFeedTitleH1 = styled.h1`
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 0.67em;
   color: #dc3232;
 `;
 

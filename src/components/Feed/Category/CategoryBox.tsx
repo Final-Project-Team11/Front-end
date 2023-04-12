@@ -32,6 +32,17 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
     else setOpenTodoInput(false);
   };
 
+  // todos 정렬 - isDone false 를 위로, true 를 아래로
+  todos.sort((a, b) => {
+    if (a.isDone === b.isDone) {
+      return 0;
+    } else if (a.isDone === false) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
   return (
     <>
       <StCategoryTitleBlock>

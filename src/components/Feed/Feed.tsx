@@ -27,7 +27,6 @@ const Feed = () => {
   };
 
   const { feed, feedIsLoading } = useGetPosts();
-  console.log(feed);
 
   if (feedIsLoading) {
     return <div>Loading...</div>;
@@ -36,13 +35,6 @@ const Feed = () => {
     <StWrapperBlock>
       <StFeedBlock>
         <FeedTitle onClick={categoryPlusHandler} />
-        {openCategoryInput && (
-          <AddCategory
-            value={categoryState}
-            onChange={categoryStateHandler}
-            setValue={setCategoryState}
-          />
-        )}
         {feed?.map((category: Category) => {
           return (
             <CategoryBox
@@ -52,6 +44,13 @@ const Feed = () => {
             />
           );
         })}
+        {openCategoryInput && (
+          <AddCategory
+            value={categoryState}
+            onChange={categoryStateHandler}
+            setValue={setCategoryState}
+          />
+        )}
       </StFeedBlock>
     </StWrapperBlock>
   );

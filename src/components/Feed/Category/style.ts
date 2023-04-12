@@ -4,11 +4,10 @@ export const StCategoryBlock = styled.div`
   /* background-color: yellow; */
   width: 100%;
   height: fit-content;
-  max-height: 100px;
   display: flex;
   flex-direction: column;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 
   margin-bottom: 5px;
 
