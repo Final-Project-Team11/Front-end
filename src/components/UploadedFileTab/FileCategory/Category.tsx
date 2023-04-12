@@ -1,22 +1,65 @@
 import React from 'react';
-import {
-  StContentSpan,
-  StDeviderBlock,
-  StUploadedBlock,
-  StUploadedFileBlock,
-} from './style';
+import * as UI from './style';
 import { CategoryProps } from './interfaces';
 
-const Category = ({ types, children }: CategoryProps) => {
+const Category = ({ fileList, children }: CategoryProps) => {
   return (
-    <StUploadedBlock>
-      {children}
-      <StDeviderBlock />
-      <StUploadedFileBlock>
-        <StContentSpan>`😵‍💫 | 이름`</StContentSpan>
-        <StContentSpan>`📎 | 파일이름`</StContentSpan>
-      </StUploadedFileBlock>
-    </StUploadedBlock>
+    <>
+      <UI.StUploadedBlock>
+        {children}
+        <UI.StDeviderBlock />
+        <UI.StInsideBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+          <UI.StUploadedFileBlock>
+            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
+            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
+          </UI.StUploadedFileBlock>
+        </UI.StInsideBlock>
+      </UI.StUploadedBlock>
+    </>
   );
 };
 

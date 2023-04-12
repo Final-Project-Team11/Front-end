@@ -5,7 +5,7 @@ export const StVacationTabBlock = styled.div`
   flex-direction: column;
 
   width: 260px;
-  height: 700px;
+  height: 340px;
 
   padding: 15px;
   box-sizing: border-box;

@@ -10,7 +10,7 @@ export const StWrapperBlock = styled.div`
 
   /* border: 1px solid black; */
 
-  box-shadow: rgba(251, 110, 82, 0.2) 10px 0px 10px 0px;
+  box-shadow: rgba(246, 211, 211, 0.4) 4px 0px 9px -2px;
 
   ::-webkit-scrollbar {
     width: 5px;
