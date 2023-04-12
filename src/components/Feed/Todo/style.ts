@@ -26,6 +26,8 @@ export const StTodoAreaBlock = styled.div<TodoBoxStProps>`
 `;
 
 export const StTodoInput = styled.input`
+  width: 60%;
+  margin-right: 25%;
   border: 0.5px solid green;
   font-size: 16px;
 `;

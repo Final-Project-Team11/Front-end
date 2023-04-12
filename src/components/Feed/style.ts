@@ -8,10 +8,11 @@ export const StWrapperBlock = styled.div`
 
   border: 1px solid black;
 
-  overflow-y: scroll;
+  overflow-y: auto;
+  box-shadow: rgba(251, 110, 82, 0.2) 10px 0px 10px 0px;
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
     background-color: transparent;
     &:hover {
       background-color: grey;
