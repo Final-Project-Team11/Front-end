@@ -29,15 +29,17 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
   };
 
   // todos 정렬 - isDone false 를 위로, true 를 아래로
-  todos.sort((a, b) => {
-    if (a.isDone === b.isDone) {
-      return 0;
-    } else if (a.isDone === false) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+  if (todos.length !== 0) {
+    todos.sort((a, b) => {
+      if (a.isDone === b.isDone) {
+        return 0;
+      } else if (a.isDone === false) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
 
   return (
     <>
@@ -65,6 +67,7 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
           value={AddTodoState}
           setValue={setAddTodoState}
           onChange={setAddTodoHandler}
+          inputHandler={setOpenTodoInput}
         />
       )}
       <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>

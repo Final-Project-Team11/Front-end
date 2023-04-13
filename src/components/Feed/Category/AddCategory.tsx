@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
-import { AddCategoryProps } from './interfaces';
+import { AddCategoryProps, SentCategory } from './interfaces';
+import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
 
-const AddCategory = ({ value, onChange }: AddCategoryProps) => {
+const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryProps) => {
   // AddCategory 인풋 생기면 focus
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -10,6 +11,19 @@ const AddCategory = ({ value, onChange }: AddCategoryProps) => {
       inputRef.current.focus();
     }
   });
+
+  const { postCategory } = usePostCategory();
+  const category: SentCategory = {
+    category: value,
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      postCategory(category);
+      setValue('');
+      inputHandler(false);
+    }
+  };
 
   return (
     <UI.StCategoryInputBlock>
@@ -20,6 +34,7 @@ const AddCategory = ({ value, onChange }: AddCategoryProps) => {
         maxLength={10}
         value={value}
         onChange={onChange}
+        onKeyPress={handleKeyPress}
       />
     </UI.StCategoryInputBlock>
   );
