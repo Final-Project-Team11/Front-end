@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { getCookie } from '../auth/CookieUtils';
 
 const config: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER,
@@ -9,8 +10,8 @@ const instnace: AxiosInstance = axios.create(config);
 instnace.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   function (config) {
-    // const token = cookies.get("token")
-    // config.headers["Authorization"] = `${token}`;
+    const token = getCookie('token');
+    config.headers['Authorization'] = `${token}`;
     return config;
   },
 
