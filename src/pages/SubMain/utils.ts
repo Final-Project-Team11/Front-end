@@ -40,7 +40,7 @@ export function settingSchedule(schedule: ScheduleProps) {
     title: schedule?.title,
     start: today,
     end: addDate(today, 3),
-    body: schedule.userName + '/' + schedule.body,
+    body: schedule.userName + '/' + schedule.content,
     attendees: schedule.mention,
   };
 
@@ -188,5 +188,119 @@ export function initCalendar(tab: number): InitialCalendar[] {
         dragBackgroundColor: COLOR.MEETING_BAR,
       },
     ];
+  }
+}
+
+export function getCanlendarName(tab: number, id: string): string {
+  if (tab === 0) {
+    switch (id) {
+      case '0':
+        return '회의';
+      case '1':
+        return '기타';
+      case '2':
+        return '출장';
+      case '3':
+        return '미팅';
+
+      default:
+        return '회의';
+    }
+  } else {
+    switch (id) {
+      case '0':
+        return '휴가';
+      case '1':
+        return '반차';
+      case '2':
+        return '월차';
+      case '3':
+        return '병가';
+
+      default:
+        return '휴가';
+    }
+  }
+}
+
+interface postFormatProps {
+  url: string;
+  postInfo: ScheduleProps;
+}
+
+export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
+  if (tab === 0) {
+    const defaultFormat = {
+      startDay: schedule.startDay,
+      endDay: schedule.endDay,
+      title: schedule.title,
+      content: schedule.content,
+      ref: schedule.ref,
+      file: schedule.file,
+    };
+
+    switch (schedule.eventType) {
+      case '회의': {
+        const postData = {
+          url: 'meeting',
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+          },
+        };
+        return postData;
+      }
+
+      case '기타': {
+        const postData = {
+          url: 'other',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+      case '출장': {
+        const postData = {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+      case '미팅': {
+        const postData = {
+          url: 'meeting',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+
+      default:
+        return {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+    }
+  } else if (tab === 1) {
+    const postData = {
+      url: 'vacation',
+      postInfo: {
+        typeDetail: schedule.eventType,
+        startDay: schedule.startDay,
+        endDay: schedule.endDay,
+      },
+    };
+    return postData;
+  } else {
+    return {
+      url: 'vacation',
+      postInfo: { ...schedule },
+    };
   }
 }

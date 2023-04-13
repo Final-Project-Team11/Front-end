@@ -6,6 +6,10 @@ const sizes: interfaces.Sizes = {
     width: '300px',
     height: '50px',
   },
+  Detail: {
+    width: '100px',
+    height: '40px',
+  },
 };
 
 export const StButton = styled.button<interfaces.CssProps>`
@@ -19,4 +23,5 @@ export const StButton = styled.button<interfaces.CssProps>`
   color: ${({ color }) => (color ? color : 'yellow')};
   background: ${({ background }) => (background ? background : 'lightgray')};
   border: ${({ boarder }) => (boarder ? boarder : 'none')};
+  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : 'none')};
 `;

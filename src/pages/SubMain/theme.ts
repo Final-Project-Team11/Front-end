@@ -40,7 +40,7 @@ export const theme: Options['theme'] = {
     },
     pastDay: { color: '#999' },
     panelResizer: { border: '1px solid #ddd' },
-    dayGrid: { borderRight: '1px solid #ddd' },
+    dayGrid: { borderRight: 'none' },
     dayGridLeft: {
       width: '100px',
       backgroundColor: '',

@@ -5,8 +5,11 @@ export interface ScheduleProps {
   userName?: string;
   startDay?: Date;
   endDay?: Date;
-  body?: string;
+  content?: string;
   mention?: string[];
+  location?: string;
+  ref?: string;
+  file?: string;
 }
 
 export interface InitialCalendar {
