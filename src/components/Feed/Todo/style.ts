@@ -41,6 +41,7 @@ export const StCircleBlock = styled.div<TodoBoxStProps>`
   height: 16px;
   border-radius: 50%;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 export const StTestDeleteBlock = styled.div`
