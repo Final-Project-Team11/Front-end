@@ -10,19 +10,27 @@ const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryPro
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  });
+  }, []);
 
   const { postCategory } = usePostCategory();
   const category: SentCategory = {
     category: value,
   };
 
+  // Enter 누를 시 value값 있다면 post 요청, 인풋 비우며 닫음
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      postCategory(category);
-      setValue('');
-      inputHandler(false);
+      if (value !== '') {
+        postCategory(category);
+        setValue('');
+        inputHandler(false);
+      }
     }
+  };
+  // 인풋에서 포커스 사라지면 input 닫힘
+  const blurHandler = () => {
+    setValue('');
+    inputHandler(false);
   };
 
   return (
@@ -35,6 +43,7 @@ const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryPro
         value={value}
         onChange={onChange}
         onKeyPress={handleKeyPress}
+        onBlur={blurHandler}
       />
     </UI.StCategoryInputBlock>
   );

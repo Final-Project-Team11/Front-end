@@ -17,7 +17,7 @@ const AddTodo = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  });
+  }, []);
 
   const { postTodo } = usePostTodo();
 
@@ -28,13 +28,20 @@ const AddTodo = ({
     },
   };
 
-  // Enter 누를 시 post 요청, 인풋 비우며 닫음
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  // Enter 누를 시 value값 있다면 post 요청, 인풋 비우며 닫음
+  const pressEnterHandle = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      postTodo(todo);
-      setValue('');
-      inputHandler(false);
+      if (value !== '') {
+        postTodo(todo);
+        setValue('');
+        inputHandler(false);
+      }
     }
+  };
+  // 인풋에서 포커스 사라지면 input 닫힘
+  const blurHandler = () => {
+    setValue('');
+    inputHandler(false);
   };
 
   return (
@@ -46,7 +53,8 @@ const AddTodo = ({
         maxLength={10}
         value={value}
         onChange={onChange}
-        onKeyPress={handleKeyPress}
+        onKeyPress={pressEnterHandle}
+        onBlur={blurHandler}
       />
     </StTodoBlock>
   );
