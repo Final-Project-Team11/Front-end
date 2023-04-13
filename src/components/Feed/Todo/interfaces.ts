@@ -1,6 +1,9 @@
 export interface TodoBoxProps {
-  todo: string;
-  isDone: boolean;
+  todo: {
+    todoId: number;
+    todo: string;
+    isDone: boolean;
+  };
 }
 
 export interface TodoBoxStProps {

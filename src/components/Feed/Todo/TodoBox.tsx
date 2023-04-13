@@ -3,9 +3,16 @@ import { StTodoBlock, StTodoAreaBlock, StCircleBlock, StTestDeleteBlock } from '
 
 import { TodoBoxProps } from './interfaces';
 import { BsX } from 'react-icons/bs';
+import { useDeleteTodo } from '../../../api/hooks/Feed/useDeleteTodo';
 
-const TodoBox = ({ todo, isDone }: TodoBoxProps) => {
+const TodoBox = ({ todo }: TodoBoxProps) => {
   const [showDeleteBtn, setShowDeleteBtn] = useState<boolean>(false);
+
+  const { deleteTodo } = useDeleteTodo();
+
+  const deleteBtnHandler = (): void => {
+    deleteTodo(todo.todoId);
+  };
 
   return (
     <StTodoBlock
@@ -13,11 +20,11 @@ const TodoBox = ({ todo, isDone }: TodoBoxProps) => {
       onMouseLeave={() => setShowDeleteBtn(false)}
     >
       <StTodoAreaBlock>
-        <StCircleBlock isDone={isDone} />
-        {todo}
+        <StCircleBlock isDone={todo.isDone} />
+        {todo.todo}
       </StTodoAreaBlock>
       {showDeleteBtn && (
-        <StTestDeleteBlock>
+        <StTestDeleteBlock onClick={deleteBtnHandler}>
           <BsX />
         </StTestDeleteBlock>
       )}

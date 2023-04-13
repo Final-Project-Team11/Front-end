@@ -4,7 +4,7 @@ import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
 import { CategoryBoxProps } from './interfaces';
 import useInput from '../../../hooks/common/useInput';
-import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
+
 import { BsX } from 'react-icons/bs';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
@@ -59,7 +59,7 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
       </UI.StCategoryWrapper>
       <UI.StCategoryBlock>
         {todos?.map(todo => {
-          return <TodoBox key={todo.todoId} todo={todo.todo} isDone={todo.isDone} />;
+          return <TodoBox key={todo.todoId} todo={todo} />;
         })}
       </UI.StCategoryBlock>
       {openTodoInput && (
