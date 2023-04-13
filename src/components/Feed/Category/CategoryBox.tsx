@@ -6,6 +6,7 @@ import { CategoryBoxProps } from './interfaces';
 import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
+import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
@@ -41,6 +42,12 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
     });
   }
 
+  const { deleteCategory } = useDeleteCategory();
+
+  const deleteBtnHandler = () => {
+    deleteCategory(categoryId);
+  };
+
   return (
     <>
       <UI.StCategoryWrapper
@@ -52,7 +59,7 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
           <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
         {showCategoryDeleteBtn && (
-          <UI.StDeleteBlock>
+          <UI.StDeleteBlock onClick={deleteBtnHandler}>
             <BsX />
           </UI.StDeleteBlock>
         )}
