@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import instnace from '../../../axios/api';
+import { keys } from '../../utils/createQueryKey';
 
 interface Todo {
   todoId: number;
@@ -11,17 +13,17 @@ interface Feed {
   feed: {
     categoryId: number;
     categoryName: string;
-    todos: Todo[];
+    todos: Todo[] | [];
   }[];
   feedIsLoading: boolean;
 }
 
 export const useGetFeed = (): Feed => {
   const { data, isLoading } = useQuery({
-    queryKey: ['GET_POSTS'], //posts get요청 key
+    queryKey: [keys.GET_POSTS], //posts get요청 key
     queryFn: async () => {
-      const data = await axios.get('http://localhost:3001/feed');
-      return data.data;
+      const { data } = await instnace.get('/feed');
+      return data.feed;
     },
   });
 

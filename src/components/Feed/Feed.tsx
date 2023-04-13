@@ -28,24 +28,31 @@ const Feed = () => {
 
   const { feed, feedIsLoading } = useGetFeed();
 
-  if (feedIsLoading) {
+  if (feedIsLoading && !feed) {
     return <div>Loading...</div>;
   }
+
   return (
     <UI.StWrapperBlock>
       <FeedTitle onClick={categoryPlusHandler} />
       <UI.StFeedBlock>
-        {feed?.map((category: Category) => {
+        {feed.map((category: Category) => {
           return (
             <CategoryBox
               key={category.categoryId}
-              category={category.categoryName}
+              categoryName={category.categoryName}
+              categoryId={category.categoryId}
               todos={category.todos}
             />
           );
         })}
         {openCategoryInput && (
-          <AddCategory value={categoryState} onChange={categoryStateHandler} />
+          <AddCategory
+            value={categoryState}
+            setValue={setCategoryState}
+            onChange={categoryStateHandler}
+            inputHandler={setOpenCategoryInput}
+          />
         )}
       </UI.StFeedBlock>
     </UI.StWrapperBlock>
