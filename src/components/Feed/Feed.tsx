@@ -40,7 +40,8 @@ const Feed = () => {
           return (
             <CategoryBox
               key={category.categoryId}
-              category={category.categoryName}
+              categoryName={category.categoryName}
+              categoryId={category.categoryId}
               todos={category.todos}
             />
           );

@@ -7,7 +7,7 @@ import useInput from '../../../hooks/common/useInput';
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
 import { BsX } from 'react-icons/bs';
 
-const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
+const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput();
   const [showCategoryDeleteBtn, setShowCategoryDeleteBtn] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
       >
         <UI.StCategoryTitleBlock>
           <UI.StCircleBlock />
-          <UI.StCategoryH3>{category}</UI.StCategoryH3>
+          <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
         {showCategoryDeleteBtn && (
           <UI.StDeleteBlock>
@@ -68,6 +68,7 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
           setValue={setAddTodoState}
           onChange={setAddTodoHandler}
           inputHandler={setOpenTodoInput}
+          categoryId={categoryId}
         />
       )}
       <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>

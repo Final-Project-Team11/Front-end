@@ -1,5 +1,6 @@
 export interface CategoryBoxProps {
-  category: string;
+  categoryId: number;
+  categoryName: string;
   todos: { todoId: number; todo: string; isDone: boolean }[] | [];
 }
 

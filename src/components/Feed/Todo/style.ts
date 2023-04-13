@@ -49,3 +49,10 @@ export const StTestDeleteBlock = styled.div`
     cursor: pointer;
   }
 `;
+
+export interface SentTodo {
+  categoryId: number;
+  content: {
+    content: string;
+  };
+}

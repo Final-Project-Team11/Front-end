@@ -11,4 +11,6 @@ export interface AddTodoProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setValue: (value: string) => void;
+  inputHandler: (value: React.SetStateAction<boolean>) => void;
+  categoryId: number;
 }
