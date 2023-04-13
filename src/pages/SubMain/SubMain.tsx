@@ -54,7 +54,6 @@ export function SubMain({
   const detailRef = useRef<HTMLDivElement>(null);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
-  console.log('initialCalendars', initialCalendars);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const getCalInstance = useCallback(() => calendarRef.current?.getInstance?.(), []);
@@ -120,6 +119,17 @@ export function SubMain({
     console.log('Event Info : ', res);
     console.log('Event Info : ', res.title);
     console.groupEnd();
+
+    const newData = {
+      eventType: res.calendarId,
+      title: res.title,
+      startDay: res.start,
+      endDay: res.end,
+      body: res.body,
+      mention: res.attendees,
+    };
+    setClickData(newData);
+    setClickDetail(true);
   };
 
   const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = res => {
@@ -303,9 +313,11 @@ export function SubMain({
           title={ClickData?.title}
           startDay={ClickData?.startDay}
           endDay={ClickData?.endDay}
-          body={ClickData?.body}
+          body={ClickData?.content}
           mention={ClickData?.mention}
           detailRef={detailRef}
+          instance={getCalInstance()}
+          tab={tab}
         />
       )}
     </div>
