@@ -60,3 +60,6 @@ body {
     justify-content: center;
   }
 
+  .toastui-calendar-daygrid-cell+.toastui-calendar-daygrid-cell {
+    border-left: none;
+  }
