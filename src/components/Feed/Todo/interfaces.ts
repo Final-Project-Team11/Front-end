@@ -17,3 +17,10 @@ export interface AddTodoProps {
   inputHandler: (value: React.SetStateAction<boolean>) => void;
   categoryId: number;
 }
+
+export interface SentTodo {
+  categoryId: number;
+  content: {
+    content: string;
+  };
+}
