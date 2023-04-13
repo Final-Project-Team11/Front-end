@@ -5,12 +5,19 @@ const StContainer = styled.div`
   border-top: 3px solid ${COLOR.DETAIL_GRAY};
 `;
 
-const StTitleBlock = styled.div`
+const StTitleContentBlock = styled.div`
   display: flex;
   gap: 30px;
   line-height: 50px;
   font-size: 20px;
+  align-items: center;
   text-align: center;
+`;
+
+const StTitleBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StContentBlock = styled.div`
@@ -24,4 +31,4 @@ const StMentionBlock = styled.div`
   height: 50px;
 `;
 
-export { StContainer, StTitleBlock, StContentBlock, StMentionBlock };
+export { StContainer, StTitleBlock, StContentBlock, StMentionBlock, StTitleContentBlock };
