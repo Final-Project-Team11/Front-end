@@ -1,9 +1,10 @@
 export interface TagElement {
   eventId: number;
+  enrollDay: string;
   title: string;
   userName: string;
   mentionId: number;
-  isChecked: boolean;
+  isChecked: 0 | 1;
   eventType: string;
 }
 
@@ -12,5 +13,5 @@ export interface TagsProps {
 }
 
 export interface CssProps {
-  isChecked: boolean;
+  isChecked: 0 | 1;
 }

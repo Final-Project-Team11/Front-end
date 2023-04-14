@@ -1,26 +1,45 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import instnace from '../../../axios/api';
 import { keys } from '../../utils/createQueryKey';
+import { AxiosError } from 'axios';
 
-export const fetchMentionedSchedules = async ({ pageParam = 1 }) => {
-  const response = await instnace.get(
-    `/mentionedSchedule?pageSize=25&pageNum=${pageParam}`
-  );
-  return response.data;
-};
+interface Mention {
+  enrollDay: string;
+  eventId: number;
+  eventType: string;
+  file: string;
+  isChecked: 0 | 1;
+  mentionId: number;
+  title: string;
+  userName: string;
+}
+
+interface PageData {
+  mention: Mention[];
+  pageNum: number;
+}
 
 export const useMentionedSchedules = () => {
-  const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
-    [keys.GET_TAG], // 쿼리 키
-    fetchMentionedSchedules, // API 호출 함수
-    {
-      getNextPageParam: (lastPage, pages) => {
-        // 다음 페이지를 가져오는 로직입니다. lastPage에서 pageNum을 추출하여 1 증가시킵니다.
-        const nextPageNum = lastPage.pageNum + 1;
-        return nextPageNum;
-      },
-    }
-  );
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+    PageData,
+    AxiosError,
+    PageData
+  >({
+    queryKey: [keys.GET_TAG], // 쿼리 키
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await instnace.get(
+        `/mentionedSchedule?pageSize=25&pageNum=${pageParam}`
+      );
+      return { ...response.data, pageNum: pageParam };
+    }, // API 호출 함수
+    getNextPageParam: lastPage => {
+      // 다음 페이지를 가져오는 로직입니다. lastPage에서 pageNum을 추출하여 1 증가시킵니다.
+      const nextPageNum = lastPage.pageNum + 1;
 
-  return { data, fetchNextPage, hasNextPage, isLoading, isError };
+      // 만약 lastPage의 데이터가 비어 있다면, 'undefined'를 반환하여 다음 페이지를 요청하지 않도록 합니다.
+      return lastPage.mention && lastPage.mention.length > 0 ? nextPageNum : undefined;
+    },
+  });
+
+  return { data, fetchNextPage, hasNextPage };
 };

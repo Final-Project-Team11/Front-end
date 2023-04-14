@@ -4,12 +4,12 @@ import { CssProps } from './interfaces';
 export const StTagsBlock = styled.div<CssProps>`
   /* background-color: yellow; */
   width: 100%;
-  height: 30px;
+  height: fit-content;
 
   overflow-x: hidden;
   overflow-y: hidden;
 
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@ export const StTagsBlock = styled.div<CssProps>`
           color: red;
           font-weight: bold;
         `
-      : ''}
+      : null}
 `;
 
 export const StTagsSpan = styled.span`
