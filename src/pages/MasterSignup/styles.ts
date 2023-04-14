@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StBlock = styled.div`
+export const StForm = styled.form`
   width: 601px;
   height: 964px;
 
