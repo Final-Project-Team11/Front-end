@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
-export const StTagBlock = styled.div`
+interface TagBlockCssProps {
+  types: 'MyPage' | 'MainPage';
+}
+
+export const StTagBlock = styled.div<TagBlockCssProps>`
   display: flex;
   flex-direction: column;
 
   width: 260px;
-  height: 700px;
+  height: ${({ types }) => (types === 'MyPage' ? '700px' : '340px')};
 
   padding: 15px;
   box-sizing: border-box;

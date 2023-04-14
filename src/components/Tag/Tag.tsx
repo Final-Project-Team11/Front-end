@@ -44,7 +44,7 @@ const Tag = () => {
   console.log(tags);
 
   return (
-    <UI.StTagBlock>
+    <UI.StTagBlock types="MainPage">
       📌
       <UI.StDeviderBlock />
       <UI.StFeedBlock ref={targetDiv}>
