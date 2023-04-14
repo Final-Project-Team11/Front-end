@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-
-interface TagBlockCssProps {
-  types: 'MyPage' | 'MainPage';
-}
+import { TagBlockCssProps } from './interfaces';
 
 export const StTagBlock = styled.div<TagBlockCssProps>`
   display: flex;

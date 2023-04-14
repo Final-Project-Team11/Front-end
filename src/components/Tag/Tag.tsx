@@ -3,8 +3,9 @@ import * as UI from './style';
 import Tags from './Tags/Tags';
 import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
 import { TagElement } from './Tags/interfaces';
+import { TagBlockCssProps } from './interfaces';
 
-const Tag = () => {
+const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
   const { data, fetchNextPage, hasNextPage } = useMentionedSchedules();
 
@@ -39,7 +40,7 @@ const Tag = () => {
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
 
   return (
-    <UI.StTagBlock types="MainPage">
+    <UI.StTagBlock types={types}>
       📌
       <UI.StDeviderBlock />
       <UI.StFeedBlock ref={targetDiv}>
