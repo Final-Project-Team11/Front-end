@@ -22,13 +22,11 @@ const MasterSignup = () => {
   });
 
   const handleAddressSelected = (postcode: string, roadAddress: string) => {
-    const fullAddress = `${postcode} ${roadAddress} ${detailAddress}`;
+    const fullAddress = `${postcode} ${roadAddress}`;
     setSignInfo(old => ({
       ...old,
       address: fullAddress,
     }));
-    console.log('우편번호', postcode);
-    console.log('도로명', roadAddress);
   };
 
   const [isValid, setIsValid] = React.useState<boolean | null>(false);
