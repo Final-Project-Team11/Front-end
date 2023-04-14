@@ -29,7 +29,6 @@ instnace.interceptors.response.use(
 
   // 오류 응답을 내보내기 전 수행되는 함수
   function (error) {
-    console.log(error);
     return Promise.reject(error);
   }
 );

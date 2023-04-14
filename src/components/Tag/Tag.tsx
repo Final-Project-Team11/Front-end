@@ -35,13 +35,8 @@ const Tag = () => {
     }
   }, [handleScroll]);
 
-  if (data) {
-    console.log(data.pages);
-  }
-
   // data 존재 시
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
-  console.log(tags);
 
   return (
     <UI.StTagBlock types="MainPage">

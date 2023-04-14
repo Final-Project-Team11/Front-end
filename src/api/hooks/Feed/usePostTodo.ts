@@ -22,13 +22,7 @@ export const usePostTodo = () => {
       return data.data;
     },
     onSuccess: data => {
-      console.log(data);
       queryClient.invalidateQueries([keys.GET_POSTS]);
-    },
-    onError: (error: AxiosError) => {
-      if (error.response) {
-        console.log((error.response.data as { errorMessage: string }).errorMessage);
-      }
     },
   });
 
