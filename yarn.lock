@@ -1984,6 +1984,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/daum-postcode@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/daum-postcode/-/daum-postcode-2.0.0.tgz#26ac1bd033d845e90e6bd6ddba398be806717e3f"
+  integrity sha512-QIbzoOpwD/+AjwB0pq1L6kwjPkzDMQFCM+BTTZv+oNyxf245BQIc3wjKfd+KH629jNvuy+Dugqq5DsiTdeET4Q==
+
 "@types/dompurify@^2.3.3":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-2.4.0.tgz#fd9706392a88e0e0e6d367f3588482d817df0ab9"
@@ -8267,6 +8272,11 @@ react-calendar@^4.2.1:
     clsx "^1.2.1"
     get-user-locale "^2.2.1"
     prop-types "^15.6.0"
+
+react-daum-postcode@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-daum-postcode/-/react-daum-postcode-3.1.1.tgz#8d349a45177cc88cc69e9f94dcc56ebc41a1d420"
+  integrity sha512-IFlC8XBSK+uobSIBHaWlxeecYpv9RhCFNu4YJ3+CrfGyEVdc4+yaaUH6BIfJbTZOybVx0V3s4nUeAEsssXBNJg==
 
 react-dev-utils@^12.0.1:
   version "12.0.1"
