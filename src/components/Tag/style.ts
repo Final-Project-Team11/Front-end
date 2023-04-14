@@ -20,3 +20,15 @@ export const StDeviderBlock = styled.div`
   height: 0;
   border: 1px solid orange;
 `;
+
+export const StFeedBlock = styled.div`
+  /* background-color: green; */
+  width: 100%;
+  height: 100%;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;

@@ -8,20 +8,9 @@ export const StWrapperBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* border: 1px solid black; */
+  border: 1px solid black;
 
   box-shadow: rgba(246, 211, 211, 0.4) 4px 0px 9px -2px;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-    background-color: transparent;
-    &:hover {
-      background-color: grey;
-    }
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: red;
-  }
 `;
 
 export const StFeedBlock = styled.div`

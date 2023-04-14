@@ -35,15 +35,15 @@ const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
   switch (type) {
     case 'Myfile':
       sentQuery = 'Myfile';
-      console.log(sentQuery);
+      // console.log(sentQuery);
       break;
     case 'meeting':
       sentQuery = 'meeting';
-      console.log(sentQuery);
+      // console.log(sentQuery);
       break;
     case 'report':
       sentQuery = 'report';
-      console.log(sentQuery);
+      // console.log(sentQuery);
       break;
     default:
       break;
