@@ -3,6 +3,7 @@ export interface InputProps {
   children?: React.ReactNode;
   Bgcolor?: string;
   type?: string;
+  name?: string;
   placeholder?: string;
   inputId?: string;
   value?: string;
