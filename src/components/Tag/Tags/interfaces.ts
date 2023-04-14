@@ -1,18 +1,16 @@
-export interface TagsProps {
-  eventId?: number;
-  file?: string;
+export interface TagElement {
+  eventId: number;
   title: string;
-  startDay?: string;
-  endDay?: string;
-  startTime?: string;
   userName: string;
-  isChecked?: Type['isChecked'];
+  mentionId: number;
+  isChecked: boolean;
+  eventType: string;
 }
 
-export interface Type {
-  isChecked?: boolean;
+export interface TagsProps {
+  tag: TagElement;
 }
 
 export interface CssProps {
-  isChecked: Type['isChecked'];
+  isChecked: boolean;
 }
