@@ -95,5 +95,6 @@ export const StCategoryInput = styled.input`
   border: none;
   color: white;
   font-size: 20px;
+  outline: none;
 `;
 /////////////////////////////////

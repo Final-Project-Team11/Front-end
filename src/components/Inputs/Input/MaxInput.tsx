@@ -14,7 +14,9 @@ const MaxInput = ({
 }: InputProps) => {
   return (
     <StColumnBlock types={types}>
-      <StInputLabel htmlFor={inputId}>{children}</StInputLabel>
+      <StInputLabel types={types} htmlFor={inputId}>
+        {children}
+      </StInputLabel>
       <StColumnInput
         id={inputId}
         types={types}

@@ -18,7 +18,6 @@ const Feed = () => {
     }
     // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
     else if (openCategoryInput === true && categoryState.length !== 0) {
-      console.log('value 있음, 쿼리동작');
       setCategoryState('');
       setOpenCategoryInput(false);
     }
@@ -28,9 +27,10 @@ const Feed = () => {
 
   const { feed, feedIsLoading } = useGetFeed();
 
-  if (feedIsLoading) {
+  if (feedIsLoading && !feed) {
     return <div>Loading...</div>;
   }
+
   return (
     <UI.StWrapperBlock>
       <FeedTitle onClick={categoryPlusHandler} />
@@ -39,13 +39,19 @@ const Feed = () => {
           return (
             <CategoryBox
               key={category.categoryId}
-              category={category.categoryName}
+              categoryName={category.categoryName}
+              categoryId={category.categoryId}
               todos={category.todos}
             />
           );
         })}
         {openCategoryInput && (
-          <AddCategory value={categoryState} onChange={categoryStateHandler} />
+          <AddCategory
+            value={categoryState}
+            setValue={setCategoryState}
+            onChange={categoryStateHandler}
+            inputHandler={setOpenCategoryInput}
+          />
         )}
       </UI.StFeedBlock>
     </UI.StWrapperBlock>

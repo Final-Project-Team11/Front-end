@@ -27,9 +27,10 @@ export const StTodoAreaBlock = styled.div`
 export const StTodoInput = styled.input`
   width: 60%;
   margin-right: 25%;
-  border: 0.5px solid #dc3232;
+  border: none;
   border-radius: 5px;
   font-size: 16px;
+  outline: none;
 `;
 
 export const StCircleBlock = styled.div<TodoBoxStProps>`
@@ -41,6 +42,7 @@ export const StCircleBlock = styled.div<TodoBoxStProps>`
   height: 16px;
   border-radius: 50%;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 export const StTestDeleteBlock = styled.div`

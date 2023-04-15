@@ -7,10 +7,19 @@ const Button = ({
   background,
   size,
   color,
+  borderRadius,
   children,
+  onClick,
 }: interfaces.ButtonProps) => {
   return (
-    <StButton boarder={boarder} background={background} color={color} size={size}>
+    <StButton
+      boarder={boarder}
+      background={background}
+      color={color}
+      size={size}
+      borderRadius={borderRadius}
+      onClick={onClick}
+    >
       {children}
     </StButton>
   );

@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Category from './FileCategory';
-import { StUploadedTab } from './style';
+import { UploadedFileTabProps, UploadedFileList } from './interfaces';
 
-const UploadedFileTab = () => {
+const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
+  let sentQuery;
+
+  switch (type) {
+    case 'Myfile':
+      sentQuery = 'Myfile';
+      break;
+    case 'meeting':
+      sentQuery = 'meeting';
+      break;
+    case 'report':
+      sentQuery = 'report';
+      break;
+    default:
+      break;
+  }
+
   return (
-    <StUploadedTab>
-      <Category>🗂️</Category>
-      <Category>🗂️</Category>
-      <Category>🗂️</Category>
-    </StUploadedTab>
+    <Category
+    // fileList={fileList}
+    >
+      {icon}
+    </Category>
   );
 };
 
