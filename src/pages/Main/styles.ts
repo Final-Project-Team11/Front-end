@@ -19,7 +19,7 @@ const StTabButton = styled.button<StyleProps>`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_RED : COLOR.VACATION_BLUE};
+    tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
 
   opacity: 1;
   &:hover {
