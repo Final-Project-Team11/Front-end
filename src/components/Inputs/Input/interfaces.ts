@@ -9,12 +9,14 @@ export interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export interface Type {
-  types: 'max' | 'half';
+  types: 'max' | 'half' | 'document';
 }
 
 export interface InputStyle {
   [key: string]: {
     width: string;
+    height?: string;
+    fontSize?: string;
   };
 }
 

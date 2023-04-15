@@ -8,27 +8,39 @@ const inputStyle: InputStyle = {
   half: {
     width: '280px',
   },
+  document: {
+    width: '100%',
+    height: '3rem',
+    fontSize: '1.6rem',
+  },
 };
 
 export const StColumnBlock = styled.div<CssProps>`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StInputLabel = styled.label<CssProps>`
+  font-size: 16px;
+
+  ${({ types }) =>
+    types &&
+    css`
+      font-size: ${inputStyle[types].fontSize};
+    `};
+`;
+
+export const StColumnInput = styled.input<CssProps>`
   ${({ types }) =>
     types &&
     css`
       ${inputStyle[types]}
     `};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
 
-export const StInputLabel = styled.label`
-  font-size: 16px;
-`;
+  box-sizing: border-box;
+  outline: none;
 
-export const StColumnInput = styled.input<CssProps>`
-  height: 16px;
-  padding: 10px 10px 10px 10px;
-  &:focus {
+  /* &:focus {
     background-color: ${({ Bgcolor }) => Bgcolor && Bgcolor};
-  }
+  } */
 `;
