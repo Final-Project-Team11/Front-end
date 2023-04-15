@@ -1,23 +1,27 @@
 /* eslint-disable no-console */
 //외부
 import type { EventObject, ExternalEventTypes, Options } from '@toast-ui/calendar';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
 import { ScheduleProps } from './interfaces';
 import { TZDate } from '@toast-ui/calendar';
 import type { ChangeEvent, MouseEvent } from 'react';
 import { switchCase } from '@babel/types';
+import cheerio from 'cheerio';
 
 //내부
 import { addDate, addHours, initCalendar, settingSchedule, subtractDate } from './utils';
 import Calendar from '../../components/ToastCalendar/Calendar';
 import useGetMain from '../../api/hooks/useGetMain';
+import { CalendarContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
 import Detail from './Detail/Detail';
+
 import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
+import TodaySchedules from './TodayScheduels/TodaySchedules';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -36,31 +40,25 @@ const viewModeOptions = [
   },
 ];
 
-export function SubMain({
-  view,
-  tab: tab,
-  data,
-}: {
-  view: ViewType;
-  tab: number;
-  data: Partial<EventObject>[] | undefined;
-}) {
+export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   const calendarRef = useRef<typeof Calendar>(null);
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
-  const [ClickData, setClickData] = useState<ScheduleProps>();
+  const [clickData, setClickData] = useState<ScheduleProps>();
+  const [todayData, setTodayData] = useState<number>(0);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
-  const [ClickDetail, setClickDetail] = useState(false);
+  const [clickDetail, setClickDetail] = useState(false);
   const detailRef = useRef<HTMLDivElement>(null);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const getCalInstance = useCallback(() => calendarRef.current?.getInstance?.(), []);
+  const schedules = useContext<ScheduleProps[]>(CalendarContext);
 
   useEffect(() => {
-    setInitialEvents(data);
-  }, [data]);
+    setInitialEvents(schedules);
+  }, [schedules]);
 
   const updateRenderRangeText = useCallback(() => {
     const calInstance = getCalInstance();
@@ -228,24 +226,39 @@ export function SubMain({
   };
 
   const clickBkHandler = (e: globalThis.MouseEvent) => {
-    console.log('clickBkHandler', e.target);
     const node: Node | null = e.target as Node | null;
     if (
-      !(node instanceof Element && node.tagName === 'SPAN') &&
-      ClickDetail === true &&
+      !(
+        node instanceof Element &&
+        node.className === 'toastui-calendar-weekday-event-title'
+      ) &&
+      clickDetail === true &&
       !detailRef.current?.contains(node)
     ) {
       setClickDetail(false);
-      console.log('test');
+    }
+
+    if (
+      node instanceof Element &&
+      node.className === 'toastui-calendar-grid-cell-header'
+    ) {
+      const html = node.outerHTML;
+      const $ = cheerio.load(html);
+      const dateSpan = $(
+        'span.toastui-calendar-weekday-grid-date.toastui-calendar-template-monthGridHeader'
+      );
+
+      const dateValue = dateSpan.text();
+      console.log('dateValue', dateValue);
+      setTodayData(Number(dateValue));
     }
   };
-
   useEffect(() => {
     window.addEventListener('click', clickBkHandler);
     return () => {
       window.removeEventListener('click', clickBkHandler);
     };
-  }, [ClickDetail]);
+  }, [clickDetail]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -306,20 +319,7 @@ export function SubMain({
           />
         </div>
       </div>
-      {ClickDetail === true && (
-        <Detail
-          eventId={ClickData?.eventId}
-          eventType={ClickData?.eventType}
-          title={ClickData?.title}
-          startDay={ClickData?.startDay}
-          endDay={ClickData?.endDay}
-          body={ClickData?.content}
-          mention={ClickData?.mention}
-          detailRef={detailRef}
-          instance={getCalInstance()}
-          tab={tab}
-        />
-      )}
+      <TodaySchedules todayData={todayData} />
     </div>
   );
 }
