@@ -14,20 +14,20 @@ const StCardBlock = styled.div<StyleProps>`
   width: 350px;
   height: 100px;
   background-color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_RED : COLOR.VACATION_BLUE};
+    tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
 `;
 const StContainer = styled.div<StyleProps>`
   width: 100%;
   height: 100px;
   border-bottom: 3px solid
-    ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_RED : COLOR.VACATION_BLUE)};
+    ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 `;
 
 const StDateBlock = styled.div<StyleProps>`
   font-size: 50px;
   font-weight: bold;
   display: flex;
-  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_RED : COLOR.VACATION_BLUE)};
+  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 `;
 
 const StYearBlock = styled.div`
