@@ -8,15 +8,16 @@ const useGetMain = (type: number) => {
     queryKey: [keys.GET_MAIN, type],
     queryFn: async () => {
       if (type === 0) {
-        const data = await api.get('/totalSchedule/0');
-        console.log('schedule', data);
+        const data = await api.get('/totalSchedule/2');
         return data.data.main;
       } else if (type === 1) {
-        console.log('vacation');
-        const data = await api.get('/totalVacation/0');
+        const data = await api.get('/totalVacation/2');
 
-        return data.data.vacation;
+        return data.data.main.vacation;
       }
+    },
+    onSuccess: () => {
+      console.log('success');
     },
   });
   return { data, isLoading };

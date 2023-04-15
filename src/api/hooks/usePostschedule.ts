@@ -5,8 +5,8 @@ import { keys } from '../utils/createQueryKey';
 
 interface Paylaod {
   schedule?: {
-    startDay?: Date;
-    endDay?: Date;
+    startDay?: string;
+    endDay?: string;
     title: string;
     location?: string;
     content?: string;
@@ -15,8 +15,8 @@ interface Paylaod {
   };
 
   other?: {
-    startDay?: Date;
-    endDay?: Date;
+    startDay?: string;
+    endDay?: string;
     title: string;
     content?: string;
     ref?: string; //멘션
@@ -24,8 +24,8 @@ interface Paylaod {
   };
 
   meeting?: {
-    startDay?: Date;
-    endDay?: Date;
+    startDay?: string;
+    endDay?: string;
     title: string;
     location?: string;
     content?: string;
@@ -40,10 +40,10 @@ interface Paylaod {
     file?: string;
   };
 
-  vacation?: {
+  postInfo?: {
     typeDetail?: string; //휴가 종류 or 일정 종류
-    startDay?: Date;
-    endDay?: Date;
+    startDay?: string;
+    endDay?: string;
   };
 
   url: string;
@@ -54,12 +54,14 @@ const usePostschedule = () => {
 
   const mutation = useMutation({
     mutationFn: async (payload: Paylaod) => {
-      const data = api.post(`/${payload.url}`, payload.vacation);
+      const data = api.post(`/${payload.url}`, payload.postInfo);
+      console.log('datapost', data);
       return data;
     },
 
     onSuccess: () => {
       console.log('success');
+
       queryClient.invalidateQueries([keys.GET_MAIN, 1]);
     },
   });
