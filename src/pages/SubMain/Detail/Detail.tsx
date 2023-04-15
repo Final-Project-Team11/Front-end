@@ -11,18 +11,20 @@ import usePostschedule from '../../../api/hooks/usePostschedule';
 import { postFormat } from '../utils';
 
 interface ScheduleProps {
-  eventId?: number;
-  eventType?: string;
-  title?: string;
-  username?: string;
-  startDay?: Date;
-  endDay?: Date;
-  body?: string;
-  mention?: string[];
-  detailRef?: any;
-  tab: number;
+  props: {
+    eventId?: number;
+    eventType?: string;
+    title?: string;
+    username?: string;
+    startDay?: Date;
+    endDay?: Date;
+    body?: string;
+    mention?: string[];
+    detailRef?: any;
+    tab: number;
+  };
 }
-function Detail(props: ScheduleProps) {
+function Detail({ props }: ScheduleProps) {
   const mutation = usePostschedule();
   const SaveClickHandler = () => {
     const newData = postFormat(props.tab, props);
@@ -39,15 +41,15 @@ function Detail(props: ScheduleProps) {
         <styles.StTitleContentBlock>
           <styles.StMarkBlock />
           <styles.StPeriodBlock>
-            <span>{props.startDay?.getFullYear().toString().slice(2, 4)}</span>
+            <span>{props.startDay?.getFullYear()}</span>
             <span>/</span>
             <span>{props.startDay && props.startDay?.getMonth() + 1}</span>
             <span>/</span>
             <span>{props.startDay?.getDate()}</span>
-            {Number(props.endDay?.getDate()) - Number(props.startDay?.getDate()) > 1 && (
+            {Number(props.endDay?.getDate()) - Number(props.startDay?.getDate()) > 0 && (
               <>
                 <span>~</span>
-                <span>{props.endDay?.getFullYear().toString().slice(2, 4)}</span>
+                <span>{props.endDay?.getFullYear()}</span>
                 <span>/</span>
                 <span>{props.endDay && props.endDay?.getMonth() + 1}</span>
                 <span>/</span>
@@ -79,6 +81,11 @@ function Detail(props: ScheduleProps) {
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
+        <styles.StMarkNameBlcok>
+          <styles.StMarkBlock />
+          <span>출장지</span>
+        </styles.StMarkNameBlcok>
+
         <styles.StTextArea
           defaultValue={props.body?.split('/')[1]}
           placeholder="내용을 입력해주세요"

@@ -57,6 +57,13 @@ const StMarkBlock = styled.div`
   margin-left: 10px;
 `;
 
+const StMarkNameBlcok = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
 const StPeriodBlock = styled.div`
   display: flex;
   gap: 3px;
@@ -74,4 +81,5 @@ export {
   StInput,
   StMarkBlock,
   StPeriodBlock,
+  StMarkNameBlcok,
 };

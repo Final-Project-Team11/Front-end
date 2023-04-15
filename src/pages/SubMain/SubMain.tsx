@@ -319,7 +319,8 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
           />
         </div>
       </div>
-      <TodaySchedules todayData={todayData} />
+      <Detail props={{ ...clickData, tab: tab }} />
+      {/* <TodaySchedules todayData={todayData} /> */}
     </div>
   );
 }
