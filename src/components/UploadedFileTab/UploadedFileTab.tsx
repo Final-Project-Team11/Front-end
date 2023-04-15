@@ -32,8 +32,6 @@ const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
 
   const tags = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
 
-  console.log(tags);
-
   return (
     <UI.StUploadedBlock>
       {icon}
@@ -41,10 +39,7 @@ const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
       <UI.StInsideBlock ref={targetDiv}>
         {tags.map((tag: UploadedFileList) => {
           return (
-            <UI.StUploadedFileBlock
-              key={tag.eventId}
-              onClick={() => console.log(tag.eventType)}
-            >
+            <UI.StUploadedFileBlock key={tag.eventId}>
               <UI.StNameDateBlock>
                 <UI.StContentSpan>😵‍💫 | {tag.userName}</UI.StContentSpan>
                 <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan>
