@@ -8,7 +8,7 @@ import { useCompanyIdValidation } from './hooks/useCompanyIdValidation';
 import { useSignup } from './hooks/useSignup';
 import { usePasswordCheck } from './hooks/usePasswordCheck';
 import axios from 'axios';
-import DaumAddressAPI from './DaumAddressAPI';
+import DaumAddressAPI from './hooks/DaumAddressAPI';
 
 const MasterSignup = () => {
   const [signInfo, setSignInfo] = React.useState<SignupInfo>({
@@ -89,7 +89,6 @@ const MasterSignup = () => {
 
   // 아이디 확인
   const checkCompanyIdHandler = (item: string) => {
-    console.log('아이템', item);
     if (validcompanyId(item)) {
       checkCompanyId.mutate(item);
     } else {
@@ -102,14 +101,12 @@ const MasterSignup = () => {
   // 회원가입 버튼 클릭 시
   const submitSignInfoHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('1차확인', signInfo);
     const newSignInfo = {
       ...signInfo,
       address: signInfo.address + detailAddress,
     };
     if (companyIdValidation && validPassword(signInfo.password)) {
       signup.mutate(newSignInfo);
-      console.log('2차확인', newSignInfo);
     } else {
       alert('가입에 실패하였습니다 입력한 내용을 확인해주세요');
     }
@@ -148,7 +145,7 @@ const MasterSignup = () => {
             {isValid ? '사업자번호가 유효합니다.' : '사업자번호가 유효하지 않습니다.'}
           </p>
         )}
-        <DaumAddressAPI onAddressSelected={handleAddressSelected} />
+        <DaumAddressAPI selectedAddressHandler={handleAddressSelected} />
         <MaxInput
           types="max"
           type="text"
