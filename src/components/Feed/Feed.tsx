@@ -36,7 +36,7 @@ const Feed = () => {
     <UI.StWrapperBlock>
       <FeedTitle onClick={categoryPlusHandler} />
       <UI.StFeedBlock>
-        {feed.map((category: Category) => {
+        {feed?.map((category: Category) => {
           return (
             <CategoryBox
               key={category.categoryId}
