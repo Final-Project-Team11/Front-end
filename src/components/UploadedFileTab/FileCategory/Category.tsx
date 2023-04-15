@@ -10,50 +10,6 @@ const Category = ({ fileList, children }: CategoryProps) => {
         <UI.StDeviderBlock />
         <UI.StInsideBlock>
           <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
-            <UI.StContentSpan>`😵‍💫 | 이름asdf`</UI.StContentSpan>
-            <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
-          </UI.StUploadedFileBlock>
-          <UI.StUploadedFileBlock>
             <UI.StContentSpan>`😵‍💫 | 이름12341234`</UI.StContentSpan>
             <UI.StContentSpan>`📎 | 파일이름`</UI.StContentSpan>
           </UI.StUploadedFileBlock>

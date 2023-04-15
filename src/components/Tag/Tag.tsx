@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import Tags from './Tags/Tags';
 import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';

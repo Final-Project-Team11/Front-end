@@ -18,12 +18,12 @@ const MyPage = () => {
           <Feed />
           <Tag types="MyPage" />
           <MiddleArea>
-            <UploadedFileTab type="Myfile" icon="📕" />
-            <UploadedFileTab type="meeting" icon="📗" />
+            <UploadedFileTab type="myfiles" icon="📕" />
+            <UploadedFileTab type="meetingfiles" icon="📗" />
           </MiddleArea>
           <MiddleArea>
             <VacationTab />
-            <UploadedFileTab type="report" icon="📘" />
+            <UploadedFileTab type="reportfiles" icon="📘" />
           </MiddleArea>
         </MainArea>
       </Wrapper>

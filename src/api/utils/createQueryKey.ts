@@ -5,6 +5,6 @@ export const keys = {
 
   GET_POSTS: 'GET_POSTS',
   GET_TAG: 'GET_POST_ONE',
-  // GET_USERNAME: ["GET_USENAME"],
+  GET_REPORT_FILE: 'GET_REPORT_FILE',
   // GET_MYPOST: ["GET_MYPOST"],
 };
