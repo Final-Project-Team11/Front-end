@@ -16,7 +16,7 @@ const MyPage = () => {
         </Header>
         <MainArea>
           <Feed />
-          <Tag />
+          <Tag types="MyPage" />
           <MiddleArea>
             <UploadedFileTab type="Myfile" icon="📕" />
             <UploadedFileTab type="meeting" icon="📗" />
