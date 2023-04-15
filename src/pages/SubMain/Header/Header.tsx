@@ -1,34 +1,27 @@
 import React from 'react';
 import { HeaderProps } from './interfaces';
-import {
-  StWrap,
-  StCardBlock,
-  StContainer,
-  StDateBlock,
-  StYearBlock,
-  StMonthBlock,
-} from './styles';
+import * as styles from './styles';
 
 function Header(porps: HeaderProps) {
   return (
-    <StWrap>
-      <StCardBlock tab={porps.tab} />
-      <StContainer tab={porps.tab}>
-        <StDateBlock tab={porps.tab}>
-          <StYearBlock>
+    <styles.StWrap>
+      <styles.StCardBlock tab={porps.tab} />
+      <styles.StContainer tab={porps.tab}>
+        <styles.StDateBlock tab={porps.tab}>
+          <styles.StYearBlock>
             {porps.selectedDateRangeText.toString().split('-').splice(0, 1)}/
-          </StYearBlock>
-          <StMonthBlock>
+          </styles.StYearBlock>
+          <styles.StMonthBlock>
             {porps.selectedDateRangeText
               .toString()
               .split('-')
               .splice(1, 2)
               .join('')
               .padStart(2, '0')}
-          </StMonthBlock>
-        </StDateBlock>
-      </StContainer>
-    </StWrap>
+          </styles.StMonthBlock>
+        </styles.StDateBlock>
+      </styles.StContainer>
+    </styles.StWrap>
   );
 }
 

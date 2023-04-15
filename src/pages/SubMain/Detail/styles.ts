@@ -31,4 +31,47 @@ const StMentionBlock = styled.div`
   height: 50px;
 `;
 
-export { StContainer, StTitleBlock, StContentBlock, StMentionBlock, StTitleContentBlock };
+const StButtonBlock = styled.div``;
+
+const StTextArea = styled.textarea`
+  width: 100%;
+  border: none;
+  height: 100%;
+  outline: none;
+  font-size: 20px;
+  resize: none;
+`;
+
+const StInput = styled.input`
+  border: none;
+  font-size: 20px;
+
+  outline: none;
+`;
+
+const StMarkBlock = styled.div`
+  width: 13px;
+  height: 30px;
+  background-color: ${COLOR.SCHEDULE_BLUE};
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+
+const StPeriodBlock = styled.div`
+  display: flex;
+  gap: 3px;
+  font-weight: bold;
+`;
+
+export {
+  StContainer,
+  StTitleBlock,
+  StContentBlock,
+  StMentionBlock,
+  StTitleContentBlock,
+  StButtonBlock,
+  StTextArea,
+  StInput,
+  StMarkBlock,
+  StPeriodBlock,
+};

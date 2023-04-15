@@ -1,11 +1,6 @@
 import React, { useRef } from 'react';
-import {
-  StContainer,
-  StTitleBlock,
-  StContentBlock,
-  StMentionBlock,
-  StTitleContentBlock,
-} from './styles';
+import * as styles from './styles';
+
 import styled from 'styled-components';
 import { COLOR } from '../../../constants/colors';
 import Button from '../../../components/Button/Button';
@@ -25,13 +20,13 @@ interface ScheduleProps {
   body?: string;
   mention?: string[];
   detailRef?: any;
-  instance?: any;
   tab: number;
 }
 function Detail(props: ScheduleProps) {
   const mutation = usePostschedule();
   const SaveClickHandler = () => {
     const newData = postFormat(props.tab, props);
+    console.log(newData);
     mutation.mutate(newData);
   };
 
@@ -39,11 +34,11 @@ function Detail(props: ScheduleProps) {
   const [content, contentHandler] = useTextarea();
 
   return (
-    <StContainer ref={props.detailRef}>
-      <StTitleBlock>
-        <StTitleContentBlock>
-          <StMarkBlock />
-          <StPeriodBlock>
+    <styles.StContainer ref={props.detailRef}>
+      <styles.StTitleBlock>
+        <styles.StTitleContentBlock>
+          <styles.StMarkBlock />
+          <styles.StPeriodBlock>
             <span>{props.startDay?.getFullYear().toString().slice(2, 4)}</span>
             <span>/</span>
             <span>{props.startDay && props.startDay?.getMonth() + 1}</span>
@@ -59,9 +54,9 @@ function Detail(props: ScheduleProps) {
                 <span>{props.endDay?.getDate()}</span>
               </>
             )}
-          </StPeriodBlock>
+          </styles.StPeriodBlock>
           <div>
-            <StInput
+            <styles.StInput
               defaultValue={props.body?.split('/')[0]}
               placeholder="작성자를 입력해주세요"
               value={author}
@@ -69,10 +64,10 @@ function Detail(props: ScheduleProps) {
             />
           </div>
           <div>
-            <StInput defaultValue={props.title} placeholder="제목 입력란" />
+            <styles.StInput defaultValue={props.title} placeholder="제목 입력란" />
           </div>
-        </StTitleContentBlock>
-        <StButtonBlock>
+        </styles.StTitleContentBlock>
+        <styles.StButtonBlock>
           <Button
             color="black"
             size="Detail"
@@ -81,51 +76,21 @@ function Detail(props: ScheduleProps) {
           >
             저장하기
           </Button>
-        </StButtonBlock>
-      </StTitleBlock>
-      <StContentBlock>
-        <StTextArea
+        </styles.StButtonBlock>
+      </styles.StTitleBlock>
+      <styles.StContentBlock>
+        <styles.StTextArea
           defaultValue={props.body?.split('/')[1]}
           placeholder="내용을 입력해주세요"
           value={content}
           onChange={contentHandler}
         />
-      </StContentBlock>
-      <StMentionBlock>{props.mention?.map(item => item + '-')}</StMentionBlock>
-    </StContainer>
+      </styles.StContentBlock>
+      <styles.StMentionBlock>
+        {props.mention?.map(item => item + '-')}
+      </styles.StMentionBlock>
+    </styles.StContainer>
   );
 }
 
 export default Detail;
-
-const StButtonBlock = styled.div``;
-
-const StTextArea = styled.textarea`
-  width: 100%;
-  border: none;
-  height: 100%;
-  outline: none;
-  font-size: 20px;
-  resize: none;
-`;
-
-const StInput = styled.input`
-  border: none;
-  font-size: 20px;
-
-  outline: none;
-`;
-
-const StMarkBlock = styled.div`
-  width: 13px;
-  height: 30px;
-  background-color: ${COLOR.SCHEDULE_RED};
-  border-radius: 10px;
-  margin-left: 10px;
-`;
-
-const StPeriodBlock = styled.div`
-  display: flex;
-  gap: 3px;
-  font-weight: bold;
-`;
