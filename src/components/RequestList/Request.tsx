@@ -29,7 +29,7 @@ const Request = () => {
     }
   }, [handleScroll]);
 
-  if (data) console.log(data);
+  // if (data) console.log(data.pages[0].schedule);
 
   const tags = data ? data.pages.flatMap(page => page.schedule) : [];
 
@@ -38,17 +38,17 @@ const Request = () => {
       ✈️ RequestedList
       <UI.StDeviderBlock />
       <UI.StInsideBlock ref={targetDiv}>
-        {/* {tags.map(tag => {
+        {tags.map(tag => {
           return (
             <UI.StUploadedFileBlock key={tag.eventId}>
               <UI.StNameDateBlock>
                 <UI.StContentSpan>😵‍💫 | {tag.userName}</UI.StContentSpan>
-                <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan>
+                {/* <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan> */}
               </UI.StNameDateBlock>
-              <UI.StContentSpan>📎 | {tag.fileName}</UI.StContentSpan>
+              <UI.StContentSpan>📎 | {tag.file}</UI.StContentSpan>
             </UI.StUploadedFileBlock>
           );
-        })} */}
+        })}
       </UI.StInsideBlock>
     </UI.StUploadedBlock>
   );

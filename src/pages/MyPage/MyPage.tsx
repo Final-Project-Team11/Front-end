@@ -5,6 +5,7 @@ import Feed from '../../components/Feed/Feed';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
+import Request from '../../components/RequestList/Request';
 
 const MyPage = () => {
   return (
@@ -16,7 +17,10 @@ const MyPage = () => {
         </Header>
         <MainArea>
           <Feed />
-          <Tag types="MyPage" />
+          <MiddleArea>
+            <Tag types="MainPage" />
+            <Request />
+          </MiddleArea>
           <MiddleArea>
             <UploadedFileTab type="myfiles" icon="📕" />
             <UploadedFileTab type="meetingfiles" icon="📗" />
