@@ -1,15 +1,15 @@
 import React from 'react';
 
-interface AddressSearchProps {
-  onAddressSelected: (postcode: string, roadAddress: string) => void;
+interface DaumAddressAPIProps {
+  selectedAddressHandler: (postcode: string, roadAddress: string) => void;
 }
 
-const DaumAddressAPI: React.FC<AddressSearchProps> = ({ onAddressSelected }) => {
+const DaumAddressAPI: React.FC<DaumAddressAPIProps> = ({ selectedAddressHandler }) => {
   const postcodeRef = React.useRef<HTMLInputElement>(null);
   const roadAddressRef = React.useRef<HTMLInputElement>(null);
   const guideRef = React.useRef<HTMLSpanElement>(null);
 
-  const handleAddressSearch = () => {
+  const searchAddressHandler = () => {
     new (window as any).daum.Postcode({
       oncomplete: (data: any) => {
         const roadAddr = data.roadAddress;
@@ -50,7 +50,7 @@ const DaumAddressAPI: React.FC<AddressSearchProps> = ({ onAddressSelected }) => 
           }
         }
 
-        onAddressSelected(data.zonecode, roadAddr);
+        selectedAddressHandler(data.zonecode, roadAddr);
       },
     }).open();
   };
@@ -58,7 +58,7 @@ const DaumAddressAPI: React.FC<AddressSearchProps> = ({ onAddressSelected }) => 
   return (
     <div>
       <input type="text" ref={postcodeRef} placeholder="우편번호" />
-      <button type="button" onClick={handleAddressSearch}>
+      <button type="button" onClick={searchAddressHandler}>
         우편번호 찾기
       </button>
       <br />
