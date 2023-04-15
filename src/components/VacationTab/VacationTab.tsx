@@ -14,7 +14,7 @@ const VacationTab = () => {
     <StVacationTabBlock>
       🏖️
       <StDeviderBlock />
-      {vacations.map((vacation: VacationList) => {
+      {vacations?.map((vacation: VacationList) => {
         return (
           <Vacation
             key={vacation.eventId}
