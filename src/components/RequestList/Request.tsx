@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import { useGetRequest } from '../../api/hooks/Request.tsx/useGetRequest';
+import { BsCheckCircleFill, BsCircle, BsXCircleFill } from 'react-icons/bs';
 
 const Request = () => {
   const { data, fetchNextPage, hasNextPage } = useGetRequest();
@@ -29,28 +30,41 @@ const Request = () => {
     }
   }, [handleScroll]);
 
-  // if (data) console.log(data.pages[0].schedule);
-
   const tags = data ? data.pages.flatMap(page => page.schedule) : [];
 
   return (
-    <UI.StUploadedBlock>
+    <UI.StRequestedBlock>
       ✈️ RequestedList
       <UI.StDeviderBlock />
       <UI.StInsideBlock ref={targetDiv}>
         {tags.map(tag => {
           return (
-            <UI.StUploadedFileBlock key={tag.eventId}>
+            <UI.StRequestedListBlock key={tag.eventId}>
               <UI.StNameDateBlock>
-                <UI.StContentSpan>😵‍💫 | {tag.userName}</UI.StContentSpan>
-                {/* <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan> */}
+                <UI.StNameDateDiv>
+                  <UI.StNameSpan>😵‍💫 | {tag.userName}</UI.StNameSpan>
+                  <UI.StDateSpan>
+                    {tag.startDay === tag.endDay
+                      ? tag.startDay
+                      : `${tag.startDay} ~ ${tag.endDay}`}
+                  </UI.StDateSpan>
+                </UI.StNameDateDiv>
+                <UI.StCircleBlock types={tag.status}>
+                  {tag.status === 'submit' ? (
+                    <BsCircle />
+                  ) : tag.status === 'accept' ? (
+                    <BsCheckCircleFill />
+                  ) : tag.status === 'deny' ? (
+                    <BsXCircleFill />
+                  ) : null}
+                </UI.StCircleBlock>
               </UI.StNameDateBlock>
-              <UI.StContentSpan>📎 | {tag.file}</UI.StContentSpan>
-            </UI.StUploadedFileBlock>
+              <UI.StContentSpan>📎 | {tag.title}</UI.StContentSpan>
+            </UI.StRequestedListBlock>
           );
         })}
       </UI.StInsideBlock>
-    </UI.StUploadedBlock>
+    </UI.StRequestedBlock>
   );
 };
 

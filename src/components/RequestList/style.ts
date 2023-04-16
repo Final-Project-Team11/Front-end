@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const StUploadedBlock = styled.div`
+interface RequestStatus {
+  types: 'submit' | 'accept' | 'deny';
+}
+
+export const StRequestedBlock = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -41,7 +45,7 @@ export const StDeviderBlock = styled.div`
   border: 1px solid orange;
 `;
 
-export const StUploadedFileBlock = styled.div`
+export const StRequestedListBlock = styled.div`
   /* background-color: yellow; */
   width: 100%;
   height: 100px;
@@ -56,7 +60,20 @@ export const StNameDateBlock = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+`;
+
+export const StNameDateDiv = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+`;
+
+export const StNameSpan = styled.span`
+  font-size: 15px;
+  white-space: nowrap;
+  max-width: 100%;
 `;
 
 export const StContentSpan = styled.span`
@@ -72,4 +89,15 @@ export const StContentSpan = styled.span`
 export const StDateSpan = styled.span`
   font-size: 13px;
   color: gray;
+`;
+
+export const StCircleBlock = styled.div<RequestStatus>`
+  color: ${({ types }) =>
+    types === 'submit'
+      ? null
+      : types === 'accept'
+      ? 'blue'
+      : types === 'deny'
+      ? 'red'
+      : null};
 `;

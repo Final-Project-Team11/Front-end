@@ -3,7 +3,7 @@ import instnace from '../../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 
-interface File {
+interface RequestInfo {
   eventId: number;
   userName: string;
   title: string;
@@ -14,7 +14,7 @@ interface File {
 }
 
 interface PageData {
-  schedule: File[];
+  schedule: RequestInfo[];
   pageNum: number;
 }
 
