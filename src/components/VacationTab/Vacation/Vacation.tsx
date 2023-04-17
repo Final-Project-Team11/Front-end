@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import {
-  StSubmitBlock,
-  StSpanBlock,
-  StVacateBlock,
-  StVacateSpan,
-  StAcceptBlock,
-  StDecideBlock,
-  StDecAcceptBlock,
-  StDecDenyBlock,
-} from './style';
+import * as UI from './style';
 import { VacateProps } from './interfaces';
 import { BsCheckCircle, BsXCircle, BsCircle, BsCheck, BsX } from 'react-icons/bs';
+import { usePutDecision } from '../../../api/hooks/Vacation/usePutDecision';
 
-const Vacation = ({ type, userName, startDay, endDay, status }: VacateProps) => {
+const Vacation = ({ vacation }: VacateProps) => {
   // 선택창 등장, 퇴장을 위한 state
   const [hover, setHover] = useState(false);
 
@@ -23,52 +15,57 @@ const Vacation = ({ type, userName, startDay, endDay, status }: VacateProps) => 
   switch (status) {
     case 'accept':
       requestStatus = (
-        // BsCheckCircleFill
-        // BsCheckCircle
-        <StAcceptBlock onMouseEnter={() => setHover(true)} status={true}>
+        <UI.StAcceptBlock onMouseEnter={() => setHover(true)} status={true}>
           <BsCheckCircle />
-        </StAcceptBlock>
+        </UI.StAcceptBlock>
       );
       break;
     case 'deny':
-      // BsXCircleFill
-      // BsXCircle
       requestStatus = (
-        <StAcceptBlock onMouseEnter={() => setHover(true)} status={false}>
+        <UI.StAcceptBlock onMouseEnter={() => setHover(true)} status={false}>
           <BsXCircle />
-        </StAcceptBlock>
+        </UI.StAcceptBlock>
       );
       break;
     default:
       requestStatus = (
-        <StSubmitBlock onMouseEnter={() => setHover(true)}>
+        <UI.StSubmitBlock onMouseEnter={() => setHover(true)}>
           <BsCircle />
-        </StSubmitBlock>
+        </UI.StSubmitBlock>
       );
       break;
   }
 
+  const payload = {
+    status: 'accept' | 'deny';
+    eventId: number;
+  }
+
+  const { mutate } = usePutDecision(payload);
+
+  console.log(hover);
+
   return (
-    <StVacateBlock>
-      <StSpanBlock>
-        <StVacateSpan>{`${type} | ${userName}`}</StVacateSpan>
-        <StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</StVacateSpan>
-      </StSpanBlock>
+    <UI.StVacateBlock onMouseLeave={() => setHover(false)}>
+      <UI.StSpanBlock>
+        <UI.StVacateSpan>{`${type} | ${userName}`}</UI.StVacateSpan>
+        <UI.StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</UI.StVacateSpan>
+      </UI.StSpanBlock>
 
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
       {hover ? (
-        <StDecideBlock onMouseLeave={() => setHover(false)}>
-          <StDecAcceptBlock className="decision" status={true}>
+        <UI.StDecideBlock onMouseLeave={() => setHover(false)}>
+          <UI.StDecAcceptBlock className="decision" status={true}>
             <BsCheck />
-          </StDecAcceptBlock>
-          <StDecAcceptBlock className="decision" status={false}>
+          </UI.StDecAcceptBlock>
+          <UI.StDecAcceptBlock className="decision" status={false}>
             <BsX />
-          </StDecAcceptBlock>
-        </StDecideBlock>
+          </UI.StDecAcceptBlock>
+        </UI.StDecideBlock>
       ) : (
         requestStatus
       )}
-    </StVacateBlock>
+    </UI.StVacateBlock>
   );
 };
 

@@ -5,6 +5,7 @@ interface RequestStatusProps {
 }
 
 export const StVacateBlock = styled.div`
+  position: relative; // 추가
   width: 100%;
   height: fit-content;
 
@@ -28,7 +29,9 @@ export const StVacateSpan = styled.span`
 `;
 
 export const StSubmitBlock = styled.div`
-  font-size: 25px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -39,9 +42,12 @@ export const StSubmitBlock = styled.div`
 
 export const StAcceptBlock = styled.div<RequestStatusProps>`
   /* color: ${({ status }) => (status ? 'green' : 'red')}; */
-  color: gray;
 
-  font-size: 25px;
+  color: gray;
+  width: 24px;
+  height: 24px;
+
+  font-size: 24px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -52,6 +58,8 @@ export const StAcceptBlock = styled.div<RequestStatusProps>`
 
 // 선택 블럭 호버 시 나오는 요소 블럭
 export const StDecideBlock = styled.div`
+  position: absolute;
+  right: 0;
   background-color: red;
 
   width: 24px;
@@ -62,13 +70,9 @@ export const StDecideBlock = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  /* gap: 5px; */
-
-  /* padding: 0 5px 0 5px; */
-  box-sizing: border-box;
 
   border: 1px solid red;
-  transition: all 0.1s;
+  transition: width 0.3s ease-out;
   &:hover {
     width: 50px;
   }
