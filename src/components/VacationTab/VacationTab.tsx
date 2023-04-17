@@ -60,7 +60,7 @@ const VacationTab = () => {
         </svg>
         <UI.StTitleSpan>휴가 요청</UI.StTitleSpan>
       </UI.StIconBlock>
-      <UI.StDeviderBlock />
+      <UI.StDivederHr />
       <UI.StInsideBlock ref={targetDiv}>
         {vacations?.map((vacation: VacationList) => {
           return <Vacation key={vacation.eventId} vacation={vacation} />;

@@ -32,10 +32,11 @@ export const StInsideBlock = styled.div`
   }
 `;
 
-export const StDeviderBlock = styled.div`
+export const StDivederHr = styled.hr`
   width: 100%;
-  height: 0;
-  border: 1px solid orange;
+  height: 1px;
+  border: none;
+  background-color: ${COLOR.PAGE_BLUE};
 `;
 
 export const StTitleSpan = styled.span`
@@ -47,5 +48,5 @@ export const StTitleSpan = styled.span`
 export const StIconBlock = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 `;
