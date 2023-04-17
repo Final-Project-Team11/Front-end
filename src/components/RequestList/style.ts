@@ -31,11 +31,7 @@ export const StInsideBlock = styled.div`
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
-    width: 5px;
-    background-color: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: red;
+    display: none;
   }
 `;
 

@@ -1,34 +1,45 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../constants/colors';
 
 interface RequestStatusProps {
   status: boolean;
 }
 
-export const StVacateBlock = styled.div`
+interface SpanProps {
+  status: 'accept' | 'deny' | 'submit';
+}
+
+export const StListlock = styled.div`
+  position: relative;
   width: 100%;
   height: fit-content;
+
+  margin-top: 5px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const StSpanBlock = styled.div`
-  background-color: azure;
+export const StSpanBlock = styled.div<SpanProps>`
   width: 65%;
   height: 100%;
+  line-height: 20px;
+  color: ${({ status }) => (status === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-export const StVacateSpan = styled.span`
-  font-size: 15px;
+export const StNormalSpan = styled.span`
+  font-size: 12px;
 `;
 
 export const StSubmitBlock = styled.div`
-  font-size: 25px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -37,11 +48,10 @@ export const StSubmitBlock = styled.div`
   justify-content: center;
 `;
 
-export const StAcceptBlock = styled.div<RequestStatusProps>`
-  /* color: ${({ status }) => (status ? 'green' : 'red')}; */
+export const StAcceptBlock = styled.span`
   color: gray;
 
-  font-size: 25px;
+  font-size: 21px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -52,25 +62,23 @@ export const StAcceptBlock = styled.div<RequestStatusProps>`
 
 // 선택 블럭 호버 시 나오는 요소 블럭
 export const StDecideBlock = styled.div`
-  background-color: red;
+  position: absolute;
+  right: 0;
+  background-color: ${COLOR.PAGE_BLUE};
 
-  width: 24px;
-  height: 24px;
+  width: 29px;
+  height: 29px;
   border-radius: 20px;
   margin-right: 10px;
 
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  /* gap: 5px; */
 
-  /* padding: 0 5px 0 5px; */
-  box-sizing: border-box;
-
-  border: 1px solid red;
-  transition: all 0.1s;
+  /* border: 1px solid red; */
+  transition: width 0.3s ease-out;
   &:hover {
-    width: 50px;
+    width: 60px;
   }
 
   &:hover .decision {
@@ -81,9 +89,9 @@ export const StDecideBlock = styled.div`
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
 export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   background-color: white;
-  color: ${({ status }) => (status ? 'green' : 'red')};
+  color: ${({ status }) => (status ? COLOR.PAGE_BLUE : COLOR.VACATION_RED)};
 
-  font-size: 20px;
+  font-size: 21px;
   border-radius: 50%;
 
   display: flex;
@@ -92,9 +100,6 @@ export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   opacity: 0;
 
   transition: 0.3s;
-  /* &:hover {
-    background-color: green;
-  } */
 `;
 
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
@@ -111,7 +116,4 @@ export const StDecDenyBlock = styled.div`
   opacity: 0;
 
   transition: 0.3s;
-  /* &:hover {
-    background-color: #fb6e52;
-  } */
 `;

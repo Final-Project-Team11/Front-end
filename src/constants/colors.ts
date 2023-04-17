@@ -13,4 +13,9 @@ export const COLOR = {
   OTHER_BAR_BOARD: '#000000',
   BUSINESS_TRIP_BAR: '#BADAFF',
   MEETING_BAR: 'E64042',
+
+  // 철환폰트
+  PAGE_SPAN: '#484240',
+  PAGE_DONE: '#A1A1A1',
+  PAGE_BLUE: '#8AB2E0',
 };

@@ -29,7 +29,7 @@ export const StFeedBlock = styled.div`
 
   overflow-y: scroll;
 
-  /* ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none;
-  } */
+  }
 `;
