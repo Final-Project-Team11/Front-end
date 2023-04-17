@@ -3,18 +3,21 @@ export interface InputProps {
   children?: React.ReactNode;
   Bgcolor?: string;
   type?: string;
+  name?: string;
   placeholder?: string;
   inputId?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export interface Type {
-  types: 'max' | 'half';
+  types: 'max' | 'half' | 'document';
 }
 
 export interface InputStyle {
   [key: string]: {
     width: string;
+    height?: string;
+    fontSize?: string;
   };
 }
 

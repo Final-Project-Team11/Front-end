@@ -20,6 +20,24 @@ const Tabconent1 = () => {
     <Tap>
       <InputWrapper>
         <MaxInput types="half" type="text">
+          아이디
+        </MaxInput>
+        <MaxInput types="half" type="password">
+          비밀번호
+        </MaxInput>
+      </InputWrapper>
+      <div style={{ marginTop: '30px' }}>
+        <Button size="example">로그인</Button>
+      </div>
+    </Tap>
+  );
+};
+
+const Tabconent2 = () => {
+  return (
+    <Tap>
+      <InputWrapper>
+        <MaxInput types="half" type="text">
           대표자 아이디
         </MaxInput>
         <MaxInput types="half" type="text">
@@ -34,24 +52,6 @@ const Tabconent1 = () => {
         <span>아이디 / 비밀번호 찾기</span>
       </TextWrapper>
       <Button size="example">로그인</Button>
-    </Tap>
-  );
-};
-
-const Tabconent2 = () => {
-  return (
-    <Tap>
-      <InputWrapper>
-        <MaxInput types="half" type="text">
-          아이디
-        </MaxInput>
-        <MaxInput types="half" type="password">
-          비밀번호
-        </MaxInput>
-      </InputWrapper>
-      <div style={{ marginTop: '30px' }}>
-        <Button size="example">로그인</Button>
-      </div>
     </Tap>
   );
 };

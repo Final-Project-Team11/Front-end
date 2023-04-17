@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Feed from '../../components/Feed';
 import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
-import MyRequest from '../../components/MyRequest';
+import Request from '../../components/RequestList/Request';
 
 const MyPage = () => {
   return (
@@ -16,14 +16,17 @@ const MyPage = () => {
         </Header>
         <MainArea>
           <Feed />
-          <Tag />
           <MiddleArea>
-            <UploadedFileTab type="Myfile" icon="📕" />
-            <UploadedFileTab type="meeting" icon="📗" />
+            <Tag types="MainPage" />
+            <Request />
           </MiddleArea>
           <MiddleArea>
-            <MyRequest />
-            <UploadedFileTab type="report" icon="📘" />
+            <UploadedFileTab type="myfiles" icon="📕" />
+            <UploadedFileTab type="meetingfiles" icon="📗" />
+          </MiddleArea>
+          <MiddleArea>
+            <VacationTab />
+            <UploadedFileTab type="reportfiles" icon="📘" />
           </MiddleArea>
         </MainArea>
       </Wrapper>

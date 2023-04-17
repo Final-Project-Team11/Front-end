@@ -1,6 +1,9 @@
 export interface TodoBoxProps {
-  todo: string;
-  isDone: boolean;
+  todo: {
+    todoId: number;
+    todo: string;
+    isDone: boolean;
+  };
 }
 
 export interface TodoBoxStProps {
@@ -11,4 +14,13 @@ export interface AddTodoProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setValue: (value: string) => void;
+  inputHandler: (value: React.SetStateAction<boolean>) => void;
+  categoryId: number;
+}
+
+export interface SentTodo {
+  categoryId: number;
+  content: {
+    content: string;
+  };
 }

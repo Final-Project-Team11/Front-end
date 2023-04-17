@@ -1,5 +1,5 @@
 import { Options, TZDate } from '@toast-ui/calendar';
-import { InitialCalendar, ScheduleProps } from './interfaces';
+import { InitialCalendar, ScheduleProps, ServerProps, VacationProps } from './interfaces';
 import { COLOR } from '../../constants/colors';
 
 export function clone(date: TZDate): TZDate {
@@ -32,16 +32,16 @@ export function settingSchedule(schedule: ScheduleProps) {
   const OTHER = '기타';
   const BUSINESS_TRIP = '출장';
   const MEETING = '미팅';
-  const today = new TZDate(); //임시
 
   const newData = {
     id: schedule?.eventId,
     calendarId: schedule?.eventType,
     title: schedule?.title,
-    start: today,
-    end: addDate(today, 3),
-    body: schedule.userName + '/' + schedule.body,
+    start: schedule.startDay,
+    end: schedule.endDay,
+    body: schedule.content,
     attendees: schedule.mention,
+    userName: schedule.userName,
   };
 
   switch (schedule?.eventType) {
@@ -76,6 +76,68 @@ export function settingSchedule(schedule: ScheduleProps) {
         backgroundColor: '#E64042',
         borderColor: '#E64042',
         dragBackgroundColor: '#E64042',
+        isReadOnly: true,
+      };
+
+    default:
+      return {
+        ...newData,
+        backgroundColor: '#1F1F1F',
+        borderColor: '#1F1F1F',
+        dragBackgroundColor: '#1F1F1F',
+        color: '#FFFFFF',
+        isReadOnly: true,
+      };
+  }
+}
+
+export function settingVacation(vacation: VacationProps) {
+  const VACATION = '휴가';
+  const HALF_DAY_OFF = '반차';
+  const MONTHLY_VACTION = '월차';
+  const SICK_DAY = '병가';
+
+  const newData = {
+    id: vacation?.eventId,
+    calendarId: vacation?.typeDetail,
+    start: vacation.startDay,
+    end: vacation.endDay,
+    title: vacation.typeDetail,
+    userName: vacation.userName,
+  };
+
+  switch (vacation?.typeDetail) {
+    case VACATION:
+      return {
+        ...newData,
+        backgroundColor: COLOR.VACATION_RED,
+        borderColor: COLOR.VACATION_RED,
+        dragBackgroundColor: COLOR.VACATION_RED,
+        color: '#FFFFFF',
+        isReadOnly: true,
+      };
+    case HALF_DAY_OFF:
+      return {
+        ...newData,
+        backgroundColor: COLOR.HALF_DAY_OFF_BAR,
+        borderColor: COLOR.HALF_DAY_OFF_BOARD,
+        dragBackgroundColor: COLOR.HALF_DAY_OFF_BAR,
+        isReadOnly: true,
+      };
+    case MONTHLY_VACTION:
+      return {
+        ...newData,
+        backgroundColor: COLOR.MONTHLY_VACTION_BAR,
+        borderColor: COLOR.MONTHLY_VACTION_BAR,
+        dragBackgroundColor: COLOR.MONTHLY_VACTION_BAR,
+        isReadOnly: true,
+      };
+    case SICK_DAY:
+      return {
+        ...newData,
+        backgroundColor: COLOR.SICK_DAY_BAR,
+        borderColor: COLOR.SICK_DAY_BAR,
+        dragBackgroundColor: COLOR.SICK_DAY_BAR,
         isReadOnly: true,
       };
 
@@ -188,5 +250,119 @@ export function initCalendar(tab: number): InitialCalendar[] {
         dragBackgroundColor: COLOR.MEETING_BAR,
       },
     ];
+  }
+}
+
+export function getCanlendarName(tab: number, id: string | undefined): string {
+  if (tab === 0) {
+    switch (id) {
+      case '0':
+        return '회의';
+      case '1':
+        return '기타';
+      case '2':
+        return '출장';
+      case '3':
+        return '미팅';
+
+      default:
+        return '회의';
+    }
+  } else {
+    switch (id) {
+      case '0':
+        return '휴가';
+      case '1':
+        return '반차';
+      case '2':
+        return '월차';
+      case '3':
+        return '병가';
+
+      default:
+        return '휴가';
+    }
+  }
+}
+
+interface postFormatProps {
+  url: string;
+  postInfo: ServerProps;
+}
+
+export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
+  const defaultFormat = {
+    startDay: schedule.startDay?.toString(),
+    endDay: schedule.endDay?.toString(),
+    title: schedule.title,
+    content: schedule.content,
+    ref: schedule.ref,
+    file: schedule.file,
+  };
+
+  if (tab === 0) {
+    switch (schedule.eventType) {
+      case '회의': {
+        const postData = {
+          url: 'meeting',
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+          },
+        };
+        return postData;
+      }
+
+      case '기타': {
+        const postData = {
+          url: 'other',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+      case '출장': {
+        const postData = {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+      case '미팅': {
+        const postData = {
+          url: 'meeting',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+        return postData;
+      }
+
+      default:
+        return {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+          },
+        };
+    }
+  } else if (tab === 1) {
+    const postData = {
+      url: 'vacation',
+      postInfo: {
+        typeDetail: getCanlendarName(tab, schedule.eventType),
+        startDay: schedule.startDay?.toString(),
+        endDay: schedule.endDay?.toString(),
+      },
+    };
+    return postData;
+  } else {
+    return {
+      url: 'vacation',
+      postInfo: { ...defaultFormat },
+    };
   }
 }

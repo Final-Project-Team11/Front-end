@@ -4,10 +4,11 @@ import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
 import { CategoryBoxProps } from './interfaces';
 import useInput from '../../../hooks/common/useInput';
-import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
-import { BsX } from 'react-icons/bs';
 
-const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
+import { BsX } from 'react-icons/bs';
+import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
+
+const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput();
   const [showCategoryDeleteBtn, setShowCategoryDeleteBtn] = useState<boolean>(false);
@@ -20,7 +21,6 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
     }
     // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
     else if (openTodoInput === true && AddTodoState.length !== 0) {
-      console.log('value 있음, 쿼리동작');
       setAddTodoState('');
       setOpenTodoInput(false);
     }
@@ -29,15 +29,23 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
   };
 
   // todos 정렬 - isDone false 를 위로, true 를 아래로
-  todos.sort((a, b) => {
-    if (a.isDone === b.isDone) {
-      return 0;
-    } else if (a.isDone === false) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+  if (todos.length !== 0) {
+    todos.sort((a, b) => {
+      if (a.isDone === b.isDone) {
+        return 0;
+      } else if (a.isDone === false) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  const { deleteCategory } = useDeleteCategory();
+
+  const deleteBtnHandler = () => {
+    deleteCategory(categoryId);
+  };
 
   return (
     <>
@@ -47,17 +55,17 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
       >
         <UI.StCategoryTitleBlock>
           <UI.StCircleBlock />
-          <UI.StCategoryH3>{category}</UI.StCategoryH3>
+          <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
         {showCategoryDeleteBtn && (
-          <UI.StDeleteBlock>
+          <UI.StDeleteBlock onClick={deleteBtnHandler}>
             <BsX />
           </UI.StDeleteBlock>
         )}
       </UI.StCategoryWrapper>
       <UI.StCategoryBlock>
         {todos?.map(todo => {
-          return <TodoBox key={todo.todoId} todo={todo.todo} isDone={todo.isDone} />;
+          return <TodoBox key={todo.todoId} todo={todo} />;
         })}
       </UI.StCategoryBlock>
       {openTodoInput && (
@@ -65,6 +73,8 @@ const CategoryBox = ({ category, todos }: CategoryBoxProps) => {
           value={AddTodoState}
           setValue={setAddTodoState}
           onChange={setAddTodoHandler}
+          inputHandler={setOpenTodoInput}
+          categoryId={categoryId}
         />
       )}
       <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>

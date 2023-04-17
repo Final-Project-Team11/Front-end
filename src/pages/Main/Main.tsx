@@ -1,16 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, createContext, useState, useContext } from 'react';
 import { SubMain } from '../SubMain/SubMain';
 import Calendar from '../../components/ToastCalendar/Calendar';
 import useGetMain from '../../api/hooks/useGetMain';
 import { ScheduleProps } from '../SubMain/interfaces';
-import { settingSchedule } from '../SubMain/utils';
+import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
+
+export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
   const [tab, setTab] = useState(1);
   const { data, isLoading } = useGetMain(tab);
-  const [filterData, setFilterData] = useState<Partial<EventObject>[]>();
+  const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
+  // const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
 
   useEffect(() => {
     if (tab === 0) {
@@ -31,8 +34,8 @@ const Main = () => {
       setFilterData(events);
     } else {
       const events = [];
-      const vacations: Partial<EventObject>[] = data?.vacation?.map(
-        (vacation: ScheduleProps) => settingSchedule(vacation)
+      const vacations: Partial<EventObject>[] = data?.map((vacation: ScheduleProps) =>
+        settingVacation(vacation)
       );
       vacations !== undefined && events.push(...vacations);
       setFilterData(events);
@@ -40,21 +43,23 @@ const Main = () => {
   }, [data]);
 
   return (
-    <StWrap>
-      <StButtonBlcok>
-        <StTabButton onClick={() => setTab(0)} tab={tab}>
-          일정
-        </StTabButton>
-        <StTabButton onClick={() => setTab(1)} tab={tab}>
-          휴가
-        </StTabButton>
-      </StButtonBlcok>
-      {tab === 0 ? (
-        <SubMain view={'month'} tab={tab} data={filterData} />
-      ) : (
-        <SubMain view={'month'} tab={tab} data={filterData} />
-      )}
-    </StWrap>
+    <CalendarContext.Provider value={filterData}>
+      <StWrap>
+        <StButtonBlcok>
+          <StTabButton onClick={() => setTab(0)} tab={tab}>
+            일정
+          </StTabButton>
+          <StTabButton onClick={() => setTab(1)} tab={tab}>
+            휴가
+          </StTabButton>
+        </StButtonBlcok>
+        {tab === 0 ? (
+          <SubMain view={'month'} tab={tab} />
+        ) : (
+          <SubMain view={'month'} tab={tab} />
+        )}
+      </StWrap>
+    </CalendarContext.Provider>
   );
 };
 
