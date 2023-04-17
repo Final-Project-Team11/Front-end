@@ -19,14 +19,14 @@ const Manager = () => {
           <Feed />
           <MiddleArea>
             <Tag types="MainPage" />
-            <Request />
+            <VacationTab />
           </MiddleArea>
           <MiddleArea>
             <UploadedFileTab type="myfiles" icon="📕" />
             <UploadedFileTab type="meetingfiles" icon="📗" />
           </MiddleArea>
           <MiddleArea>
-            <VacationTab />
+            <Request />
             <UploadedFileTab type="reportfiles" icon="📘" />
           </MiddleArea>
         </MainArea>
@@ -53,9 +53,10 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  background-color: #d5f09f;
+  /* background-color: #d5f09f; */
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   width: 100%;
   height: 150px;
