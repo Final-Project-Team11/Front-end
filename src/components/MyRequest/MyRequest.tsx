@@ -38,8 +38,6 @@ const MyRequest = () => {
   // data 존재 시
   const tags = data ? data.pages.flatMap(page => page.schedule) : [];
 
-  if (data) console.log(tags);
-
   return (
     <UI.StRequestBlock>
       <RiFolderUserFill />
