@@ -15,14 +15,14 @@ const Vacation = ({ vacation }: VacateProps) => {
   switch (vacation.status) {
     case 'accept':
       requestStatus = (
-        <UI.StAcceptBlock onMouseEnter={() => setHover(true)} status={true}>
+        <UI.StAcceptBlock onMouseEnter={() => setHover(true)}>
           <BsCheckCircle />
         </UI.StAcceptBlock>
       );
       break;
     case 'deny':
       requestStatus = (
-        <UI.StAcceptBlock onMouseEnter={() => setHover(true)} status={false}>
+        <UI.StAcceptBlock onMouseEnter={() => setHover(true)}>
           <BsXCircle />
         </UI.StAcceptBlock>
       );
@@ -36,11 +36,11 @@ const Vacation = ({ vacation }: VacateProps) => {
       break;
   }
 
+  // PATCH 요청용 payload
   interface Payload {
     status: 'submit' | 'accept' | 'deny';
     eventId: number;
   }
-
   const accept: Payload = {
     status: 'accept',
     eventId: vacation.eventId,
@@ -53,10 +53,10 @@ const Vacation = ({ vacation }: VacateProps) => {
   const { mutate } = usePutDecision();
 
   return (
-    <UI.StVacateBlock onMouseLeave={() => setHover(false)}>
-      <UI.StSpanBlock>
-        <UI.StVacateSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StVacateSpan>
-        <UI.StVacateSpan>{`기간 | ${vacation.startDay} ~ ${vacation.endDay}`}</UI.StVacateSpan>
+    <UI.StListlock onMouseLeave={() => setHover(false)}>
+      <UI.StSpanBlock status={vacation.status}>
+        <UI.StNormalSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StNormalSpan>
+        <UI.StNormalSpan>{`기간 | ${vacation.startDay} ~ ${vacation.endDay}`}</UI.StNormalSpan>
       </UI.StSpanBlock>
 
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
@@ -80,7 +80,7 @@ const Vacation = ({ vacation }: VacateProps) => {
       ) : (
         requestStatus
       )}
-    </UI.StVacateBlock>
+    </UI.StListlock>
   );
 };
 

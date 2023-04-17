@@ -5,7 +5,11 @@ interface RequestStatusProps {
   status: boolean;
 }
 
-export const StVacateBlock = styled.div`
+interface SpanProps {
+  status: 'accept' | 'deny' | 'submit';
+}
+
+export const StListlock = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
@@ -17,16 +21,18 @@ export const StVacateBlock = styled.div`
   justify-content: space-between;
 `;
 
-export const StSpanBlock = styled.div`
+export const StSpanBlock = styled.div<SpanProps>`
   width: 65%;
   height: 100%;
+  line-height: 20px;
+  color: ${({ status }) => (status === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-export const StVacateSpan = styled.span`
+export const StNormalSpan = styled.span`
   font-size: 12px;
 `;
 
@@ -42,9 +48,7 @@ export const StSubmitBlock = styled.div`
   justify-content: center;
 `;
 
-export const StAcceptBlock = styled.span<RequestStatusProps>`
-  /* color: ${({ status }) => (status ? 'green' : 'red')}; */
-
+export const StAcceptBlock = styled.span`
   color: gray;
 
   font-size: 21px;
@@ -60,7 +64,7 @@ export const StAcceptBlock = styled.span<RequestStatusProps>`
 export const StDecideBlock = styled.div`
   position: absolute;
   right: 0;
-  background-color: ${COLOR.VACATION_BAR};
+  background-color: ${COLOR.PAGE_BLUE};
 
   width: 29px;
   height: 29px;
@@ -85,7 +89,7 @@ export const StDecideBlock = styled.div`
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
 export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   background-color: white;
-  color: ${({ status }) => (status ? 'green' : 'red')};
+  color: ${({ status }) => (status ? COLOR.PAGE_BLUE : COLOR.VACATION_RED)};
 
   font-size: 21px;
   border-radius: 50%;
@@ -96,9 +100,6 @@ export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   opacity: 0;
 
   transition: 0.3s;
-  /* &:hover {
-    background-color: green;
-  } */
 `;
 
 // 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
@@ -115,7 +116,4 @@ export const StDecDenyBlock = styled.div`
   opacity: 0;
 
   transition: 0.3s;
-  /* &:hover {
-    background-color: #fb6e52;
-  } */
 `;

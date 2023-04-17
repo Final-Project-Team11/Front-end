@@ -5,10 +5,13 @@ import { useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
 
 const VacationTab = () => {
+  // Vacation 리스트 GET 요청
   const { data, fetchNextPage, hasNextPage } = useGetVacation();
 
+  // 무한스크롤 적용할 div 지정
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
+  // 무한스크롤 function
   const handleScroll = () => {
     const container = targetDiv.current;
 
@@ -23,6 +26,7 @@ const VacationTab = () => {
     }
   };
 
+  // 스크롤이벤트 등록
   useEffect(() => {
     const container = targetDiv.current;
 
@@ -32,6 +36,7 @@ const VacationTab = () => {
     }
   }, [handleScroll]);
 
+  // 원본배열 유지하며 새로운 데이터 추가
   const vacations = data
     ? data.pages.reduce<VacationList[]>(
         (acc, page) => [...acc, ...(page.vacation as VacationList[])],
@@ -43,11 +48,10 @@ const VacationTab = () => {
     return <h1>....loading</h1>;
   }
 
-  console.log(vacations);
-
   return (
-    <UI.StVacationTabBlock>
-      <UI.StIconBlock style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <UI.StTabBlock>
+      <UI.StIconBlock>
+        {/* 아이콘 */}
         <svg viewBox="0 0 146.01 117.08" width="20px" height="20px">
           <path
             fill="#87acd7"
@@ -62,14 +66,8 @@ const VacationTab = () => {
           return <Vacation key={vacation.eventId} vacation={vacation} />;
         })}
       </UI.StInsideBlock>
-    </UI.StVacationTabBlock>
+    </UI.StTabBlock>
   );
 };
 
-{
-  /* <style>.cls-1{fill:#87acd7;}</style> */
-}
-{
-  /* <style>.cls-1{fill:#231815;stroke:#231815;stroke-miterlimit:10;}</style> */
-}
 export default VacationTab;

@@ -1,13 +1,14 @@
 import styled from 'styled-components';
+import { COLOR } from '../../constants/colors';
 
-export const StVacationTabBlock = styled.div`
+export const StTabBlock = styled.div`
+  width: 260px;
+  height: 340px;
+
   display: flex;
   flex-direction: column;
 
   font-size: 15px;
-
-  width: 260px;
-  height: 340px;
 
   padding: 15px;
   box-sizing: border-box;
@@ -38,6 +39,7 @@ export const StDeviderBlock = styled.div`
 `;
 
 export const StTitleSpan = styled.span`
+  color: ${COLOR.PAGE_DONE};
   font-size: 13px;
   margin-top: 2.5px;
 `;
