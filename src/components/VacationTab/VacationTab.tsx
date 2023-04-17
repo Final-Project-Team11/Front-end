@@ -47,7 +47,15 @@ const VacationTab = () => {
 
   return (
     <UI.StVacationTabBlock>
-      🏖️
+      <UI.StIconBlock style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <svg viewBox="0 0 146.01 117.08" width="20px" height="20px">
+          <path
+            fill="#87acd7"
+            d="M131.2,15.46h-58.65S58.09,0,58.25,0H14.29C6.4,0,0,6.4,0,14.29L.16,102.27c0,8.18,6.63,14.81,14.81,14.81h116.22c8.18,0,14.81-6.63,14.81-14.81V30.27c0-8.18-6.63-14.81-14.81-14.81Z"
+          />
+        </svg>
+        <UI.StTitleSpan>휴가 요청</UI.StTitleSpan>
+      </UI.StIconBlock>
       <UI.StDeviderBlock />
       <UI.StInsideBlock ref={targetDiv}>
         {vacations?.map((vacation: VacationList) => {
@@ -58,4 +66,10 @@ const VacationTab = () => {
   );
 };
 
+{
+  /* <style>.cls-1{fill:#87acd7;}</style> */
+}
+{
+  /* <style>.cls-1{fill:#231815;stroke:#231815;stroke-miterlimit:10;}</style> */
+}
 export default VacationTab;

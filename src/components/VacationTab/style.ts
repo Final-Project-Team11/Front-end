@@ -12,7 +12,7 @@ export const StVacationTabBlock = styled.div`
   padding: 15px;
   box-sizing: border-box;
 
-  gap: 15px;
+  gap: 10px;
 
   border: 1px solid orange;
 `;
@@ -22,7 +22,7 @@ export const StInsideBlock = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 19px;
 
   overflow-y: scroll;
 
@@ -35,4 +35,15 @@ export const StDeviderBlock = styled.div`
   width: 100%;
   height: 0;
   border: 1px solid orange;
+`;
+
+export const StTitleSpan = styled.span`
+  font-size: 13px;
+  margin-top: 2.5px;
+`;
+
+export const StIconBlock = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

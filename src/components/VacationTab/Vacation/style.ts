@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../constants/colors';
 
 interface RequestStatusProps {
   status: boolean;
@@ -8,6 +9,8 @@ export const StVacateBlock = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
+
+  margin-top: 5px;
 
   display: flex;
   align-items: center;
@@ -24,7 +27,7 @@ export const StSpanBlock = styled.div`
 `;
 
 export const StVacateSpan = styled.span`
-  font-size: 15px;
+  font-size: 12px;
 `;
 
 export const StSubmitBlock = styled.div`
@@ -39,14 +42,12 @@ export const StSubmitBlock = styled.div`
   justify-content: center;
 `;
 
-export const StAcceptBlock = styled.div<RequestStatusProps>`
+export const StAcceptBlock = styled.span<RequestStatusProps>`
   /* color: ${({ status }) => (status ? 'green' : 'red')}; */
 
   color: gray;
-  width: 24px;
-  height: 24px;
 
-  font-size: 24px;
+  font-size: 21px;
   border-radius: 50%;
   margin-right: 10px;
 
@@ -59,10 +60,10 @@ export const StAcceptBlock = styled.div<RequestStatusProps>`
 export const StDecideBlock = styled.div`
   position: absolute;
   right: 0;
-  background-color: red;
+  background-color: ${COLOR.VACATION_BAR};
 
-  width: 24px;
-  height: 24px;
+  width: 29px;
+  height: 29px;
   border-radius: 20px;
   margin-right: 10px;
 
@@ -70,10 +71,10 @@ export const StDecideBlock = styled.div`
   justify-content: space-evenly;
   align-items: center;
 
-  border: 1px solid red;
+  /* border: 1px solid red; */
   transition: width 0.3s ease-out;
   &:hover {
-    width: 50px;
+    width: 60px;
   }
 
   &:hover .decision {
@@ -86,7 +87,7 @@ export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   background-color: white;
   color: ${({ status }) => (status ? 'green' : 'red')};
 
-  font-size: 20px;
+  font-size: 21px;
   border-radius: 50%;
 
   display: flex;
