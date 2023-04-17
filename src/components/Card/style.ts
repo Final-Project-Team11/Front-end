@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StCardBlock = styled.div`
-  background-color: #e64042;
+  background-color: #badaff;
 
   width: 260px;
   height: 120px;
@@ -11,7 +11,7 @@ export const StCardBlock = styled.div`
   padding: 10px;
   box-sizing: border-box;
   gap: 10px;
-  text-shadow: rgba(212, 229, 249, 0.4) 0px 1px 9px -1px;
+  text-shadow: 0px 1px 9px rgba(212, 229, 249, 1);
 `;
 
 export const StInfoBlock = styled.div`
