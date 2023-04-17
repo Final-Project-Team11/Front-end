@@ -32,9 +32,16 @@ const VacationTab = () => {
     }
   }, [handleScroll]);
 
-  const vacations = data?.pages[0].vacation;
+  const vacations = data
+    ? data.pages.reduce<VacationList[]>(
+        (acc, page) => [...acc, ...(page.vacation as VacationList[])],
+        []
+      )
+    : [];
 
-  if (data) console.log(data?.pages);
+  if (!vacations) {
+    return <h1>....loading</h1>;
+  }
 
   return (
     <UI.StVacationTabBlock>

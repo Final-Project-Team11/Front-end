@@ -12,7 +12,7 @@ const Vacation = ({ vacation }: VacateProps) => {
   let requestStatus: React.ReactNode;
 
   // 요소에 마우스 진입 시 hover state 변경되며 선택창 등장
-  switch (status) {
+  switch (vacation.status) {
     case 'accept':
       requestStatus = (
         <UI.StAcceptBlock onMouseEnter={() => setHover(true)} status={true}>
@@ -36,29 +36,44 @@ const Vacation = ({ vacation }: VacateProps) => {
       break;
   }
 
-  const payload = {
-    status: 'accept' | 'deny';
+  interface Payload {
+    status: 'submit' | 'accept' | 'deny';
     eventId: number;
   }
 
-  const { mutate } = usePutDecision(payload);
+  const accept: Payload = {
+    status: 'accept',
+    eventId: vacation.eventId,
+  };
+  const deny: Payload = {
+    status: 'deny',
+    eventId: vacation.eventId,
+  };
 
-  console.log(hover);
+  const { mutate } = usePutDecision();
 
   return (
     <UI.StVacateBlock onMouseLeave={() => setHover(false)}>
       <UI.StSpanBlock>
-        <UI.StVacateSpan>{`${type} | ${userName}`}</UI.StVacateSpan>
-        <UI.StVacateSpan>{`기간 | ${startDay} ~ ${endDay}`}</UI.StVacateSpan>
+        <UI.StVacateSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StVacateSpan>
+        <UI.StVacateSpan>{`기간 | ${vacation.startDay} ~ ${vacation.endDay}`}</UI.StVacateSpan>
       </UI.StSpanBlock>
 
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
       {hover ? (
         <UI.StDecideBlock onMouseLeave={() => setHover(false)}>
-          <UI.StDecAcceptBlock className="decision" status={true}>
+          <UI.StDecAcceptBlock
+            className="decision"
+            status={true}
+            onClick={() => mutate(accept)}
+          >
             <BsCheck />
           </UI.StDecAcceptBlock>
-          <UI.StDecAcceptBlock className="decision" status={false}>
+          <UI.StDecAcceptBlock
+            className="decision"
+            status={false}
+            onClick={() => mutate(deny)}
+          >
             <BsX />
           </UI.StDecAcceptBlock>
         </UI.StDecideBlock>

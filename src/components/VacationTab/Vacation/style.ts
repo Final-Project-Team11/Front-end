@@ -5,7 +5,7 @@ interface RequestStatusProps {
 }
 
 export const StVacateBlock = styled.div`
-  position: relative; // 추가
+  position: relative;
   width: 100%;
   height: fit-content;
 
@@ -15,7 +15,6 @@ export const StVacateBlock = styled.div`
 `;
 
 export const StSpanBlock = styled.div`
-  background-color: azure;
   width: 65%;
   height: 100%;
 
