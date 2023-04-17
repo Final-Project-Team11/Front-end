@@ -16,7 +16,6 @@ export const usePutDecision = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_VACATION_LIST]);
-      console.log('@@@@@@@@@@@@@@', mutate);
     },
   });
 

@@ -43,6 +43,8 @@ const VacationTab = () => {
     return <h1>....loading</h1>;
   }
 
+  console.log(vacations);
+
   return (
     <UI.StVacationTabBlock>
       🏖️
