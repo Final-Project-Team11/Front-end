@@ -42,13 +42,11 @@ export const StDeviderBlock = styled.div`
 `;
 
 export const StUploadedFileBlock = styled.div`
-  /* background-color: yellow; */
   width: 100%;
   height: 100px;
   display: flex;
   flex-direction: column;
   margin-top: 5px;
-  /* overflow-x: hidden; */
   gap: 2px;
 `;
 
