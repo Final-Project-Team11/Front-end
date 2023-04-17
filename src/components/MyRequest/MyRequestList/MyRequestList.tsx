@@ -7,13 +7,17 @@ const MyRequestList = ({ tag }: TagsProps) => {
   return (
     <UI.StFileBlock>
       <UI.StSpanBlock>
-        <UI.StFileSpan>{`🙋🏻‍♂️ | ${tag.userName}`}</UI.StFileSpan>
-        <UI.StFileSpan>
-          {tag.startDay === tag.endDay ? tag.startDay : `${tag.startDay} ~ ${tag.endDay}`}
-        </UI.StFileSpan>
+        <UI.StNameDateBlock>
+          <UI.StFileSpan>{`🙋🏻‍♂️ | ${tag.userName}`}</UI.StFileSpan>
+          <UI.StDateSpan>
+            {tag.startDay === tag.endDay
+              ? tag.startDay
+              : `${tag.startDay} ~ ${tag.endDay}`}
+          </UI.StDateSpan>
+        </UI.StNameDateBlock>
         <UI.StFileSpan>{`💾 | ${tag.title}`}</UI.StFileSpan>
       </UI.StSpanBlock>
-      <UI.StStatusBlock>
+      <UI.StStatusBlock status={tag.status}>
         {tag.status === 'submit' ? (
           <BsCircle />
         ) : tag.status === 'accept' ? (
