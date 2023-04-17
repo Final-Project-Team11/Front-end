@@ -11,7 +11,7 @@ export const StBlock = styled.div`
   box-sizing: border-box;
 `;
 
-export const Tap = styled.div`
+export const Tap = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
