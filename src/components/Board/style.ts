@@ -7,7 +7,7 @@ interface HeightProps {
 
 export const StTabBlock = styled.div<HeightProps>`
   width: 260px;
-  height: ${({ types }) => (types === 'MyPage' ? '700px' : '340px')};
+  height: ${({ types }) => (types === 'MyPage' ? '700px' : '351px')};
 
   display: flex;
   flex-direction: column;
