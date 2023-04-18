@@ -28,9 +28,7 @@ const FileUpload = (props: FileUploadProps) => {
       {fileNames?.map(item => {
         return <styles.StTagBlock key={nanoid()}>{item}</styles.StTagBlock>;
       })}
-      <styles.StPlusLabel htmlFor="FileInput">
-        <HiOutlinePlusSm size="25px" />
-      </styles.StPlusLabel>
+      <styles.StPlusLabel htmlFor="FileInput"></styles.StPlusLabel>
       <styles.StInput type="file" id="FileInput" onChange={ChangeHandler} />
     </styles.StContainer>
   );
