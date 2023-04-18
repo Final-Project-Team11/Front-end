@@ -13,9 +13,7 @@ const Main = () => {
   const [tab, setTab] = useState(1);
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
-  // const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
 
-  console.log('data', data);
   useEffect(() => {
     if (tab === 0) {
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
