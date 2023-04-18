@@ -134,6 +134,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       body: res.body,
       mention: res.attendees,
       userId: userId,
+      isReadOnly: res.isReadOnly,
     };
     setClickData(newData);
     setClickDetail(true);
