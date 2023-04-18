@@ -114,6 +114,10 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   }, [view]);
 
   useEffect(() => {
+    setClickDetail(false);
+  }, [tab]);
+
+  useEffect(() => {
     updateRenderRangeText();
   }, [selectedView, updateRenderRangeText]);
 
