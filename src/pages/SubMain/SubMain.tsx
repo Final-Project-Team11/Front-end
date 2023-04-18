@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 //외부
+import { useTransition, animated, AnimatedProps, useSpringRef } from '@react-spring/web';
 import type { EventObject, ExternalEventTypes, Options } from '@toast-ui/calendar';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import 'tui-date-picker/dist/tui-date-picker.css';
@@ -7,21 +8,25 @@ import 'tui-time-picker/dist/tui-time-picker.css';
 import { ScheduleProps } from './interfaces';
 import { TZDate } from '@toast-ui/calendar';
 import type { ChangeEvent, MouseEvent } from 'react';
+import { TfiBackLeft } from 'react-icons/tfi';
 import { switchCase } from '@babel/types';
 import cheerio from 'cheerio';
 
 //내부
-import { addDate, addHours, initCalendar, settingSchedule, subtractDate } from './utils';
+
+import ScheduleFormat from '../../components/DocumentForm/ScheduleFormat/ScheduleFormat';
 import Calendar from '../../components/ToastCalendar/Calendar';
-import useGetMain from '../../api/hooks/useGetMain';
 import { CalendarContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
-import Detail from './Detail/Detail';
-
+import { initCalendar } from './utils';
 import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
+
+import VacationFormat from '../../components/DocumentForm/VacationFormat/VacationFormat';
 import TodaySchedules from './TodayScheduels/TodaySchedules';
+import { getCookie } from '../../auth/CookieUtils';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -47,7 +52,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   const [clickData, setClickData] = useState<ScheduleProps>();
   const [todayData, setTodayData] = useState<number>(0);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
-  const [clickDetail, setClickDetail] = useState(false);
+  const [clickDetail, setClickDetail] = useState<boolean>(false);
   const detailRef = useRef<HTMLDivElement>(null);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
@@ -115,9 +120,12 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   const onAfterRenderEvent: ExternalEventTypes['afterRenderEvent'] = res => {
     console.group('onAfterRenderEvent');
     console.log('Event Info : ', res);
-    console.log('Event Info : ', res.title);
+
     console.groupEnd();
 
+    const token = getCookie('token');
+    const decoded = token && jwtDecode<JwtPayload>(token);
+    const userId = decoded ? decoded.userId : '';
     const newData = {
       eventType: res.calendarId,
       title: res.title,
@@ -125,6 +133,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       endDay: res.end,
       body: res.body,
       mention: res.attendees,
+      userId: userId,
     };
     setClickData(newData);
     setClickDetail(true);
@@ -176,6 +185,8 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       endDay: res.event.end,
       body: res.event.body,
       mention: res.event.attendees,
+      isReadOnly: res.event.isReadOnly,
+      userId: res.event.id,
     };
     setClickData(newData);
     setClickDetail(true);
@@ -225,44 +236,37 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
     getCalInstance().createEvents([event]);
   };
 
-  const clickBkHandler = (e: globalThis.MouseEvent) => {
-    const node: Node | null = e.target as Node | null;
-    if (
-      !(
-        node instanceof Element &&
-        node.className === 'toastui-calendar-weekday-event-title'
-      ) &&
-      clickDetail === true &&
-      !detailRef.current?.contains(node)
-    ) {
-      setClickDetail(false);
-    }
+  // const clickBkHandler = (e: globalThis.MouseEvent) => {
+  //   const node: Node | null = e.target as Node | null;
+  //   const targetNode = e.target as HTMLElement;
+  //   const className: string = targetNode.className;
 
-    if (
-      node instanceof Element &&
-      node.className === 'toastui-calendar-grid-cell-header'
-    ) {
-      const html = node.outerHTML;
-      const $ = cheerio.load(html);
-      const dateSpan = $(
-        'span.toastui-calendar-weekday-grid-date.toastui-calendar-template-monthGridHeader'
-      );
+  //   if (
+  //     !(node instanceof Element && node.tagName === 'STRONG') &&
+  //     !(node instanceof Element && node.tagName === 'SPAN') &&
+  //     className !== 'toastui-calendar-weekday-event-title' &&
+  //     clickDetail === true &&
+  //     !detailRef.current?.contains(node)
+  //   ) {
+  //     console.log(className !== 'toastui-calendar-weekday-event-title');
+  //     setClickDetail(false);
+  //   }
+  // };
 
-      const dateValue = dateSpan.text();
-      console.log('dateValue', dateValue);
-      setTodayData(Number(dateValue));
-    }
-  };
-  useEffect(() => {
-    window.addEventListener('click', clickBkHandler);
-    return () => {
-      window.removeEventListener('click', clickBkHandler);
-    };
-  }, [clickDetail]);
+  // useEffect(() => {
+  //   window.addEventListener('click', clickBkHandler);
+  //   return () => {
+  //     window.removeEventListener('click', clickBkHandler);
+  //   };
+  // }, [clickDetail]);
 
   return (
     <div style={{ width: '100%' }}>
-      <Header selectedDateRangeText={selectedDateRangeText} tab={tab} />
+      <Header
+        selectedDateRangeText={selectedDateRangeText}
+        tab={tab}
+        initialCalendars={initialCalendars}
+      />
       <div className="bodyContainer">
         <div style={{ marginTop: '30px', marginRight: '30px' }}>
           <Feed />
@@ -319,8 +323,20 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
           />
         </div>
       </div>
-      <Detail props={{ ...clickData, tab: tab }} />
-      {/* <TodaySchedules todayData={todayData} /> */}
+
+      {clickDetail === false ? (
+        <TodaySchedules todayData={todayData} />
+      ) : tab === 0 ? (
+        <ScheduleFormat
+          props={{ ...clickData, tab: tab, propsRef: detailRef }}
+          onReturnHandler={setClickDetail}
+        />
+      ) : (
+        <VacationFormat
+          props={{ ...clickData, tab: tab, propsRef: detailRef }}
+          onReturnHandler={setClickDetail}
+        />
+      )}
     </div>
   );
 }

@@ -1,17 +1,8 @@
 import React, { useContext } from 'react';
 import { CalendarContext } from '../../Main/Main';
-import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
-import { start } from 'repl';
-
-interface StylesProps {
-  backgroundColor?: string;
-  borderColor?: string;
-  color?: string;
-}
-interface TodaysProps {
-  todayData?: number;
-}
+import { nanoid } from 'nanoid';
+import { TodaysProps } from './interfaces';
+import * as styles from './styles';
 
 const TodaySchedules = (props: TodaysProps) => {
   const schedules = useContext(CalendarContext);
@@ -23,69 +14,50 @@ const TodaySchedules = (props: TodaysProps) => {
     return startDay.getDate() <= today && endDay.getDate() >= today;
   });
 
+  console.log(filterSchedules);
   return (
-    <StWrap>
-      <StContainer>
-        <h1>today work's</h1>
-        {filterSchedules?.map(item => {
-          const startDay = new Date(item.start);
-          return (
-            <StScheduleBlock>
-              <StMarkBlock backgroundColor={item.backgroundColor} />
-              <StBlock>
-                <span>{startDay.getFullYear()}</span>
-                <span>/</span>
-                <span>{startDay.getMonth().toString().padStart(2, '0')}</span>
-                <span>/</span>
-                <span>{startDay.getDate()}</span>
-              </StBlock>
-              <StBlock>
-                <span>{startDay.getHours()}:</span>
-                <span>{startDay.getMinutes().toString().padStart(2, '0')}</span>
-              </StBlock>
-              <StBlock>
-                <span>{item.userName}</span>
-              </StBlock>
-              <StBlock>
-                <span>{item.title}</span>
-              </StBlock>
-            </StScheduleBlock>
-          );
-        })}
-      </StContainer>
-    </StWrap>
+    <styles.StWrap>
+      <styles.StContainer>
+        {filterSchedules.length !== 0 ? (
+          filterSchedules.map(item => {
+            const startDay = new Date(item.start);
+            return (
+              <styles.StScheduleBlock key={nanoid()}>
+                <styles.StMarkBlock backgroundColor={item.backgroundColor} />
+                <styles.StDateBlock>
+                  <styles.StSpan>{startDay.getFullYear()}</styles.StSpan>
+                  <styles.StSpan>/</styles.StSpan>
+                  <styles.StSpan>
+                    {startDay.getMonth().toString().padStart(2, '0')}
+                  </styles.StSpan>
+                  <styles.StSpan>/</styles.StSpan>
+                  <styles.StSpan>{startDay.getDate()}</styles.StSpan>
+                </styles.StDateBlock>
+                <styles.StDateBlock>
+                  <styles.StSpan>{startDay.getHours()}</styles.StSpan>
+                  <styles.StSpan>:</styles.StSpan>
+                  <styles.StSpan>
+                    {startDay.getMinutes().toString().padStart(2, '0')}
+                  </styles.StSpan>
+                </styles.StDateBlock>
+                <styles.StBlock>
+                  <span>{item.userName}</span>
+                </styles.StBlock>
+                <styles.StBlock>
+                  <span>{item.title}</span>
+                </styles.StBlock>
+              </styles.StScheduleBlock>
+            );
+          })
+        ) : (
+          <styles.StScheduleBlock>
+            <styles.StMarkBlock backgroundColor={'lightgray'} />
+            일정이 존재하지 않습니다.
+          </styles.StScheduleBlock>
+        )}
+      </styles.StContainer>
+    </styles.StWrap>
   );
 };
 
 export default TodaySchedules;
-
-const StBlock = styled.div`
-  margin-right: 40px;
-`;
-
-const StMarkBlock = styled.div<StylesProps>`
-  width: 13px;
-  height: 40px;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : 'red'};
-  border-radius: 10px;
-  margin-left: 10px;
-`;
-
-const StScheduleBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  border-top: 1px solid #cccccc;
-  padding: 15px 10px;
-`;
-
-const StWrap = styled.div`
-  display: flex;
-  flex: 1;
-`;
-
-const StContainer = styled.div`
-  width: 100%;
-`;

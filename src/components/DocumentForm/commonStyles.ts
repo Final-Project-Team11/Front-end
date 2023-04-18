@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../constants/colors';
 
-const StContainer = styled.div`
-  border-top: 3px solid ${COLOR.DETAIL_GRAY};
-`;
+const StContainer = styled.div``;
 
 const StTitleContentBlock = styled.div`
   display: flex;
@@ -18,22 +16,32 @@ const StTitleBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid ${COLOR.DETAIL_GRAY};
 `;
 
 const StContentBlock = styled.div`
   height: 250px;
-  border-top: 3px solid ${COLOR.DETAIL_GRAY};
-  border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
+  border-top: 1px solid ${COLOR.DETAIL_GRAY};
+  border-bottom: 1px solid ${COLOR.DETAIL_GRAY};
   padding: 10px 0;
 `;
 
 const StMentionBlock = styled.div`
-  border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
-  height: 60px;
-  margin-bottom: 30px;
+  border-bottom: 1px solid ${COLOR.DETAIL_GRAY};
+  margin-bottom: 200px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  gap: 10px;
 `;
 
-const StButtonBlock = styled.div``;
+const StButtonBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
 
 const StTextArea = styled.textarea`
   width: 100%;
@@ -42,13 +50,20 @@ const StTextArea = styled.textarea`
   outline: none;
   font-size: 20px;
   resize: none;
+
+  &:disabled {
+    background: none;
+  }
 `;
 
 const StInput = styled.input`
   border: none;
   font-size: 20px;
-
   outline: none;
+
+  &:disabled {
+    background: none;
+  }
 `;
 
 const StMarkBlock = styled.div`
@@ -92,6 +107,29 @@ const StFileNameSpan = styled.span`
   }
 `;
 
+const stTagBlock = styled.div`
+  background-color: lightgray;
+  width: 50px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 5px;
+`;
+
+const Ststrong = styled.strong`
+  font-weight: bold;
+  font-size: 1.5rem;
+`;
+
+const StReturnBlcok = styled.div`
+  margin-right: 50px;
+  cursor: pointer;
+
+  opacity: 1;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
 export {
   StContainer,
   StTitleBlock,
@@ -107,4 +145,7 @@ export {
   StTextAreaBlock,
   StFileBlock,
   StFileNameSpan,
+  stTagBlock,
+  Ststrong,
+  StReturnBlcok,
 };

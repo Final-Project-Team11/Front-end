@@ -1,7 +1,7 @@
 import React, { useEffect, createContext, useState, useContext } from 'react';
 import { SubMain } from '../SubMain/SubMain';
 import Calendar from '../../components/ToastCalendar/Calendar';
-import useGetMain from '../../api/hooks/useGetMain';
+import useGetMain from '../../api/hooks/Main/useGetMain';
 import { ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
@@ -15,6 +15,7 @@ const Main = () => {
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
   // const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
 
+  console.log('data', data);
   useEffect(() => {
     if (tab === 0) {
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
