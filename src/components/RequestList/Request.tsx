@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import { useGetRequest } from '../../api/hooks/Request.tsx/useGetRequest';
-import { BsCheckCircleFill, BsCircle, BsXCircleFill } from 'react-icons/bs';
+
+import Board from '../Board/Board';
+import RequestedOne from './RequestedOne/RequestedOne';
 
 const Request = () => {
   const { data, fetchNextPage, hasNextPage } = useGetRequest();
@@ -30,41 +32,20 @@ const Request = () => {
     }
   }, [handleScroll]);
 
-  const tags = data ? data.pages.flatMap(page => page.schedule) : [];
+  const requests = data ? data.pages.flatMap(page => page.schedule) : [];
+
+  const icon = '✈️';
+
+  console.log(requests);
 
   return (
-    <UI.StRequestedBlock>
-      ✈️ RequestedList
-      <UI.StDeviderBlock />
+    <Board icon={icon} title="RequestedList">
       <UI.StInsideBlock ref={targetDiv}>
-        {tags.map(tag => {
-          return (
-            <UI.StRequestedListBlock key={tag.eventId}>
-              <UI.StNameDateBlock>
-                <UI.StNameDateDiv>
-                  <UI.StNameSpan>😵‍💫 | {tag.userName}</UI.StNameSpan>
-                  <UI.StDateSpan>
-                    {tag.startDay === tag.endDay
-                      ? tag.startDay
-                      : `${tag.startDay} ~ ${tag.endDay}`}
-                  </UI.StDateSpan>
-                </UI.StNameDateDiv>
-                <UI.StCircleBlock types={tag.status}>
-                  {tag.status === 'submit' ? (
-                    <BsCircle />
-                  ) : tag.status === 'accept' ? (
-                    <BsCheckCircleFill />
-                  ) : tag.status === 'deny' ? (
-                    <BsXCircleFill />
-                  ) : null}
-                </UI.StCircleBlock>
-              </UI.StNameDateBlock>
-              <UI.StContentSpan>📎 | {tag.title}</UI.StContentSpan>
-            </UI.StRequestedListBlock>
-          );
+        {requests.map(request => {
+          return <RequestedOne key={request.eventId} request={request} />;
         })}
       </UI.StInsideBlock>
-    </UI.StRequestedBlock>
+    </Board>
   );
 };
 

@@ -8,8 +8,7 @@ interface RequestInfo {
   userName: string;
   title: string;
   file: string;
-  startDay: string;
-  endDay: string;
+  enrollDay: string;
   status: 'submit' | 'accept' | 'deny';
 }
 
