@@ -12,6 +12,8 @@ interface ScheduleProps {
     tab: number;
     userId?: string;
     isReadOnly?: boolean;
+    ref?: string;
+    file?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
 }
