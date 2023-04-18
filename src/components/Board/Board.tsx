@@ -3,13 +3,14 @@ import * as UI from './style';
 
 interface ComponentProps {
   children: React.ReactNode;
-  icon: React.ReactElement;
+  icon: React.ReactElement | string;
   title: string;
+  types?: 'MyPage' | 'ManagerPage';
 }
 
-const Board = ({ children, icon, title }: ComponentProps) => {
+const Board = ({ children, icon, title, types }: ComponentProps) => {
   return (
-    <UI.StTabBlock>
+    <UI.StTabBlock types={types}>
       <UI.StIconBlock>
         {/* 아이콘 */}
         {icon}

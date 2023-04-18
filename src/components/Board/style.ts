@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { COLOR } from '../../constants/colors';
 
-export const StTabBlock = styled.div`
+interface HeightProps {
+  types?: 'MyPage' | 'ManagerPage';
+}
+
+export const StTabBlock = styled.div<HeightProps>`
   width: 260px;
-  height: 340px;
+  height: ${({ types }) => (types === 'MyPage' ? '700px' : '340px')};
 
   display: flex;
   flex-direction: column;

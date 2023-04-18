@@ -1,30 +1,36 @@
-import styled, { css } from 'styled-components';
-import { CssProps } from './interfaces';
+import styled from 'styled-components';
+import { COLOR } from '../../../constants/colors';
 
-export const StTagsBlock = styled.div<CssProps>`
+interface BlockProps {
+  isChecked: 0 | 1;
+}
+
+interface SpanProps {
+  types: 'MyPage' | 'ManagerPage';
+}
+
+export const StTagsBlock = styled.div<BlockProps>`
   /* background-color: yellow; */
   width: 100%;
   height: fit-content;
 
   overflow-x: hidden;
-  overflow-y: hidden;
 
-  margin-bottom: 8px;
+  margin-bottom: 2px;
+  line-height: 20px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-
-  ${({ isChecked }) =>
-    isChecked
-      ? css`
-          color: red;
-          font-weight: bold;
-        `
-      : null}
+  color: ${({ isChecked }) => (isChecked ? COLOR.PAGE_DONE : COLOR.PAGE_SPAN)};
+  font-weight: ${({ isChecked }) => (isChecked ? 'lighter' : 'bold')};
 `;
 
-export const StTagsSpan = styled.span`
-  font-size: 20px;
+export const StContentSpan = styled.span<SpanProps>`
+  font-size: ${({ types }) => (types === 'MyPage' ? '15px' : '14px')};
+
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis; // 넘치는 부분에 ... 처리
+  white-space: nowrap; // 텍스트를 한 줄로 표시
+  max-width: 100%;
+
+  cursor: pointer;
 `;
