@@ -18,7 +18,7 @@ const Manager = () => {
         <MainArea>
           <Feed />
           <MiddleArea>
-            <Tag types="MainPage" />
+            <Tag types="ManagerPage" />
             <VacationTab />
           </MiddleArea>
           <MiddleArea>

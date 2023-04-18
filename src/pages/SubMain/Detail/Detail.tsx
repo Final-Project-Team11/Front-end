@@ -30,7 +30,7 @@ function Detail({ props }: ScheduleProps) {
   const SaveClickHandler = () => {
     const newData = postFormat(props.tab, props);
     console.log(newData);
-    mutation.mutate({ ...newData });
+    // mutation.mutate({ ...newData });
   };
 
   const [author, autherHandler] = useInput();

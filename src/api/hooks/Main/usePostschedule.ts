@@ -21,9 +21,17 @@ const usePostschedule = () => {
 
   const mutation = useMutation({
     mutationFn: async (payload: Paylaod) => {
-      const data = api.post(`/${payload.url}`, payload.postInfo);
-      console.log('datapost', data);
-      return data;
+      if (payload.postInfo?.file) {
+        const newPostInfo = {
+          ...payload.postInfo,
+          file: JSON.parse(payload.postInfo.file),
+        };
+        const data = api.post(`/${payload.url}`, newPostInfo);
+        return data;
+      } else {
+        const data = api.post(`/${payload.url}`, payload.postInfo);
+        return data;
+      }
     },
 
     onSuccess: () => {

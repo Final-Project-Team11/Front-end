@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
 import * as UI from './style';
 import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
+import Board from '../Board/Board';
+import UploadedOne from './UploadedOne/UploadedOne';
 
 const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
   const { data, fetchNextPage, hasNextPage } = useGetFile(type);
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
+  // 스크롤이벤트 동작 시 GET 요청
   const handleScroll = () => {
     const container = targetDiv.current;
 
@@ -15,7 +18,7 @@ const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
       const scrollTop = container.scrollTop;
       const clientHeight = container.clientHeight;
 
-      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
+      if (scrollTop + clientHeight + 1 >= scrollHeight && hasNextPage) {
         fetchNextPage();
       }
     }
@@ -30,26 +33,33 @@ const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
     }
   }, [handleScroll]);
 
-  const tags = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
+  const files = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
+
+  // 받아오는 type 에 따라 보드 타이틀 변경
+  let title;
+  switch (type) {
+    case 'meetingfiles': {
+      title = '회의록';
+      break;
+    }
+    case 'myfiles': {
+      title = '내가 올린 파일';
+      break;
+    }
+    case 'reportfiles': {
+      title = '보고서';
+      break;
+    }
+  }
 
   return (
-    <UI.StUploadedBlock>
-      {icon}
-      <UI.StDeviderBlock />
+    <Board icon={icon} title={title}>
       <UI.StInsideBlock ref={targetDiv}>
-        {tags.map((tag: UploadedFileList) => {
-          return (
-            <UI.StUploadedFileBlock key={tag.eventId}>
-              <UI.StNameDateBlock>
-                <UI.StContentSpan>😵‍💫 | {tag.userName}</UI.StContentSpan>
-                <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan>
-              </UI.StNameDateBlock>
-              <UI.StContentSpan>📎 | {tag.fileName}</UI.StContentSpan>
-            </UI.StUploadedFileBlock>
-          );
+        {files.map((file: UploadedFileList) => {
+          return <UploadedOne key={file.eventId} file={file} />;
         })}
       </UI.StInsideBlock>
-    </UI.StUploadedBlock>
+    </Board>
   );
 };
 

@@ -12,14 +12,24 @@ import { getCookie } from '../../../auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import AddTodo from '../../Feed/Todo/AddTodo';
 import { RiArrowLeftSLine } from 'react-icons/ri';
+import FileUpload from '../../FileUpload/FileUpload';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
+  const [FormFiles, SetFormFile] = useState<File>();
+
   const SaveClickHandler = () => {
     if (disable === false) {
-      const newData = postFormat(props.tab, props);
-      console.log(newData);
-      mutation.mutate(newData);
+      const formData = new FormData();
+      if (FormFiles !== undefined) {
+        formData.append('file', FormFiles);
+        const newProps = { ...props, file: JSON.stringify(formData) };
+        const newData = postFormat(props.tab, newProps);
+        mutation.mutate(newData);
+      } else {
+        const newData = postFormat(props.tab, props);
+        mutation.mutate(newData);
+      }
     } else if (disable === true) {
       console.log('t');
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
@@ -28,7 +38,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
     setDisable(!disable);
   };
 
-  console.log(props.eventType);
   const token = getCookie('token');
   const decoded = token && jwtDecode<JwtPayload>(token);
   const userId = decoded ? decoded.userId : '';
@@ -45,7 +54,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
     props.isReadOnly && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
   }, [props]);
-
   return (
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
@@ -92,7 +100,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock>
           <styles.StTextArea
-            defaultValue={props.body}
             placeholder="내용을 입력해주세요"
             value={content}
             onChange={contentHandler}
@@ -100,8 +107,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
           />
         </styles.StTextAreaBlock>
         <styles.StFileBlock>
-          <MdFolder color={'#D9D9D9'} size={'25px'} />
-          <styles.StFileNameSpan>파일 추가하기</styles.StFileNameSpan>
+          <FileUpload onFileHandler={SetFormFile} />
         </styles.StFileBlock>
       </styles.StContentBlock>
     </styles.StContainer>
