@@ -10,7 +10,6 @@ export function useInput(): [
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    console.log(inputValue);
   };
 
   return [inputValue, handleChange, setInputValue];

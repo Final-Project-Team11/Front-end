@@ -1,10 +1,10 @@
 import React from 'react';
-import Tag from '../../components/Tag/Tag';
+import Tag from '../../components/Tag';
 import styled from 'styled-components';
-import Feed from '../../components/Feed/Feed';
-import VacationTab from '../../components/VacationTab/VacationTab';
+import Feed from '../../components/Feed';
 import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
+import MyRequest from '../../components/MyRequest/MyRequest';
 
 const MyPage = () => {
   return (
@@ -16,21 +16,20 @@ const MyPage = () => {
         </Header>
         <MainArea>
           <Feed />
-          <Tag />
+          <Tag types="MyPage" />
           <MiddleArea>
-            <UploadedFileTab type="Myfile" icon="📕" />
-            <UploadedFileTab type="meeting" icon="📗" />
+            <UploadedFileTab type="myfiles" icon="📕" />
+            <UploadedFileTab type="meetingfiles" icon="📗" />
           </MiddleArea>
           <MiddleArea>
-            <VacationTab />
-            <UploadedFileTab type="report" icon="📘" />
+            <MyRequest />
+            <UploadedFileTab type="reportfiles" icon="📘" />
           </MiddleArea>
         </MainArea>
       </Wrapper>
     </Frame>
   );
 };
-
 const Frame = styled.div`
   width: 1920px;
   height: 1080px;
@@ -42,16 +41,17 @@ const Frame = styled.div`
 const Wrapper = styled.div`
   /* background-color: beige; */
   width: 1200px;
-  height: 100vh;
+  height: 100%;
+  padding-top: 25px;
 
   display: flex;
   flex-direction: column;
 `;
 
 const Header = styled.div`
-  background-color: #d5f09f;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   width: 100%;
   height: 150px;
@@ -67,7 +67,6 @@ const Calendar = styled.div`
 `;
 
 const MainArea = styled.div`
-  /* background-color: #ffeff2; */
   width: 100%;
   height: 100%;
 
@@ -75,7 +74,7 @@ const MainArea = styled.div`
   box-sizing: border-box;
 
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   gap: 15px;
 `;
 

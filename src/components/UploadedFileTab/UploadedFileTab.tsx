@@ -1,60 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Category from './FileCategory';
+import React, { useEffect, useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
+import * as UI from './style';
+import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
 
 const UploadedFileTab = ({ type, icon }: UploadedFileTabProps) => {
-  //////////////////////////////////////////////////////
-  // const [queryNum, setQueryNum] = useState<number>(0);
-  // const [fileList, setFileList] = useState<never[] | UploadedFileList[]>([]);
+  const { data, fetchNextPage, hasNextPage } = useGetFile(type);
+  const targetDiv = useRef<HTMLDivElement | null>(null);
 
-  // const onScroll = () => {
-  //   if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight) {
-  //     setQueryNum(pre => pre + 1);
-  //   }
-  // };
+  const handleScroll = () => {
+    const container = targetDiv.current;
 
-  // useEffect(() => {
-  //   window.addEventListener('scroll', onScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', onScroll);
-  //   };
-  // }, [queryNum]);
+    if (container) {
+      const scrollHeight = container.scrollHeight;
+      const scrollTop = container.scrollTop;
+      const clientHeight = container.clientHeight;
 
-  // useEffect(() => {
-  //   if (boardData) {
-  //     setPostData((prevPostData: never[] | ImageType[]): never[] | ImageType[] => [
-  //       ...prevPostData,
-  //       ...boardData,
-  //     ]);
-  //   }
-  // }, [boardData]);
-  /////////////////////////////////////////////////////////////
+      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
+        fetchNextPage();
+      }
+    }
+  };
 
-  let sentQuery;
+  // div에 스크롤 이벤트 추가.
+  useEffect(() => {
+    const container = targetDiv.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [handleScroll]);
 
-  switch (type) {
-    case 'Myfile':
-      sentQuery = 'Myfile';
-      console.log(sentQuery);
-      break;
-    case 'meeting':
-      sentQuery = 'meeting';
-      console.log(sentQuery);
-      break;
-    case 'report':
-      sentQuery = 'report';
-      console.log(sentQuery);
-      break;
-    default:
-      break;
-  }
+  const tags = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
 
   return (
-    <Category
-    // fileList={fileList}
-    >
+    <UI.StUploadedBlock>
       {icon}
-    </Category>
+      <UI.StDeviderBlock />
+      <UI.StInsideBlock ref={targetDiv}>
+        {tags.map((tag: UploadedFileList) => {
+          return (
+            <UI.StUploadedFileBlock key={tag.eventId}>
+              <UI.StNameDateBlock>
+                <UI.StContentSpan>😵‍💫 | {tag.userName}</UI.StContentSpan>
+                <UI.StDateSpan> {tag.enrollDay}</UI.StDateSpan>
+              </UI.StNameDateBlock>
+              <UI.StContentSpan>📎 | {tag.fileName}</UI.StContentSpan>
+            </UI.StUploadedFileBlock>
+          );
+        })}
+      </UI.StInsideBlock>
+    </UI.StUploadedBlock>
   );
 };
 

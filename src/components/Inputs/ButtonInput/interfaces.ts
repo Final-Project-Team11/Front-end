@@ -4,6 +4,7 @@ export interface InputProps {
   Bgcolor?: string;
   type?: string;
   buttonTag?: string;
+  name?: string;
   placeholder?: string;
   inputId?: string;
   value?: string;

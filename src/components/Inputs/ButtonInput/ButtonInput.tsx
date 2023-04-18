@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   StCheckButton,
   StColumnBlock,
@@ -13,6 +12,7 @@ const ButtonInput = ({
   children,
   Bgcolor,
   buttonTag,
+  name,
   type,
   onClick,
   placeholder,
@@ -32,8 +32,11 @@ const ButtonInput = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          name={name}
         />
-        <StCheckButton onClick={onClick}>{buttonTag}</StCheckButton>
+        <StCheckButton onClick={onClick} type="button">
+          {buttonTag}
+        </StCheckButton>
       </StInputButtonBlock>
     </StColumnBlock>
   );

@@ -9,6 +9,9 @@ import {
 } from './styles';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import Button from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { useLogin } from './hooks/useLogin';
+import { getCookie } from '../../auth/CookieUtils';
 
 enum Tabs {
   Tab1 = 'Tab1',
@@ -16,24 +19,40 @@ enum Tabs {
 }
 
 const Tabconent1 = () => {
+  const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useLogin();
+  const navigate = useNavigate();
+
   return (
-    <Tap>
+    <Tap onSubmit={submitLoginHandler}>
       <InputWrapper>
-        <MaxInput types="half" type="text">
-          대표자 아이디
-        </MaxInput>
-        <MaxInput types="half" type="text">
+        <MaxInput
+          types="half"
+          type="text"
+          name="companyId"
+          value={adminLoginInfo.companyId}
+          onChange={changeInputHandler}
+        >
           아이디
         </MaxInput>
-        <MaxInput types="half" type="password">
+        <MaxInput
+          types="half"
+          type="password"
+          name="password"
+          value={adminLoginInfo.password}
+          onChange={changeInputHandler}
+        >
           비밀번호
         </MaxInput>
       </InputWrapper>
       <TextWrapper>
-        <span>미어캣린더가 처음이면! 회원가입</span>
+        <span onClick={() => navigate('/masterSignup')}>
+          미어캣린더가 처음이면! 회원가입
+        </span>
         <span>아이디 / 비밀번호 찾기</span>
       </TextWrapper>
-      <Button size="example">로그인</Button>
+      <div style={{ marginTop: '30px' }}>
+        <Button size="example">로그인</Button>
+      </div>
     </Tap>
   );
 };
@@ -42,6 +61,9 @@ const Tabconent2 = () => {
   return (
     <Tap>
       <InputWrapper>
+        <MaxInput types="half" type="text">
+          대표자 아이디
+        </MaxInput>
         <MaxInput types="half" type="text">
           아이디
         </MaxInput>
@@ -61,6 +83,16 @@ const Login = () => {
   const ClickTabHandler = (tab: Tabs) => {
     setCurrentTab(tab);
   };
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const checkToken = getCookie('token');
+    if (checkToken) {
+      alert('이미 로그인 된 계정입니다.');
+      navigate(-1);
+    }
+  }, [navigate]);
+
   return (
     <StBlock>
       <TapButtonWrapper>

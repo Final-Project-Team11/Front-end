@@ -1,4 +1,3 @@
-import React from 'react';
 import { StColumnBlock, StColumnInput, StInputLabel } from './style';
 import { InputProps } from './interfaces';
 
@@ -11,6 +10,7 @@ const MaxInput = ({
   inputId,
   value,
   onChange,
+  name,
 }: InputProps) => {
   return (
     <StColumnBlock types={types}>
@@ -25,6 +25,7 @@ const MaxInput = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        name={name}
       />
     </StColumnBlock>
   );

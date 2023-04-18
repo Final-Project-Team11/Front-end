@@ -21,7 +21,6 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
     }
     // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
     else if (openTodoInput === true && AddTodoState.length !== 0) {
-      console.log('value 있음, 쿼리동작');
       setAddTodoState('');
       setOpenTodoInput(false);
     }
