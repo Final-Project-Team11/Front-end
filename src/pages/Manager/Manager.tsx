@@ -6,6 +6,7 @@ import Card from '../../components/Card';
 import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from './styles';
+import Board from '../../components/Board/Board';
 
 const Manager = () => {
   return (
@@ -23,12 +24,14 @@ const Manager = () => {
               <VacationTab />
             </UI.MiddleArea>
             <UI.MiddleArea>
-              <UploadedFileTab type="myfiles" icon="📕" />
+              <UploadedFileTab type="reportfiles" icon="📘" />
               <UploadedFileTab type="meetingfiles" icon="📗" />
             </UI.MiddleArea>
             <UI.MiddleArea>
               <Request />
-              <UploadedFileTab type="reportfiles" icon="📘" />
+              <Board icon="💈" title="결재 요청">
+                아직 준비중입니다.
+              </Board>
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>
