@@ -34,7 +34,7 @@ export function settingSchedule(schedule: ScheduleProps) {
   const MEETING = 'Issues';
 
   const title = schedule?.userName
-    ? schedule?.userName + '-' + schedule?.title
+    ? schedule?.title + '-' + schedule?.userName
     : schedule?.eventType;
 
   const newData = {
@@ -102,7 +102,7 @@ export function settingVacation(vacation: VacationProps) {
   const SICK_DAY = '병가';
 
   const title = vacation?.userName
-    ? vacation?.userName + '-' + vacation?.typeDetail
+    ? vacation?.typeDetail + '-' + vacation?.userName
     : vacation?.typeDetail;
 
   const newData = {
