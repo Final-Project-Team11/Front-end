@@ -99,14 +99,6 @@ const StFileBlock = styled.div`
   gap: 10px;
 `;
 
-const StFileNameSpan = styled.span`
-  color: rgb(221, 221, 221);
-
-  &:hover {
-    color: rgb(186, 186, 186);
-  }
-`;
-
 const stTagBlock = styled.div`
   background-color: lightgray;
   width: 50px;
@@ -144,7 +136,6 @@ export {
   StMarkNameBlcok,
   StTextAreaBlock,
   StFileBlock,
-  StFileNameSpan,
   stTagBlock,
   Ststrong,
   StReturnBlcok,

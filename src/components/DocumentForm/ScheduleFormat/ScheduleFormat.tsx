@@ -14,6 +14,7 @@ import AddTodo from '../../Feed/Todo/AddTodo';
 import useGetTeamInfo from '../../../api/hooks/Main/useGetTeamInfo';
 import HashTag from '../../HashTag/HashTag';
 import { RiArrowLeftSLine } from 'react-icons/ri';
+import FileUpload from '../../FileUpload/FileUpload';
 
 const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
@@ -30,6 +31,7 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   };
 
   const { data, isLoading } = useGetTeamInfo();
+  const [FormFiles, SetFormFile] = useState<File>();
 
   const token = getCookie('token');
   const decoded = token && jwtDecode<JwtPayload>(token);
@@ -101,9 +103,11 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StTextAreaBlock>
         <styles.StFileBlock>
           <MdFolder color={'#D9D9D9'} size={'25px'} />
-          <styles.StFileNameSpan>파일 추가하기</styles.StFileNameSpan>
         </styles.StFileBlock>
       </styles.StContentBlock>
+      <styles.StFileBlock>
+        <FileUpload onFileHandler={SetFormFile} />
+      </styles.StFileBlock>
       <styles.StMentionBlock>
         <AiFillTag size="25px" color="lightgray" />
         <HashTag
