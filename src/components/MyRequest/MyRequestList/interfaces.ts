@@ -1,4 +1,4 @@
-export interface MyListProps {
+interface MyListProps {
   eventId: number;
   userName: string;
   title: string;
@@ -9,6 +9,6 @@ export interface MyListProps {
   status: 'submit' | 'accept' | 'deny';
 }
 
-export interface TagsProps {
-  tag: MyListProps;
+export interface FileProps {
+  file: MyListProps;
 }

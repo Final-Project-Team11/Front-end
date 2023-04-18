@@ -9,6 +9,7 @@ const Request = () => {
   const { data, fetchNextPage, hasNextPage } = useGetRequest();
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
+  // 스크롤이벤트 동작 시 GET 요청
   const handleScroll = () => {
     const container = targetDiv.current;
 
@@ -34,6 +35,7 @@ const Request = () => {
 
   const requests = data ? data.pages.flatMap(page => page.schedule) : [];
 
+  // props 로 내려줄 icon
   const icon = '✈️';
 
   return (

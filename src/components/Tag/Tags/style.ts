@@ -10,7 +10,6 @@ interface SpanProps {
 }
 
 export const StTagsBlock = styled.div<BlockProps>`
-  /* background-color: yellow; */
   width: 100%;
   height: fit-content;
 

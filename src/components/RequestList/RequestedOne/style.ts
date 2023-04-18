@@ -17,10 +17,8 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
 
   margin-bottom: 14px;
 
-  &:hover {
-    .date {
-      opacity: 1;
-    }
+  &:hover .date {
+    opacity: 1;
   }
 `;
 

@@ -49,6 +49,7 @@ const VacationTab = () => {
     return <h1>....loading</h1>;
   }
 
+  // props 로 내려줄 아이콘
   const icon = (
     <svg viewBox="0 0 146.01 117.08" width="20px" height="20px">
       <path

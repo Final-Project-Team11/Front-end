@@ -12,28 +12,10 @@ export const StTabBlock = styled.div<HeightProps>`
   display: flex;
   flex-direction: column;
 
-  font-size: 15px;
-
   padding: 15px;
   box-sizing: border-box;
 
-  gap: 10px;
-
-  border: 1px solid orange;
-`;
-
-export const StInsideBlock = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 19px;
-
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  gap: 4px;
 `;
 
 export const StDivederHr = styled.hr`
@@ -43,14 +25,15 @@ export const StDivederHr = styled.hr`
   background-color: ${COLOR.PAGE_BLUE};
 `;
 
+export const StIconBlock = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  gap: 13px;
+`;
+
 export const StTitleSpan = styled.span`
   color: ${COLOR.PAGE_DONE};
   font-size: 13px;
   margin-top: 2.5px;
-`;
-
-export const StIconBlock = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
 `;
