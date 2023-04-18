@@ -15,6 +15,7 @@ const Business = () => {
 
   const authority = ['관리자', '팀원'];
   const teams = ['개발팀', '경영팀', '광고팀'];
+  // PR 테스트
 
   const test = () => {
     console.log('test');
