@@ -10,8 +10,7 @@ import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
-  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput();
-  const [showCategoryDeleteBtn, setShowCategoryDeleteBtn] = useState<boolean>(false);
+  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {
@@ -49,35 +48,30 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
 
   return (
     <>
-      <UI.StCategoryWrapper
-        onMouseEnter={() => setShowCategoryDeleteBtn(true)}
-        onMouseLeave={() => setShowCategoryDeleteBtn(false)}
-      >
+      <UI.StCategoryWrapper>
         <UI.StCategoryTitleBlock>
           <UI.StCircleBlock />
           <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
-        <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>
-        {showCategoryDeleteBtn && (
-          <UI.StDeleteBlock onClick={deleteBtnHandler}>
-            <BsX />
-          </UI.StDeleteBlock>
-        )}
+        <UI.StPlusBlock onMouseDown={TodoPlusHandler}>+</UI.StPlusBlock>
+        <UI.StDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+          <BsX />
+        </UI.StDeleteBlock>
       </UI.StCategoryWrapper>
       <UI.StCategoryBlock>
         {todos?.map(todo => {
           return <TodoBox key={todo.todoId} todo={todo} />;
         })}
+        {openTodoInput && (
+          <AddTodo
+            value={AddTodoState}
+            setValue={setAddTodoState}
+            onChange={setAddTodoHandler}
+            inputHandler={setOpenTodoInput}
+            categoryId={categoryId}
+          />
+        )}
       </UI.StCategoryBlock>
-      {openTodoInput && (
-        <AddTodo
-          value={AddTodoState}
-          setValue={setAddTodoState}
-          onChange={setAddTodoHandler}
-          inputHandler={setOpenTodoInput}
-          categoryId={categoryId}
-        />
-      )}
     </>
   );
 };

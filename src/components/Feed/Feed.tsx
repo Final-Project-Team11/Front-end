@@ -9,7 +9,7 @@ import useInput from '../../hooks/common/useInput';
 
 const Feed = () => {
   const [openCategoryInput, setOpenCategoryInput] = useState<boolean>(false);
-  const [categoryState, categoryStateHandler, setCategoryState] = useInput();
+  const [categoryState, categoryStateHandler, setCategoryState] = useInput(10);
 
   const categoryPlusHandler = () => {
     // input이 닫혀있다면 열림

@@ -13,8 +13,6 @@ export const StWrapperBlock = styled.div`
   gap: 35px;
   box-sizing: border-box;
 
-  border: 1px solid black;
-
   box-shadow: rgba(236, 241, 248, 0.4) 4px 0px 9px -2px;
 `;
 

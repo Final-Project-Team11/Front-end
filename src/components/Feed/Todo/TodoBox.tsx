@@ -1,5 +1,5 @@
 import React from 'react';
-import { StTodoBlock, StTodoAreaBlock, StCircleBlock, StTestDeleteBlock } from './style';
+import * as UI from './style';
 
 import { TodoBoxProps } from './interfaces';
 import { BsX } from 'react-icons/bs';
@@ -22,15 +22,15 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
   };
 
   return (
-    <StTodoBlock>
-      <StTodoAreaBlock>
-        <StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
-        {todo.todo}
-      </StTodoAreaBlock>
-      <StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+    <UI.StTodoBlock>
+      <UI.StTodoAreaBlock>
+        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
+        <UI.StTodoSpan>{todo.todo}</UI.StTodoSpan>
+      </UI.StTodoAreaBlock>
+      <UI.StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
         <BsX />
-      </StTestDeleteBlock>
-    </StTodoBlock>
+      </UI.StTestDeleteBlock>
+    </UI.StTodoBlock>
   );
 };
 

@@ -7,7 +7,10 @@ export const StCategoryBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 5px;
+  gap: 9px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-bottom: 36px;
 `;
 
 export const StCategoryWrapper = styled.div`
@@ -18,10 +21,14 @@ export const StCategoryWrapper = styled.div`
 
   display: flex;
   align-items: center;
+  &:hover .deleteBlock {
+    opacity: 1;
+  }
 `;
 
 export const StDeleteBlock = styled.div`
-  font-size: 25px;
+  font-size: 18px;
+  color: ${COLOR.PAGE_DONE};
 
   display: flex;
 
@@ -29,6 +36,8 @@ export const StDeleteBlock = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 `;
 
 export const StCategoryTitleBlock = styled.div`
