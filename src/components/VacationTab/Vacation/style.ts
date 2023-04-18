@@ -9,12 +9,13 @@ interface SpanProps {
   status: 'accept' | 'deny' | 'submit';
 }
 
-export const StListlock = styled.div`
+export const StListBlock = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
 
-  margin-top: 5px;
+  margin-bottom: 24px;
+  font-size: 12px;
 
   display: flex;
   align-items: center;
@@ -32,9 +33,7 @@ export const StSpanBlock = styled.div<SpanProps>`
   justify-content: center;
 `;
 
-export const StNormalSpan = styled.span`
-  font-size: 12px;
-`;
+export const StNormalSpan = styled.span``;
 
 export const StSubmitBlock = styled.div`
   font-size: 24px;
@@ -75,7 +74,6 @@ export const StDecideBlock = styled.div`
   justify-content: space-evenly;
   align-items: center;
 
-  /* border: 1px solid red; */
   transition: width 0.3s ease-out;
   &:hover {
     width: 60px;
