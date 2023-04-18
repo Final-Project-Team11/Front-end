@@ -44,13 +44,12 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    props.title && setAuthorInputValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setTitleHanlderValue(props.title?.split('-')[1]);
+    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
     props.isReadOnly && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
   }, [props]);
 
-  console.log('mention', mention);
   return (
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
@@ -85,12 +84,15 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
               {disable === false ? '등록하기' : '수정하기'}
             </Button>
           )}
+          <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
+            <RiArrowLeftSLine size="20px" />
+          </styles.StReturnBlcok>
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
         <styles.StMarkNameBlcok>
           <styles.StMarkBlock />
-          <span>출장지</span>
+          <span>{props.eventType}</span>
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock>
           <styles.StTextArea
@@ -102,14 +104,11 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
           />
         </styles.StTextAreaBlock>
         <styles.StFileBlock>
-          <MdFolder color={'#D9D9D9'} size={'25px'} />
+          <FileUpload onFileHandler={SetFormFile} />
         </styles.StFileBlock>
       </styles.StContentBlock>
-      <styles.StFileBlock>
-        <FileUpload onFileHandler={SetFormFile} />
-      </styles.StFileBlock>
+
       <styles.StMentionBlock>
-        <AiFillTag size="25px" color="lightgray" />
         <HashTag
           mention={props.mention}
           disable={disable}

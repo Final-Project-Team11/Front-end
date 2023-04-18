@@ -45,12 +45,11 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [disable, setDisable] = useState(false);
   const [author, autherHandler, setAuthorInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
-  const [mention, mentionHandler, setMentionValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    props.title && setAuthorInputValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setTitleHanlderValue(props.title?.split('-')[1]);
+    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
     props.isReadOnly && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
   }, [props]);
@@ -106,9 +105,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
             disabled={disable}
           />
         </styles.StTextAreaBlock>
-        <styles.StFileBlock>
-          <FileUpload onFileHandler={SetFormFile} />
-        </styles.StFileBlock>
       </styles.StContentBlock>
     </styles.StContainer>
   );
