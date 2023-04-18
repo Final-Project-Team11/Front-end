@@ -29,12 +29,27 @@ const StMarkBlock = styled.div<StylesProps>`
 
 const StScheduleBlock = styled.div`
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
   border-bottom: 1px solid #cccccc;
 
   padding: 15px 10px;
+`;
+
+const StBlankBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 10px;
+  border-bottom: 1px solid #cccccc;
+`;
+
+const StContentBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 `;
 
 const StWrap = styled.div`
@@ -58,4 +73,6 @@ export {
   StScheduleBlock,
   StWrap,
   StContainer,
+  StContentBlock,
+  StBlankBlock,
 };
