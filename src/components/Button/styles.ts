@@ -24,4 +24,8 @@ export const StButton = styled.button<interfaces.CssProps>`
   background: ${({ background }) => (background ? background : 'lightgray')};
   border: ${({ boarder }) => (boarder ? boarder : 'none')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : 'none')};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
