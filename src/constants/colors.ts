@@ -18,4 +18,6 @@ export const COLOR = {
   PAGE_SPAN: '#484240',
   PAGE_DONE: '#A1A1A1',
   PAGE_BLUE: '#8AB2E0',
+  PAGE_LIGHTBLUE: '#BADAFF',
+  PAGE_WHITE: '#FBF8F8',
 };

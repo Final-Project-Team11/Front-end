@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StTodoBlock, StTodoAreaBlock, StCircleBlock, StTestDeleteBlock } from './style';
 
 import { TodoBoxProps } from './interfaces';
@@ -7,8 +7,6 @@ import { useDeleteTodo } from '../../../api/hooks/Feed/useDeleteTodo';
 import { useCheckTodo } from '../../../api/hooks/Feed/useCheckTodo';
 
 const TodoBox = ({ todo }: TodoBoxProps) => {
-  const [showDeleteBtn, setShowDeleteBtn] = useState<boolean>(false);
-
   const { deleteTodo } = useDeleteTodo();
 
   //투두 삭제
@@ -24,19 +22,14 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
   };
 
   return (
-    <StTodoBlock
-      onMouseEnter={() => setShowDeleteBtn(true)}
-      onMouseLeave={() => setShowDeleteBtn(false)}
-    >
+    <StTodoBlock>
       <StTodoAreaBlock>
         <StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
         {todo.todo}
       </StTodoAreaBlock>
-      {showDeleteBtn && (
-        <StTestDeleteBlock onClick={deleteBtnHandler}>
-          <BsX />
-        </StTestDeleteBlock>
-      )}
+      <StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+        <BsX />
+      </StTestDeleteBlock>
     </StTodoBlock>
   );
 };

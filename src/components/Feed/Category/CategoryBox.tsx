@@ -57,6 +57,7 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
           <UI.StCircleBlock />
           <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
+        <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>
         {showCategoryDeleteBtn && (
           <UI.StDeleteBlock onClick={deleteBtnHandler}>
             <BsX />
@@ -77,7 +78,6 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
           categoryId={categoryId}
         />
       )}
-      <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>
     </>
   );
 };

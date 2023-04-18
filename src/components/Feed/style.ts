@@ -47,7 +47,7 @@ export const StFeedTitleBlock = styled.div`
 `;
 
 export const StPlusSpan = styled.span`
-  font-size: 30px;
+  font-size: 20px;
   color: ${COLOR.PAGE_BLUE};
 
   cursor: pointer;

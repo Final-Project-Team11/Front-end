@@ -50,7 +50,7 @@ const AddTodo = ({
       <StTodoInput
         ref={inputRef}
         type="text"
-        maxLength={10}
+        maxLength={15}
         value={value}
         onChange={onChange}
         onKeyPress={pressEnterHandle}

@@ -13,6 +13,9 @@ export const StTodoBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &:hover .deleteBlock {
+    opacity: 1;
+  }
 `;
 
 export const StTodoAreaBlock = styled.div`
@@ -46,7 +49,9 @@ export const StCircleBlock = styled.div<TodoBoxStProps>`
 `;
 
 export const StTestDeleteBlock = styled.div`
+  opacity: 0;
   font-size: 20px;
+  transition: opacity 0.3s ease;
   &:hover {
     cursor: pointer;
   }

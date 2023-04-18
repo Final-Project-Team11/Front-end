@@ -1,5 +1,5 @@
 export interface FeedTitleProps {
-  onClick: () => void;
+  clickFn: () => void;
 }
 interface Todo {
   todoId: number;
