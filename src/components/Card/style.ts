@@ -1,17 +1,21 @@
 import styled from 'styled-components';
+import { COLOR } from '../../constants/colors';
 
 export const StCardBlock = styled.div`
-  background-color: #badaff;
+  background-color: ${COLOR.PAGE_LIGHTBLUE};
 
-  width: 260px;
-  height: 120px;
+  width: 250px;
+  height: 116px;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px;
+
+  padding: 19px;
   box-sizing: border-box;
-  gap: 10px;
-  text-shadow: 0px 1px 9px rgba(212, 229, 249, 1);
+
+  box-shadow: rgba(212, 229, 249, 1) 0px 1px 9px -1px;
+  text-shadow: 0px 1px 4px rgba(148, 177, 211, 0.94);
 `;
 
 export const StInfoBlock = styled.div`
@@ -20,21 +24,18 @@ export const StInfoBlock = styled.div`
 
   color: white;
 
-  gap: 10px;
+  gap: 18px;
 `;
 
 export const StTeamNameH1 = styled.h1`
-  font-size: 1.2em;
-  margin-top: 10px;
+  font-size: 15px;
   font-weight: bold;
 `;
 
 export const StDateBlock = styled.div`
-  height: 65px;
-
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  gap: 6px;
 `;
 
 export const StInfoSpan = styled.span`
@@ -43,9 +44,10 @@ export const StInfoSpan = styled.span`
 
 export const StProfileBlock = styled.div`
   background-color: black;
-  width: 80px;
-  height: 80px;
-  margin-left: auto;
+  width: 55px;
+  height: 55px;
+
+  margin-bottom: 20px;
 
   border-radius: 50%;
 `;

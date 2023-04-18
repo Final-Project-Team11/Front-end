@@ -22,7 +22,6 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  background-color: beige;
   display: flex;
   justify-content: space-between;
   align-items: center;
