@@ -7,8 +7,9 @@ import Button from '../../../components/Button/Button';
 import instnace from '../../../axios/api';
 import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
-import usePostschedule from '../../../api/hooks/usePostschedule';
+import usePostschedule from '../../../api/hooks/Main/usePostschedule';
 import { postFormat } from '../utils';
+import { MdFolder } from 'react-icons/md';
 
 interface ScheduleProps {
   props: {
@@ -29,7 +30,7 @@ function Detail({ props }: ScheduleProps) {
   const SaveClickHandler = () => {
     const newData = postFormat(props.tab, props);
     console.log(newData);
-    mutation.mutate(newData);
+    mutation.mutate({ ...newData });
   };
 
   const [author, autherHandler] = useInput();
@@ -59,7 +60,7 @@ function Detail({ props }: ScheduleProps) {
           </styles.StPeriodBlock>
           <div>
             <styles.StInput
-              defaultValue={props.body?.split('/')[0]}
+              defaultValue={props.body}
               placeholder="작성자를 입력해주세요"
               value={author}
               onChange={autherHandler}
@@ -85,13 +86,18 @@ function Detail({ props }: ScheduleProps) {
           <styles.StMarkBlock />
           <span>출장지</span>
         </styles.StMarkNameBlcok>
-
-        <styles.StTextArea
-          defaultValue={props.body?.split('/')[1]}
-          placeholder="내용을 입력해주세요"
-          value={content}
-          onChange={contentHandler}
-        />
+        <styles.StTextAreaBlock>
+          <styles.StTextArea
+            defaultValue={props.body?.split('/')[1]}
+            placeholder="내용을 입력해주세요"
+            value={content}
+            onChange={contentHandler}
+          />
+        </styles.StTextAreaBlock>
+        <styles.StFileBlock>
+          <MdFolder color={'#D9D9D9'} size={'25px'} />
+          <styles.StFileNameSpan>파일 추가하기</styles.StFileNameSpan>
+        </styles.StFileBlock>
       </styles.StContentBlock>
       <styles.StMentionBlock>
         {props.mention?.map(item => item + '-')}
