@@ -28,19 +28,23 @@ export function subtractDate(d: TZDate, steps: number) {
 }
 
 export function settingSchedule(schedule: ScheduleProps) {
-  const ISSUE = '회의';
-  const OTHER = '기타';
-  const BUSINESS_TRIP = '출장';
-  const MEETING = '미팅';
+  const ISSUE = 'Meetings';
+  const OTHER = 'Reports';
+  const BUSINESS_TRIP = 'Schedules';
+  const MEETING = 'Issues';
+
+  const title = schedule?.userName
+    ? schedule?.userName + '-' + schedule?.title
+    : schedule?.eventType;
 
   const newData = {
-    id: schedule?.eventId,
+    id: schedule?.userId,
     calendarId: schedule?.eventType,
-    title: schedule?.title,
+    title: title,
     start: schedule.startDay,
     end: schedule.endDay,
     body: schedule.content,
-    attendees: schedule.mention,
+    attendees: schedule.mentions,
     userName: schedule.userName,
   };
 
@@ -48,43 +52,43 @@ export function settingSchedule(schedule: ScheduleProps) {
     case ISSUE:
       return {
         ...newData,
-        backgroundColor: '#1F1F1F',
-        borderColor: '#1F1F1F',
-        dragBackgroundColor: '#1F1F1F',
-        color: '#FFFFFF',
+        backgroundColor: COLOR.SCHEDULE_BLUE,
+        borderColor: COLOR.SCHEDULE_BLUE,
+        dragBackgroundColor: COLOR.SCHEDULE_BLUE,
+        color: COLOR.WHITE_COLOR,
         isReadOnly: true,
       };
     case OTHER:
       return {
         ...newData,
-        backgroundColor: '#FFFFFF',
-        borderColor: '#1F1F1F',
-        dragBackgroundColor: '#1F1F1F',
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
         isReadOnly: true,
       };
     case BUSINESS_TRIP:
       return {
         ...newData,
-        backgroundColor: '#BADAFF',
-        borderColor: '#BADAFF',
-        dragBackgroundColor: '#BADAFF',
+        backgroundColor: COLOR.BUSINESS_TRIP_BAR,
+        borderColor: COLOR.BUSINESS_TRIP_BAR,
+        dragBackgroundColor: COLOR.BUSINESS_TRIP_BAR,
         isReadOnly: true,
       };
     case MEETING:
       return {
         ...newData,
-        backgroundColor: '#E64042',
-        borderColor: '#E64042',
-        dragBackgroundColor: '#E64042',
+        backgroundColor: COLOR.MEETING_BAR,
+        borderColor: COLOR.MEETING_BAR,
+        dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
       };
 
     default:
       return {
         ...newData,
-        backgroundColor: '#1F1F1F',
-        borderColor: '#1F1F1F',
-        dragBackgroundColor: '#1F1F1F',
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
         color: '#FFFFFF',
         isReadOnly: true,
       };
@@ -97,12 +101,16 @@ export function settingVacation(vacation: VacationProps) {
   const MONTHLY_VACTION = '월차';
   const SICK_DAY = '병가';
 
+  const title = vacation?.userName
+    ? vacation?.userName + '-' + vacation?.typeDetail
+    : vacation?.typeDetail;
+
   const newData = {
-    id: vacation?.eventId,
+    id: vacation?.userId,
     calendarId: vacation?.typeDetail,
     start: vacation.startDay,
     end: vacation.endDay,
-    title: vacation.typeDetail,
+    title: title,
     userName: vacation.userName,
   };
 
@@ -169,7 +177,7 @@ export function initCalendar(tab: number): InitialCalendar[] {
         name: '기타',
         backgroundColor: COLOR.OTHER_BAR,
         borderColor: COLOR.OTHER_BAR_BOARD,
-        dragBackgroundColor: COLOR.OTHER_BAR,
+        dragBackgroundColor: COLOR.OTHER_BAR_BOARD,
       },
       {
         id: '2',
