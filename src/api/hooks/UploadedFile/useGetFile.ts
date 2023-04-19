@@ -25,7 +25,7 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
   >({
     queryKey: [keys.GET_REPORT_FILE, type], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await apis.get(`/${type}?pageSize=5&pageNum=${pageParam}`);
+      const response = await apis.get(`/${type}?pageSize=6&pageNum=${pageParam}`);
       return { [type]: response.data[type], pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {

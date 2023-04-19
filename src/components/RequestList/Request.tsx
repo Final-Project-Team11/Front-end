@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
-import { useGetRequest } from '../../api/hooks/Request.tsx/useGetRequest';
+import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
 
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';

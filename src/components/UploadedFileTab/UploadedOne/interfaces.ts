@@ -10,4 +10,5 @@ export interface File {
 
 export interface Props {
   file: File;
+  type: 'myfiles' | 'meetingfiles' | 'reportfiles';
 }
