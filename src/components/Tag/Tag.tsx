@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import Tags from './Tags/Tags';
 import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
-import { TagElement } from './Tags/interfaces';
+import { TagElement } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
+import Board from '../Board/Board';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
@@ -39,16 +40,17 @@ const Tag = ({ types }: TagBlockCssProps) => {
   // data 존재 시
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
 
+  // props로 줄 icon
+  const icon = '📌';
+
   return (
-    <UI.StTagBlock types={types}>
-      📌
-      <UI.StDeviderBlock />
-      <UI.StFeedBlock ref={targetDiv}>
+    <Board icon={icon} title="tag" types={types}>
+      <UI.StInsideBlock ref={targetDiv}>
         {tags.map((tag: TagElement) => {
-          return <Tags key={tag.eventId} tag={tag} />;
+          return <Tags key={tag.eventId} tag={tag} types={types} />;
         })}
-      </UI.StFeedBlock>
-    </UI.StTagBlock>
+      </UI.StInsideBlock>
+    </Board>
   );
 };
 

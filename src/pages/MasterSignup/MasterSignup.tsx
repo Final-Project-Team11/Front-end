@@ -3,7 +3,7 @@ import { InputWrapper, StForm } from './styles';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import ButtonInput from '../../components/Inputs/ButtonInput';
 import Button from '../../components/Button/Button';
-import { SignupInfo } from './interfaces';
+import { AdminSignupInfo } from './interfaces';
 import { useCompanyIdValidation } from './hooks/useCompanyIdValidation';
 import { useSignup } from './hooks/useSignup';
 import { usePasswordCheck } from './hooks/usePasswordCheck';
@@ -11,7 +11,7 @@ import axios from 'axios';
 import DaumAddressAPI from './hooks/DaumAddressAPI';
 
 const MasterSignup = () => {
-  const [signInfo, setSignInfo] = React.useState<SignupInfo>({
+  const [signInfo, setSignInfo] = React.useState<AdminSignupInfo>({
     companyName: '',
     address: '',
     ceoName: '',

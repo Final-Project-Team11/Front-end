@@ -1,4 +1,4 @@
-export interface TagElement {
+interface TagElement {
   eventId: number;
   enrollDay: string;
   title: string;
@@ -10,8 +10,5 @@ export interface TagElement {
 
 export interface TagsProps {
   tag: TagElement;
-}
-
-export interface CssProps {
-  isChecked: 0 | 1;
+  types: 'MyPage' | 'ManagerPage';
 }

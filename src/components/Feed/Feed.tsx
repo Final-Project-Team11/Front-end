@@ -9,21 +9,28 @@ import useInput from '../../hooks/common/useInput';
 
 const Feed = () => {
   const [openCategoryInput, setOpenCategoryInput] = useState<boolean>(false);
-  const [categoryState, categoryStateHandler, setCategoryState] = useInput();
+  const [categoryState, categoryStateHandler, setCategoryState] = useInput(10);
 
   const categoryPlusHandler = () => {
     // input이 닫혀있다면 열림
-    if (!openCategoryInput) {
+    if (openCategoryInput === false) {
       setOpenCategoryInput(true);
+      console.log('열렸다');
     }
     // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
-    else if (openCategoryInput === true && categoryState.length !== 0) {
+    else if (openCategoryInput && categoryState.length !== 0) {
       setCategoryState('');
       setOpenCategoryInput(false);
+      console.log('닫히냐?');
     }
     // 인풋이 열려있지만, 비어있다면 인풋 닫음
-    else setOpenCategoryInput(false);
+    else {
+      setOpenCategoryInput(false);
+      console.log('닫혀라');
+    }
   };
+
+  console.log(openCategoryInput);
 
   const { feed, feedIsLoading } = useGetFeed();
 
@@ -33,7 +40,7 @@ const Feed = () => {
 
   return (
     <UI.StWrapperBlock>
-      <FeedTitle onClick={categoryPlusHandler} />
+      <FeedTitle clickFn={categoryPlusHandler} />
       <UI.StFeedBlock>
         {feed?.map((category: Category) => {
           return (

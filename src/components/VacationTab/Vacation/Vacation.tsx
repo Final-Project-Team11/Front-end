@@ -53,7 +53,7 @@ const Vacation = ({ vacation }: VacateProps) => {
   const { mutate } = usePutDecision();
 
   return (
-    <UI.StListlock onMouseLeave={() => setHover(false)}>
+    <UI.StListBlock onMouseLeave={() => setHover(false)}>
       <UI.StSpanBlock status={vacation.status}>
         <UI.StNormalSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StNormalSpan>
         <UI.StNormalSpan>{`기간 | ${vacation.startDay} ~ ${vacation.endDay}`}</UI.StNormalSpan>
@@ -67,20 +67,20 @@ const Vacation = ({ vacation }: VacateProps) => {
             status={true}
             onClick={() => mutate(accept)}
           >
-            <BsCheck />
+            <BsX />
           </UI.StDecAcceptBlock>
           <UI.StDecAcceptBlock
             className="decision"
             status={false}
             onClick={() => mutate(deny)}
           >
-            <BsX />
+            <BsCheck />
           </UI.StDecAcceptBlock>
         </UI.StDecideBlock>
       ) : (
         requestStatus
       )}
-    </UI.StListlock>
+    </UI.StListBlock>
   );
 };
 
