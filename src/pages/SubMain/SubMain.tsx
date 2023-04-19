@@ -18,7 +18,7 @@ import ScheduleFormat from '../../components/DocumentForm/ScheduleFormat/Schedul
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { CalendarContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
-import { initCalendar } from './utils';
+import { getScheduleColor, initCalendar } from './utils';
 import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
@@ -130,6 +130,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
     const userId = decoded ? decoded.userId : '';
+
     const newData = {
       eventType: res.calendarId,
       title: res.title,
@@ -139,7 +140,10 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       mention: res.attendees,
       userId: userId,
       isReadOnly: res.isReadOnly,
+      backgroundColor: getScheduleColor(res.calendarId),
     };
+
+    console.log('newData', newData);
     setClickData(newData);
     setClickDetail(true);
   };
