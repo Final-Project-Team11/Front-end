@@ -30,8 +30,6 @@ const Feed = () => {
     }
   };
 
-  console.log(openCategoryInput);
-
   const { feed, feedIsLoading } = useGetFeed();
 
   if (feedIsLoading && !feed) {
