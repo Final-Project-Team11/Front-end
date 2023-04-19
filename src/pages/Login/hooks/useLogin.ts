@@ -33,7 +33,7 @@ export const useLogin = () => {
       const token = data.token;
       alert(data.message);
       setCookie('token', token);
-      navigate('/');
+      navigate('/main');
     },
     onError() {
       alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
