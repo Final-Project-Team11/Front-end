@@ -66,10 +66,15 @@ const StInput = styled.input`
   }
 `;
 
-const StMarkBlock = styled.div`
+interface CalendarTypeProps {
+  backgroundColor?: string;
+}
+
+const StMarkBlock = styled.div<CalendarTypeProps>`
   width: 13px;
   height: 30px;
-  background-color: ${COLOR.SCHEDULE_BLUE};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : COLOR.SCHEDULE_BLUE};
   border-radius: 10px;
   margin-left: 10px;
 `;
