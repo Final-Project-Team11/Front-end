@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { Props } from './interfaces';
-import { useGetRequestDetail } from '../../../api/hooks/Request.tsx/useGetRequestDetail';
+import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
 import Modal from '../../Modal/Modal';
 import RequestDetail from '../RequestDetail/RequestDetail';
 
