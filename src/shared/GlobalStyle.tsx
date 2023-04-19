@@ -36,6 +36,10 @@ time, mark, audio, video {
     font-family: "Inter";
 }
 
+button, input {
+    font-family: "Inter";
+}
+
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
     display: block;
