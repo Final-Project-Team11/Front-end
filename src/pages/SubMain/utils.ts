@@ -34,7 +34,7 @@ export function settingSchedule(schedule: ScheduleProps) {
   const MEETING = 'Issues';
 
   const title = schedule?.userName
-    ? schedule?.userName + '-' + schedule?.title
+    ? schedule?.title + '-' + schedule?.userName
     : schedule?.eventType;
 
   const newData = {
@@ -102,7 +102,7 @@ export function settingVacation(vacation: VacationProps) {
   const SICK_DAY = '병가';
 
   const title = vacation?.userName
-    ? vacation?.userName + '-' + vacation?.typeDetail
+    ? vacation?.typeDetail + '-' + vacation?.userName
     : vacation?.typeDetail;
 
   const newData = {
@@ -372,5 +372,20 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
       url: 'vacation',
       postInfo: { ...defaultFormat },
     };
+  }
+}
+
+export function getScheduleColor(eventType: string): string {
+  switch (eventType) {
+    case '0':
+      return COLOR.VACATION_RED;
+    case '01':
+      return COLOR.HALF_DAY_OFF_BAR;
+    case '2':
+      return COLOR.MONTHLY_VACTION_BAR;
+    case '3':
+      return COLOR.SICK_DAY_BAR;
+    default:
+      return COLOR.VACATION_RED;
   }
 }

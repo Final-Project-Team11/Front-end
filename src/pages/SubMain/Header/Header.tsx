@@ -1,6 +1,7 @@
 import React from 'react';
 import { HeaderProps } from './interfaces';
 import * as styles from './styles';
+import { nanoid } from 'nanoid';
 
 function Header(props: HeaderProps) {
   return (
@@ -24,7 +25,7 @@ function Header(props: HeaderProps) {
         <styles.StColorList>
           {props?.initialCalendars?.map(item => {
             return (
-              <styles.StColorContainer>
+              <styles.StColorContainer key={nanoid()}>
                 <styles.StColorNameBlock>{item.name}</styles.StColorNameBlock>
                 <styles.StColorBlock backgroundColor={item.backgroundColor} />
               </styles.StColorContainer>

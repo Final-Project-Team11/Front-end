@@ -14,6 +14,7 @@ interface ScheduleProps {
     isReadOnly?: boolean;
     ref?: string;
     file?: string;
+    backgroundColor?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
 }

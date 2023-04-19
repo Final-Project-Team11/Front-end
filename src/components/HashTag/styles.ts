@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { UlStyleProps } from './interfaces';
 
-const StContainer = styled.div``;
+const StContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StLiBlock = styled.li`
   padding: 5px 0 5px 5px;
@@ -66,7 +70,6 @@ const StInputBlock = styled.div`
   line-height: 20px;
   min-width: 600px;
   max-width: 700px;
-  border: 1px solid #ddd;
 `;
 
 const StTeamMark = styled.div`
@@ -106,6 +109,11 @@ const StUlBlock = styled.ul<UlStyleProps>`
     `top : ${pos.top + pos.height}px; left :${pos.left}px; width:${pos.width - 1}px;`}
 `;
 
+const StIconBlock = styled.div`
+  padding-top: 7px;
+  margin-right: 10px;
+`;
+
 export {
   StContainer,
   StLiBlock,
@@ -117,4 +125,5 @@ export {
   StTeamMark,
   StInput,
   StUlBlock,
+  StIconBlock,
 };

@@ -20,8 +20,8 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const SaveClickHandler = () => {
     if (disable === false) {
+      const newProps = { ...props, file: FormFiles, ref: mention };
       const newData = postFormat(props.tab, props);
-      console.log(newData);
       mutation.mutate(newData);
     } else if (disable === true) {
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
@@ -44,18 +44,17 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    props.title && setAuthorInputValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setTitleHanlderValue(props.title?.split('-')[1]);
+    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
     props.isReadOnly && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
   }, [props]);
 
-  console.log('mention', mention);
   return (
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
-          <styles.StMarkBlock />
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
@@ -85,12 +84,19 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
               {disable === false ? '등록하기' : '수정하기'}
             </Button>
           )}
+          <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
+            <RiArrowLeftSLine size="20px" />
+          </styles.StReturnBlcok>
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
         <styles.StMarkNameBlcok>
-          <styles.StMarkBlock />
-          <span>출장지</span>
+          {props.eventType !== 'Reports' ? (
+            <>
+              <styles.StMarkBlock backgroundColor={props.backgroundColor} />
+              <span>{props.eventType}</span>
+            </>
+          ) : null}
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock>
           <styles.StTextArea
@@ -102,14 +108,11 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
           />
         </styles.StTextAreaBlock>
         <styles.StFileBlock>
-          <MdFolder color={'#D9D9D9'} size={'25px'} />
+          <FileUpload onFileHandler={SetFormFile} />
         </styles.StFileBlock>
       </styles.StContentBlock>
-      <styles.StFileBlock>
-        <FileUpload onFileHandler={SetFormFile} />
-      </styles.StFileBlock>
+
       <styles.StMentionBlock>
-        <AiFillTag size="25px" color="lightgray" />
         <HashTag
           mention={props.mention}
           disable={disable}

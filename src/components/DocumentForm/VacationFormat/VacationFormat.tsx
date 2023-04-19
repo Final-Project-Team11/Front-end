@@ -18,6 +18,8 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [FormFiles, SetFormFile] = useState<File>();
 
+  console.log('props', props);
+
   const SaveClickHandler = () => {
     if (disable === false) {
       const formData = new FormData();
@@ -45,20 +47,20 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [disable, setDisable] = useState(false);
   const [author, autherHandler, setAuthorInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
-  const [mention, mentionHandler, setMentionValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    props.title && setAuthorInputValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setTitleHanlderValue(props.title?.split('-')[1]);
+    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
     props.isReadOnly && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
   }, [props]);
+
   return (
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
-          <styles.StMarkBlock />
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
@@ -95,7 +97,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
       </styles.StTitleBlock>
       <styles.StContentBlock>
         <styles.StMarkNameBlcok>
-          <styles.StMarkBlock />
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <span>출장지</span>
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock>
@@ -106,9 +108,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
             disabled={disable}
           />
         </styles.StTextAreaBlock>
-        <styles.StFileBlock>
-          <FileUpload onFileHandler={SetFormFile} />
-        </styles.StFileBlock>
       </styles.StContentBlock>
     </styles.StContainer>
   );
