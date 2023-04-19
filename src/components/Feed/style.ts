@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '../../constants/colors';
+import { COLOR } from '../../styles/colors';
 // 공통
 
 export const StWrapperBlock = styled.div`

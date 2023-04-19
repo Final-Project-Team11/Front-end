@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { TodoBoxStProps } from './interfaces';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 
 export const StTodoBlock = styled.div`
   width: 100%;

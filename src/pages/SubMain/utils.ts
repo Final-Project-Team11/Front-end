@@ -1,6 +1,6 @@
 import { Options, TZDate } from '@toast-ui/calendar';
 import { InitialCalendar, ScheduleProps, ServerProps, VacationProps } from './interfaces';
-import { COLOR } from '../../constants/colors';
+import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
   return new TZDate(date);

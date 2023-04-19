@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import * as styles from './styles';
 
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 import Button from '../../../components/Button/Button';
 import apis from '../../../api/axios/api';
 import useInput from '../../../hooks/common/useInput';
