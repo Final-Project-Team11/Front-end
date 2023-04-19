@@ -11,6 +11,7 @@ export interface ScheduleProps {
   ref?: string;
   file?: string;
   userId?: string;
+  backgroundColor?: string;
 }
 
 export interface VacationProps {
