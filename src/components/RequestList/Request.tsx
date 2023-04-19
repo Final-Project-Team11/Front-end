@@ -4,9 +4,10 @@ import { useGetRequest } from '../../api/hooks/Request.tsx/useGetRequest';
 
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';
+import { RequestInfo } from './interfaces';
 
 const Request = () => {
-  const { data, fetchNextPage, hasNextPage } = useGetRequest();
+  const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest();
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 스크롤이벤트 동작 시 GET 요청
@@ -31,12 +32,27 @@ const Request = () => {
       container.addEventListener('scroll', handleScroll);
       return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, [handleScroll]);
-
-  const requests = data ? data.pages.flatMap(page => page.schedule) : [];
+  }, [handleScroll, fetchNextPage, hasNextPage]);
 
   // props 로 내려줄 icon
   const icon = '✈️';
+
+  if (isLoading) {
+    return <div>...loading</div>;
+  }
+
+  if (!data || !data.pages) {
+    console.log('데이터', data);
+    console.log('데이터.페이지', data?.pages);
+    return <div>데이터 없음</div>;
+  }
+
+  const requests = data
+    ? data.pages.reduce<RequestInfo[]>(
+        (acc, page) => (page.schedule ? [...acc, ...page.schedule] : acc),
+        []
+      )
+    : [];
 
   return (
     <Board icon={icon} title="RequestedList">

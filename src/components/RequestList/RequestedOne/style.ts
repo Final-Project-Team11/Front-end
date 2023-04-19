@@ -14,6 +14,7 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
 
   font-size: 12px;
   color: ${({ types }) => (types === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
+  cursor: pointer;
 
   margin-bottom: 14px;
 
