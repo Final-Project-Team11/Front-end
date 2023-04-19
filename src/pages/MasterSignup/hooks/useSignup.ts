@@ -7,7 +7,6 @@ export const useSignup = () => {
   const navigate = useNavigate();
   const signup = useMutation(
     async (item: AdminSignupInfo) => {
-      console.log('아이템', item);
       const data = await apis.post(`/signUp`, item);
       return data;
     },

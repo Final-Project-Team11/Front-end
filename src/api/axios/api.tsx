@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { getCookie } from '../../auth/CookieUtils';
+import { getCookie } from '../auth/CookieUtils';
 
 const config: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER,

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { AdminLoginInfo } from '../../MasterSignup/interfaces';
 import apis from '../../../api/axios/api';
-import { setCookie } from '../../../auth/CookieUtils';
+import { setCookie } from '../../../api/auth/CookieUtils';
 import React from 'react';
 
 export interface AdminLoginResponse {

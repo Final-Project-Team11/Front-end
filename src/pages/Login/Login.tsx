@@ -11,7 +11,7 @@ import MaxInput from '../../components/Inputs/Input/MaxInput';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './hooks/useLogin';
-import { getCookie } from '../../auth/CookieUtils';
+import { getCookie } from '../../api/auth/CookieUtils';
 
 enum Tabs {
   Tab1 = 'Tab1',

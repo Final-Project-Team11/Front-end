@@ -25,7 +25,7 @@ import './subMain.css';
 
 import VacationFormat from '../../components/DocumentForm/VacationFormat/VacationFormat';
 import TodaySchedules from './TodayScheduels/TodaySchedules';
-import { getCookie } from '../../auth/CookieUtils';
+import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 type ViewType = 'month' | 'week' | 'day';

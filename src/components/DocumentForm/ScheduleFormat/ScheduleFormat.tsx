@@ -8,7 +8,7 @@ import Button from '../../Button/Button';
 import { MdFolder } from 'react-icons/md';
 import { AiFillTag } from 'react-icons/ai';
 import Period from '../components/Period/Period';
-import { getCookie } from '../../../auth/CookieUtils';
+import { getCookie } from '../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import AddTodo from '../../Feed/Todo/AddTodo';
 import useGetTeamInfo from '../../../api/hooks/Main/useGetTeamInfo';
