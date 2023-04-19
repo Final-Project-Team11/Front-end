@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { keys } from '../../utils/createQueryKey';
-import api from '../../../axios/api';
+import api from '../../axios/api';
 
 interface TeamInfo {
   data: string[];

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { AdminLoginInfo } from '../../MasterSignup/interfaces';
-import instnace from '../../../axios/api';
+import apis from '../../../api/axios/api';
 import { setCookie } from '../../../auth/CookieUtils';
 import React from 'react';
 
@@ -25,7 +25,7 @@ export const useLogin = () => {
 
   const login = useMutation<AdminLoginResponse, Error, AdminLoginInfo>({
     mutationFn: async (item: AdminLoginInfo) => {
-      const data = await instnace.post<AdminLoginResponse>('/adminlogin', item);
+      const data = await apis.post<AdminLoginResponse>('/adminlogin', item);
       console.log('데이터', data);
       return data.data;
     },

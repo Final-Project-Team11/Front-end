@@ -4,7 +4,7 @@ import * as styles from './styles';
 import styled from 'styled-components';
 import { COLOR } from '../../../constants/colors';
 import Button from '../../../components/Button/Button';
-import instnace from '../../../axios/api';
+import apis from '../../../api/axios/api';
 import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
 import usePostschedule from '../../../api/hooks/Main/usePostschedule';

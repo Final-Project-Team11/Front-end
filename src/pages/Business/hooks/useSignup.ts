@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { UserSignupInfo } from '../interfaces';
-import instnace from '../../../axios/api';
+import apis from '../../../api/axios/api';
 
 export const useSignup = () => {
   const signup = useMutation(
     async (item: UserSignupInfo) => {
-      const data = await instnace.post(`/users`, item);
+      const data = await apis.post(`/users`, item);
       return data;
     },
     {

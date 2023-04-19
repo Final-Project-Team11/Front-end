@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import instnace from '../../../axios/api';
+import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 
 interface Todo {
@@ -22,7 +22,7 @@ export const useGetFeed = (): Feed => {
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_POSTS], //posts get요청 key
     queryFn: async () => {
-      const { data } = await instnace.get('/feed');
+      const { data } = await apis.get('/feed');
       return data.feed;
     },
   });

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import instnace from '../../../axios/api';
+import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 
@@ -25,7 +25,7 @@ export const useGetRequest = () => {
   >({
     queryKey: [keys.GET_REQUEST_LIST], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await instnace.get(`/schedule?size=5&page=${pageParam}`);
+      const response = await apis.get(`/schedule?size=5&page=${pageParam}`);
       return { ...response.data, pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {

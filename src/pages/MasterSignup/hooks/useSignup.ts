@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { AdminSignupInfo } from '../interfaces';
-import instnace from '../../../axios/api';
+import apis from '../../../api/axios/api';
 
 export const useSignup = () => {
   const navigate = useNavigate();
   const signup = useMutation(
     async (item: AdminSignupInfo) => {
       console.log('아이템', item);
-      const data = await instnace.post(`/signUp`, item);
+      const data = await apis.post(`/signUp`, item);
       return data;
     },
     {

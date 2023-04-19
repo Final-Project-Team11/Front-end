@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
-import instnace from '../../../axios/api';
+import apis from '../../../api/axios/api';
 
 export const useUserIdValidation = () => {
   const [userIdValidation, setUserIdValidation] = React.useState<boolean>(false);
@@ -9,7 +9,7 @@ export const useUserIdValidation = () => {
 
   const checkUserId = useMutation(
     async (item: string) => {
-      const data = await instnace.post(`/idCheck`, {
+      const data = await apis.post(`/idCheck`, {
         userId: item,
       });
       return data;

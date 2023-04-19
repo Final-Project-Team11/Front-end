@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import instnace from '../../../axios/api';
+import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 
@@ -25,7 +25,7 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
   >({
     queryKey: [keys.GET_REPORT_FILE, type], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await instnace.get(`/${type}?pageSize=5&pageNum=${pageParam}`);
+      const response = await apis.get(`/${type}?pageSize=5&pageNum=${pageParam}`);
       return { [type]: response.data[type], pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {
