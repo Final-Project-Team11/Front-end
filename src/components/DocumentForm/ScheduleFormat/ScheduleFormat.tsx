@@ -20,8 +20,8 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const SaveClickHandler = () => {
     if (disable === false) {
+      const newProps = { ...props, file: FormFiles, ref: mention };
       const newData = postFormat(props.tab, props);
-      console.log(newData);
       mutation.mutate(newData);
     } else if (disable === true) {
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
@@ -54,7 +54,7 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
-          <styles.StMarkBlock />
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
@@ -91,8 +91,12 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
       </styles.StTitleBlock>
       <styles.StContentBlock>
         <styles.StMarkNameBlcok>
-          <styles.StMarkBlock />
-          <span>{props.eventType}</span>
+          {props.eventType !== 'Reports' ? (
+            <>
+              <styles.StMarkBlock backgroundColor={props.backgroundColor} />
+              <span>{props.eventType}</span>
+            </>
+          ) : null}
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock>
           <styles.StTextArea
