@@ -21,14 +21,16 @@ const StTitleBlock = styled.div`
 `;
 
 const StContentBlock = styled.div`
-  height: 150px;
+  height: 250px;
   border-top: 3px solid ${COLOR.DETAIL_GRAY};
   border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
+  padding: 10px 0;
 `;
 
 const StMentionBlock = styled.div`
   border-bottom: 3px solid ${COLOR.DETAIL_GRAY};
-  height: 50px;
+  height: 60px;
+  margin-bottom: 30px;
 `;
 
 const StButtonBlock = styled.div``;
@@ -70,6 +72,26 @@ const StPeriodBlock = styled.div`
   font-weight: bold;
 `;
 
+const StTextAreaBlock = styled.div`
+  margin-left: 30px;
+  height: 170px;
+`;
+
+const StFileBlock = styled.div`
+  display: flex;
+  margin-left: 8px;
+  align-items: center;
+  gap: 10px;
+`;
+
+const StFileNameSpan = styled.span`
+  color: rgb(221, 221, 221);
+
+  &:hover {
+    color: rgb(186, 186, 186);
+  }
+`;
+
 export {
   StContainer,
   StTitleBlock,
@@ -82,4 +104,7 @@ export {
   StMarkBlock,
   StPeriodBlock,
   StMarkNameBlcok,
+  StTextAreaBlock,
+  StFileBlock,
+  StFileNameSpan,
 };

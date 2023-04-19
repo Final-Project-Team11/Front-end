@@ -6,10 +6,11 @@ export interface ScheduleProps {
   startDay?: Date;
   endDay?: Date;
   content?: string;
-  mention?: string[];
+  mentions?: string[];
   location?: string;
   ref?: string;
   file?: string;
+  userId?: string;
 }
 
 export interface VacationProps {
@@ -19,6 +20,7 @@ export interface VacationProps {
   startDay?: Date;
   endDay?: Date;
   typeDetail?: string;
+  userId?: string;
 }
 
 export interface ServerProps {

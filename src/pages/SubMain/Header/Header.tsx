@@ -2,17 +2,18 @@ import React from 'react';
 import { HeaderProps } from './interfaces';
 import * as styles from './styles';
 
-function Header(porps: HeaderProps) {
+function Header(props: HeaderProps) {
   return (
     <styles.StWrap>
-      <styles.StCardBlock tab={porps.tab} />
-      <styles.StContainer tab={porps.tab}>
-        <styles.StDateBlock tab={porps.tab}>
+      <styles.StCardBlock tab={props.tab} />
+      <styles.StContainer tab={props.tab}>
+        <styles.StDateBlock tab={props.tab}>
           <styles.StYearBlock>
-            {porps.selectedDateRangeText.toString().split('-').splice(0, 1)}/
+            <span>{props.selectedDateRangeText.toString().split('-').splice(0, 1)}</span>
+            <span>/</span>
           </styles.StYearBlock>
           <styles.StMonthBlock>
-            {porps.selectedDateRangeText
+            {props.selectedDateRangeText
               .toString()
               .split('-')
               .splice(1, 2)
@@ -20,6 +21,17 @@ function Header(porps: HeaderProps) {
               .padStart(2, '0')}
           </styles.StMonthBlock>
         </styles.StDateBlock>
+        <styles.StColorList>
+          {props?.initialCalendars?.map(item => {
+            return (
+              <styles.StColorContainer>
+                <styles.StColorNameBlock>{item.name}</styles.StColorNameBlock>
+                <styles.StColorBlock backgroundColor={item.backgroundColor} />
+              </styles.StColorContainer>
+            );
+          })}
+          <styles.StTeamBlock />
+        </styles.StColorList>
       </styles.StContainer>
     </styles.StWrap>
   );

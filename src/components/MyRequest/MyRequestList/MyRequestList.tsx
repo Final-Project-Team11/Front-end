@@ -1,28 +1,35 @@
 import React from 'react';
 import * as UI from './style';
 import { BsCheckCircle, BsXCircle, BsCircle } from 'react-icons/bs';
-import { MyListProps, TagsProps } from './interfaces';
+import { FileProps } from './interfaces';
 
-const MyRequestList = ({ tag }: TagsProps) => {
+const MyRequestList = ({ file }: FileProps) => {
   return (
-    <UI.StFileBlock>
+    <UI.StFileBlock status={file.status}>
       <UI.StSpanBlock>
         <UI.StNameDateBlock>
-          <UI.StFileSpan>{`🙋🏻‍♂️ | ${tag.userName}`}</UI.StFileSpan>
-          <UI.StDateSpan>
-            {tag.startDay === tag.endDay
-              ? tag.startDay
-              : `${tag.startDay} ~ ${tag.endDay}`}
+          <UI.StFileSpan>{`🙋🏻‍♂️ | ${file.userName}`}</UI.StFileSpan>
+          <UI.StDateSpan className="date">
+            {file.startDay === file.endDay
+              ? file.startDay
+              : `${file.startDay} ~ ${file.endDay}`}
           </UI.StDateSpan>
         </UI.StNameDateBlock>
-        <UI.StFileSpan>{`💾 | ${tag.title}`}</UI.StFileSpan>
+        <UI.StFileSpan>
+          💾 |{' '}
+          {file.status === 'submit' ? (
+            file.title
+          ) : (
+            <UI.StRejectedSpan>{file.title}</UI.StRejectedSpan>
+          )}
+        </UI.StFileSpan>
       </UI.StSpanBlock>
-      <UI.StStatusBlock status={tag.status}>
-        {tag.status === 'submit' ? (
+      <UI.StStatusBlock status={file.status}>
+        {file.status === 'submit' ? (
           <BsCircle />
-        ) : tag.status === 'accept' ? (
+        ) : file.status === 'accept' ? (
           <BsCheckCircle />
-        ) : tag.status === 'deny' ? (
+        ) : file.status === 'deny' ? (
           <BsXCircle />
         ) : null}
       </UI.StStatusBlock>

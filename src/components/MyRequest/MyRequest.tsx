@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
-import { RiFolderUserFill } from 'react-icons/ri';
 import MyRequestList from './MyRequestList';
 import { useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
+import Board from '../Board/Board';
 
 const MyRequest = () => {
   // 무한스크롤 코드
@@ -36,18 +36,19 @@ const MyRequest = () => {
   }, [handleScroll]);
 
   // data 존재 시
-  const tags = data ? data.pages.flatMap(page => page.schedule) : [];
+  const files = data ? data.pages.flatMap(page => page.schedule) : [];
+
+  // props로 내려줄 icon
+  const icon = '🙋🏻‍♂️';
 
   return (
-    <UI.StRequestBlock>
-      <RiFolderUserFill />
-      <UI.StDeviderBlock />
+    <Board icon={icon} title="내가 올린 결재">
       <UI.StUploadedFileBlock ref={targetDiv}>
-        {tags.map(tag => {
-          return <MyRequestList key={tag.eventId} tag={tag} />;
+        {files.map(file => {
+          return <MyRequestList key={file.eventId} file={file} />;
         })}
       </UI.StUploadedFileBlock>
-    </UI.StRequestBlock>
+    </Board>
   );
 };
 

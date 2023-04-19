@@ -28,16 +28,14 @@ export const StModalBackground = styled.div<interfaces.CssProps>`
 `;
 
 export const StModal = styled.div<interfaces.CssProps>`
+  ${({ style }) => style && { ...style }}
   ${({ size }) =>
     size &&
     css`
       width: ${sizes[size].width};
       height: ${sizes[size].height};
     `};
-  color: ${({ color }) => (color ? color : 'black')};
-  background: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'white')};
-  border: ${({ border }) => (border ? border : '1px solid black')};
-
+  background: ${({ background }) => (background ? background : 'white')};
   z-index: 2000;
 
   position: fixed;

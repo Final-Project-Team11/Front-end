@@ -1,6 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
-
+import '@fontsource/inter';
+import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
+${reset}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Noto+Sans+KR:wght@900&family=Noto+Serif+KR:wght@300&family=Sunflower:wght@300&display=swap');
+
+@font-face {
+    font-family: 'Inter', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Serif KR', serif;
+    font-family: 'Sunflower', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Noto+Sans+KR:wght@900&family=Noto+Serif+KR:wght@300&family=Sunflower:wght@300&display=swap');
+}
+
     html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,6 +33,7 @@ time, mark, audio, video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    font-family: "Inter";
 }
 
 article, aside, details, figcaption, figure, 

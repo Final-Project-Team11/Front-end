@@ -18,7 +18,7 @@ const Manager = () => {
         <MainArea>
           <Feed />
           <MiddleArea>
-            <Tag types="MainPage" />
+            <Tag types="ManagerPage" />
             <VacationTab />
           </MiddleArea>
           <MiddleArea>
@@ -47,6 +47,7 @@ const Wrapper = styled.div`
   /* background-color: beige; */
   width: 1200px;
   height: 100%;
+  padding-top: 25px;
 
   display: flex;
   flex-direction: column;
