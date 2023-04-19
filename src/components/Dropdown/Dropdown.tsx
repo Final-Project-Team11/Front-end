@@ -10,14 +10,17 @@ const Dropdown: React.FC<DropdownProps> = ({
   color,
   background,
   border,
+  onChange,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState('');
-  // 선택된 아이템을 저장하는 상태 값
 
-  const clickItemHandler = (item: string) => {
-    setSelectedItem(item);
+  const clickItemHandler = (item: { name: string; value: number | string }) => {
+    setSelectedItem(item.name);
     setIsOpen(false);
+    if (onChange) {
+      onChange(item.value);
+    }
   };
 
   return (
@@ -29,24 +32,24 @@ const Dropdown: React.FC<DropdownProps> = ({
         background={background}
         border={border}
       >
-        {children}
+        {selectedItem || children}
         {'  '}
         {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </StBlock>
       <ul>
         {isOpen && (
           <>
-            {items.map((item: string) => {
+            {items.map((item: { name: string; value: number | string }) => {
               return (
                 <StLi
-                  key={item}
+                  key={item.name}
                   onClick={() => clickItemHandler(item)}
                   size={size}
                   color={color}
                   background={background}
                   border={border}
                 >
-                  {item}
+                  {item.name}
                 </StLi>
               );
             })}

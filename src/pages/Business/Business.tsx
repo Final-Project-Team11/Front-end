@@ -5,26 +5,93 @@ import ButtonInput from '../../components/Inputs/ButtonInput/ButtonInput';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import { StButton } from '../../components/Button/styles';
 import Modal from '../../components/Modal/Modal';
+import { UserSignupInfo } from './interfaces';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useUserIdValidation } from './hooks/useUserIdValidation';
+import { useLogin } from '../Login/hooks/useLogin';
+import { useSignup } from './hooks/useSignup';
+// import 'business.css';
 
 const Business = () => {
+  // 모달 상태변수, 콜백함수
   const [showModal, setShowModal] = React.useState<boolean>(false);
-
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const authority = ['관리자', '팀원'];
-  const teams = ['개발팀', '경영팀', '광고팀'];
-  // PR 테스트
+  // 유저생성 상태변수
+  const [userInfo, setUserInfo] = React.useState<UserSignupInfo>({
+    userName: '',
+    team: '',
+    rank: '',
+    job: '',
+    userId: '',
+    joinDay: new Date(),
+    salaryDay: 0,
+    authLevel: 0,
+  });
 
-  const test = () => {
-    console.log('test');
+  // 유저생성 인풋 체인지 핸들러
+  const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  // 유저생성 권한 드롭 다운 체인지 핸들러
+  const selecteAuthorityHandler = (value: number | string) => {
+    setUserInfo({ ...userInfo, authLevel: Number(value) });
+  };
+
+  const changeDateHandler = (date: Date) => {
+    setUserInfo({ ...userInfo, joinDay: date });
+  };
+
+  const changeDateHandler2 = (date: Date) => {
+    const day = date.getDate();
+    setUserInfo({ ...userInfo, salaryDay: day });
+  };
+
+  // 권한 드롭 다운 배열
+  const authority = [
+    { name: '관리자', value: 2 },
+    { name: '팀원', value: 3 },
+  ];
+  // 아이디 유효성 검사, 중복확인 콜백함수
+  const { validUserId, checkUserId, userIdValidation, setUserIdValidation } =
+    useUserIdValidation();
+
+  // 아이디 유호성 검사, 중복확인 핸들러
+  const checkUserIdHandler = (item: string) => {
+    if (validUserId(item)) {
+      checkUserId.mutate(item);
+    } else {
+      setUserIdValidation(false);
+      alert('아이디 양식을 재확인 해주세요');
+    }
+  };
+
+  const { signup } = useSignup();
+
+  const submitSignInfoHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (userIdValidation) {
+      signup.mutate(userInfo);
+    } else {
+      alert('가입에 실패하였습니다 입력한 내용을 확인해주세요');
+    }
+  };
+
+  // const teams = ['개발팀', '경영팀', '광고팀'];
+
+  const check = () => {
+    console.log('중간점검', userInfo);
   };
   return (
     <MainWrapper>
       <ViewUser>
         <VuHeader>
-          <Dropdown items={teams}>부서</Dropdown>
+          {/* <Dropdown items={teams}>부서</Dropdown> */}
           <MaxInput types="max" type="search">
             검색
           </MaxInput>
@@ -34,7 +101,7 @@ const Business = () => {
           {showModal && (
             <Modal closeModal={closeModal}>
               <MaxInput types="max">이름</MaxInput>
-              <Dropdown items={teams}>부서</Dropdown>
+              <MaxInput types="max">부서</MaxInput>
               <MaxInput types="max">직급</MaxInput>
               <MaxInput types="max">직무</MaxInput>
               <MaxInput types="max">아이디</MaxInput>
@@ -48,23 +115,91 @@ const Business = () => {
           )}
         </Vubody>
       </ViewUser>
-      <CreateUser>
+      <CreateUser onSubmit={submitSignInfoHandler}>
         <h1>유저 생성</h1>
-        <MaxInput types="max">이름</MaxInput>
-        <MaxInput types="max">부서</MaxInput>
-        <MaxInput types="max">직급</MaxInput>
-        <MaxInput types="max">직무</MaxInput>
-        <ButtonInput types="button" onClick={test} buttonTag="중복검사">
+        {/* <-----------이름 : userName-----------> */}
+        <MaxInput
+          types="max"
+          type="text"
+          name="userName"
+          value={userInfo.userName}
+          onChange={changeInputHandler}
+        >
+          이름
+        </MaxInput>
+        {/* <-----------이름 : userName-----------> */}
+        {/* <-----------부서 : team-----------> */}
+        <MaxInput
+          types="max"
+          type="text"
+          name="team"
+          value={userInfo.team}
+          onChange={changeInputHandler}
+        >
+          부서
+        </MaxInput>
+        {/* <-----------부서 : team----------> */}
+        {/* <-----------직급 : rank-----------> */}
+        <MaxInput
+          types="max"
+          type="text"
+          name="rank"
+          value={userInfo.rank}
+          onChange={changeInputHandler}
+        >
+          직급
+        </MaxInput>
+        {/* <-----------직급 : rank-----------> */}
+        {/* <-----------직무 : job-----------> */}
+        <MaxInput
+          types="max"
+          type="text"
+          name="job"
+          value={userInfo.job}
+          onChange={changeInputHandler}
+        >
+          직무
+        </MaxInput>
+        {/* <-----------직무 : job-----------> */}
+        {/* <-----------아이디 : userID-----------> */}
+        <ButtonInput
+          types="button"
+          type="text"
+          name="userId"
+          value={userInfo.userId}
+          onChange={changeInputHandler}
+          onClick={() => checkUserIdHandler(userInfo.userId)}
+          buttonTag="중복검사"
+        >
           아이디
         </ButtonInput>
-        <MaxInput types="max" type="date">
-          입사일
-        </MaxInput>
-        <MaxInput types="max" type="date">
-          월급일
-        </MaxInput>
-        <Dropdown items={authority}>권한</Dropdown>
-        <StButton>생성</StButton>
+        {/* <-----------아이디 : userID-----------> */}
+        {/* <-----------입사일 : joinDay-----------> */}
+        입사일
+        <br />
+        <DatePicker selected={userInfo.joinDay} onChange={changeDateHandler} />
+        {/* <-----------입사일 : joinDay-----------> */}
+        {/* <-----------월급일 : salaryDay-----------> */}
+        <br />
+        월급일
+        <br />
+        <DatePicker
+          selected={new Date(userInfo.salaryDay)}
+          onChange={changeDateHandler2}
+        />
+        {/* <-----------월급일 : salaryDay-----------> */}
+        {/* <-----------권한 : authLevel-----------> */}
+        <br />
+        <Dropdown
+          items={authority}
+          value={userInfo.authLevel}
+          onChange={selecteAuthorityHandler}
+        >
+          권한
+        </Dropdown>
+        {/* <-----------권한 : authLevel-----------> */}
+        <br />
+        <StButton onClick={check}>생성</StButton>
       </CreateUser>
     </MainWrapper>
   );
