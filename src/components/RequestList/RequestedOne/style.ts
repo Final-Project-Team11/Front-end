@@ -66,14 +66,3 @@ export const StContentSpan = styled.span`
 export const StRejectedSpan = styled.span`
   text-decoration: line-through;
 `;
-
-export const StCircleBlock = styled.div<RequestStatus>`
-  color: ${({ types }) =>
-    types === 'submit'
-      ? null
-      : types === 'accept'
-      ? 'blue'
-      : types === 'deny'
-      ? 'red'
-      : null};
-`;

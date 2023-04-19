@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StTodoBlock, StTodoAreaBlock, StCircleBlock, StTestDeleteBlock } from './style';
+import React from 'react';
+import * as UI from './style';
 
 import { TodoBoxProps } from './interfaces';
 import { BsX } from 'react-icons/bs';
@@ -7,8 +7,6 @@ import { useDeleteTodo } from '../../../api/hooks/Feed/useDeleteTodo';
 import { useCheckTodo } from '../../../api/hooks/Feed/useCheckTodo';
 
 const TodoBox = ({ todo }: TodoBoxProps) => {
-  const [showDeleteBtn, setShowDeleteBtn] = useState<boolean>(false);
-
   const { deleteTodo } = useDeleteTodo();
 
   //투두 삭제
@@ -24,20 +22,15 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
   };
 
   return (
-    <StTodoBlock
-      onMouseEnter={() => setShowDeleteBtn(true)}
-      onMouseLeave={() => setShowDeleteBtn(false)}
-    >
-      <StTodoAreaBlock>
-        <StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
-        {todo.todo}
-      </StTodoAreaBlock>
-      {showDeleteBtn && (
-        <StTestDeleteBlock onClick={deleteBtnHandler}>
-          <BsX />
-        </StTestDeleteBlock>
-      )}
-    </StTodoBlock>
+    <UI.StTodoBlock>
+      <UI.StTodoAreaBlock>
+        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
+        <UI.StTodoSpan>{todo.todo}</UI.StTodoSpan>
+      </UI.StTodoAreaBlock>
+      <UI.StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+        <BsX />
+      </UI.StTestDeleteBlock>
+    </UI.StTodoBlock>
   );
 };
 

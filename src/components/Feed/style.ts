@@ -13,8 +13,6 @@ export const StWrapperBlock = styled.div`
   gap: 35px;
   box-sizing: border-box;
 
-  border: 1px solid black;
-
   box-shadow: rgba(236, 241, 248, 0.4) 4px 0px 9px -2px;
 `;
 
@@ -47,7 +45,7 @@ export const StFeedTitleBlock = styled.div`
 `;
 
 export const StPlusSpan = styled.span`
-  font-size: 30px;
+  font-size: 20px;
   color: ${COLOR.PAGE_BLUE};
 
   cursor: pointer;

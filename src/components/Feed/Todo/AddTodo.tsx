@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { StTodoBlock, StTodoInput } from './style';
+import * as UI from './style';
 import { StCircleBlock } from './style';
 import { AddTodoProps, SentTodo } from './interfaces';
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
@@ -45,18 +45,18 @@ const AddTodo = ({
   };
 
   return (
-    <StTodoBlock>
+    <UI.StTodoAreaBlock>
       <StCircleBlock />
-      <StTodoInput
+      <UI.StTodoInput
         ref={inputRef}
         type="text"
-        maxLength={10}
+        maxLength={15}
         value={value}
         onChange={onChange}
         onKeyPress={pressEnterHandle}
         onBlur={blurHandler}
       />
-    </StTodoBlock>
+    </UI.StTodoAreaBlock>
   );
 };
 
