@@ -3,24 +3,24 @@ import * as UI from './style';
 import { DetailProps } from './interfaces';
 
 const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
-  if (isLoading) {
+  if (isLoading || !data) {
     return <div>Loading....</div>;
   }
 
-  console.log(data.meetingfiles);
+  console.log(data.meetingfile);
 
   let files;
   switch (type) {
     case 'meetingfiles': {
-      files = data.meetingfiles;
+      files = data.meetingfile;
       break;
     }
     case 'myfiles': {
-      files = data.myfiles;
+      files = data.myfile;
       break;
     }
     case 'reportfiles': {
-      files = data.reportfiles;
+      files = data.reportfile;
       break;
     }
   }
@@ -45,9 +45,9 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
         </UI.FooterHalf>
         <UI.Devider />
         <UI.FooterHalf>
-          {/* {files.ref.map(tag => {
+          {files.ref?.map(tag => {
             return <UI.FooterSpanBlock>@ {tag}</UI.FooterSpanBlock>;
-          })} */}
+          })}
         </UI.FooterHalf>
       </UI.Footer>
     </UI.Modal>

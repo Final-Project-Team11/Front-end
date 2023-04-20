@@ -30,7 +30,6 @@ const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryPro
   // 인풋에서 포커스 사라지면 input 닫힘
   const blurHandler = () => {
     setValue('');
-    console.log('블러');
     inputHandler(false);
   };
 

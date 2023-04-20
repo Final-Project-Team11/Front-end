@@ -11,9 +11,9 @@ interface Detail {
 
 export interface DetailProps {
   data: {
-    meetingfiles: Detail;
-    myfiles: Detail;
-    reportfiles: Detail;
+    meetingfile: Detail;
+    myfile: Detail;
+    reportfile: Detail;
   };
   isLoading: boolean;
   type: 'myfiles' | 'meetingfiles' | 'reportfiles';

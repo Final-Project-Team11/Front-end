@@ -17,8 +17,6 @@ const RequestedOne = ({ request }: Props) => {
     setModalOpen(false);
   };
 
-  if (data) console.log(data);
-
   return (
     <UI.StRequestedListBlock
       key={request.eventId}

@@ -44,8 +44,6 @@ const Request = () => {
   }
 
   if (!data || !data.pages) {
-    console.log('데이터', data);
-    console.log('데이터.페이지', data?.pages);
     return <div>데이터 없음</div>;
   }
 
@@ -55,6 +53,8 @@ const Request = () => {
         []
       )
     : [];
+
+  console.log(requests);
 
   return (
     <Board icon={icon} title="RequestedList">
