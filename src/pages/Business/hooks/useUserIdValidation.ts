@@ -9,7 +9,7 @@ export const useUserIdValidation = () => {
 
   const checkUserId = useMutation(
     async (item: string) => {
-      const data = await apis.post(`/idCheck`, {
+      const data = await apis.post(`/users/${item}/check`, {
         userId: item,
       });
       return data;

@@ -9,13 +9,18 @@ import { UserSignupInfo } from './interfaces';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useUserIdValidation } from './hooks/useUserIdValidation';
-import { useLogin } from '../Login/hooks/useLogin';
 import { useSignup } from './hooks/useSignup';
-// import 'business.css';
+import './business.css';
+import { ko } from 'date-fns/locale';
+import { Users, useGetUser } from './hooks/useGetUser';
+import { useDeleteUser } from './hooks/useDeletUser';
+import DropdownPortal from '../../components/Dropdown/DropdownPortal';
+import { usePatchUser } from './hooks/usePatchUser';
 
 const Business = () => {
   // 모달 상태변수, 콜백함수
   const [showModal, setShowModal] = React.useState<boolean>(false);
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -28,14 +33,15 @@ const Business = () => {
     job: '',
     userId: '',
     joinDay: new Date(),
-    salaryDay: 0,
+    salaryDay: '',
     authLevel: 0,
   });
 
   // 유저생성 인풋 체인지 핸들러
   const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
+    const updateUserInfo = name === 'salaryDay' ? Number(value) : value;
+    setUserInfo({ ...userInfo, [name]: updateUserInfo });
   };
 
   // 유저생성 권한 드롭 다운 체인지 핸들러
@@ -43,19 +49,19 @@ const Business = () => {
     setUserInfo({ ...userInfo, authLevel: Number(value) });
   };
 
-  const changeDateHandler = (date: Date) => {
-    setUserInfo({ ...userInfo, joinDay: date });
+  const selecteAuthorityPatchHandler = (value: number | string) => {
+    setPatchUserInfo({ ...patchUserInfo, authLevel: Number(value) });
   };
 
-  const changeDateHandler2 = (date: Date) => {
-    const day = date.getDate();
-    setUserInfo({ ...userInfo, salaryDay: day });
+  // datepicker handler
+  const changeDateHandler = (date: Date) => {
+    setUserInfo({ ...userInfo, joinDay: date });
   };
 
   // 권한 드롭 다운 배열
   const authority = [
     { name: '관리자', value: 2 },
-    { name: '팀원', value: 3 },
+    { name: '직원', value: 3 },
   ];
   // 아이디 유효성 검사, 중복확인 콜백함수
   const { validUserId, checkUserId, userIdValidation, setUserIdValidation } =
@@ -82,11 +88,72 @@ const Business = () => {
     }
   };
 
-  // const teams = ['개발팀', '경영팀', '광고팀'];
+  const { data, isLoading } = useGetUser();
+  console.log('데이터', data);
+  const [selectedUser, setSelectedUser] = React.useState<Users>({
+    userId: '',
+    userName: '',
+    team: '',
+    rank: '',
+    joinDay: null,
+    job: '',
+    salaryDay: 0,
+    authLevel: '',
+  });
 
-  const check = () => {
-    console.log('중간점검', userInfo);
+  const handleUserClick = (user: Users) => {
+    setSelectedUser(user);
+    setShowModal(true);
+    console.log('선택된', user);
   };
+
+  if (!data && isLoading) {
+    <div>Loading</div>;
+  }
+
+  const { deleteUser } = useDeleteUser();
+
+  const deleteUserHandler = (): void => {
+    deleteUser(selectedUser.userId);
+    closeModal();
+  };
+
+  interface PatchUserInfo {
+    team: string;
+    authLevel: number | string;
+    rank: string;
+    job: string;
+  }
+
+  const [patchUserInfo, setPatchUserInfo] = React.useState<PatchUserInfo>({
+    team: '',
+    authLevel: '',
+    rank: '',
+    job: '',
+  });
+
+  React.useEffect(() => {
+    setPatchUserInfo({
+      team: selectedUser.team,
+      authLevel: selectedUser.authLevel,
+      rank: selectedUser.rank,
+      job: selectedUser.job,
+    });
+  }, [selectedUser]);
+
+  const patchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPatchUserInfo({ ...patchUserInfo, [name]: value });
+  };
+
+  const { patchUser } = usePatchUser();
+
+  const patchUserHandler = () => {
+    patchUser(selectedUser.userId, patchUserInfo);
+    alert('수정되었습니다.');
+    closeModal();
+  };
+
   return (
     <MainWrapper>
       <ViewUser>
@@ -97,19 +164,66 @@ const Business = () => {
           </MaxInput>
         </VuHeader>
         <Vubody>
-          <button onClick={() => setShowModal(true)}>유저 조회 영역</button>
+          {data?.map(user => {
+            return (
+              <div key={user.userId} onClick={() => handleUserClick(user)}>
+                <span>{user.team}</span>&nbsp;
+                <span>{user.rank}</span>&nbsp;
+                <span>{user.job}</span>&nbsp;
+                <span>{user.userName}</span>&nbsp;
+                <span>{String(user.joinDay)}</span>&nbsp;
+              </div>
+            );
+          })}
           {showModal && (
             <Modal closeModal={closeModal}>
-              <MaxInput types="max">이름</MaxInput>
-              <MaxInput types="max">부서</MaxInput>
-              <MaxInput types="max">직급</MaxInput>
-              <MaxInput types="max">직무</MaxInput>
-              <MaxInput types="max">아이디</MaxInput>
-              <MaxInput types="max">입사일</MaxInput>
-              <MaxInput types="max">월급일</MaxInput>
-              <Dropdown items={authority}>권한</Dropdown>
-              <StButton>수정</StButton>
-              <StButton>삭제</StButton>
+              이름{'  '}
+              {selectedUser.userName}
+              <MaxInput
+                types="max"
+                value={patchUserInfo.team}
+                name="team"
+                onChange={patchInputHandler}
+              >
+                부서
+              </MaxInput>
+              <MaxInput
+                types="max"
+                value={patchUserInfo.rank}
+                name="rank"
+                onChange={patchInputHandler}
+              >
+                직급
+              </MaxInput>
+              <MaxInput
+                types="max"
+                value={patchUserInfo.job}
+                name="job"
+                onChange={patchInputHandler}
+              >
+                직무
+              </MaxInput>
+              아이디{'  '}
+              {selectedUser.userId}
+              <br />
+              입사일{'  '}
+              {String(selectedUser.joinDay)}
+              <br />
+              월급일{'  '}
+              {selectedUser.salaryDay}
+              <br />
+              권한{' : '}
+              {selectedUser.authLevel}
+              <Dropdown
+                size="small"
+                items={authority}
+                value={selectedUser.authLevel}
+                onChange={selecteAuthorityPatchHandler}
+              >
+                변경
+              </Dropdown>
+              <StButton onClick={patchUserHandler}>수정</StButton>
+              <StButton onClick={deleteUserHandler}>삭제</StButton>
               <StButton onClick={closeModal}>닫기</StButton>
             </Modal>
           )}
@@ -177,20 +291,29 @@ const Business = () => {
         {/* <-----------입사일 : joinDay-----------> */}
         입사일
         <br />
-        <DatePicker selected={userInfo.joinDay} onChange={changeDateHandler} />
+        <DatePicker
+          selected={userInfo.joinDay}
+          onChange={changeDateHandler}
+          locale={ko}
+          dateFormat="yyyy년 MM월 dd일"
+        />
         {/* <-----------입사일 : joinDay-----------> */}
         {/* <-----------월급일 : salaryDay-----------> */}
         <br />
-        월급일
-        <br />
-        <DatePicker
-          selected={new Date(userInfo.salaryDay)}
-          onChange={changeDateHandler2}
-        />
+        <MaxInput
+          types="max"
+          type="text"
+          name="salaryDay"
+          value={userInfo.salaryDay}
+          onChange={changeInputHandler}
+        >
+          월급일
+        </MaxInput>
         {/* <-----------월급일 : salaryDay-----------> */}
         {/* <-----------권한 : authLevel-----------> */}
         <br />
         <Dropdown
+          size="small"
           items={authority}
           value={userInfo.authLevel}
           onChange={selecteAuthorityHandler}
@@ -199,7 +322,7 @@ const Business = () => {
         </Dropdown>
         {/* <-----------권한 : authLevel-----------> */}
         <br />
-        <StButton onClick={check}>생성</StButton>
+        <StButton>생성</StButton>
       </CreateUser>
     </MainWrapper>
   );
