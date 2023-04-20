@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import * as UI from './style';
 import { AddCategoryProps, SentCategory } from './interfaces';
 import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
+import { TabContext } from '../../../pages/Main/Main';
 
 const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryProps) => {
   // AddCategory 인풋 생기면 focus
   const inputRef = useRef<HTMLInputElement>(null);
+  const tab = useContext(TabContext);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -35,7 +37,7 @@ const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryPro
   };
 
   return (
-    <UI.StCategoryInputBlock>
+    <UI.StCategoryInputBlock tab={tab}>
       <UI.StCircleBlock />
       <UI.StCategoryInput
         ref={inputRef}

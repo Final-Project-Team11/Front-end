@@ -11,3 +11,7 @@ export interface Category {
   categoryName: string;
   todos: Todo[] | [];
 }
+
+export interface TitleProps {
+  tab?: number;
+}

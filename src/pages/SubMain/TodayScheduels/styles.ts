@@ -41,7 +41,7 @@ const StBlankBlock = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  padding: 15px 10px;
+  padding: 32px 10px;
   border-bottom: 1px solid #cccccc;
 `;
 
@@ -57,6 +57,8 @@ const StWrap = styled.div`
   flex: 1;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
+  min-height: 400px;
+  margin-bottom: 50px;
 `;
 
 const StContainer = styled.div`

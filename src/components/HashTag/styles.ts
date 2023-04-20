@@ -70,6 +70,8 @@ const StInputBlock = styled.div`
   line-height: 20px;
   min-width: 600px;
   max-width: 700px;
+
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 `;
 
 const StTeamMark = styled.div`
@@ -103,15 +105,16 @@ const StUlBlock = styled.ul<UlStyleProps>`
   position: absolute;
   z-index: 100;
   background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   border-top: none;
   ${({ pos }) =>
-    `top : ${pos.top + pos.height}px; left :${pos.left}px; width:${pos.width - 1}px;`}
+    `top : ${pos.top + pos.height + 2}px; left :${pos.left}px; width:${pos.width - 1}px;`}
 `;
 
 const StIconBlock = styled.div`
   padding-top: 7px;
-  margin-right: 10px;
+  margin-right: 26px;
 `;
 
 export {

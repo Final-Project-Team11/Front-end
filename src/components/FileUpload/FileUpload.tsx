@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 
 interface FileUploadProps {
   onFileHandler: React.Dispatch<React.SetStateAction<File | undefined>>;
+  disable?: boolean;
 }
 const FileUpload = (props: FileUploadProps) => {
   const [files, setFiles] = useState<File>();
@@ -28,10 +29,15 @@ const FileUpload = (props: FileUploadProps) => {
       {fileNames?.map(item => {
         return <styles.StTagBlock key={nanoid()}>{item}</styles.StTagBlock>;
       })}
-      <styles.StPlusLabel htmlFor="FileInput">
-        <HiOutlinePlusSm size="25px" />
-      </styles.StPlusLabel>
-      <styles.StInput type="file" id="FileInput" onChange={ChangeHandler} />
+
+      {props.disable === false && (
+        <>
+          <styles.StPlusLabel htmlFor="FileInput">
+            <HiOutlinePlusSm size="25px" />
+          </styles.StPlusLabel>
+          <styles.StInput type="file" id="FileInput" onChange={ChangeHandler} />
+        </>
+      )}
     </styles.StContainer>
   );
 };

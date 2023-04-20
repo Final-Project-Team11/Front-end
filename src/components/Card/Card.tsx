@@ -9,7 +9,11 @@ import {
 } from './style';
 import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
 
-const Card = () => {
+interface CardProps {
+  tab?: number;
+}
+
+const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = GetCardInfo();
 
   if (infoIsLoading || !userInfo) {
@@ -17,7 +21,7 @@ const Card = () => {
   }
 
   return (
-    <StCardBlock>
+    <StCardBlock tab={tab}>
       <StInfoBlock>
         <StTeamNameH1>
           {userInfo.team} : {userInfo.userName}

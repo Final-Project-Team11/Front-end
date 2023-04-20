@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
+import { CategoryStyle } from './interfaces';
 
 export const StCategoryBlock = styled.div`
   width: 100%;
@@ -40,8 +41,9 @@ export const StDeleteBlock = styled.div`
   transition: opacity 0.3s ease;
 `;
 
-export const StCategoryTitleBlock = styled.div`
-  background-color: ${COLOR.PAGE_BLUE};
+export const StCategoryTitleBlock = styled.div<CategoryStyle>`
+  background-color: ${({ tab }) =>
+    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
   width: fit-content;
   max-width: 155px;
   height: 26px;
@@ -87,8 +89,9 @@ export const StPlusBlock = styled.button`
 `;
 
 // styles for AddCategory
-export const StCategoryInputBlock = styled.div`
-  background-color: ${COLOR.PAGE_BLUE};
+export const StCategoryInputBlock = styled.div<CategoryStyle>`
+  background-color: ${({ tab }) =>
+    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
   width: fit-content;
   height: 26px;
 
