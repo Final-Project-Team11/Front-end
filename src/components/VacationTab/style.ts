@@ -6,6 +6,10 @@ export const StInsideBlock = styled.div`
 
   overflow-y: scroll;
 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
   ::-webkit-scrollbar {
     display: none;
   }

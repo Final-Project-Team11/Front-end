@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as UI from './style';
 import { Props } from './interfaces';
+import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
+import Modal from '../../Modal/Modal';
+import RequestDetail from '../RequestDetail/RequestDetail';
 
 const RequestedOne = ({ request }: Props) => {
+  const { data, refetch, isLoading } = useGetRequestDetail(request.eventId);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const getDetail = () => {
+    refetch();
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <UI.StRequestedListBlock key={request.eventId} types={request.status}>
+    <UI.StRequestedListBlock
+      key={request.eventId}
+      types={request.status}
+      onClick={() => getDetail()}
+    >
+      {modalOpen && (
+        <Modal closeModal={closeModal}>
+          <RequestDetail data={data} isLoading={isLoading} />
+        </Modal>
+      )}
       <UI.StLeftBlock>
         <UI.StNameDateBlock>
           <UI.StNameDateDiv>

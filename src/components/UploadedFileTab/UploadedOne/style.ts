@@ -14,6 +14,8 @@ export const StUploadedFileBlock = styled.div`
 
   margin-bottom: 14px;
 
+  cursor: pointer;
+
   &:hover .date {
     opacity: 1;
   }
