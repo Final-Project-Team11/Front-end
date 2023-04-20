@@ -2,7 +2,6 @@ import React from 'react';
 import { DropdownProps } from './interfaces';
 import { StBlock, StLi } from './styles';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import ReactDom from 'react-dom';
 
 const Dropdown: React.FC<DropdownProps> = ({
   items,
@@ -24,7 +23,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
-  const dropdownList = (
+  return (
     <>
       <StBlock
         onClick={() => setIsOpen(!isOpen)}
@@ -59,14 +58,6 @@ const Dropdown: React.FC<DropdownProps> = ({
       </ul>
     </>
   );
-  const root = document.getElementById('root');
-  if (!root) {
-    const newRoot = document.createElement('div');
-    document.body.appendChild(newRoot);
-    return ReactDom.createPortal(dropdownList, newRoot);
-  } else {
-    return ReactDom.createPortal(dropdownList, root);
-  }
 };
 
 export default Dropdown;
