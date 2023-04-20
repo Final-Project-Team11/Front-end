@@ -117,7 +117,7 @@ const HashTag = (props: HashTagProps) => {
             {data?.map(item => {
               return (
                 <styles.StLiBlock onClick={onLiClickHandler}>
-                  <styles.StImageBlock />
+                  {/* <styles.StImageBlock /> */}
                   {item}
                 </styles.StLiBlock>
               );

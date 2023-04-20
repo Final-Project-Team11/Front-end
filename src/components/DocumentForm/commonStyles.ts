@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
 
 const StContainer = styled.div``;
 
 const StTitleContentBlock = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 18px;
   line-height: 50px;
   font-size: 20px;
   align-items: center;
@@ -20,7 +20,7 @@ const StTitleBlock = styled.div`
 `;
 
 const StContentBlock = styled.div`
-  height: 250px;
+  /* height: 250px; */
   border-top: 1px solid ${COLOR.DETAIL_GRAY};
   border-bottom: 1px solid ${COLOR.DETAIL_GRAY};
   padding: 10px 0;
@@ -29,10 +29,10 @@ const StContentBlock = styled.div`
 const StMentionBlock = styled.div`
   border-bottom: 1px solid ${COLOR.DETAIL_GRAY};
   margin-bottom: 200px;
-  padding: 10px 0;
+  padding: 18px 0;
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  margin-left: 18px;
   gap: 10px;
 `;
 
@@ -59,6 +59,18 @@ const StTextArea = styled.textarea`
 const StInput = styled.input`
   border: none;
   font-size: 20px;
+  width: 71px;
+  outline: none;
+
+  &:disabled {
+    background: none;
+  }
+`;
+
+const StTitleInput = styled.input`
+  border: none;
+  font-size: 20px;
+  width: 300px;
   outline: none;
 
   &:disabled {
@@ -76,7 +88,7 @@ const StMarkBlock = styled.div<CalendarTypeProps>`
   background-color: ${({ backgroundColor }) =>
     backgroundColor ? backgroundColor : COLOR.SCHEDULE_BLUE};
   border-radius: 10px;
-  margin-left: 10px;
+  margin-left: 18px;
 `;
 
 const StMarkNameBlcok = styled.div`
@@ -92,16 +104,31 @@ const StPeriodBlock = styled.div`
   font-weight: bold;
 `;
 
-const StTextAreaBlock = styled.div`
+interface ZoomClickProps {
+  zoomClick?: boolean;
+}
+const StTextAreaBlock = styled.div<ZoomClickProps>`
   margin-left: 30px;
-  height: 170px;
+  padding-top: 10px;
+  ${({ zoomClick }) =>
+    zoomClick === true
+      ? css`
+          height: 800px;
+          overflow: hidden scroll;
+        `
+      : css`
+          height: 170px;
+          overflow: hidden;
+        `}
 `;
 
 const StFileBlock = styled.div`
   display: flex;
   margin-left: 8px;
   align-items: center;
+  padding: 27px 0;
   gap: 10px;
+  margin-left: 18px;
 `;
 
 const stTagBlock = styled.div`
@@ -127,6 +154,26 @@ const StReturnBlcok = styled.div`
   }
 `;
 
+const StOpenBlock = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(237, 237, 237, 0.7);
+  border-bottom: 1px solid rgba(237, 237, 237, 0.7);
+  margin-left: 18px;
+  padding: 10px 0;
+`;
+
+const StOpenButton = styled.div`
+  display: flex;
+  gap: 10px;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
 export {
   StContainer,
   StTitleBlock,
@@ -144,4 +191,7 @@ export {
   stTagBlock,
   Ststrong,
   StReturnBlcok,
+  StOpenBlock,
+  StOpenButton,
+  StTitleInput,
 };

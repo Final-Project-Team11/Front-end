@@ -5,7 +5,7 @@ import * as styles from '../commonStyles';
 import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
 import Button from '../../Button/Button';
-import { MdFolder } from 'react-icons/md';
+import { MdFolder, MdZoomInMap } from 'react-icons/md';
 import { AiFillTag } from 'react-icons/ai';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../api/auth/CookieUtils';
@@ -13,6 +13,8 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 import AddTodo from '../../Feed/Todo/AddTodo';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import FileUpload from '../../FileUpload/FileUpload';
+import styled from 'styled-components';
+import { TbBorderCorners } from 'react-icons/tb';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
@@ -25,8 +27,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
       const formData = new FormData();
       if (FormFiles !== undefined) {
         formData.append('file', FormFiles);
-        const newProps = { ...props, file: JSON.stringify(formData) };
-        const newData = postFormat(props.tab, newProps);
+        const newData = postFormat(props.tab, props);
         mutation.mutate(newData);
       } else {
         const newData = postFormat(props.tab, props);
@@ -48,14 +49,17 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [author, autherHandler, setAuthorInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
+  const [zoomClick, setZoomClick] = useState(false);
 
   useEffect(() => {
     props.title && setTitleHanlderValue(props.title?.split('-')[0]);
     props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
-    props.isReadOnly && setDisable(props.isReadOnly);
+    props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body && setContentValue(props.body);
+    console.log(' props.isReadOnly', props.isReadOnly);
   }, [props]);
 
+  console.log('disable', disable);
   return (
     <styles.StContainer ref={props.propsRef}>
       <styles.StTitleBlock>
@@ -64,14 +68,14 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
-              placeholder="작성자를 입력해주세요"
+              placeholder="작성자"
               value={author}
               onChange={autherHandler}
               disabled={disable}
             />
           </div>
           <div>
-            <styles.StInput
+            <styles.StTitleInput
               placeholder="제목 입력란"
               value={title}
               onChange={titleHandler}
@@ -96,11 +100,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
-        <styles.StMarkNameBlcok>
-          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-          <span>출장지</span>
-        </styles.StMarkNameBlcok>
-        <styles.StTextAreaBlock>
+        <styles.StTextAreaBlock zoomClick={zoomClick}>
           <styles.StTextArea
             placeholder="내용을 입력해주세요"
             value={content}
@@ -108,6 +108,21 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
             disabled={disable}
           />
         </styles.StTextAreaBlock>
+        <styles.StOpenBlock>
+          <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
+            {zoomClick === false ? (
+              <>
+                <TbBorderCorners />
+                <span>전체화면</span>
+              </>
+            ) : (
+              <>
+                <MdZoomInMap />
+                <span>축소</span>
+              </>
+            )}
+          </styles.StOpenButton>
+        </styles.StOpenBlock>
       </styles.StContentBlock>
     </styles.StContainer>
   );
