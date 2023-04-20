@@ -13,7 +13,6 @@ export const useGetUploadedDetail = ({ id, types, userId }: Payload) => {
     queryKey: [keys.GET_UPLOADED_DETAIL, id],
     queryFn: async () => {
       const response = await apis.get(`/${types}/detail?userId=${userId}&eventId=${id}`);
-      console.log('@@@@@@@@@@@@@@@@@@', response.data);
       return response.data;
     },
     enabled: false,

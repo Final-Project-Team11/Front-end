@@ -59,8 +59,6 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
     }
   }
 
-  console.log(files);
-
   return (
     <Board icon={icon} title={title}>
       <UI.StInsideBlock ref={targetDiv}>

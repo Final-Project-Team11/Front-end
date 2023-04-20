@@ -54,8 +54,6 @@ const Request = () => {
       )
     : [];
 
-  console.log(requests);
-
   return (
     <Board icon={icon} title="RequestedList">
       <UI.StInsideBlock ref={targetDiv}>

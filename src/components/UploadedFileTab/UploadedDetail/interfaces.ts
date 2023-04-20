@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 interface Detail {
   content: string;
   enrollDay: string;
@@ -17,4 +19,5 @@ export interface DetailProps {
   };
   isLoading: boolean;
   type: 'myfiles' | 'meetingfiles' | 'reportfiles';
+  closeModal: () => void;
 }

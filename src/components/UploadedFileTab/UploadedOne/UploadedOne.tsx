@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as UI from './style';
 import { Props } from './interfaces';
 import Modal from '../../Modal/Modal';
@@ -22,13 +22,23 @@ const UploadedOne = ({ file, type }: Props) => {
   };
   const closeModal = () => {
     setModalOpen(false);
+    console.log('test');
   };
+
+  useEffect(() => {
+    console.log(modalOpen);
+  }, [modalOpen]);
 
   return (
     <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}>
       {modalOpen && (
         <Modal closeModal={closeModal}>
-          <UploadedDetail data={data} isLoading={isLoading} type={type} />
+          <UploadedDetail
+            data={data}
+            isLoading={isLoading}
+            type={type}
+            closeModal={closeModal}
+          />
         </Modal>
       )}
       <UI.StNameDateBlock>

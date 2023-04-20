@@ -2,12 +2,10 @@ import React from 'react';
 import * as UI from './style';
 import { DetailProps } from './interfaces';
 
-const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
+const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
   if (isLoading || !data) {
     return <div>Loading....</div>;
   }
-
-  console.log(data.meetingfile);
 
   let files;
   switch (type) {
@@ -25,8 +23,6 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
     }
   }
 
-  console.log(files);
-
   return (
     <UI.Modal>
       <UI.Header>
@@ -34,8 +30,9 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
         <UI.TitleSpan>{files.enrollDay}</UI.TitleSpan>
         <UI.TitleSpan>{files.userName}</UI.TitleSpan>
         <UI.TitleSpan>{files.title}</UI.TitleSpan>
+        <UI.CloseButton onClick={closeModal}>닫기</UI.CloseButton>
+        <UI.Devider positions="Header" />
       </UI.Header>
-      <UI.Devider />
       <UI.ContentArea>
         <UI.ContentSpan>{files.content}</UI.ContentSpan>
       </UI.ContentArea>
@@ -43,7 +40,7 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
         <UI.FooterHalf>
           <UI.FooterSpanBlock>파일</UI.FooterSpanBlock>
         </UI.FooterHalf>
-        <UI.Devider />
+        <UI.Devider positions="Footer" />
         <UI.FooterHalf>
           {files.ref?.map(tag => {
             return <UI.FooterSpanBlock>@ {tag}</UI.FooterSpanBlock>;
@@ -54,4 +51,4 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
   );
 };
 
-export default RequestDetail;
+export default UploadedDetail;
