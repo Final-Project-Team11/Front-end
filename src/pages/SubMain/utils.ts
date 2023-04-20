@@ -56,7 +56,9 @@ export function settingSchedule(schedule: ScheduleProps) {
         borderColor: COLOR.SCHEDULE_BLUE,
         dragBackgroundColor: COLOR.SCHEDULE_BLUE,
         color: COLOR.WHITE_COLOR,
+        end: schedule.startDay,
         isReadOnly: true,
+        location: schedule.location,
       };
     case OTHER:
       return {
@@ -81,6 +83,7 @@ export function settingSchedule(schedule: ScheduleProps) {
         borderColor: COLOR.MEETING_BAR,
         dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
+        location: schedule.location,
       };
 
     default:
@@ -301,49 +304,64 @@ interface postFormatProps {
 export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
   const defaultFormat = {
     startDay: schedule.startDay?.toString(),
-    endDay: schedule.endDay?.toString(),
     title: schedule.title,
     content: schedule.content,
-    ref: schedule.ref,
-    file: schedule.file,
   };
 
   if (tab === 0) {
     switch (schedule.eventType) {
-      case '회의': {
+      case '0': {
+        const postData = {
+          url: 'meeting', //Isssue
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+            ref: schedule.ref,
+            file: schedule.file,
+            eventType: 'Meetings',
+            endDay: schedule.endDay?.toString(),
+            startTime:
+              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+          },
+        };
+        return postData;
+      }
+
+      case '1': {
+        const postData = {
+          url: 'other',
+          postInfo: {
+            ...defaultFormat,
+            ref: schedule.ref,
+            file: schedule.file,
+            endDay: schedule.endDay?.toString(),
+          },
+        };
+        return postData;
+      }
+      case '2': {
+        const postData = {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+            ref: schedule.ref,
+            file: schedule.file,
+          },
+        };
+        return postData;
+      }
+      case '3': {
         const postData = {
           url: 'meeting',
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-          },
-        };
-        return postData;
-      }
-
-      case '기타': {
-        const postData = {
-          url: 'other',
-          postInfo: {
-            ...defaultFormat,
-          },
-        };
-        return postData;
-      }
-      case '출장': {
-        const postData = {
-          url: 'schedule',
-          postInfo: {
-            ...defaultFormat,
-          },
-        };
-        return postData;
-      }
-      case '미팅': {
-        const postData = {
-          url: 'meeting',
-          postInfo: {
-            ...defaultFormat,
+            ref: schedule.ref,
+            file: schedule.file,
+            eventType: 'MeetingReports',
+            startTime:
+              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
           },
         };
         return postData;
