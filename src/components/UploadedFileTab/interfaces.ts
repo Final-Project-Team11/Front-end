@@ -10,4 +10,5 @@ export interface UploadedFileList {
   title: string;
   userName: string;
   eventType?: string;
+  userId: string;
 }

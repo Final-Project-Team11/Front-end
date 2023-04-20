@@ -7,7 +7,6 @@ const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
     return <div>Loading....</div>;
   }
 
-  console.log(data);
   console.log(data.meetingfiles);
 
   let files;

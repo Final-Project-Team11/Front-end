@@ -6,6 +6,7 @@ export interface File {
   title: string;
   userName: string;
   eventType?: string;
+  userId: string;
 }
 
 export interface Props {

@@ -4,10 +4,8 @@ import * as UI from './style';
 import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
 import Board from '../Board/Board';
 import UploadedOne from './UploadedOne/UploadedOne';
-import TagIcon from '../../assets/Icons/TagIcon';
 import FolderIcon from '../../assets/Icons/FolderIcon';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
-import CalendarIcon from '../../assets/Icons/CalendarIcon';
 import { COLOR } from '../../styles/colors';
 
 const UploadedFileTab = ({ type }: UploadedFileTabProps) => {

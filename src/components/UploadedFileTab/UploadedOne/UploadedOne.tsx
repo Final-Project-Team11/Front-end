@@ -11,6 +11,7 @@ const UploadedOne = ({ file, type }: Props) => {
   const payload = {
     id: file.eventId,
     types: type,
+    userId: file.userId,
   };
 
   const { data, refetch, isLoading } = useGetUploadedDetail(payload);
