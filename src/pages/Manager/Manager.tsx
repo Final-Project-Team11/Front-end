@@ -7,6 +7,7 @@ import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from './styles';
 import Board from '../../components/Board/Board';
+import VacationMeerkat from '../../assets/Icons/VacationMeerkat';
 
 const Manager = () => {
   return (
@@ -17,7 +18,10 @@ const Manager = () => {
           <UI.Calendar>캘린더영역</UI.Calendar>
         </UI.Header>
         <UI.MainArea>
-          <Feed />
+          <UI.FeedArea>
+            <Feed />
+            <VacationMeerkat />
+          </UI.FeedArea>
           <UI.TabArea>
             <UI.MiddleArea>
               <Tag types="ManagerPage" />
