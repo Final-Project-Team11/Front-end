@@ -54,6 +54,15 @@ export const TabArea = styled.div`
   gap: 20px;
 `;
 
+export const FeedArea = styled.div`
+  width: 250px;
+  height: 800px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const MiddleArea = styled.div`
   width: 260px;
   height: 734px;
