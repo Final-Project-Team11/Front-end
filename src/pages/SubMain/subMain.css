@@ -63,3 +63,24 @@ body {
   .toastui-calendar-daygrid-cell+.toastui-calendar-daygrid-cell {
     border-left: none;
   }
+
+  .toastui-calendar-grid-cell-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .toastui-calendar-template-monthDayName{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .toastui-calendar-grid-cell-more-events{
+    position: absolute;
+    right: 0;
+  }
+
+  .toastui-calendar-grid-cell-date{
+    font-size: 11px; 
+  }
