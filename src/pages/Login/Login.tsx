@@ -10,7 +10,7 @@ import {
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { useLogin } from './hooks/useLogin';
+import { useAdminLogin } from './hooks/useAdminLogin';
 import { getCookie } from '../../api/auth/CookieUtils';
 
 enum Tabs {
@@ -19,7 +19,7 @@ enum Tabs {
 }
 
 const Tabconent1 = () => {
-  const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useLogin();
+  const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useAdminLogin();
   const navigate = useNavigate();
 
   return (

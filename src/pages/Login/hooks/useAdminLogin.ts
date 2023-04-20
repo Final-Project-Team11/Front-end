@@ -10,7 +10,7 @@ export interface AdminLoginResponse {
   message: string;
 }
 
-export const useLogin = () => {
+export const useAdminLogin = () => {
   const navigate = useNavigate();
 
   const [adminLoginInfo, setAdminLoginInfo] = React.useState<AdminLoginInfo>({
