@@ -50,7 +50,7 @@ const Tag = ({ types }: TagBlockCssProps) => {
     <Board icon={icon} title="tag" types={types}>
       <UI.StInsideBlock ref={targetDiv}>
         {tags.map((tag: TagElement) => {
-          return <Tags key={tag.eventId} tag={tag} types={types} />;
+          return <Tags key={tag.mentionId} tag={tag} types={types} />;
         })}
       </UI.StInsideBlock>
     </Board>
