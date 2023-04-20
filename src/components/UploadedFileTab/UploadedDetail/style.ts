@@ -107,6 +107,7 @@ export const CloseButton = styled.button`
 
   font-size: 10px;
   color: ${COLOR.PAGE_BLUE};
+  cursor: pointer;
 
   border: 1px solid ${COLOR.PAGE_BLUE};
   border-radius: 19px;

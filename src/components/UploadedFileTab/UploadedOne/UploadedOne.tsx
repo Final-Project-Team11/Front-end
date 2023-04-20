@@ -22,15 +22,17 @@ const UploadedOne = ({ file, type }: Props) => {
   };
   const closeModal = () => {
     setModalOpen(false);
-    console.log('test');
   };
 
-  useEffect(() => {
-    console.log(modalOpen);
-  }, [modalOpen]);
-
   return (
-    <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}>
+    <>
+      <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}>
+        <UI.StNameDateBlock>
+          <UI.StContentSpan>😵‍💫 | {file.userName}</UI.StContentSpan>
+          <UI.StDateSpan className="date"> {file.enrollDay}</UI.StDateSpan>
+        </UI.StNameDateBlock>
+        <UI.StContentSpan>📎 | {file.fileName}</UI.StContentSpan>
+      </UI.StUploadedFileBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
           <UploadedDetail
@@ -41,12 +43,7 @@ const UploadedOne = ({ file, type }: Props) => {
           />
         </Modal>
       )}
-      <UI.StNameDateBlock>
-        <UI.StContentSpan>😵‍💫 | {file.userName}</UI.StContentSpan>
-        <UI.StDateSpan className="date"> {file.enrollDay}</UI.StDateSpan>
-      </UI.StNameDateBlock>
-      <UI.StContentSpan>📎 | {file.fileName}</UI.StContentSpan>
-    </UI.StUploadedFileBlock>
+    </>
   );
 };
 
