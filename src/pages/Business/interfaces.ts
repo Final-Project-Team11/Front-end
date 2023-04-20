@@ -5,6 +5,6 @@ export interface UserSignupInfo {
   job: string;
   userId: string;
   joinDay: Date;
-  salaryDay: number;
+  salaryDay: number | string;
   authLevel: number;
 }
