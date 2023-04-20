@@ -24,8 +24,8 @@ const Manager = () => {
               <VacationTab />
             </UI.MiddleArea>
             <UI.MiddleArea>
-              <UploadedFileTab type="reportfiles" icon="📘" />
-              <UploadedFileTab type="meetingfiles" icon="📗" />
+              <UploadedFileTab type="reportfiles" />
+              <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
               <Request />

@@ -3,7 +3,7 @@ import * as UI from './style';
 import { DetailProps } from './interfaces';
 
 const RequestDetail = ({ data, isLoading, type }: DetailProps) => {
-  if (isLoading || !data) {
+  if (isLoading) {
     return <div>Loading....</div>;
   }
 

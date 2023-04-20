@@ -5,6 +5,8 @@ import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';
 import { RequestInfo } from './interfaces';
+import BusinessIcon from '../../assets/Icons/BusinessIcon';
+import { COLOR } from '../../styles/colors';
 
 const Request = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest();
@@ -35,7 +37,7 @@ const Request = () => {
   }, [handleScroll, fetchNextPage, hasNextPage]);
 
   // props 로 내려줄 icon
-  const icon = '✈️';
+  const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   if (isLoading) {
     return <div>...loading</div>;

@@ -14,7 +14,7 @@ export const useGetUploadedDetail = ({ id, types }: Payload) => {
       const response = await apis.get(`/${types}/${id}`);
       return response.data;
     },
-    // enabled: false,
+    enabled: false,
   });
 
   return {

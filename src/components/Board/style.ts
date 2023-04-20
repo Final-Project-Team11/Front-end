@@ -35,5 +35,4 @@ export const StIconBlock = styled.div`
 export const StTitleSpan = styled.span`
   color: ${COLOR.PAGE_DONE};
   font-size: 13px;
-  margin-top: 2.5px;
 `;

@@ -19,12 +19,12 @@ const MyPage = () => {
           <UI.TabArea>
             <Tag types="MyPage" />
             <UI.MiddleArea>
-              <UploadedFileTab type="myfiles" icon="📕" />
-              <UploadedFileTab type="meetingfiles" icon="📗" />
+              <UploadedFileTab type="myfiles" />
+              <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
               <MyRequest />
-              <UploadedFileTab type="reportfiles" icon="📘" />
+              <UploadedFileTab type="reportfiles" />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>
