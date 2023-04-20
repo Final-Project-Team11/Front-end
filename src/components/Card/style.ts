@@ -1,12 +1,23 @@
 import styled from 'styled-components';
 import { COLOR } from '../../styles/colors';
+import { color } from 'framer-motion';
 
-export const StCardBlock = styled.div`
-  background-color: ${COLOR.PAGE_LIGHTBLUE};
+interface CardStyleProps {
+  tab?: number;
+}
+
+export const StCardBlock = styled.div<CardStyleProps>`
+  background-color: ${({ tab }) =>
+    tab === 0
+      ? COLOR.SCHEDULE_BLUE
+      : tab === 1
+      ? COLOR.VACATION_RED
+      : COLOR.PAGE_LIGHTBLUE};
 
   width: 250px;
   height: 116px;
 
+  min-width: 250px;
   display: flex;
   justify-content: space-between;
   align-items: center;
