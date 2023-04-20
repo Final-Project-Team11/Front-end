@@ -8,11 +8,9 @@ interface StyleProps {
 
 const StWrap = styled.div`
   display: flex;
-  gap: 25px;
 `;
 
 const StCardBlock = styled.div<StyleProps>`
-  margin-right: '30px';
   width: 310px;
   height: 100px;
   background-color: ${({ tab }) =>
@@ -33,17 +31,27 @@ const StDateBlock = styled.div<StyleProps>`
   font-weight: 900;
   display: flex;
   color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
-  padding-bottom: 5px;
+  padding-bottom: 23px;
+  margin-left: 50px;
+  gap: 14px;
 `;
 
-const StYearBlock = styled.div``;
+const StYearBlock = styled.div`
+  line-height: 56px;
+`;
 
-const StMonthBlock = styled.div``;
+const StMonthBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 27.5px;
+`;
 
 const StColorList = styled.div`
   display: flex;
-  gap: 15px;
-  padding-bottom: 5px;
+  align-items: flex-end;
+  gap: 28px;
+  padding-bottom: 17px;
 `;
 
 const StColorContainer = styled.div`
@@ -56,6 +64,7 @@ const StColorContainer = styled.div`
 
 interface ColorBlockProps {
   backgroundColor?: string;
+  color?: string;
 }
 
 const StColorBlock = styled.div<ColorBlockProps>`
@@ -71,11 +80,26 @@ const StColorNameBlock = styled.div`
 `;
 
 const StTeamBlock = styled.div`
-  width: 100px;
-  height: 30px;
+  width: 101px;
+  height: 26px;
   background-color: lightgray;
-  margin-left: 30px;
+  margin-left: 43px;
 `;
+
+const StButton = styled.button<StyleProps>`
+  border: none;
+  background-color: white;
+  font-size: 20px;
+
+  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+
+  cursor: pointer;
+  opacity: 1;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
 export {
   StWrap,
   StCardBlock,
@@ -88,4 +112,5 @@ export {
   StColorNameBlock,
   StColorList,
   StTeamBlock,
+  StButton,
 };
