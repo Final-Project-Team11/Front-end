@@ -16,7 +16,6 @@ const Board = ({ children, icon, title, types }: ComponentProps) => {
         {icon}
         <UI.StTitleSpan>{title}</UI.StTitleSpan>
       </UI.StIconBlock>
-      <UI.StDivederHr />
       {children}
     </UI.StTabBlock>
   );
