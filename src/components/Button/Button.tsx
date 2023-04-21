@@ -10,6 +10,7 @@ const Button = ({
   borderRadius,
   children,
   onClick,
+  style,
 }: interfaces.ButtonProps) => {
   return (
     <StButton
@@ -19,6 +20,7 @@ const Button = ({
       size={size}
       borderRadius={borderRadius}
       onClick={onClick}
+      style={style}
     >
       {children}
     </StButton>

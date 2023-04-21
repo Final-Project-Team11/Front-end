@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StBlock,
-  TapButton,
-  TapButtonWrapper,
-  InputWrapper,
-  TextWrapper,
-  Tap,
-} from './styles';
+import { StBlock, TapButton, TapButtonWrapper, TextWrapper, Tap } from './styles';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -14,60 +7,62 @@ import { useAdminLogin } from './hooks/useAdminLogin';
 import { getCookie } from '../../api/auth/CookieUtils';
 import { useLogin } from './hooks/useLogin';
 import Modal from '../../components/Modal/Modal';
+import ManagerHead from '../../assets/Meerkat/ManagerHead';
+import MeerkatHead4 from '../../assets/Meerkat/MeerkatHead4';
 // import { useRePassword } from './hooks/useRePassword';
 
-enum Tabs {
-  Tab1 = 'Tab1',
-  Tab2 = 'Tab2',
-}
-
-const Tabconent1 = () => {
+const AdminLogin = () => {
   const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useAdminLogin();
   const navigate = useNavigate();
 
   return (
     <Tap onSubmit={submitLoginHandler}>
-      <InputWrapper>
-        <MaxInput
-          types="half"
-          type="text"
-          name="companyId"
-          value={adminLoginInfo.companyId}
-          onChange={changeInputHandler}
-        >
-          아이디
-        </MaxInput>
-        <MaxInput
-          types="half"
-          type="password"
-          name="password"
-          value={adminLoginInfo.password}
-          onChange={changeInputHandler}
-        >
-          비밀번호
-        </MaxInput>
-      </InputWrapper>
+      <MaxInput
+        types="login"
+        type="text"
+        name="companyId"
+        value={adminLoginInfo.companyId}
+        onChange={changeInputHandler}
+        placeholder="대표자 아이디를 입력해주세요"
+      />
+      <MaxInput
+        types="login"
+        type="password"
+        name="password"
+        value={adminLoginInfo.password}
+        onChange={changeInputHandler}
+        placeholder="비밀번호를 입력해주세요."
+      />
       <TextWrapper>
-        <span onClick={() => navigate('/masterSignup')}>
-          미어캣린더가 처음이면! 회원가입
+        <span onClick={() => navigate('/masterSignup')} style={{ fontSize: '12px' }}>
+          미어캣린더가 처음이면! <strong style={{ fontWeight: 'bold' }}>회원가입</strong>
         </span>
-        <span>아이디 / 비밀번호 찾기</span>
+        <span style={{ fontSize: '12px' }}>아이디 / 비밀번호 찾기</span>
       </TextWrapper>
-      <div style={{ marginTop: '30px' }}>
-        <Button size="example">로그인</Button>
-      </div>
+      <Button
+        size="login"
+        style={{
+          color: '#E64042',
+          fontSize: '15px',
+          fontWeight: 'bold',
+          borderRadius: '7px',
+          backgroundColor: '#F6F6F6',
+        }}
+      >
+        로그인
+      </Button>
     </Tap>
   );
 };
 
-const Tabconent2 = () => {
+const UserLogin = () => {
+  // 현재 해결 되지 않는 오류
+  // const { patchPassword } = useRePassword();
+
   const { loginInfo, submitLoginHandler, changeInputHandler, showModal, closeModal } =
     useLogin();
 
   const [password, setPassword] = React.useState<string>('');
-
-  // 현재 해결 되지 않는 오류
-  // const { patchPassword } = useRePassword();
 
   const changePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -76,57 +71,68 @@ const Tabconent2 = () => {
 
   return (
     <Tap onSubmit={submitLoginHandler}>
-      {showModal && (
-        <Modal closeModal={closeModal}>
-          <MaxInput
-            types="max"
-            type="password"
-            value={password}
-            onChange={changePasswordHandler}
-          >
-            변경할 비밀번호
-          </MaxInput>
-          <button>변경하기</button>
-        </Modal>
-      )}
-      <InputWrapper>
-        <MaxInput
-          types="half"
-          type="text"
-          name="companyId"
-          value={loginInfo.companyId}
-          onChange={changeInputHandler}
-        >
-          대표자 아이디
-        </MaxInput>
-        <MaxInput
-          types="half"
-          type="text"
-          name="userId"
-          value={loginInfo.userId}
-          onChange={changeInputHandler}
-        >
-          아이디
-        </MaxInput>
-        <MaxInput
-          types="half"
-          type="password"
-          name="password"
-          value={loginInfo.password}
-          onChange={changeInputHandler}
-        >
-          비밀번호
-        </MaxInput>
-      </InputWrapper>
-      <div style={{ marginTop: '30px' }}>
-        <Button size="example">로그인</Button>
-      </div>
+      <MaxInput
+        types="login"
+        type="text"
+        name="companyId"
+        value={loginInfo.companyId}
+        onChange={changeInputHandler}
+        placeholder="대표자 아이디를 입력해주세요."
+      />
+      <MaxInput
+        types="login"
+        type="text"
+        name="userId"
+        value={loginInfo.userId}
+        onChange={changeInputHandler}
+        placeholder="직원 아이디를 입력해주세요"
+      />
+      <MaxInput
+        types="login"
+        type="password"
+        name="password"
+        value={loginInfo.password}
+        onChange={changeInputHandler}
+        placeholder="비밀번호를 입력해주세요."
+      />
+      <Button
+        size="login"
+        style={{
+          color: '#E64042',
+          fontSize: '15px',
+          fontWeight: 'bold',
+          borderRadius: '7px',
+          background: '#F6F6F6',
+          marginTop: '20px',
+        }}
+      >
+        로그인
+      </Button>
+      {/* {showModal && (
+            <Modal closeModal={closeModal}>
+              <MaxInput
+                types="login"
+                type="password"
+                value={password}
+                onChange={changePasswordHandler}
+              >
+                변경할 비밀번호
+              </MaxInput>
+              <button>변경하기</button>
+            </Modal>
+          )} */}
     </Tap>
   );
 };
 
+enum Tabs {
+  Admin = 'Tab1',
+  User = 'Tab2',
+}
+
 const Login = () => {
-  const [currentTab, setCurrentTab] = React.useState<Tabs>(Tabs.Tab1);
+  const [currentTab, setCurrentTab] = React.useState<Tabs>(Tabs.Admin);
+
   const ClickTabHandler = (tab: Tabs) => {
     setCurrentTab(tab);
   };
@@ -143,11 +149,23 @@ const Login = () => {
   return (
     <StBlock>
       <TapButtonWrapper>
-        <TapButton onClick={() => ClickTabHandler(Tabs.Tab1)}>대표 운영자</TapButton>
-        <TapButton onClick={() => ClickTabHandler(Tabs.Tab2)}>팀원</TapButton>
+        <TapButton
+          onClick={() => ClickTabHandler(Tabs.Admin)}
+          isSelected={currentTab === Tabs.Admin}
+        >
+          <span style={{ marginBottom: '30px' }}>대표</span>
+          <ManagerHead colors={currentTab === Tabs.Admin ? 'red' : 'blue'} />
+        </TapButton>
+        <TapButton
+          onClick={() => ClickTabHandler(Tabs.User)}
+          isSelected={currentTab === Tabs.User}
+        >
+          <span style={{ marginBottom: '30px' }}>팀원</span>
+          <MeerkatHead4 colors={currentTab === Tabs.User ? 'red' : 'blue'} />
+        </TapButton>
       </TapButtonWrapper>
-      {currentTab === Tabs.Tab1 && <Tabconent1 />}
-      {currentTab === Tabs.Tab2 && <Tabconent2 />}
+      {currentTab === Tabs.Admin && <AdminLogin />}
+      {currentTab === Tabs.User && <UserLogin />}
     </StBlock>
   );
 };
