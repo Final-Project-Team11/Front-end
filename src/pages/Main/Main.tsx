@@ -38,7 +38,7 @@ const Main = () => {
 
       console.log('events', events);
     } else {
-      const events = [];
+      const events: Partial<EventObject>[] = [];
       const vacations: Partial<EventObject>[] = data?.map((vacation: ScheduleProps) =>
         settingVacation(vacation)
       );
