@@ -1,6 +1,6 @@
 export interface ButtonProps {
   children: React.ReactNode;
-  size?: 'large' | 'medium' | 'small' | 'example' | 'Detail' | 'login';
+  size?: 'large' | 'medium' | 'small' | 'example' | 'Detail' | 'login' | 'signup';
   color?: string;
   background?: string;
   boarder?: string;
@@ -10,7 +10,7 @@ export interface ButtonProps {
 }
 
 export interface CssProps {
-  size?: 'large' | 'medium' | 'small' | 'example' | 'Detail' | 'login';
+  size?: 'large' | 'medium' | 'small' | 'example' | 'Detail' | 'login' | 'signup';
   color?: string;
   background?: string;
   boarder?: string;

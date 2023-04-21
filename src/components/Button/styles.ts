@@ -6,6 +6,10 @@ const sizes: interfaces.Sizes = {
     width: '430px',
     height: '50px',
   },
+  signup: {
+    width: '180px',
+    height: '50px',
+  },
   example: {
     width: '300px',
     height: '50px',
