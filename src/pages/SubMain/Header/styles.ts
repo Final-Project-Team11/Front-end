@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 import '@fontsource/inter';
 
@@ -86,6 +86,28 @@ const StTeamBlock = styled.div`
   margin-left: 43px;
 `;
 
+const jump = keyframes`
+0% {
+    transform: translateY(0);
+}
+50%{
+  transform: translateY(-20px) scale(2);
+
+}
+100%{
+  transform: translateY(0);
+}
+`;
+
+const StTabBlock = styled.div`
+  margin-bottom: -10px;
+  animation: slide 2s ease-out;
+  cursor: pointer;
+  &:hover {
+    animation: ${jump} 1s ease-out infinite;
+  }
+`;
+
 const StButton = styled.button<StyleProps>`
   border: none;
   background-color: white;
@@ -113,4 +135,5 @@ export {
   StColorList,
   StTeamBlock,
   StButton,
+  StTabBlock,
 };
