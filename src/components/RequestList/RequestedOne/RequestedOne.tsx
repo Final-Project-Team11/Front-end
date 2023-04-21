@@ -18,33 +18,35 @@ const RequestedOne = ({ request }: Props) => {
   };
 
   return (
-    <UI.StRequestedListBlock
-      key={request.eventId}
-      types={request.status}
-      onClick={() => getDetail()}
-    >
+    <>
+      <UI.StRequestedListBlock
+        key={request.eventId}
+        types={request.status}
+        onClick={() => getDetail()}
+      >
+        <UI.StLeftBlock>
+          <UI.StNameDateBlock>
+            <UI.StNameDateDiv>
+              <UI.StNameSpan>😵‍💫 | {request.userName}</UI.StNameSpan>
+              <UI.StDateSpan className="date">{request.enrollDay}</UI.StDateSpan>
+            </UI.StNameDateDiv>
+          </UI.StNameDateBlock>
+          <UI.StContentSpan>
+            📎 |{' '}
+            {request.status === 'deny' ? (
+              <UI.StRejectedSpan>{request.title}</UI.StRejectedSpan>
+            ) : (
+              request.title
+            )}
+          </UI.StContentSpan>
+        </UI.StLeftBlock>
+      </UI.StRequestedListBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
           <RequestDetail data={data} isLoading={isLoading} />
         </Modal>
       )}
-      <UI.StLeftBlock>
-        <UI.StNameDateBlock>
-          <UI.StNameDateDiv>
-            <UI.StNameSpan>😵‍💫 | {request.userName}</UI.StNameSpan>
-            <UI.StDateSpan className="date">{request.enrollDay}</UI.StDateSpan>
-          </UI.StNameDateDiv>
-        </UI.StNameDateBlock>
-        <UI.StContentSpan>
-          📎 |{' '}
-          {request.status === 'deny' ? (
-            <UI.StRejectedSpan>{request.title}</UI.StRejectedSpan>
-          ) : (
-            request.title
-          )}
-        </UI.StContentSpan>
-      </UI.StLeftBlock>
-    </UI.StRequestedListBlock>
+    </>
   );
 };
 

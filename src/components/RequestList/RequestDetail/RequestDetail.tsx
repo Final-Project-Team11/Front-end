@@ -29,8 +29,8 @@ const RequestDetail = ({ data, isLoading }: DetailProps) => {
         </UI.FooterHalf>
         <UI.Devider />
         <UI.FooterHalf>
-          {data.ref.map(tag => {
-            return <UI.FooterSpanBlock>@ {tag}</UI.FooterSpanBlock>;
+          {data.ref.map((tag, idx) => {
+            return <UI.FooterSpanBlock key={idx}>@ {tag}</UI.FooterSpanBlock>;
           })}
         </UI.FooterHalf>
       </UI.Footer>
