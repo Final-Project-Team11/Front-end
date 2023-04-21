@@ -15,7 +15,7 @@ export const StTabBlock = styled.div<HeightProps>`
   padding: 15px;
   box-sizing: border-box;
 
-  gap: 4px;
+  gap: 14px;
 `;
 
 export const StIconBlock = styled.div`

@@ -5,7 +5,7 @@ import { TitleProps } from './interfaces';
 
 export const StWrapperBlock = styled.div`
   width: 250px;
-  height: 700px;
+  height: 635px;
 
   display: flex;
   flex-direction: column;
