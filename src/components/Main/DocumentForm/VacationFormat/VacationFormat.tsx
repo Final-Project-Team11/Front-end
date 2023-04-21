@@ -15,50 +15,66 @@ import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
 import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
+import Swal from 'sweetalert2';
 
-const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
+const VacationFormat = ({ props, onReturnHandler, onCancelHandler }: ScheduleProps) => {
   const mutation = usePostVacation();
   const [FormFiles, SetFormFile] = useState<File>();
   const [tab] = useContext(ChangeTabContext);
+
   const SaveClickHandler = () => {
     if (disable === false) {
-      if (confirm('등록하시나요 ?')) {
-        const newData = postFormat(tab, props);
-        mutation.mutate(newData, {
-          onSuccess: () => {
-            setDisable(!disable);
-            toast.success('🦄 서버 업로드 성공!', {
-              position: 'top-right',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-
-            setDisable(!disable);
-          },
-          onError: error => {
-            const errorData: AxiosError = error as AxiosError;
-            const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-            console.log('errorData', errorData);
-            toast.error(`❌ ${errorOjbect.errorMessage}`, {
-              position: 'top-right',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-          },
-        });
-      }
-    } else if (disable === true) {
-      //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
+      Swal.fire({
+        title: '일정을 추가하시겠습니까?',
+        text: '일정을 다시한번 확인해 주세요.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '네,추가하겠습니다!',
+        cancelButtonText: '아니요, 취소할게요!',
+        reverseButtons: true,
+      }).then(result => {
+        if (result.isConfirmed) {
+          const newData = postFormat(tab, props);
+          mutation.mutate(newData, {
+            onSuccess: () => {
+              setDisable(!disable);
+              toast.success('🦄 서버 업로드 성공!', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
+            },
+            onError: error => {
+              const errorData: AxiosError = error as AxiosError;
+              const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
+              console.log('errorData', errorData);
+              toast.error(`❌ ${errorOjbect.errorMessage}`, {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
+            },
+          });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          Swal.fire({
+            title: '취소되었습니다.',
+            icon: 'error',
+          });
+        }
+      });
     }
   };
 
@@ -106,14 +122,24 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StTitleContentBlock>
         <styles.StButtonBlock>
           {disable === false && (
-            <Button
-              color="black"
-              size="Detail"
-              borderRadius="19px"
-              onClick={SaveClickHandler}
-            >
-              등록하기
-            </Button>
+            <>
+              <Button
+                color="black"
+                size="Detail"
+                borderRadius="19px"
+                onClick={onCancelHandler}
+              >
+                취소하기
+              </Button>
+              <Button
+                color="black"
+                size="Detail"
+                borderRadius="19px"
+                onClick={SaveClickHandler}
+              >
+                등록하기
+              </Button>
+            </>
           )}
           <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
             <RiArrowLeftSLine size="20px" />
