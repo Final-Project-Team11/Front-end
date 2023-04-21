@@ -11,10 +11,11 @@ const StWrap = styled.div`
 `;
 
 const StCardBlock = styled.div<StyleProps>`
-  width: 310px;
-  height: 100px;
-  background-color: ${({ tab }) =>
-    tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 const StContainer = styled.div<StyleProps>`
   width: 100%;

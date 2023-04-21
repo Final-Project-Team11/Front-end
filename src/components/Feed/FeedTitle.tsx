@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FeedTitleProps } from './interfaces';
 import * as UI from './style';
-import { ChangeTabContext } from '../../pages/Main/Main';
+import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
 
 const FeedTitle = ({ clickFn }: FeedTitleProps) => {
   const [tab] = useContext(ChangeTabContext);

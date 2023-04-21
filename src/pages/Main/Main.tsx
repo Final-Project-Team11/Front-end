@@ -5,11 +5,12 @@ import { ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
+import { ChangeTabContext, TabContext } from '../../api/hooks/Main/useTabContext';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
-  const [tab, setTab] = useContext(ChangeTabContext);
+  const [tab] = useContext(ChangeTabContext);
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
@@ -37,7 +38,7 @@ const Main = () => {
 
       console.log('events', events);
     } else {
-      const events = [];
+      const events: Partial<EventObject>[] = [];
       const vacations: Partial<EventObject>[] = data?.map((vacation: ScheduleProps) =>
         settingVacation(vacation)
       );
@@ -47,37 +48,13 @@ const Main = () => {
   }, [data]);
 
   return (
-    <TabContext>
-      <CalendarContext.Provider value={filterData}>
-        <StWrap>
-          <StButtonBlcok></StButtonBlcok>
-          {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
-        </StWrap>
-      </CalendarContext.Provider>
-    </TabContext>
+    <CalendarContext.Provider value={filterData}>
+      <StWrap>
+        <StButtonBlcok></StButtonBlcok>
+        {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
+      </StWrap>
+    </CalendarContext.Provider>
   );
 };
 
 export default Main;
-
-type State = boolean;
-type Dispatch = React.Dispatch<React.SetStateAction<State>>;
-export const ChangeTabContext = createContext<[State, Dispatch]>([
-  false,
-  () => {
-    //
-  },
-]);
-
-interface ContextProps {
-  children: React.ReactNode;
-}
-function TabContext({ children }: ContextProps) {
-  const [tab, setTab] = useState(false);
-
-  return (
-    <ChangeTabContext.Provider value={[tab, setTab]}>
-      {children}
-    </ChangeTabContext.Provider>
-  );
-}

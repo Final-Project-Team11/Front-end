@@ -5,76 +5,26 @@ import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
 import useTextarea from '../../../../hooks/common/useTextarea';
 import Button from '../../../Button/Button';
-import { MdFolder, MdZoomInMap } from 'react-icons/md';
-import { AiFillTag } from 'react-icons/ai';
+import { MdZoomInMap } from 'react-icons/md';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import AddTodo from '../../../Feed/Todo/AddTodo';
 import useGetTeamInfo from '../../../../api/hooks/Main/useGetTeamInfo';
 import HashTag from '../components/HashTag/HashTag';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import FileUpload from '../components/FileUpload/FileUpload';
-import { scheduler } from 'timers/promises';
 import { TbBorderCorners } from 'react-icons/tb';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AxiosError } from 'axios';
 import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
+import Swal from 'sweetalert2';
 
-const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
+const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [zoomClick, setZoomClick] = useState(false);
   const [tab] = useContext(ChangeTabContext);
-  const SaveClickHandler = () => {
-    if (disable === false) {
-      if (confirm('등록하시나요 ?')) {
-        const newProps = {
-          ...props,
-          file: FormFiles,
-          attendees: mention,
-          body: content,
-          title: title,
-          username: userName,
-        };
-        const newData = postFormat(tab, newProps);
-        mutation.mutate(newData, {
-          onSuccess: () => {
-            setDisable(!disable);
-            toast.success('🦄 서버 업로드 성공!', {
-              position: 'top-right',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-          },
-          onError: error => {
-            const errorData: AxiosError = error as AxiosError;
-            const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-            console.log('errorData', errorData);
-            toast.error(`❌ ${errorOjbect.errorMessage}`, {
-              position: 'top-right',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-          },
-        });
-      }
-    } else if (disable === true) {
-      //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
-    }
-  };
-
   const { data, isLoading } = useGetTeamInfo();
   const [FormFiles, SetFormFile] = useState<File>();
 
@@ -96,7 +46,78 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
     props.body !== undefined && setContentValue(props.body);
   }, [props]);
 
-  console.log('userName', userName);
+  // const swalWithBootstrapButtons = Swal.mixin({
+  //   customClass: {
+  //     confirmButton: 'btn btn-success',
+  //     cancelButton: 'btn btn-danger',
+  //   },
+  //   buttonsStyling: false,
+  // });
+
+  const SaveClickHandler = () => {
+    if (disable === false) {
+      Swal.fire({
+        title: '일정을 추가하시겠습니까?',
+        text: '일정을 다시한번 확인해 주세요.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '네,추가하겠습니다!',
+        cancelButtonText: '아니요, 취소할게요!',
+        reverseButtons: true,
+      }).then(result => {
+        if (result.isConfirmed) {
+          const newProps = {
+            ...props,
+            file: FormFiles,
+            attendees: mention,
+            body: content,
+            title: title,
+            username: userName,
+          };
+          const newData = postFormat(tab, newProps);
+          mutation.mutate(newData, {
+            onSuccess: () => {
+              setDisable(!disable);
+              toast.success('🦄 서버 업로드 성공!', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
+            },
+            onError: error => {
+              const errorData: AxiosError = error as AxiosError;
+              const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
+              console.log('errorData', errorData);
+              toast.error(`❌ ${errorOjbect.errorMessage}`, {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
+            },
+          });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          Swal.fire({
+            title: '취소되었습니다.',
+            icon: 'error',
+          });
+        }
+      });
+    }
+  };
+
   return (
     <styles.StContainer ref={props.propsRef}>
       <ToastContainer />
@@ -118,14 +139,24 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StTitleContentBlock>
         <styles.StButtonBlock>
           {disable === false && userId === props.userId && (
-            <Button
-              color="black"
-              size="Detail"
-              borderRadius="5px"
-              onClick={SaveClickHandler}
-            >
-              등록하기
-            </Button>
+            <>
+              <Button
+                color="black"
+                size="Detail"
+                borderRadius="5px"
+                onClick={onCancelHandler}
+              >
+                취소하기
+              </Button>
+              <Button
+                color="black"
+                size="Detail"
+                borderRadius="5px"
+                onClick={SaveClickHandler}
+              >
+                등록하기
+              </Button>
+            </>
           )}
           <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
             <RiArrowLeftSLine size="20px" />

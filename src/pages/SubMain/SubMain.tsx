@@ -15,19 +15,21 @@ import cheerio from 'cheerio';
 //내부
 
 import Calendar from '../../components/ToastCalendar/Calendar';
-import { CalendarContext, ChangeTabContext } from '../Main/Main';
+import { CalendarContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
 import { getScheduleColor, initCalendar } from './utils';
 import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
 
-import TodaySchedules from './TodayScheduels/TodaySchedules';
+import TodaySchedules from './TodayScheduels';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
 import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
 import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
+import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
+import React from 'react';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -52,6 +54,7 @@ export function SubMain({ view }: { view: ViewType }) {
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
+  const [clickEvent, setClickEvent] = useState<CalendarProps>();
   const [todayData, setTodayData] = useState<number>(0);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
@@ -144,7 +147,7 @@ export function SubMain({ view }: { view: ViewType }) {
       attendees: res.attendees,
       userId: userId,
       isReadOnly: res.isReadOnly,
-      backgroundColor: getScheduleColor(res.calendarId),
+      backgroundColor: getScheduleColor(tab, res.calendarId),
       location: res.location,
       userName: user.userInfo.userName,
     };
@@ -152,6 +155,7 @@ export function SubMain({ view }: { view: ViewType }) {
     console.log('newData', newData);
     setClickData(newData);
     setClickDetail(true);
+    setClickEvent(res);
   };
 
   const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = res => {
@@ -196,12 +200,13 @@ export function SubMain({ view }: { view: ViewType }) {
 
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].id === res.event.id) {
-        console.log('schedules[i]', schedules[i]);
         setClickData(schedules[i]);
         setClickDetail(true);
         break;
       }
     }
+    setClickDetail(true);
+    setClickEvent(res.event);
   };
 
   const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
@@ -246,6 +251,12 @@ export function SubMain({ view }: { view: ViewType }) {
     };
 
     getCalInstance().createEvents([event]);
+  };
+
+  const onDeleteEvent = () => {
+    console.log('cancel');
+    clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
+    setClickDetail(false);
   };
 
   return (
@@ -318,11 +329,13 @@ export function SubMain({ view }: { view: ViewType }) {
         <ScheduleFormat
           props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
+          onCancelHandler={onDeleteEvent}
         />
       ) : (
         <VacationFormat
           props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
+          onCancelHandler={onDeleteEvent}
         />
       )}
     </div>

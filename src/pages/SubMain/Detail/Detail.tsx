@@ -10,7 +10,7 @@ import useTextarea from '../../../hooks/common/useTextarea';
 import usePostschedule from '../../../api/hooks/Main/usePostschedule';
 import { postFormat } from '../utils';
 import { MdFolder } from 'react-icons/md';
-import { ChangeTabContext } from '../../Main/Main';
+import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 
 interface ScheduleProps {
   props: {
