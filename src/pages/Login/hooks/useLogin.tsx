@@ -36,7 +36,6 @@ export const useLogin = () => {
     onSuccess: data => {
       const token = data.token;
       setCookie('token', token);
-      alert('로그인 성공');
       navigate('/main');
 
       // if (loginInfo.userId === loginInfo.password) {
