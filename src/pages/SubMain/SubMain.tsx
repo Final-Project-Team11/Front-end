@@ -14,7 +14,6 @@ import cheerio from 'cheerio';
 
 //내부
 
-import ScheduleFormat from '../../components/DocumentForm/ScheduleFormat/ScheduleFormat';
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { CalendarContext, TabContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
@@ -23,10 +22,11 @@ import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
 
-import VacationFormat from '../../components/DocumentForm/VacationFormat/VacationFormat';
 import TodaySchedules from './TodayScheduels/TodaySchedules';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
+import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();

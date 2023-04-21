@@ -67,7 +67,6 @@ body {
   .toastui-calendar-grid-cell-header{
     display: flex;
     justify-content: center;
-    align-items: center;
   }
 
   .toastui-calendar-template-monthDayName{
