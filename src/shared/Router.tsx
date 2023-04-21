@@ -8,6 +8,7 @@ import Manager from '../pages/Manager/Manager';
 import Business from '../pages/Business/Business';
 import Write from '../pages/Write/Write';
 import { SubMain } from '../pages/SubMain/SubMain';
+import React from 'react';
 
 const Router = () => {
   return (
