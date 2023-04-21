@@ -54,6 +54,7 @@ export function SubMain({ view }: { view: ViewType }) {
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
+  const [clickEvent, setClickEvent] = useState<CalendarProps>();
   const [todayData, setTodayData] = useState<number>(0);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
@@ -154,6 +155,7 @@ export function SubMain({ view }: { view: ViewType }) {
     console.log('newData', newData);
     setClickData(newData);
     setClickDetail(true);
+    setClickEvent(res);
   };
 
   const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = res => {
@@ -198,12 +200,13 @@ export function SubMain({ view }: { view: ViewType }) {
 
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].id === res.event.id) {
-        console.log('schedules[i]', schedules[i]);
         setClickData(schedules[i]);
         setClickDetail(true);
         break;
       }
     }
+
+    setClickEvent(res.event);
   };
 
   const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
@@ -248,6 +251,12 @@ export function SubMain({ view }: { view: ViewType }) {
     };
 
     getCalInstance().createEvents([event]);
+  };
+
+  const onDeleteEvent = () => {
+    console.log('cancel');
+    clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
+    setClickDetail(false);
   };
 
   return (
@@ -320,11 +329,13 @@ export function SubMain({ view }: { view: ViewType }) {
         <ScheduleFormat
           props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
+          onCancelHandler={onDeleteEvent}
         />
       ) : (
         <VacationFormat
           props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
+          onCancelHandler={onDeleteEvent}
         />
       )}
     </div>
