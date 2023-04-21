@@ -17,20 +17,52 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 import FileUpload from '../../FileUpload/FileUpload';
 import { scheduler } from 'timers/promises';
 import { TbBorderCorners } from 'react-icons/tb';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [zoomClick, setZoomClick] = useState(false);
   const SaveClickHandler = () => {
     if (disable === false) {
-      const newProps = { ...props, file: FormFiles, ref: mention, content: content };
-      console.log('newProps', newProps);
-      const newData = postFormat(props.tab, newProps);
-      mutation.mutate(newData, {
-        onSuccess: () => {
-          setDisable(!disable);
-        },
-      });
+      if (confirm('등록하시나요 ?')) {
+        const newProps = {
+          ...props,
+          file: FormFiles,
+          ref: mention,
+          content: content,
+          title: title,
+          username: userName,
+        };
+        const newData = postFormat(props.tab, newProps);
+        mutation.mutate(newData, {
+          onSuccess: () => {
+            setDisable(!disable);
+            toast.success('🦄 서버 업로드 성공!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+          onError: () => {
+            toast.error('❌ 서버 업로드 실패!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+        });
+      }
     } else if (disable === true) {
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
     }
@@ -44,29 +76,30 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const userId = decoded ? decoded.userId : '';
 
   const [disable, setDisable] = useState(false);
-  const [author, autherHandler, setAuthorInputValue] = useInput();
+  const [userName, userNameHandler, setUserNameInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
   const [mention, mentionHandler] = useState<string[]>();
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
+    props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setUserNameInputValue(props.title?.split('-')[1]);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
-    props.body && setContentValue(props.body);
+    props.body !== undefined && setContentValue(props.body);
   }, [props]);
 
   return (
     <styles.StContainer ref={props.propsRef}>
+      <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
           <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
-              placeholder="작성자를 입력해주세요"
-              value={author}
-              onChange={autherHandler}
+              placeholder="작성자"
+              value={userName}
+              onChange={userNameHandler}
               disabled={disable}
             />
           </div>
