@@ -10,7 +10,7 @@ import { ChangeTabContext, TabContext } from '../../api/hooks/Main/useTabContext
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
-  const [tab, setTab] = useContext(ChangeTabContext);
+  const [tab] = useContext(ChangeTabContext);
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
@@ -48,14 +48,12 @@ const Main = () => {
   }, [data]);
 
   return (
-    <TabContext>
-      <CalendarContext.Provider value={filterData}>
-        <StWrap>
-          <StButtonBlcok></StButtonBlcok>
-          {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
-        </StWrap>
-      </CalendarContext.Provider>
-    </TabContext>
+    <CalendarContext.Provider value={filterData}>
+      <StWrap>
+        <StButtonBlcok></StButtonBlcok>
+        {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
+      </StWrap>
+    </CalendarContext.Provider>
   );
 };
 
