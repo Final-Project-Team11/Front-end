@@ -5,6 +5,7 @@ export interface ScheduleProps {
   userName?: string;
   startDay?: Date;
   endDay?: Date;
+  enrollDay?: Date;
   content?: string;
   mentions?: string[];
   location?: string;
@@ -46,4 +47,24 @@ export interface InitialCalendar {
   backgroundColor?: string;
   dragBackgroundColor?: string;
   borderColor?: string;
+}
+
+export interface CalendarProps {
+  id?: number | string;
+  calendarId?: string;
+  title?: string;
+  body?: string;
+  start?: Date;
+  end?: Date;
+  attendees?: string[];
+  location?: string;
+  userId?: string;
+  userName?: string;
+  file?: string | File;
+
+  color?: string;
+  backgroundColor?: string;
+  dragBackgroundColor?: string;
+  borderColor?: string;
+  isReadOnly?: boolean;
 }
