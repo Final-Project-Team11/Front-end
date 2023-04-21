@@ -9,14 +9,18 @@ import { useLogin } from './hooks/useLogin';
 import Modal from '../../components/Modal/Modal';
 import ManagerHead from '../../assets/Meerkat/ManagerHead';
 import MeerkatHead4 from '../../assets/Meerkat/MeerkatHead4';
+import Swal from 'sweetalert2';
 // import { useRePassword } from './hooks/useRePassword';
 
 const AdminLogin = () => {
   const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useAdminLogin();
   const navigate = useNavigate();
 
-  const showMessage = () => {
-    alert('준비중인 기능입니다.');
+  const Waiting = () => {
+    Swal.fire({
+      icon: 'info',
+      title: '준비 중인 기능입니다.',
+    });
   };
 
   return (
@@ -41,7 +45,7 @@ const AdminLogin = () => {
         <span onClick={() => navigate('/masterSignup')} style={{ fontSize: '12px' }}>
           미어캣린더가 처음이면! <strong style={{ fontWeight: 'bold' }}>회원가입</strong>
         </span>
-        <span onClick={showMessage} style={{ fontSize: '12px' }}>
+        <span onClick={Waiting} style={{ fontSize: '12px' }}>
           아이디 / 비밀번호 찾기
         </span>
       </TextWrapper>
