@@ -17,6 +17,7 @@ export interface ScheduleProps {
     location?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
+  onCancelHandler?: () => void;
 }
 
 export interface ErrorData {
