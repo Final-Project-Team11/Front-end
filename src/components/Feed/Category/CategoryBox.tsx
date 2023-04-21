@@ -7,12 +7,12 @@ import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
 import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
-import { TabContext } from '../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../pages/Main/Main';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
-  const tab = useContext(TabContext);
+  const [tab] = useContext(ChangeTabContext);
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {

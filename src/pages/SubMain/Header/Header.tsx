@@ -4,10 +4,13 @@ import * as styles from './styles';
 import { nanoid } from 'nanoid';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import Card from '../../../components/Card/Card';
-import { TabContext } from '../../Main/Main';
+import { ChangeTabContext } from '../../Main/Main';
+import ChangeVacation from '../../../assets/Meerkat/ChangeVacation';
+import ChangeSchedule from '../../../assets/Meerkat/ChangeSchedule';
 
 function Header(props: HeaderProps) {
-  const tab = useContext<number>(TabContext);
+  const [tab, tabHandler] = useContext(ChangeTabContext);
+
   return (
     <styles.StWrap>
       <Card tab={tab} />
@@ -42,7 +45,11 @@ function Header(props: HeaderProps) {
             </styles.StButton>
           </styles.StMonthBlock>
         </styles.StDateBlock>
+
         <styles.StColorList>
+          <styles.StTabBlock onClick={() => tabHandler(!tab)}>
+            {tab === false ? <ChangeSchedule /> : <ChangeVacation />}
+          </styles.StTabBlock>
           {props?.initialCalendars?.map(item => {
             return (
               <styles.StColorContainer key={nanoid()}>

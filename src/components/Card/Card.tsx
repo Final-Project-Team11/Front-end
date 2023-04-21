@@ -10,7 +10,7 @@ import {
 import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
 
 interface CardProps {
-  tab?: number;
+  tab?: boolean;
 }
 
 const Card = ({ tab }: CardProps) => {

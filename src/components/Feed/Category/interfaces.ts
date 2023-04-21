@@ -15,5 +15,5 @@ export interface SentCategory {
   category: string;
 }
 export interface CategoryStyle {
-  tab?: number;
+  tab?: boolean;
 }

@@ -182,8 +182,8 @@ export function settingVacation(vacation: VacationProps) {
   }
 }
 
-export function initCalendar(tab: number): InitialCalendar[] {
-  if (tab === 0) {
+export function initCalendar(tab: boolean): InitialCalendar[] {
+  if (tab === false) {
     return [
       {
         id: '0',
@@ -215,7 +215,7 @@ export function initCalendar(tab: number): InitialCalendar[] {
         dragBackgroundColor: COLOR.MEETING_BAR,
       },
     ];
-  } else if (tab === 1) {
+  } else if (tab === true) {
     return [
       {
         id: '0',
@@ -282,8 +282,8 @@ export function initCalendar(tab: number): InitialCalendar[] {
   }
 }
 
-export function getCanlendarName(tab: number, id: string | undefined): string {
-  if (tab === 0) {
+export function getCanlendarName(tab: boolean, id: string | undefined): string {
+  if (tab === false) {
     switch (id) {
       case '0':
         return '회의';
@@ -319,14 +319,14 @@ interface postFormatProps {
   postInfo: ServerProps;
 }
 
-export function postFormat(tab: number, schedule: CalendarProps): postFormatProps {
+export function postFormat(tab: boolean, schedule: CalendarProps): postFormatProps {
   const defaultFormat = {
     startDay: schedule.start?.toString(),
     title: schedule.title,
     content: schedule.body,
   };
 
-  if (tab === 0) {
+  if (tab === false) {
     switch (schedule.calendarId) {
       case '0': {
         const postData = {
@@ -391,7 +391,7 @@ export function postFormat(tab: number, schedule: CalendarProps): postFormatProp
           },
         };
     }
-  } else if (tab === 1) {
+  } else if (tab === true) {
     const postData = {
       url: 'vacation',
       postInfo: {

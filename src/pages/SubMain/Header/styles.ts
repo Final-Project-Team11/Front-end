@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 import '@fontsource/inter';
 
 interface StyleProps {
-  tab?: number;
+  tab?: boolean;
 }
 
 const StWrap = styled.div`
@@ -14,12 +14,12 @@ const StCardBlock = styled.div<StyleProps>`
   width: 310px;
   height: 100px;
   background-color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
+    tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
 `;
 const StContainer = styled.div<StyleProps>`
   width: 100%;
   border-bottom: 2px solid
-    ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+    ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 
   display: flex;
   justify-content: space-between;
@@ -30,7 +30,7 @@ const StDateBlock = styled.div<StyleProps>`
   font-size: 66px;
   font-weight: 900;
   display: flex;
-  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+  color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
   padding-bottom: 23px;
   margin-left: 50px;
   gap: 14px;
@@ -86,12 +86,34 @@ const StTeamBlock = styled.div`
   margin-left: 43px;
 `;
 
+const jump = keyframes`
+0% {
+    transform: translateY(0);
+}
+50%{
+  transform: translateY(-20px) scale(2);
+
+}
+100%{
+  transform: translateY(0);
+}
+`;
+
+const StTabBlock = styled.div`
+  margin-bottom: -10px;
+  animation: slide 2s ease-out;
+  cursor: pointer;
+  &:hover {
+    animation: ${jump} 1s ease-out infinite;
+  }
+`;
+
 const StButton = styled.button<StyleProps>`
   border: none;
   background-color: white;
   font-size: 20px;
 
-  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+  color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 
   cursor: pointer;
   opacity: 1;
@@ -113,4 +135,5 @@ export {
   StColorList,
   StTeamBlock,
   StButton,
+  StTabBlock,
 };
