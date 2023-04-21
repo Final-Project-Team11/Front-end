@@ -15,6 +15,10 @@ const AdminLogin = () => {
   const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useAdminLogin();
   const navigate = useNavigate();
 
+  const showMessage = () => {
+    alert('준비중인 기능입니다.');
+  };
+
   return (
     <Tap onSubmit={submitLoginHandler}>
       <MaxInput
@@ -37,7 +41,9 @@ const AdminLogin = () => {
         <span onClick={() => navigate('/masterSignup')} style={{ fontSize: '12px' }}>
           미어캣린더가 처음이면! <strong style={{ fontWeight: 'bold' }}>회원가입</strong>
         </span>
-        <span style={{ fontSize: '12px' }}>아이디 / 비밀번호 찾기</span>
+        <span onClick={showMessage} style={{ fontSize: '12px' }}>
+          아이디 / 비밀번호 찾기
+        </span>
       </TextWrapper>
       <Button
         size="login"
