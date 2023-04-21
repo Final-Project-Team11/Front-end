@@ -3,7 +3,7 @@ import * as interfaces from './interfaces';
 
 const sizes: interfaces.Sizes = {
   login: {
-    width: '400px',
+    width: '430px',
     height: '50px',
   },
   example: {
