@@ -159,6 +159,7 @@ export function settingVacation(vacation: VacationProps) {
         backgroundColor: COLOR.MONTHLY_VACTION_BAR,
         borderColor: COLOR.MONTHLY_VACTION_BAR,
         dragBackgroundColor: COLOR.MONTHLY_VACTION_BAR,
+        color: COLOR.WHITE_COLOR,
         isReadOnly: true,
       };
     case SICK_DAY:
