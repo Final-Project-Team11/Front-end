@@ -34,7 +34,7 @@ const usePostschedule = () => {
     },
     onSuccess: () => {
       console.log('success');
-      queryClient.invalidateQueries([keys.GET_MAIN, 1]);
+      queryClient.invalidateQueries([keys.GET_MAIN, 0]);
     },
   });
 
@@ -77,14 +77,6 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       formData.append('content', payload.postInfo?.content || '');
       payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
       formData.append('file', payload.postInfo?.file || '');
-      return formData;
-    }
-
-    case 'vacation': {
-      const formData = new FormData();
-      formData.append('startDay', payload.postInfo?.startDay || '');
-      formData.append('endDay', payload.postInfo?.endDay || '');
-      formData.append('typeDetail', payload.postInfo?.eventType || '');
       return formData;
     }
 
