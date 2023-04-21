@@ -1,6 +1,5 @@
 import React, { useEffect, createContext, useState, useContext } from 'react';
 import { SubMain } from '../SubMain/SubMain';
-import Calendar from '../../components/ToastCalendar/Calendar';
 import useGetMain from '../../api/hooks/Main/useGetMain';
 import { ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
@@ -9,6 +8,7 @@ import { StWrap, StTabButton, StButtonBlcok } from './styles';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 export const TabContext = createContext<number>(-1);
+
 const Main = () => {
   const [tab, setTab] = useState(1);
   const { data, isLoading } = useGetMain(tab);
@@ -48,22 +48,47 @@ const Main = () => {
   }, [data]);
 
   return (
-    <CalendarContext.Provider value={filterData}>
-      <TabContext.Provider value={tab}>
-        <StWrap>
-          <StButtonBlcok>
-            <StTabButton onClick={() => setTab(0)} tab={tab}>
-              일정
-            </StTabButton>
-            <StTabButton onClick={() => setTab(1)} tab={tab}>
-              휴가
-            </StTabButton>
-          </StButtonBlcok>
-          {tab === 0 ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
-        </StWrap>
-      </TabContext.Provider>
-    </CalendarContext.Provider>
+    <TabChangeContext>
+      <CalendarContext.Provider value={filterData}>
+        <TabContext.Provider value={tab}>
+          <StWrap>
+            <StButtonBlcok>
+              <StTabButton onClick={() => setTab(0)} tab={tab}>
+                일정
+              </StTabButton>
+              <StTabButton onClick={() => setTab(1)} tab={tab}>
+                휴가
+              </StTabButton>
+            </StButtonBlcok>
+            {tab === 0 ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
+          </StWrap>
+        </TabContext.Provider>
+      </CalendarContext.Provider>
+    </TabChangeContext>
   );
 };
 
 export default Main;
+
+type State = boolean;
+type Dispatch = React.Dispatch<React.SetStateAction<State>>;
+export const ChangeTabContext = createContext<[State, Dispatch]>([
+  false,
+  () => {
+    //
+  },
+]);
+
+interface ContextProps {
+  children: React.ReactNode;
+}
+function TabChangeContext({ children }: ContextProps) {
+  const [tab, setTab] = useState(false);
+  const contextValue = { tab, setTab };
+
+  return (
+    <ChangeTabContext.Provider value={[tab, setTab]}>
+      {children}
+    </ChangeTabContext.Provider>
+  );
+}
