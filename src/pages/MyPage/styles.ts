@@ -1,12 +1,22 @@
 import styled from 'styled-components';
 
 export const Frame = styled.div`
-  width: 1920px;
-  height: 1080px;
+  /* width: 1920px;
+  height: 1080px; */
+  width: 100%;
+  height: 100%;
 
   display: flex;
   justify-content: center;
   align-items: flex-start;
+`;
+export const FeedArea = styled.div`
+  width: 250px;
+  height: 735px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
 
 export const Wrapper = styled.div`

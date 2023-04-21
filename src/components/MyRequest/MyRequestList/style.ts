@@ -30,8 +30,6 @@ export const StSpanBlock = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  gap: 8px;
 `;
 
 export const StNameDateBlock = styled.div`

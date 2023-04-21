@@ -28,7 +28,7 @@ export const useMentionedSchedules = () => {
     queryKey: [keys.GET_TAG], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
       const response = await apis.get(
-        `/mentionedSchedule?pageSize=15&pageNum=${pageParam}`
+        `/mentionedSchedule?pageSize=30&pageNum=${pageParam}`
       );
       return { ...response.data, pageNum: pageParam };
     }, // API 호출 함수
