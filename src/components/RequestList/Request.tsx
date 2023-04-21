@@ -43,10 +43,6 @@ const Request = () => {
     return <div>...loading</div>;
   }
 
-  if (!data || !data.pages) {
-    return <div>데이터 없음</div>;
-  }
-
   const requests = data
     ? data.pages.reduce<RequestInfo[]>(
         (acc, page) => (page.schedule ? [...acc, ...page.schedule] : acc),
