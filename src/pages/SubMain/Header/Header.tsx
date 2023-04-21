@@ -15,12 +15,12 @@ import { useNavigate } from 'react-router-dom';
 function Header(props: HeaderProps) {
   const [tab, tabHandler] = useContext(ChangeTabContext);
   const navigate = useNavigate();
+
   const CardClickHandler = () => {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
-    const teamId = decoded ? decoded.teamId : '';
-
-    teamId === 3 ? navigate('/mypage') : navigate('/manager');
+    const authLevel = decoded ? decoded.authLevel : '';
+    authLevel === 3 ? navigate('/mypage') : navigate('/manager');
   };
 
   return (
