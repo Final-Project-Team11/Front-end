@@ -6,10 +6,11 @@ import Card from '../../components/Card';
 import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from './styles';
-import Board from '../../components/Board/Board';
 import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
 import WaitVacation from '../../assets/Meerkat/WaitVacation';
 import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
+import AuthRequest from '../../components/AuthRequest/AuthRequest';
+import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
 
 const Manager = () => {
   return (
@@ -17,7 +18,7 @@ const Manager = () => {
       <UI.Wrapper>
         <UI.Header>
           <Card />
-          <UI.Calendar>캘린더영역</UI.Calendar>
+          <OneWeekCalendar />
         </UI.Header>
         <UI.MainArea>
           <UI.FeedArea>
@@ -37,9 +38,7 @@ const Manager = () => {
             </UI.MiddleArea>
             <UI.MiddleArea>
               <Request />
-              <Board icon="💈" title="결재 요청">
-                아직 준비중입니다.
-              </Board>
+              <AuthRequest />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>

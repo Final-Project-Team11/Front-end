@@ -40,11 +40,11 @@ const Request = () => {
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   if (isLoading) {
-    return <div>...loading</div>;
-  }
-
-  if (!data || !data.pages) {
-    return <div>데이터 없음</div>;
+    return (
+      <Board icon={icon} title="RequestedList">
+        <UI.StInsideBlock ref={targetDiv}></UI.StInsideBlock>
+      </Board>
+    );
   }
 
   const requests = data

@@ -52,7 +52,7 @@ const VacationTab = () => {
   }
 
   // props 로 내려줄 아이콘
-  const icon = <CalendarIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+  const icon = <CalendarIcon usage="title" />;
 
   return (
     <Board icon={icon} title="휴가 요청">

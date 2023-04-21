@@ -30,12 +30,6 @@ export const Header = styled.div`
   height: fit-content;
 `;
 
-export const Calendar = styled.div`
-  background-color: aliceblue;
-  width: 823px;
-  height: 113px;
-`;
-
 export const MainArea = styled.div`
   width: 1098px;
   height: 748px;

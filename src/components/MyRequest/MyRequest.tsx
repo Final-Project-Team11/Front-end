@@ -3,6 +3,8 @@ import * as UI from './style';
 import MyRequestList from './MyRequestList';
 import { useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
 import Board from '../Board/Board';
+import BusinessIcon from '../../assets/Icons/BusinessIcon';
+import { COLOR } from '../../styles/colors';
 
 const MyRequest = () => {
   // 무한스크롤 코드
@@ -39,7 +41,7 @@ const MyRequest = () => {
   const files = data ? data.pages.flatMap(page => page.schedule) : [];
 
   // props로 내려줄 icon
-  const icon = '🙋🏻‍♂️';
+  const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   return (
     <Board icon={icon} title="내가 올린 결재">
