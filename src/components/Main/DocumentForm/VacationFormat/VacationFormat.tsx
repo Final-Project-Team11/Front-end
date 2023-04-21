@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
 import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostVacation();

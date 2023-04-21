@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import * as UI from './style';
 import { AddCategoryProps, SentCategory } from './interfaces';
 import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
-import { ChangeTabContext } from '../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 
 const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryProps) => {
   // AddCategory 인풋 생기면 focus

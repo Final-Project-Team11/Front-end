@@ -7,7 +7,7 @@ import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
 import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
-import { ChangeTabContext } from '../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);

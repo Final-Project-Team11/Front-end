@@ -5,6 +5,7 @@ import { ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
+import { ChangeTabContext, TabContext } from '../../api/hooks/Main/useTabContext';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
@@ -59,25 +60,3 @@ const Main = () => {
 };
 
 export default Main;
-
-type State = boolean;
-type Dispatch = React.Dispatch<React.SetStateAction<State>>;
-export const ChangeTabContext = createContext<[State, Dispatch]>([
-  false,
-  () => {
-    //
-  },
-]);
-
-interface ContextProps {
-  children: React.ReactNode;
-}
-function TabContext({ children }: ContextProps) {
-  const [tab, setTab] = useState(false);
-
-  return (
-    <ChangeTabContext.Provider value={[tab, setTab]}>
-      {children}
-    </ChangeTabContext.Provider>
-  );
-}

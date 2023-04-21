@@ -21,7 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AxiosError } from 'axios';
 import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../pages/Main/Main';
+import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 
 const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();

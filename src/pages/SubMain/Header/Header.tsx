@@ -4,9 +4,10 @@ import * as styles from './styles';
 import { nanoid } from 'nanoid';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import Card from '../../../components/Card/Card';
-import { ChangeTabContext } from '../../Main/Main';
+
 import ChangeVacation from '../../../assets/Meerkat/ChangeVacation';
 import ChangeSchedule from '../../../assets/Meerkat/ChangeSchedule';
+import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 
 function Header(props: HeaderProps) {
   const [tab, tabHandler] = useContext(ChangeTabContext);
