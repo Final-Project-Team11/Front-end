@@ -147,7 +147,7 @@ export function SubMain({ view }: { view: ViewType }) {
       attendees: res.attendees,
       userId: userId,
       isReadOnly: res.isReadOnly,
-      backgroundColor: getScheduleColor(res.calendarId),
+      backgroundColor: getScheduleColor(tab, res.calendarId),
       location: res.location,
       userName: user.userInfo.userName,
     };
@@ -205,7 +205,7 @@ export function SubMain({ view }: { view: ViewType }) {
         break;
       }
     }
-
+    setClickDetail(true);
     setClickEvent(res.event);
   };
 

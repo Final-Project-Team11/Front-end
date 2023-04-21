@@ -410,17 +410,32 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
   }
 }
 
-export function getScheduleColor(eventType: string): string {
-  switch (eventType) {
-    case '0':
-      return COLOR.VACATION_RED;
-    case '01':
-      return COLOR.HALF_DAY_OFF_BAR;
-    case '2':
-      return COLOR.MONTHLY_VACTION_BAR;
-    case '3':
-      return COLOR.SICK_DAY_BAR;
-    default:
-      return COLOR.VACATION_RED;
+export function getScheduleColor(tab: boolean, eventType: string): string {
+  if (tab === false) {
+    switch (eventType) {
+      case '0':
+        return COLOR.CONBANTION_BAR;
+      case '1':
+        return COLOR.OTHER_BAR;
+      case '2':
+        return COLOR.BUSINESS_TRIP_BAR;
+      case '3':
+        return COLOR.MEETING_BAR;
+      default:
+        return COLOR.VACATION_RED;
+    }
+  } else {
+    switch (eventType) {
+      case '0':
+        return COLOR.VACATION_RED;
+      case '1':
+        return COLOR.HALF_DAY_OFF_BAR;
+      case '2':
+        return COLOR.MONTHLY_VACTION_BAR;
+      case '3':
+        return COLOR.SICK_DAY_BAR;
+      default:
+        return COLOR.VACATION_RED;
+    }
   }
 }
