@@ -15,6 +15,7 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 import FileUpload from '../../FileUpload/FileUpload';
 import styled from 'styled-components';
 import { TbBorderCorners } from 'react-icons/tb';
+import { ToastContainer, toast } from 'react-toastify';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
@@ -24,17 +25,44 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
 
   const SaveClickHandler = () => {
     if (disable === false) {
-      const formData = new FormData();
-      if (FormFiles !== undefined) {
-        formData.append('file', FormFiles);
-        const newData = postFormat(props.tab, props);
-        mutation.mutate(newData);
-      } else {
-        const newData = postFormat(props.tab, props);
-        mutation.mutate(newData);
+      if (confirm('등록하시나요 ?')) {
+        const newProps = {
+          ...props,
+          file: FormFiles,
+          content: content,
+          title: title,
+          username: userName,
+        };
+        const newData = postFormat(props.tab, newProps);
+        mutation.mutate(newData, {
+          onSuccess: () => {
+            setDisable(!disable);
+            toast.success('🦄 서버 업로드 성공!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+          onError: () => {
+            toast.error('❌ 서버 업로드 실패!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+        });
       }
     } else if (disable === true) {
-      console.log('t');
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
     }
 
@@ -46,22 +74,22 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const userId = decoded ? decoded.userId : '';
 
   const [disable, setDisable] = useState(false);
-  const [author, autherHandler, setAuthorInputValue] = useInput();
+  const [userName, userNameHandler, setUserNameInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
   const [zoomClick, setZoomClick] = useState(false);
 
   useEffect(() => {
-    props.title && setTitleHanlderValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setAuthorInputValue(props.title?.split('-')[1]);
+    props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setUserNameInputValue(props.title?.split('-')[1]);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
-    props.body && setContentValue(props.body);
-    console.log(' props.isReadOnly', props.isReadOnly);
+    props.body !== undefined && setContentValue(props.body);
   }, [props]);
 
   console.log('disable', disable);
   return (
     <styles.StContainer ref={props.propsRef}>
+      <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
           <styles.StMarkBlock backgroundColor={props.backgroundColor} />
@@ -69,8 +97,8 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
           <div>
             <styles.StInput
               placeholder="작성자"
-              value={author}
-              onChange={autherHandler}
+              value={userName}
+              onChange={userNameHandler}
               disabled={disable}
             />
           </div>
