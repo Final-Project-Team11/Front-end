@@ -4,7 +4,7 @@ import React from 'react';
 
 const SignupMeerkat = () => {
   return (
-    <svg viewBox="0 0 333.87 186.83" width={'250px'} height={'85px'}>
+    <svg viewBox="0 0 333.87 186.83" width={'310px'} height={'310px'}>
       <style>{`.SignupMeerkat-1{fill:#3768b2;}.SignupMeerkat-2{fill:#7698cf;}`}</style>
       <g>
         <g>

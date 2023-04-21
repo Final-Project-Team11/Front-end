@@ -9,9 +9,10 @@ export interface InputProps {
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
+  ref?: React.RefObject<HTMLInputElement>;
 }
 export interface Type {
-  types: 'max' | 'half' | 'document' | 'login';
+  types: 'max' | 'half' | 'document' | 'login' | 'signup';
 }
 
 export interface InputStyle {
@@ -22,6 +23,7 @@ export interface InputStyle {
     boxShadow?: string;
     border?: string;
     padding?: string;
+    margin?: string;
   };
 }
 

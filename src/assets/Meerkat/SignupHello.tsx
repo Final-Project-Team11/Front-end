@@ -4,7 +4,7 @@ import React from 'react';
 
 const SignupHello = () => {
   return (
-    <svg viewBox="0 0 159.12 319.49" width={'250px'} height={'85px'}>
+    <svg viewBox="0 0 159.12 319.49" width={'230px'} height={'450px'}>
       <style>{`.SignupHello-1{fill:#3768b2;}.SignupHello-2{fill:#7698cf;}`}</style>
       <g>
         <g>

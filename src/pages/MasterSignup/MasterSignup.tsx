@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputWrapper, StForm } from './styles';
+import { StForm, BackGround, StH1, NameTag, EmailInput, Svg } from './styles';
+import { StInput, StButton, StSpan } from './hooks/DaumAddressAPI';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import ButtonInput from '../../components/Inputs/ButtonInput';
 import Button from '../../components/Button/Button';
@@ -10,8 +11,13 @@ import { usePasswordCheck } from './hooks/usePasswordCheck';
 import axios from 'axios';
 import DaumAddressAPI from './hooks/DaumAddressAPI';
 import { useCompanyNumCheck } from './hooks/useCompanyNumCheck';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import SignupHello from '../../assets/Meerkat/SignupHello';
+import SignupMeerkat from '../../assets/Meerkat/SignupMeerkat';
 
 const MasterSignup = () => {
+  const navigate = useNavigate();
   const [signInfo, setSignInfo] = React.useState<AdminSignupInfo>({
     companyName: '',
     address: '',
@@ -131,120 +137,173 @@ const MasterSignup = () => {
     }
   };
 
+  const Waiting = () => {
+    Swal.fire({
+      icon: 'info',
+      title: '준비 중인 기능입니다.',
+    });
+  };
+
   return (
-    <StForm onSubmit={submitSignInfoHandler}>
-      <h1 style={{ fontSize: '20px', marginTop: '30px', fontWeight: 'bold' }}>
-        사업자 등록
-      </h1>
-      <InputWrapper>
-        <MaxInput
-          types="max"
-          type="text"
-          name="companyName"
-          placeholder="상호명을 입력해주세요."
-          value={signInfo.companyName}
-          onChange={e => changeInputHandler(e)}
-        >
-          상호명
-        </MaxInput>
-        <ButtonInput
-          types="button"
-          type="text"
-          name="companyNum"
-          value={signInfo.companyNum}
-          onChange={e => changeCompanyNumHandler(e)}
-          onClick={checkCompanyNumHandler}
-          buttonTag="사업자 확인"
-          placeholder="하이픈을 제외하고 입력해주세요."
-        >
-          사업자 등록번호
-        </ButtonInput>
-        {isValid !== null && (
-          <p>
-            {isValid ? '사업자번호가 유효합니다.' : '사업자번호가 유효하지 않습니다.'}
-          </p>
-        )}
-        <DaumAddressAPI selectedAddressHandler={handleAddressSelected} />
-        <MaxInput
-          types="max"
-          type="text"
-          value={detailAddress}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setDetailAddress(e.target.value)
-          }
-        >
-          상세주소
-        </MaxInput>
-        <MaxInput
-          types="max"
-          type="text"
-          name="ceoName"
-          placeholder="대표자의 이름을 입력해주세요."
-          value={signInfo.ceoName}
-          onChange={e => changeInputHandler(e)}
-        >
-          대표자명
-        </MaxInput>
-        <MaxInput
-          types="max"
-          type="text"
-          name="ceoNum"
-          placeholder="대표자의 연락처를 하이픈 없이 입력해주세요."
-          value={signInfo.ceoNum.toString()}
-          onChange={e => changeInputHandler(e)}
-        >
-          대표자 연락처
-        </MaxInput>
-        <ButtonInput
-          types="button"
-          type="text"
-          name="companyId"
-          onClick={() => checkCompanyIdHandler(signInfo.companyId)}
-          buttonTag="중복확인"
-          placeholder="영 대, 소문자, 숫자 5자 이상 입력해주세요."
-          value={signInfo.companyId}
-          onChange={e => changeInputHandler(e)}
-        >
-          아이디
-        </ButtonInput>
-        {signInfo.companyId ? (
-          companyIdValidation ? (
-            <span>사용할 수 있는 아이디 입니다.</span>
-          ) : (
-            <span>중복확인이 필요합니다.</span>
-          )
-        ) : null}
-        <MaxInput
-          types="max"
-          type="password"
-          name="password"
-          placeholder="영 대,소문자, 숫자, 특수문자 중 숫자, 특수문자를 포함하는 8자~15자"
-          value={signInfo.password}
-          onChange={e => changeInputHandler(e)}
-        >
-          비밀번호
-        </MaxInput>
-        <MaxInput
-          types="max"
-          type="password"
-          placeholder="비밀번호를 한 번 더 입력해주세요."
-          value={checkPassword}
-          onChange={e => reCheckPasswordHandler(e)}
-        >
-          비밀번호 확인
-        </MaxInput>
-        {checkPassword ? (
-          checkPasswordHandler(checkPassword) ? (
-            <span>비밀번호가 일치합니다.</span>
-          ) : (
-            <span>비밀번호가 일치하지 않습니다.</span>
-          )
-        ) : null}
-      </InputWrapper>
-      <div style={{ marginTop: '30px' }}>
-        <Button size="example">가입하기</Button>
-      </div>
-    </StForm>
+    <BackGround>
+      <StH1>Meer : 캣린더 사업자 등록</StH1>
+      <Svg>
+        <div style={{ margin: '1250px 10px 0 0' }}>
+          <SignupMeerkat />
+        </div>
+        <StForm onSubmit={submitSignInfoHandler}>
+          <MaxInput
+            types="signup"
+            type="text"
+            name="companyName"
+            placeholder="상호명을 입력해주세요."
+            value={signInfo.companyName}
+            onChange={e => changeInputHandler(e)}
+            style={{ marginTop: '100px' }}
+          >
+            상호명
+          </MaxInput>
+          <ButtonInput
+            types="button"
+            type="text"
+            name="companyNum"
+            value={signInfo.companyNum}
+            onChange={e => changeCompanyNumHandler(e)}
+            onClick={checkCompanyNumHandler}
+            buttonTag="인증 하기"
+            placeholder="-을 제외하고 입력해주세요."
+            style={{ marginBottom: '45px' }}
+          >
+            사업자 등록번호
+          </ButtonInput>
+          {isValid !== null && (
+            <p>
+              {isValid ? '사업자번호가 유효합니다.' : '사업자번호가 유효하지 않습니다.'}
+            </p>
+          )}
+          <DaumAddressAPI selectedAddressHandler={handleAddressSelected} />
+          <MaxInput
+            types="signup"
+            type="text"
+            value={detailAddress}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setDetailAddress(e.target.value)
+            }
+            style={{ marginBottom: '45px' }}
+            placeholder="상세 주소를 입력해주세요."
+          >
+            상세주소
+          </MaxInput>
+          <MaxInput
+            types="signup"
+            type="text"
+            name="ceoName"
+            placeholder="대표자의 성명을 입력해주세요."
+            value={signInfo.ceoName}
+            onChange={e => changeInputHandler(e)}
+          >
+            대표자 성명
+          </MaxInput>
+          <MaxInput
+            types="signup"
+            type="text"
+            name="ceoNum"
+            placeholder="-을 제외하고 입력해주세요."
+            value={signInfo.ceoNum.toString()}
+            onChange={e => changeInputHandler(e)}
+          >
+            대표자 핸드폰 번호
+          </MaxInput>
+          <EmailInput>
+            <NameTag>
+              <StSpan>이메일</StSpan>
+              <StInput type="text"></StInput>
+            </NameTag>
+            <StInput type="text" placeholder="직접 입력"></StInput>
+            <StButton onClick={Waiting} type="button">
+              인증 하기
+            </StButton>
+          </EmailInput>
+          <ButtonInput
+            types="button"
+            type="text"
+            name="companyId"
+            onClick={() => checkCompanyIdHandler(signInfo.companyId)}
+            buttonTag="중복확인"
+            placeholder="영 대, 소문자, 숫자 5자 이상 입력해주세요."
+            value={signInfo.companyId}
+            onChange={e => changeInputHandler(e)}
+          >
+            아이디
+          </ButtonInput>
+          {signInfo.companyId ? (
+            companyIdValidation ? (
+              <span>사용할 수 있는 아이디 입니다.</span>
+            ) : (
+              <span>중복확인이 필요합니다.</span>
+            )
+          ) : null}
+          <MaxInput
+            types="signup"
+            type="password"
+            name="password"
+            placeholder="영 대,소문자, 숫자, 특수문자 중 숫자, 특수문자를 포함하는 8자~15자"
+            value={signInfo.password}
+            onChange={e => changeInputHandler(e)}
+          >
+            비밀번호
+          </MaxInput>
+          <MaxInput
+            types="signup"
+            type="password"
+            placeholder="비밀번호를 한 번 더 입력해주세요."
+            value={checkPassword}
+            onChange={e => reCheckPasswordHandler(e)}
+          >
+            비밀번호 확인
+          </MaxInput>
+          {checkPassword ? (
+            checkPasswordHandler(checkPassword) ? (
+              <span>비밀번호가 일치합니다.</span>
+            ) : (
+              <span>비밀번호가 일치하지 않습니다.</span>
+            )
+          ) : null}
+          <div style={{ marginTop: '100px' }}>
+            <Button
+              size="signup"
+              style={{
+                color: '#E64042',
+                fontSize: '15px',
+                fontWeight: 'bold',
+                border: '1px solid #E64042',
+                borderRadius: '7px',
+                backgroundColor: '#fff',
+                marginRight: '15px',
+                boxSizing: 'border-box',
+              }}
+              onClick={() => navigate('/login')}
+            >
+              취소
+            </Button>
+            <Button
+              size="signup"
+              style={{
+                color: '#fff',
+                fontSize: '15px',
+                fontWeight: 'bold',
+                borderRadius: '7px',
+                backgroundColor: '#E64042',
+                boxSizing: 'border-box',
+              }}
+            >
+              회원가입
+            </Button>
+          </div>
+        </StForm>
+        <SignupHello />
+      </Svg>
+    </BackGround>
   );
 };
 

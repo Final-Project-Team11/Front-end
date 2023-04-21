@@ -10,9 +10,11 @@ export interface InputProps {
   value?: string;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  style?: React.CSSProperties;
 }
+
 export interface Type {
-  types: 'button' | 'valid';
+  types: 'button';
 }
 
 export interface ButtonProps {
@@ -22,6 +24,12 @@ export interface ButtonProps {
 export interface InputStyle {
   [key: string]: {
     width: string;
+    height?: string;
+    fontSize?: string;
+    boxShadow?: string;
+    border?: string;
+    padding?: string;
+    margin?: string;
   };
 }
 
@@ -29,4 +37,5 @@ export interface CssProps {
   types: Type['types'];
   Bgcolor?: string;
   border?: string;
+  style?: React.CSSProperties;
 }
