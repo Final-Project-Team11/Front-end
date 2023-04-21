@@ -1,5 +1,11 @@
 import { Options, TZDate } from '@toast-ui/calendar';
-import { InitialCalendar, ScheduleProps, ServerProps, VacationProps } from './interfaces';
+import {
+  CalendarProps,
+  InitialCalendar,
+  ScheduleProps,
+  ServerProps,
+  VacationProps,
+} from './interfaces';
 import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
@@ -27,18 +33,19 @@ export function subtractDate(d: TZDate, steps: number) {
   return date;
 }
 
-export function settingSchedule(schedule: ScheduleProps) {
+export function settingSchedule(schedule: ScheduleProps): CalendarProps {
   const ISSUE = 'Meetings';
-  const OTHER = 'Reports';
+  const OTHER = 'Others';
   const BUSINESS_TRIP = 'Schedules';
   const MEETING = 'Issues';
+  const REPORT = 'Reports';
 
   const title = schedule?.userName
     ? schedule?.title + '-' + schedule?.userName
     : schedule?.eventType;
 
   const newData = {
-    id: schedule?.userId,
+    id: schedule?.eventId,
     calendarId: schedule?.eventType,
     title: title,
     start: schedule.startDay,
@@ -46,6 +53,7 @@ export function settingSchedule(schedule: ScheduleProps) {
     body: schedule.content,
     attendees: schedule.mentions,
     userName: schedule.userName,
+    userId: schedule.userId,
   };
 
   switch (schedule?.eventType) {
@@ -59,6 +67,16 @@ export function settingSchedule(schedule: ScheduleProps) {
         end: schedule.startDay,
         isReadOnly: true,
         location: schedule.location,
+      };
+    case REPORT:
+      return {
+        ...newData,
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
+        start: schedule.enrollDay,
+        end: schedule.enrollDay,
+        isReadOnly: true,
       };
     case OTHER:
       return {
@@ -109,7 +127,7 @@ export function settingVacation(vacation: VacationProps) {
     : vacation?.typeDetail;
 
   const newData = {
-    id: vacation?.userId,
+    id: vacation?.eventId,
     calendarId: vacation?.typeDetail,
     start: vacation.startDay,
     end: vacation.endDay,
@@ -301,27 +319,26 @@ interface postFormatProps {
   postInfo: ServerProps;
 }
 
-export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
+export function postFormat(tab: number, schedule: CalendarProps): postFormatProps {
   const defaultFormat = {
-    startDay: schedule.startDay?.toString(),
+    startDay: schedule.start?.toString(),
     title: schedule.title,
-    content: schedule.content,
+    content: schedule.body,
   };
 
   if (tab === 0) {
-    switch (schedule.eventType) {
+    switch (schedule.calendarId) {
       case '0': {
         const postData = {
           url: 'meeting', //Isssue
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
             eventType: 'Meetings',
-            endDay: schedule.endDay?.toString(),
-            startTime:
-              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+            endDay: schedule.end?.toString(),
+            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
         };
         return postData;
@@ -332,9 +349,9 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           url: 'other',
           postInfo: {
             ...defaultFormat,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
-            endDay: schedule.endDay?.toString(),
+            endDay: schedule.end?.toString(),
           },
         };
         return postData;
@@ -345,7 +362,7 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
           },
         };
@@ -357,11 +374,10 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
             eventType: 'MeetingReports',
-            startTime:
-              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
         };
         return postData;
@@ -379,9 +395,9 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
     const postData = {
       url: 'vacation',
       postInfo: {
-        typeDetail: getCanlendarName(tab, schedule.eventType),
-        startDay: schedule.startDay?.toString(),
-        endDay: schedule.endDay?.toString(),
+        typeDetail: getCanlendarName(tab, schedule.calendarId),
+        startDay: schedule.start?.toString(),
+        endDay: schedule.end?.toString(),
       },
     };
     return postData;
