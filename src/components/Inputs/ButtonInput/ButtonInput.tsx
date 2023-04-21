@@ -19,9 +19,10 @@ const ButtonInput = ({
   inputId,
   value,
   onChange,
+  style,
 }: InputProps) => {
   return (
-    <StColumnBlock>
+    <StColumnBlock style={style}>
       <StInputLabel htmlFor={inputId}>{children}</StInputLabel>
       <StInputButtonBlock>
         <StColumnInput
