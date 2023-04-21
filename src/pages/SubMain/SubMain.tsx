@@ -22,13 +22,14 @@ import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
 
-import TodaySchedules from './TodayScheduels/TodaySchedules';
+import TodaySchedules from './TodayScheduels';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
 import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
 import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
 import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
+import React from 'react';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
