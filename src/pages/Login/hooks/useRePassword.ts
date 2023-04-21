@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import apis from '../../../api/axios/api';
 import { useNavigate } from 'react-router-dom';
 

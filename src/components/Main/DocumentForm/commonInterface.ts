@@ -1,13 +1,13 @@
-interface ScheduleProps {
+export interface ScheduleProps {
   props: {
-    eventId?: number;
-    eventType?: string;
+    id?: number | string;
+    calendarId?: string;
     title?: string;
-    username?: string;
-    startDay?: Date;
-    endDay?: Date;
+    userName?: string;
+    start?: Date;
+    end?: Date;
     body?: string;
-    mention?: string[];
+    attendees?: string[];
     propsRef?: React.RefObject<HTMLDivElement>;
     tab: number;
     userId?: string;
@@ -18,4 +18,9 @@ interface ScheduleProps {
     location?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface ErrorData {
+  errorMessage: string;
+  success: boolean;
 }

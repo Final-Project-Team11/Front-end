@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FolderIcon from '../../assets/Icons/FolderIcon';
+import FolderIcon from '../../../../../assets/Icons/FolderIcon';
 import { HiOutlinePlusSm } from 'react-icons/hi';
 import * as styles from './styles';
 import { nanoid } from 'nanoid';

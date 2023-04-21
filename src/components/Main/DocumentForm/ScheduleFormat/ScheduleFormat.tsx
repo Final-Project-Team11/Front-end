@@ -1,24 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { postFormat } from '../../../pages/SubMain/utils';
-import usePostschedule from '../../../api/hooks/Main/usePostschedule';
+import { postFormat } from '../../../../pages/SubMain/utils';
+import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import * as styles from '../commonStyles';
-import useInput from '../../../hooks/common/useInput';
-import useTextarea from '../../../hooks/common/useTextarea';
-import Button from '../../Button/Button';
+import useInput from '../../../../hooks/common/useInput';
+import useTextarea from '../../../../hooks/common/useTextarea';
+import Button from '../../../Button/Button';
 import { MdFolder, MdZoomInMap } from 'react-icons/md';
 import { AiFillTag } from 'react-icons/ai';
 import Period from '../components/Period/Period';
-import { getCookie } from '../../../api/auth/CookieUtils';
+import { getCookie } from '../../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import AddTodo from '../../Feed/Todo/AddTodo';
-import useGetTeamInfo from '../../../api/hooks/Main/useGetTeamInfo';
-import HashTag from '../../HashTag/HashTag';
+import AddTodo from '../../../Feed/Todo/AddTodo';
+import useGetTeamInfo from '../../../../api/hooks/Main/useGetTeamInfo';
+import HashTag from '../components/HashTag/HashTag';
 import { RiArrowLeftSLine } from 'react-icons/ri';
-import FileUpload from '../../FileUpload/FileUpload';
+import FileUpload from '../components/FileUpload/FileUpload';
 import { scheduler } from 'timers/promises';
 import { TbBorderCorners } from 'react-icons/tb';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AxiosError } from 'axios';
+import { ErrorData, ScheduleProps } from '../commonInterface';
 
 const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
@@ -29,8 +31,8 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         const newProps = {
           ...props,
           file: FormFiles,
-          ref: mention,
-          content: content,
+          attendees: mention,
+          body: content,
           title: title,
           username: userName,
         };
@@ -49,8 +51,11 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
               theme: 'light',
             });
           },
-          onError: () => {
-            toast.error('❌ 서버 업로드 실패!', {
+          onError: error => {
+            const errorData: AxiosError = error as AxiosError;
+            const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
+            console.log('errorData', errorData);
+            toast.error(`❌ ${errorOjbect.errorMessage}`, {
               position: 'top-right',
               autoClose: 2000,
               hideProgressBar: false,
@@ -82,26 +87,23 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
+    console.log('props', props.userName);
     props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setUserNameInputValue(props.title?.split('-')[1]);
+    props.userName !== undefined && setUserNameInputValue(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body !== undefined && setContentValue(props.body);
   }, [props]);
 
+  console.log('userName', userName);
   return (
     <styles.StContainer ref={props.propsRef}>
       <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
           <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-          <Period startDay={props.startDay} endDay={props.endDay} />
+          <Period start={props.start} end={props.end} />
           <div>
-            <styles.StInput
-              placeholder="작성자"
-              value={userName}
-              onChange={userNameHandler}
-              disabled={disable}
-            />
+            <styles.StUserName>{userName}</styles.StUserName>
           </div>
           <div>
             <styles.StTitleInput
@@ -130,7 +132,7 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
       </styles.StTitleBlock>
       <styles.StContentBlock>
         <styles.StMarkNameBlcok>
-          {props.eventType !== 'Reports' ? (
+          {props.calendarId !== 'Reports' ? (
             <>
               <styles.StMarkBlock backgroundColor={props.backgroundColor} />
               <span>{props.location}</span>
@@ -167,7 +169,7 @@ const ScheduleFormat = ({ props, onReturnHandler }: ScheduleProps) => {
 
       <styles.StMentionBlock>
         <HashTag
-          mention={props.mention}
+          mention={props.attendees}
           disable={disable}
           mentionHandler={mentionHandler}
         />

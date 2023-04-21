@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { postFormat } from '../../../pages/SubMain/utils';
-import usePostschedule from '../../../api/hooks/Main/usePostschedule';
+import { postFormat } from '../../../../pages/SubMain/utils';
 import * as styles from '../commonStyles';
-import useInput from '../../../hooks/common/useInput';
-import useTextarea from '../../../hooks/common/useTextarea';
-import Button from '../../Button/Button';
-import { MdFolder, MdZoomInMap } from 'react-icons/md';
-import { AiFillTag } from 'react-icons/ai';
+import useInput from '../../../../hooks/common/useInput';
+import useTextarea from '../../../../hooks/common/useTextarea';
+import Button from '../../../Button/Button';
+import { MdZoomInMap } from 'react-icons/md';
 import Period from '../components/Period/Period';
-import { getCookie } from '../../../api/auth/CookieUtils';
+import { getCookie } from '../../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import AddTodo from '../../Feed/Todo/AddTodo';
 import { RiArrowLeftSLine } from 'react-icons/ri';
-import FileUpload from '../../FileUpload/FileUpload';
-import styled from 'styled-components';
 import { TbBorderCorners } from 'react-icons/tb';
 import { ToastContainer, toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
+import { ErrorData, ScheduleProps } from '../commonInterface';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
-  const mutation = usePostschedule();
+  const mutation = usePostVacation();
   const [FormFiles, SetFormFile] = useState<File>();
-
-  console.log('props', props);
-
   const SaveClickHandler = () => {
     if (disable === false) {
       if (confirm('등록하시나요 ?')) {
-        const newProps = {
-          ...props,
-          file: FormFiles,
-          content: content,
-          title: title,
-          username: userName,
-        };
-        const newData = postFormat(props.tab, newProps);
+        const newData = postFormat(props.tab, props);
         mutation.mutate(newData, {
           onSuccess: () => {
             setDisable(!disable);
@@ -47,9 +35,14 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
               progress: undefined,
               theme: 'light',
             });
+
+            setDisable(!disable);
           },
-          onError: () => {
-            toast.error('❌ 서버 업로드 실패!', {
+          onError: error => {
+            const errorData: AxiosError = error as AxiosError;
+            const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
+            console.log('errorData', errorData);
+            toast.error(`❌ ${errorOjbect.errorMessage}`, {
               position: 'top-right',
               autoClose: 2000,
               hideProgressBar: false,
@@ -65,8 +58,6 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
     } else if (disable === true) {
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
     }
-
-    setDisable(!disable);
   };
 
   const token = getCookie('token');
@@ -81,7 +72,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
 
   useEffect(() => {
     props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setUserNameInputValue(props.title?.split('-')[1]);
+    props.userName !== undefined && setUserNameInputValue(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body !== undefined && setContentValue(props.body);
   }, [props]);
@@ -93,7 +84,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
           <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-          <Period startDay={props.startDay} endDay={props.endDay} />
+          <Period start={props.start} end={props.end} />
           <div>
             <styles.StInput
               placeholder="작성자"

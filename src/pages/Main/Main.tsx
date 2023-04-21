@@ -13,7 +13,7 @@ const Main = () => {
   const [tab, setTab] = useState(1);
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
-  console.log('data', data);
+
   useEffect(() => {
     if (tab === 0) {
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
@@ -29,8 +29,6 @@ const Main = () => {
       const meeting: Partial<EventObject>[] = data?.meeting?.map((other: ScheduleProps) =>
         settingSchedule(other)
       );
-
-      console.log('meeting', meeting);
       const events: Partial<EventObject>[] = [];
       schedules !== undefined && events.push(...schedules);
       reports !== undefined && events.push(...reports);

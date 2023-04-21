@@ -5,7 +5,7 @@ import type { EventObject, ExternalEventTypes, Options } from '@toast-ui/calenda
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
-import { ScheduleProps } from './interfaces';
+import { CalendarProps, ScheduleProps } from './interfaces';
 import { TZDate } from '@toast-ui/calendar';
 import type { ChangeEvent, MouseEvent } from 'react';
 import { TfiBackLeft } from 'react-icons/tfi';
@@ -14,7 +14,6 @@ import cheerio from 'cheerio';
 
 //내부
 
-import ScheduleFormat from '../../components/DocumentForm/ScheduleFormat/ScheduleFormat';
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { CalendarContext, TabContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
@@ -23,10 +22,12 @@ import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
 
-import VacationFormat from '../../components/DocumentForm/VacationFormat/VacationFormat';
 import TodaySchedules from './TodayScheduels/TodaySchedules';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
+import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
+import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -47,9 +48,10 @@ const viewModeOptions = [
 
 export function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
+  const user = GetCardInfo();
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
-  const [clickData, setClickData] = useState<ScheduleProps>();
+  const [clickData, setClickData] = useState<CalendarProps>();
   const [todayData, setTodayData] = useState<number>(0);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
@@ -60,7 +62,7 @@ export function SubMain({ view }: { view: ViewType }) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const getCalInstance = useCallback(() => calendarRef.current?.getInstance?.(), []);
-  const schedules = useContext<ScheduleProps[]>(CalendarContext);
+  const schedules = useContext<CalendarProps[]>(CalendarContext);
 
   useEffect(() => {
     setInitialEvents(schedules);
@@ -130,19 +132,21 @@ export function SubMain({ view }: { view: ViewType }) {
 
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
+    console.log('decoded', decoded);
     const userId = decoded ? decoded.userId : '';
 
     const newData = {
-      eventType: res.calendarId,
+      calendarId: res.calendarId,
       title: res.title,
-      startDay: res.start,
-      endDay: res.end,
+      start: res.start,
+      end: res.end,
       body: res.body,
-      mention: res.attendees,
+      attendees: res.attendees,
       userId: userId,
       isReadOnly: res.isReadOnly,
       backgroundColor: getScheduleColor(res.calendarId),
       location: res.location,
+      userName: user.userInfo.userName,
     };
 
     console.log('newData', newData);
@@ -190,20 +194,14 @@ export function SubMain({ view }: { view: ViewType }) {
     console.log('Event Info : ', res.event);
     console.groupEnd();
 
-    const newData = {
-      eventId: res.event.id,
-      eventType: res.event.calendarId,
-      title: res.event.title,
-      startDay: res.event.start,
-      endDay: res.event.end,
-      body: res.event.body,
-      mention: res.event.attendees,
-      isReadOnly: res.event.isReadOnly,
-      userId: res.event.id,
-      location: res.event.location,
-    };
-    setClickData(newData);
-    setClickDetail(true);
+    for (let i = 0; i < schedules.length; i++) {
+      if (schedules[i].id === res.event.id) {
+        console.log('schedules[i]', schedules[i]);
+        setClickData(schedules[i]);
+        setClickDetail(true);
+        break;
+      }
+    }
   };
 
   const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
