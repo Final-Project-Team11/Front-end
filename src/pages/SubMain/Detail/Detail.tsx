@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import * as styles from './styles';
 
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import useTextarea from '../../../hooks/common/useTextarea';
 import usePostschedule from '../../../api/hooks/Main/usePostschedule';
 import { postFormat } from '../utils';
 import { MdFolder } from 'react-icons/md';
+import { ChangeTabContext } from '../../Main/Main';
 
 interface ScheduleProps {
   props: {
@@ -27,8 +28,9 @@ interface ScheduleProps {
 }
 function Detail({ props }: ScheduleProps) {
   const mutation = usePostschedule();
+  const [tab] = useContext(ChangeTabContext);
   const SaveClickHandler = () => {
-    const newData = postFormat(props.tab, props);
+    const newData = postFormat(tab, props);
     console.log(newData);
     mutation.mutate({ ...newData });
   };

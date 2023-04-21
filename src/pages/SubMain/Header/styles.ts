@@ -3,7 +3,7 @@ import { COLOR } from '../../../styles/colors';
 import '@fontsource/inter';
 
 interface StyleProps {
-  tab?: number;
+  tab?: boolean;
 }
 
 const StWrap = styled.div`
@@ -14,12 +14,12 @@ const StCardBlock = styled.div<StyleProps>`
   width: 310px;
   height: 100px;
   background-color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
+    tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
 `;
 const StContainer = styled.div<StyleProps>`
   width: 100%;
   border-bottom: 2px solid
-    ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+    ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 
   display: flex;
   justify-content: space-between;
@@ -30,7 +30,7 @@ const StDateBlock = styled.div<StyleProps>`
   font-size: 66px;
   font-weight: 900;
   display: flex;
-  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+  color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
   padding-bottom: 23px;
   margin-left: 50px;
   gap: 14px;
@@ -113,7 +113,7 @@ const StButton = styled.button<StyleProps>`
   background-color: white;
   font-size: 20px;
 
-  color: ${({ tab }) => (tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
+  color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
 
   cursor: pointer;
   opacity: 1;

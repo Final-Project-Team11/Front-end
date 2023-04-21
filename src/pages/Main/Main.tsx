@@ -7,15 +7,14 @@ import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
-export const TabContext = createContext<number>(-1);
 
 const Main = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useContext(ChangeTabContext);
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
   useEffect(() => {
-    if (tab === 0) {
+    if (tab === false) {
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
         (schedule: ScheduleProps) => settingSchedule(schedule)
       );
@@ -48,23 +47,14 @@ const Main = () => {
   }, [data]);
 
   return (
-    <TabChangeContext>
+    <TabContext>
       <CalendarContext.Provider value={filterData}>
-        <TabContext.Provider value={tab}>
-          <StWrap>
-            <StButtonBlcok>
-              <StTabButton onClick={() => setTab(0)} tab={tab}>
-                일정
-              </StTabButton>
-              <StTabButton onClick={() => setTab(1)} tab={tab}>
-                휴가
-              </StTabButton>
-            </StButtonBlcok>
-            {tab === 0 ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
-          </StWrap>
-        </TabContext.Provider>
+        <StWrap>
+          <StButtonBlcok></StButtonBlcok>
+          {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
+        </StWrap>
       </CalendarContext.Provider>
-    </TabChangeContext>
+    </TabContext>
   );
 };
 
@@ -82,9 +72,8 @@ export const ChangeTabContext = createContext<[State, Dispatch]>([
 interface ContextProps {
   children: React.ReactNode;
 }
-function TabChangeContext({ children }: ContextProps) {
+function TabContext({ children }: ContextProps) {
   const [tab, setTab] = useState(false);
-  const contextValue = { tab, setTab };
 
   return (
     <ChangeTabContext.Provider value={[tab, setTab]}>

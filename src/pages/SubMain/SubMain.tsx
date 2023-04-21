@@ -15,7 +15,7 @@ import cheerio from 'cheerio';
 //내부
 
 import Calendar from '../../components/ToastCalendar/Calendar';
-import { CalendarContext, TabContext } from '../Main/Main';
+import { CalendarContext, ChangeTabContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
 import { getScheduleColor, initCalendar } from './utils';
 import { theme } from './theme';
@@ -56,7 +56,7 @@ export function SubMain({ view }: { view: ViewType }) {
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
   const detailRef = useRef<HTMLDivElement>(null);
-  const tab = useContext<number>(TabContext);
+  const [tab] = useContext(ChangeTabContext);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -314,14 +314,14 @@ export function SubMain({ view }: { view: ViewType }) {
 
       {clickDetail === false ? (
         <TodaySchedules todayData={todayData} />
-      ) : tab === 0 ? (
+      ) : tab === false ? (
         <ScheduleFormat
-          props={{ ...clickData, tab: tab, propsRef: detailRef }}
+          props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
         />
       ) : (
         <VacationFormat
-          props={{ ...clickData, tab: tab, propsRef: detailRef }}
+          props={{ ...clickData, propsRef: detailRef }}
           onReturnHandler={setClickDetail}
         />
       )}

@@ -9,7 +9,6 @@ export interface ScheduleProps {
     body?: string;
     attendees?: string[];
     propsRef?: React.RefObject<HTMLDivElement>;
-    tab: number;
     userId?: string;
     isReadOnly?: boolean;
     ref?: string[];

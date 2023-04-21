@@ -13,5 +13,5 @@ export interface Category {
 }
 
 export interface TitleProps {
-  tab?: number;
+  tab?: boolean;
 }

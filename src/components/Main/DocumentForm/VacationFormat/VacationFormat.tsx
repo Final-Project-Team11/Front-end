@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { postFormat } from '../../../../pages/SubMain/utils';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
@@ -14,14 +14,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
 import { ErrorData, ScheduleProps } from '../commonInterface';
+import { ChangeTabContext } from '../../../../pages/Main/Main';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostVacation();
   const [FormFiles, SetFormFile] = useState<File>();
+  const [tab] = useContext(ChangeTabContext);
   const SaveClickHandler = () => {
     if (disable === false) {
       if (confirm('등록하시나요 ?')) {
-        const newData = postFormat(props.tab, props);
+        const newData = postFormat(tab, props);
         mutation.mutate(newData, {
           onSuccess: () => {
             setDisable(!disable);
