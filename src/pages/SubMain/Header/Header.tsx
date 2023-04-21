@@ -8,13 +8,26 @@ import Card from '../../../components/Card/Card';
 import ChangeVacation from '../../../assets/Meerkat/ChangeVacation';
 import ChangeSchedule from '../../../assets/Meerkat/ChangeSchedule';
 import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { getCookie } from '../../../api/auth/CookieUtils';
+import { useNavigate } from 'react-router-dom';
 
 function Header(props: HeaderProps) {
   const [tab, tabHandler] = useContext(ChangeTabContext);
+  const navigate = useNavigate();
+  const CardClickHandler = () => {
+    const token = getCookie('token');
+    const decoded = token && jwtDecode<JwtPayload>(token);
+    const teamId = decoded ? decoded.teamId : '';
+
+    teamId === 3 ? navigate('/mypage') : navigate('/manager');
+  };
 
   return (
     <styles.StWrap>
-      <Card tab={tab} />
+      <styles.StCardBlock onClick={CardClickHandler}>
+        <Card tab={tab} />
+      </styles.StCardBlock>
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
           <styles.StYearBlock>
