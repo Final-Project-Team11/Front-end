@@ -1,11 +1,11 @@
 import React from 'react';
 import * as UI from './style';
-// import OneWeekCalendar from '../../assets/images/OneWeekCalendar.jpg';
+import oneWeekCalendar from '../../assets/images/oneWeekCalendar.jpg';
 
 const OneWeekCalendar = () => {
   return (
     <UI.StCalendarBlock>
-      <img src="" />
+      <img src={oneWeekCalendar} />
     </UI.StCalendarBlock>
   );
 };
