@@ -15,8 +15,7 @@ const TodaySchedules = (props: TodaysProps) => {
     const endDay = new Date(item.end);
     return startDay.getDate() <= today && endDay.getDate() >= today;
   });
-  console.log('schedules', schedules);
-  console.log('filterSchedules', filterSchedules);
+
   return (
     <styles.StWrap>
       <styles.StContainer>
