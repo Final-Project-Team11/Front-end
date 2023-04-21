@@ -10,7 +10,7 @@ export interface AdminLoginResponse {
   message: string;
 }
 
-export const useLogin = () => {
+export const useAdminLogin = () => {
   const navigate = useNavigate();
 
   const [adminLoginInfo, setAdminLoginInfo] = React.useState<AdminLoginInfo>({
@@ -26,7 +26,6 @@ export const useLogin = () => {
   const login = useMutation<AdminLoginResponse, Error, AdminLoginInfo>({
     mutationFn: async (item: AdminLoginInfo) => {
       const data = await apis.post<AdminLoginResponse>('/adminlogin', item);
-      console.log('데이터', data);
       return data.data;
     },
     onSuccess: data => {
