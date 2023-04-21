@@ -6,9 +6,6 @@ export const StBlock = styled.div`
 
   margin: auto;
   margin-top: 100px;
-
-  border: 1px solid black;
-  box-sizing: border-box;
 `;
 
 export const Tap = styled.form`
@@ -30,9 +27,6 @@ export const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin-top: 43px;
-  gap: 18px;
 `;
 
 export const TextWrapper = styled.div`
@@ -41,18 +35,17 @@ export const TextWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
-  margin-top: 33px;
-  margin-bottom: 11px;
+  margin-bottom: 43px;
 `;
 
-export const TapButton = styled.div`
-  width: 250px;
-  height: 63px;
-
-  border: 1px solid black;
-  box-sizing: border-box;
-
+export const TapButton = styled.div<TapButtonProps>`
+  font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'nomal')};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
+
+interface TapButtonProps {
+  isSelected: boolean;
+}
