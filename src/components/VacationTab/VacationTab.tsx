@@ -4,6 +4,8 @@ import Vacation from './Vacation/Vacation';
 import { useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
 import Board from '../Board/Board';
+import CalendarIcon from '../../assets/Icons/CalendarIcon';
+import { COLOR } from '../../styles/colors';
 
 const VacationTab = () => {
   // Vacation 리스트 GET 요청
@@ -50,14 +52,7 @@ const VacationTab = () => {
   }
 
   // props 로 내려줄 아이콘
-  const icon = (
-    <svg viewBox="0 0 146.01 117.08" width="20px" height="20px">
-      <path
-        fill="#87acd7"
-        d="M131.2,15.46h-58.65S58.09,0,58.25,0H14.29C6.4,0,0,6.4,0,14.29L.16,102.27c0,8.18,6.63,14.81,14.81,14.81h116.22c8.18,0,14.81-6.63,14.81-14.81V30.27c0-8.18-6.63-14.81-14.81-14.81Z"
-      />
-    </svg>
-  );
+  const icon = <CalendarIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   return (
     <Board icon={icon} title="휴가 요청">

@@ -3,15 +3,16 @@ import { InputWrapper, StForm } from './styles';
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import ButtonInput from '../../components/Inputs/ButtonInput';
 import Button from '../../components/Button/Button';
-import { SignupInfo } from './interfaces';
+import { AdminSignupInfo } from './interfaces';
 import { useCompanyIdValidation } from './hooks/useCompanyIdValidation';
 import { useSignup } from './hooks/useSignup';
 import { usePasswordCheck } from './hooks/usePasswordCheck';
 import axios from 'axios';
 import DaumAddressAPI from './hooks/DaumAddressAPI';
+import { useCompanyNumCheck } from './hooks/useCompanyNumCheck';
 
 const MasterSignup = () => {
-  const [signInfo, setSignInfo] = React.useState<SignupInfo>({
+  const [signInfo, setSignInfo] = React.useState<AdminSignupInfo>({
     companyName: '',
     address: '',
     ceoName: '',
@@ -29,36 +30,54 @@ const MasterSignup = () => {
     }));
   };
 
-  const [isValid, setIsValid] = React.useState<boolean | null>(false);
+  // const [isValid, setIsValid] = React.useState<boolean | null>(false);
 
-  // 사업자 등록번호 조회 api
-  const COMPANYNUM_VALID_KEY = process.env.REACT_APP_COMPANYNUM_VALID_KEY;
+  // // 사업자 등록번호 조회 api
+  // const COMPANYNUM_VALID_KEY = process.env.REACT_APP_COMPANYNUM_VALID_KEY;
 
-  const handleButtonClick = async () => {
-    try {
-      const response = await axios.post(
-        `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${COMPANYNUM_VALID_KEY}`,
-        {
-          b_no: [signInfo.companyNum],
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-        }
-      );
-      const data = response.data.data[0];
-      if (data.b_stt_cd === '01' || data.b_stt_cd === '02' || data.b_stt_cd === '03') {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    } catch (error) {
-      console.error(error);
-      setIsValid(false);
+  // const handleButtonClick = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${COMPANYNUM_VALID_KEY}`,
+  //       {
+  //         b_no: [signInfo.companyNum],
+  //       },
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Accept: 'application/json',
+  //         },
+  //       }
+  //     );
+  //     const data = response.data.data[0];
+  //     if (data.b_stt_cd === '01' || data.b_stt_cd === '02' || data.b_stt_cd === '03') {
+  //       setIsValid(true);
+  //     } else {
+  //       setIsValid(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     setIsValid(false);
+  //   }
+  // };
+
+  // 임시 사업자 등록번호 인증(숫자 10자리)
+  const { isValid, validCompanyNumLength } = useCompanyNumCheck();
+
+  const changeCompanyNumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignInfo({ ...signInfo, [name]: value });
+    validCompanyNumLength(value);
+  };
+
+  const checkCompanyNumHandler = () => {
+    if (isValid) {
+      alert('유효한 사업자 등록번호 입니다.');
+    } else {
+      alert('올바른 사업자 등록번호를 입력해주세요.');
     }
   };
+
   //주소 디테일 정보
   const [detailAddress, setDetailAddress] = React.useState('');
 
@@ -105,7 +124,7 @@ const MasterSignup = () => {
       ...signInfo,
       address: signInfo.address + detailAddress,
     };
-    if (companyIdValidation && validPassword(signInfo.password)) {
+    if (companyIdValidation && validPassword(signInfo.password) && isValid) {
       signup.mutate(newSignInfo);
     } else {
       alert('가입에 실패하였습니다 입력한 내용을 확인해주세요');
@@ -133,8 +152,8 @@ const MasterSignup = () => {
           type="text"
           name="companyNum"
           value={signInfo.companyNum}
-          onChange={e => changeInputHandler(e)}
-          onClick={handleButtonClick}
+          onChange={e => changeCompanyNumHandler(e)}
+          onClick={checkCompanyNumHandler}
           buttonTag="사업자 확인"
           placeholder="하이픈을 제외하고 입력해주세요."
         >

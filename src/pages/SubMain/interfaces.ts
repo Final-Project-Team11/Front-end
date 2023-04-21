@@ -8,9 +8,11 @@ export interface ScheduleProps {
   content?: string;
   mentions?: string[];
   location?: string;
-  ref?: string;
-  file?: string;
+  ref?: string[];
+  file?: string | File;
   userId?: string;
+  backgroundColor?: string;
+  startTime?: string;
 }
 
 export interface VacationProps {
@@ -33,8 +35,9 @@ export interface ServerProps {
   content?: string;
   mention?: string[];
   location?: string;
-  ref?: string;
-  file?: string;
+  ref?: string[];
+  file?: File | string;
+  startTime?: string;
 }
 export interface InitialCalendar {
   id: string;

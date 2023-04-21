@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import useGetTeamInfo from '../../api/hooks/Main/useGetTeamInfo';
 import * as styles from './styles';
+import TagIcon from '../../assets/Icons/TagIcon';
 
 interface HashTagProps {
   mention?: string[];
@@ -85,6 +86,9 @@ const HashTag = (props: HashTagProps) => {
 
   return (
     <styles.StContainer>
+      <styles.StIconBlock>
+        <TagIcon />
+      </styles.StIconBlock>
       <styles.StInputBlock ref={inputRef}>
         {tagList?.map(item => {
           return (
@@ -113,7 +117,7 @@ const HashTag = (props: HashTagProps) => {
             {data?.map(item => {
               return (
                 <styles.StLiBlock onClick={onLiClickHandler}>
-                  <styles.StImageBlock />
+                  {/* <styles.StImageBlock /> */}
                   {item}
                 </styles.StLiBlock>
               );

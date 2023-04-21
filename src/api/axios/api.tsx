@@ -5,9 +5,9 @@ const config: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER,
 };
 
-const instnace: AxiosInstance = axios.create(config);
+const apis: AxiosInstance = axios.create(config);
 
-instnace.interceptors.request.use(
+apis.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   function (config) {
     const token = getCookie('token');
@@ -21,7 +21,7 @@ instnace.interceptors.request.use(
   }
 );
 
-instnace.interceptors.response.use(
+apis.interceptors.response.use(
   // 응답을 내보내기 전 수행되는 함수
   function (response) {
     return response;
@@ -33,4 +33,4 @@ instnace.interceptors.response.use(
   }
 );
 
-export default instnace;
+export default apis;

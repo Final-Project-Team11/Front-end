@@ -1,6 +1,6 @@
 import { Options, TZDate } from '@toast-ui/calendar';
 import { InitialCalendar, ScheduleProps, ServerProps, VacationProps } from './interfaces';
-import { COLOR } from '../../constants/colors';
+import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
   return new TZDate(date);
@@ -34,7 +34,7 @@ export function settingSchedule(schedule: ScheduleProps) {
   const MEETING = 'Issues';
 
   const title = schedule?.userName
-    ? schedule?.userName + '-' + schedule?.title
+    ? schedule?.title + '-' + schedule?.userName
     : schedule?.eventType;
 
   const newData = {
@@ -56,7 +56,9 @@ export function settingSchedule(schedule: ScheduleProps) {
         borderColor: COLOR.SCHEDULE_BLUE,
         dragBackgroundColor: COLOR.SCHEDULE_BLUE,
         color: COLOR.WHITE_COLOR,
+        end: schedule.startDay,
         isReadOnly: true,
+        location: schedule.location,
       };
     case OTHER:
       return {
@@ -81,6 +83,7 @@ export function settingSchedule(schedule: ScheduleProps) {
         borderColor: COLOR.MEETING_BAR,
         dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
+        location: schedule.location,
       };
 
     default:
@@ -102,7 +105,7 @@ export function settingVacation(vacation: VacationProps) {
   const SICK_DAY = '병가';
 
   const title = vacation?.userName
-    ? vacation?.userName + '-' + vacation?.typeDetail
+    ? vacation?.typeDetail + '-' + vacation?.userName
     : vacation?.typeDetail;
 
   const newData = {
@@ -301,49 +304,64 @@ interface postFormatProps {
 export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
   const defaultFormat = {
     startDay: schedule.startDay?.toString(),
-    endDay: schedule.endDay?.toString(),
     title: schedule.title,
     content: schedule.content,
-    ref: schedule.ref,
-    file: schedule.file,
   };
 
   if (tab === 0) {
     switch (schedule.eventType) {
-      case '회의': {
+      case '0': {
+        const postData = {
+          url: 'meeting', //Isssue
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+            ref: schedule.ref,
+            file: schedule.file,
+            eventType: 'Meetings',
+            endDay: schedule.endDay?.toString(),
+            startTime:
+              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+          },
+        };
+        return postData;
+      }
+
+      case '1': {
+        const postData = {
+          url: 'other',
+          postInfo: {
+            ...defaultFormat,
+            ref: schedule.ref,
+            file: schedule.file,
+            endDay: schedule.endDay?.toString(),
+          },
+        };
+        return postData;
+      }
+      case '2': {
+        const postData = {
+          url: 'schedule',
+          postInfo: {
+            ...defaultFormat,
+            location: schedule.location,
+            ref: schedule.ref,
+            file: schedule.file,
+          },
+        };
+        return postData;
+      }
+      case '3': {
         const postData = {
           url: 'meeting',
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-          },
-        };
-        return postData;
-      }
-
-      case '기타': {
-        const postData = {
-          url: 'other',
-          postInfo: {
-            ...defaultFormat,
-          },
-        };
-        return postData;
-      }
-      case '출장': {
-        const postData = {
-          url: 'schedule',
-          postInfo: {
-            ...defaultFormat,
-          },
-        };
-        return postData;
-      }
-      case '미팅': {
-        const postData = {
-          url: 'meeting',
-          postInfo: {
-            ...defaultFormat,
+            ref: schedule.ref,
+            file: schedule.file,
+            eventType: 'MeetingReports',
+            startTime:
+              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
           },
         };
         return postData;
@@ -372,5 +390,20 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
       url: 'vacation',
       postInfo: { ...defaultFormat },
     };
+  }
+}
+
+export function getScheduleColor(eventType: string): string {
+  switch (eventType) {
+    case '0':
+      return COLOR.VACATION_RED;
+    case '01':
+      return COLOR.HALF_DAY_OFF_BAR;
+    case '2':
+      return COLOR.MONTHLY_VACTION_BAR;
+    case '3':
+      return COLOR.SICK_DAY_BAR;
+    default:
+      return COLOR.VACATION_RED;
   }
 }

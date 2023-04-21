@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import instnace from '../../../axios/api';
+import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 
 export const usePostCategory = () => {
@@ -11,7 +11,7 @@ export const usePostCategory = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (payload: CategoryPayload) => {
-      const data = await instnace.post('/feed/category', payload);
+      const data = await apis.post('/feed/category', payload);
       return data.data;
     },
     onSuccess: () => {

@@ -16,7 +16,7 @@ const Period = ({ startDay, endDay }: PeriodProps) => {
       <span>{startDay?.getDate()}</span>
       {Number(endDay?.getDate()) - Number(startDay?.getDate()) > 0 && (
         <>
-          <span>~</span>
+          <span>-</span>
           <span>{endDay?.getFullYear()}</span>
           <span>/</span>
           <span>{endDay && endDay?.getMonth() + 1}</span>

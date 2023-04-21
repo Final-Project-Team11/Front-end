@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { AdminLoginInfo } from '../../MasterSignup/interfaces';
-import instnace from '../../../axios/api';
-import { setCookie } from '../../../auth/CookieUtils';
+import apis from '../../../api/axios/api';
+import { setCookie } from '../../../api/auth/CookieUtils';
 import React from 'react';
 
 export interface AdminLoginResponse {
@@ -10,7 +10,7 @@ export interface AdminLoginResponse {
   message: string;
 }
 
-export const useLogin = () => {
+export const useAdminLogin = () => {
   const navigate = useNavigate();
 
   const [adminLoginInfo, setAdminLoginInfo] = React.useState<AdminLoginInfo>({
@@ -25,15 +25,14 @@ export const useLogin = () => {
 
   const login = useMutation<AdminLoginResponse, Error, AdminLoginInfo>({
     mutationFn: async (item: AdminLoginInfo) => {
-      const data = await instnace.post<AdminLoginResponse>('/adminlogin', item);
-      console.log('데이터', data);
+      const data = await apis.post<AdminLoginResponse>('/adminlogin', item);
       return data.data;
     },
     onSuccess: data => {
       const token = data.token;
       alert(data.message);
       setCookie('token', token);
-      navigate('/');
+      navigate('/main');
     },
     onError() {
       alert('아이디 혹은 비밀번호가 일치하지 않습니다.');

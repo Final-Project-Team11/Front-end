@@ -12,8 +12,10 @@ interface ScheduleProps {
     tab: number;
     userId?: string;
     isReadOnly?: boolean;
-    ref?: string;
-    file?: string;
+    ref?: string[];
+    file?: File | string;
+    backgroundColor?: string;
+    location?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
 }

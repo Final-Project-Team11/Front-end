@@ -5,33 +5,64 @@ import * as styles from '../commonStyles';
 import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
 import Button from '../../Button/Button';
-import { MdFolder } from 'react-icons/md';
+import { MdFolder, MdZoomInMap } from 'react-icons/md';
 import { AiFillTag } from 'react-icons/ai';
 import Period from '../components/Period/Period';
-import { getCookie } from '../../../auth/CookieUtils';
+import { getCookie } from '../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import AddTodo from '../../Feed/Todo/AddTodo';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import FileUpload from '../../FileUpload/FileUpload';
+import styled from 'styled-components';
+import { TbBorderCorners } from 'react-icons/tb';
+import { ToastContainer, toast } from 'react-toastify';
 
 const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [FormFiles, SetFormFile] = useState<File>();
 
+  console.log('props', props);
+
   const SaveClickHandler = () => {
     if (disable === false) {
-      const formData = new FormData();
-      if (FormFiles !== undefined) {
-        formData.append('file', FormFiles);
-        const newProps = { ...props, file: JSON.stringify(formData) };
+      if (confirm('등록하시나요 ?')) {
+        const newProps = {
+          ...props,
+          file: FormFiles,
+          content: content,
+          title: title,
+          username: userName,
+        };
         const newData = postFormat(props.tab, newProps);
-        mutation.mutate(newData);
-      } else {
-        const newData = postFormat(props.tab, props);
-        mutation.mutate(newData);
+        mutation.mutate(newData, {
+          onSuccess: () => {
+            setDisable(!disable);
+            toast.success('🦄 서버 업로드 성공!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+          onError: () => {
+            toast.error('❌ 서버 업로드 실패!', {
+              position: 'top-right',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          },
+        });
       }
     } else if (disable === true) {
-      console.log('t');
       //decode한 정보에서 userId와 앞으로 받을 userId 비교해서 수정기능 되게 하기
     }
 
@@ -43,33 +74,36 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
   const userId = decoded ? decoded.userId : '';
 
   const [disable, setDisable] = useState(false);
-  const [author, autherHandler, setAuthorInputValue] = useInput();
+  const [userName, userNameHandler, setUserNameInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
-  const [mention, mentionHandler, setMentionValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
+  const [zoomClick, setZoomClick] = useState(false);
 
   useEffect(() => {
-    props.title && setAuthorInputValue(props.title?.split('-')[0]);
-    props.title?.split('-')[1] && setTitleHanlderValue(props.title?.split('-')[1]);
-    props.isReadOnly && setDisable(props.isReadOnly);
-    props.body && setContentValue(props.body);
+    props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
+    props.title?.split('-')[1] && setUserNameInputValue(props.title?.split('-')[1]);
+    props.isReadOnly !== undefined && setDisable(props.isReadOnly);
+    props.body !== undefined && setContentValue(props.body);
   }, [props]);
+
+  console.log('disable', disable);
   return (
     <styles.StContainer ref={props.propsRef}>
+      <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
-          <styles.StMarkBlock />
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period startDay={props.startDay} endDay={props.endDay} />
           <div>
             <styles.StInput
-              placeholder="작성자를 입력해주세요"
-              value={author}
-              onChange={autherHandler}
+              placeholder="작성자"
+              value={userName}
+              onChange={userNameHandler}
               disabled={disable}
             />
           </div>
           <div>
-            <styles.StInput
+            <styles.StTitleInput
               placeholder="제목 입력란"
               value={title}
               onChange={titleHandler}
@@ -94,11 +128,7 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
-        <styles.StMarkNameBlcok>
-          <styles.StMarkBlock />
-          <span>출장지</span>
-        </styles.StMarkNameBlcok>
-        <styles.StTextAreaBlock>
+        <styles.StTextAreaBlock zoomClick={zoomClick}>
           <styles.StTextArea
             placeholder="내용을 입력해주세요"
             value={content}
@@ -106,9 +136,21 @@ const VacationFormat = ({ props, onReturnHandler }: ScheduleProps) => {
             disabled={disable}
           />
         </styles.StTextAreaBlock>
-        <styles.StFileBlock>
-          <FileUpload onFileHandler={SetFormFile} />
-        </styles.StFileBlock>
+        <styles.StOpenBlock>
+          <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
+            {zoomClick === false ? (
+              <>
+                <TbBorderCorners />
+                <span>전체화면</span>
+              </>
+            ) : (
+              <>
+                <MdZoomInMap />
+                <span>축소</span>
+              </>
+            )}
+          </styles.StOpenButton>
+        </styles.StOpenBlock>
       </styles.StContentBlock>
     </styles.StContainer>
   );

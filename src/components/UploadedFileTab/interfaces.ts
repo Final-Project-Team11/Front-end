@@ -1,6 +1,5 @@
 export interface UploadedFileTabProps {
   type: 'myfiles' | 'meetingfiles' | 'reportfiles';
-  icon: '📕' | '📗' | '📘';
 }
 
 export interface UploadedFileList {
@@ -11,4 +10,5 @@ export interface UploadedFileList {
   title: string;
   userName: string;
   eventType?: string;
+  userId: string;
 }

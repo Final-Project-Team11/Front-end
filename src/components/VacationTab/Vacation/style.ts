@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 
 interface RequestStatusProps {
   status: boolean;
@@ -14,7 +14,6 @@ export const StListBlock = styled.div`
   width: 100%;
   height: fit-content;
 
-  margin-bottom: 24px;
   font-size: 12px;
 
   display: flex;

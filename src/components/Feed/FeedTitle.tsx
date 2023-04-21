@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FeedTitleProps } from './interfaces';
 import * as UI from './style';
+import { TabContext } from '../../pages/Main/Main';
 
-const FeedTitle = ({ onClick }: FeedTitleProps) => {
+const FeedTitle = ({ clickFn }: FeedTitleProps) => {
+  const tab = useContext<number>(TabContext);
   return (
     <UI.StFeedTitleBlock>
-      <UI.StFeedTitleH1>todo</UI.StFeedTitleH1>
-      <UI.StPlusSpan onClick={onClick}>+</UI.StPlusSpan>
+      <UI.StFeedTitleH1 tab={tab}>todo</UI.StFeedTitleH1>
+      <UI.StPlusSpan tab={tab} onMouseDown={clickFn}>
+        +
+      </UI.StPlusSpan>
     </UI.StFeedTitleBlock>
   );
 };

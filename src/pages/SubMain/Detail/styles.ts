@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 
 const StContainer = styled.div`
   border-top: 3px solid ${COLOR.DETAIL_GRAY};

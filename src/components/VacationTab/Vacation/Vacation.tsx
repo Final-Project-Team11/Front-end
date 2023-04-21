@@ -67,14 +67,14 @@ const Vacation = ({ vacation }: VacateProps) => {
             status={true}
             onClick={() => mutate(accept)}
           >
-            <BsCheck />
+            <BsX />
           </UI.StDecAcceptBlock>
           <UI.StDecAcceptBlock
             className="decision"
             status={false}
             onClick={() => mutate(deny)}
           >
-            <BsX />
+            <BsCheck />
           </UI.StDecAcceptBlock>
         </UI.StDecideBlock>
       ) : (

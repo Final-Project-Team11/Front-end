@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as UI from './style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
@@ -7,11 +7,12 @@ import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
 import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
+import { TabContext } from '../../../pages/Main/Main';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
-  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput();
-  const [showCategoryDeleteBtn, setShowCategoryDeleteBtn] = useState<boolean>(false);
+  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
+  const tab = useContext(TabContext);
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {
@@ -49,35 +50,30 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
 
   return (
     <>
-      <UI.StCategoryWrapper
-        onMouseEnter={() => setShowCategoryDeleteBtn(true)}
-        onMouseLeave={() => setShowCategoryDeleteBtn(false)}
-      >
-        <UI.StCategoryTitleBlock>
+      <UI.StCategoryWrapper>
+        <UI.StCategoryTitleBlock tab={tab}>
           <UI.StCircleBlock />
           <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
-        {showCategoryDeleteBtn && (
-          <UI.StDeleteBlock onClick={deleteBtnHandler}>
-            <BsX />
-          </UI.StDeleteBlock>
-        )}
+        <UI.StPlusBlock onMouseDown={TodoPlusHandler}>+</UI.StPlusBlock>
+        <UI.StDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+          <BsX />
+        </UI.StDeleteBlock>
       </UI.StCategoryWrapper>
       <UI.StCategoryBlock>
         {todos?.map(todo => {
           return <TodoBox key={todo.todoId} todo={todo} />;
         })}
+        {openTodoInput && (
+          <AddTodo
+            value={AddTodoState}
+            setValue={setAddTodoState}
+            onChange={setAddTodoHandler}
+            inputHandler={setOpenTodoInput}
+            categoryId={categoryId}
+          />
+        )}
       </UI.StCategoryBlock>
-      {openTodoInput && (
-        <AddTodo
-          value={AddTodoState}
-          setValue={setAddTodoState}
-          onChange={setAddTodoHandler}
-          inputHandler={setOpenTodoInput}
-          categoryId={categoryId}
-        />
-      )}
-      <UI.StPlusBlock onClick={TodoPlusHandler}>+</UI.StPlusBlock>
     </>
   );
 };

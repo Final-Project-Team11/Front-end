@@ -14,3 +14,6 @@ export interface AddCategoryProps {
 export interface SentCategory {
   category: string;
 }
+export interface CategoryStyle {
+  tab?: number;
+}

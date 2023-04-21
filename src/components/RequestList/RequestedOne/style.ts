@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 
 interface RequestStatus {
   types: 'submit' | 'accept' | 'deny';
@@ -14,6 +14,7 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
 
   font-size: 12px;
   color: ${({ types }) => (types === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
+  cursor: pointer;
 
   margin-bottom: 14px;
 
@@ -65,15 +66,4 @@ export const StContentSpan = styled.span`
 
 export const StRejectedSpan = styled.span`
   text-decoration: line-through;
-`;
-
-export const StCircleBlock = styled.div<RequestStatus>`
-  color: ${({ types }) =>
-    types === 'submit'
-      ? null
-      : types === 'accept'
-      ? 'blue'
-      : types === 'deny'
-      ? 'red'
-      : null};
 `;

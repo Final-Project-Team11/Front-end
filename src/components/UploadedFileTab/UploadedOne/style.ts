@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../constants/colors';
+import { COLOR } from '../../../styles/colors';
 
 export const StUploadedFileBlock = styled.div`
   width: 100%;
@@ -13,6 +13,8 @@ export const StUploadedFileBlock = styled.div`
   color: ${COLOR.PAGE_DONE};
 
   margin-bottom: 14px;
+
+  cursor: pointer;
 
   &:hover .date {
     opacity: 1;

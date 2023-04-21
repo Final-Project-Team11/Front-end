@@ -10,8 +10,11 @@ import {
 import MaxInput from '../../components/Inputs/Input/MaxInput';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { useAdminLogin } from './hooks/useAdminLogin';
+import { getCookie } from '../../api/auth/CookieUtils';
 import { useLogin } from './hooks/useLogin';
-import { getCookie } from '../../auth/CookieUtils';
+import Modal from '../../components/Modal/Modal';
+// import { useRePassword } from './hooks/useRePassword';
 
 enum Tabs {
   Tab1 = 'Tab1',
@@ -19,7 +22,7 @@ enum Tabs {
 }
 
 const Tabconent1 = () => {
-  const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useLogin();
+  const { adminLoginInfo, submitLoginHandler, changeInputHandler } = useAdminLogin();
   const navigate = useNavigate();
 
   return (
@@ -58,16 +61,60 @@ const Tabconent1 = () => {
 };
 
 const Tabconent2 = () => {
+  const { loginInfo, submitLoginHandler, changeInputHandler, showModal, closeModal } =
+    useLogin();
+
+  const [password, setPassword] = React.useState<string>('');
+
+  // 현재 해결 되지 않는 오류
+  // const { patchPassword } = useRePassword();
+
+  const changePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setPassword(value);
+  };
+
   return (
-    <Tap>
+    <Tap onSubmit={submitLoginHandler}>
+      {showModal && (
+        <Modal closeModal={closeModal}>
+          <MaxInput
+            types="max"
+            type="password"
+            value={password}
+            onChange={changePasswordHandler}
+          >
+            변경할 비밀번호
+          </MaxInput>
+          <button>변경하기</button>
+        </Modal>
+      )}
       <InputWrapper>
-        <MaxInput types="half" type="text">
+        <MaxInput
+          types="half"
+          type="text"
+          name="companyId"
+          value={loginInfo.companyId}
+          onChange={changeInputHandler}
+        >
           대표자 아이디
         </MaxInput>
-        <MaxInput types="half" type="text">
+        <MaxInput
+          types="half"
+          type="text"
+          name="userId"
+          value={loginInfo.userId}
+          onChange={changeInputHandler}
+        >
           아이디
         </MaxInput>
-        <MaxInput types="half" type="password">
+        <MaxInput
+          types="half"
+          type="password"
+          name="password"
+          value={loginInfo.password}
+          onChange={changeInputHandler}
+        >
           비밀번호
         </MaxInput>
       </InputWrapper>

@@ -1,5 +1,5 @@
 export interface FeedTitleProps {
-  onClick: () => void;
+  clickFn: () => void;
 }
 interface Todo {
   todoId: number;
@@ -10,4 +10,8 @@ export interface Category {
   categoryId: number;
   categoryName: string;
   todos: Todo[] | [];
+}
+
+export interface TitleProps {
+  tab?: number;
 }

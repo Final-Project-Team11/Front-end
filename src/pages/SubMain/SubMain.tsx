@@ -16,16 +16,16 @@ import cheerio from 'cheerio';
 
 import ScheduleFormat from '../../components/DocumentForm/ScheduleFormat/ScheduleFormat';
 import Calendar from '../../components/ToastCalendar/Calendar';
-import { CalendarContext } from '../Main/Main';
+import { CalendarContext, TabContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
-import { initCalendar } from './utils';
+import { getScheduleColor, initCalendar } from './utils';
 import { theme } from './theme';
 import Header from './Header';
 import './subMain.css';
 
 import VacationFormat from '../../components/DocumentForm/VacationFormat/VacationFormat';
 import TodaySchedules from './TodayScheduels/TodaySchedules';
-import { getCookie } from '../../auth/CookieUtils';
+import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 type ViewType = 'month' | 'week' | 'day';
@@ -45,7 +45,7 @@ const viewModeOptions = [
   },
 ];
 
-export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
+export function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
@@ -54,6 +54,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
   const detailRef = useRef<HTMLDivElement>(null);
+  const tab = useContext<number>(TabContext);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -114,6 +115,10 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   }, [view]);
 
   useEffect(() => {
+    setClickDetail(false);
+  }, [tab]);
+
+  useEffect(() => {
     updateRenderRangeText();
   }, [selectedView, updateRenderRangeText]);
 
@@ -126,6 +131,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
     const userId = decoded ? decoded.userId : '';
+
     const newData = {
       eventType: res.calendarId,
       title: res.title,
@@ -135,7 +141,11 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       mention: res.attendees,
       userId: userId,
       isReadOnly: res.isReadOnly,
+      backgroundColor: getScheduleColor(res.calendarId),
+      location: res.location,
     };
+
+    console.log('newData', newData);
     setClickData(newData);
     setClickDetail(true);
   };
@@ -161,6 +171,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
   };
 
   const onClickNavi = (ev: MouseEvent<HTMLButtonElement>) => {
+    console.log('test', (ev.target as HTMLButtonElement).tagName);
     if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
       const button = ev.target as HTMLButtonElement;
       const actionName = (button.getAttribute('data-action') ?? 'month').replace(
@@ -169,6 +180,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       );
       getCalInstance()[actionName]();
       updateRenderRangeText();
+      console.log('test');
     }
   };
 
@@ -188,6 +200,7 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
       mention: res.event.attendees,
       isReadOnly: res.event.isReadOnly,
       userId: res.event.id,
+      location: res.event.location,
     };
     setClickData(newData);
     setClickDetail(true);
@@ -237,36 +250,12 @@ export function SubMain({ view, tab: tab }: { view: ViewType; tab: number }) {
     getCalInstance().createEvents([event]);
   };
 
-  // const clickBkHandler = (e: globalThis.MouseEvent) => {
-  //   const node: Node | null = e.target as Node | null;
-  //   const targetNode = e.target as HTMLElement;
-  //   const className: string = targetNode.className;
-
-  //   if (
-  //     !(node instanceof Element && node.tagName === 'STRONG') &&
-  //     !(node instanceof Element && node.tagName === 'SPAN') &&
-  //     className !== 'toastui-calendar-weekday-event-title' &&
-  //     clickDetail === true &&
-  //     !detailRef.current?.contains(node)
-  //   ) {
-  //     console.log(className !== 'toastui-calendar-weekday-event-title');
-  //     setClickDetail(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('click', clickBkHandler);
-  //   return () => {
-  //     window.removeEventListener('click', clickBkHandler);
-  //   };
-  // }, [clickDetail]);
-
   return (
     <div style={{ width: '100%' }}>
       <Header
         selectedDateRangeText={selectedDateRangeText}
-        tab={tab}
         initialCalendars={initialCalendars}
+        onClickNavi={onClickNavi}
       />
       <div className="bodyContainer">
         <div style={{ marginTop: '30px', marginRight: '30px' }}>

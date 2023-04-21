@@ -9,7 +9,11 @@ import {
 } from './style';
 import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
 
-const Card = () => {
+interface CardProps {
+  tab?: number;
+}
+
+const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = GetCardInfo();
 
   if (infoIsLoading || !userInfo) {
@@ -17,12 +21,14 @@ const Card = () => {
   }
 
   return (
-    <StCardBlock>
+    <StCardBlock tab={tab}>
       <StInfoBlock>
-        <StTeamNameH1>팀이름 : {userInfo.userName}</StTeamNameH1>
+        <StTeamNameH1>
+          {userInfo.team} : {userInfo.userName}
+        </StTeamNameH1>
         <StDateBlock>
           <StInfoSpan>월급일 : D-{userInfo.salaryDay}</StInfoSpan>
-          <StInfoSpan>남은연차 : {userInfo.remainDay}일</StInfoSpan>
+          <StInfoSpan>남은연차 : {userInfo.remainDay}</StInfoSpan>
         </StDateBlock>
       </StInfoBlock>
       <StProfileBlock />

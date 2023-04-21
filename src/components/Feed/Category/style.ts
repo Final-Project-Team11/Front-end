@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../styles/colors';
+import { CategoryStyle } from './interfaces';
 
 export const StCategoryBlock = styled.div`
   width: 100%;
@@ -6,95 +8,113 @@ export const StCategoryBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 5px;
+  gap: 9px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-bottom: 36px;
 `;
 
 export const StCategoryWrapper = styled.div`
   width: 100%;
   height: fit-content;
 
+  margin-bottom: 11px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  &:hover .deleteBlock {
+    opacity: 1;
+  }
 `;
 
 export const StDeleteBlock = styled.div`
-  font-size: 25px;
+  font-size: 18px;
+  color: ${COLOR.PAGE_DONE};
 
   display: flex;
+
+  margin-left: auto;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 `;
 
-export const StCategoryTitleBlock = styled.div`
-  background-color: #dc3232;
+export const StCategoryTitleBlock = styled.div<CategoryStyle>`
+  background-color: ${({ tab }) =>
+    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
   width: fit-content;
-  height: 30px;
+  max-width: 155px;
+  height: 26px;
 
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
 
   box-sizing: border-box;
-  border-radius: 15px;
+  border-radius: 13px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  gap: 5px;
 `;
 
 export const StCategoryH3 = styled.span`
-  height: 30px;
-
   padding-top: 2px;
 
-  font-size: 20px;
+  font-size: 12px;
 
-  color: white;
+  color: ${COLOR.PAGE_WHITE};
   display: flex;
   align-items: center;
 `;
 
 export const StCircleBlock = styled.div`
-  background-color: white;
+  background-color: ${COLOR.PAGE_WHITE};
 
-  width: 18px;
-  height: 18px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  margin-right: 10px;
 `;
 
 export const StPlusBlock = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: lighter;
+  color: ${COLOR.PAGE_DONE};
   cursor: pointer;
 `;
 
 // styles for AddCategory
-export const StCategoryInputBlock = styled.div`
-  background-color: #dc3232;
+export const StCategoryInputBlock = styled.div<CategoryStyle>`
+  background-color: ${({ tab }) =>
+    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
   width: fit-content;
-  height: 30px;
+  height: 26px;
 
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
 
   box-sizing: border-box;
-  border-radius: 15px;
+  border-radius: 13px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  gap: 5px;
 `;
 
 export const StCategoryInput = styled.input`
-  width: 100px;
-  height: 30px;
+  width: 150px;
+  height: 26px;
   background-color: transparent;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 12px;
   outline: none;
 `;
 /////////////////////////////////

@@ -9,7 +9,7 @@ export type LoginInfo = {
   password: string;
 };
 
-export type SignupInfo = AdminLoginInfo & {
+export type AdminSignupInfo = AdminLoginInfo & {
   companyName: string;
   address: string;
   ceoName: string;

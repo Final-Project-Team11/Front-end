@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import instnace from '../../../axios/api';
+import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 
 export const useDeleteCategory = () => {
@@ -7,7 +7,7 @@ export const useDeleteCategory = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (categoryId: number) => {
-      const data = await instnace.delete(`feed/category/${categoryId}`);
+      const data = await apis.delete(`feed/category/${categoryId}`);
 
       return data.data;
     },

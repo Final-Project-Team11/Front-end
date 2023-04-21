@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as UI from './style';
-import { BsCheckCircleFill, BsCircle, BsXCircleFill } from 'react-icons/bs';
 import { Props } from './interfaces';
+import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
+import Modal from '../../Modal/Modal';
+import RequestDetail from '../RequestDetail/RequestDetail';
 
 const RequestedOne = ({ request }: Props) => {
-  // 요청 상태 표시 원 icon
-  let statusCircle;
-  switch (request.status) {
-    case 'submit': {
-      statusCircle = <BsCircle />;
-      break;
-    }
-    case 'accept': {
-      statusCircle = <BsCheckCircleFill />;
-      break;
-    }
-    case 'deny': {
-      statusCircle = <BsXCircleFill />;
-      break;
-    }
-    default:
-      break;
-  }
+  const { data, refetch, isLoading } = useGetRequestDetail(request.eventId);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const getDetail = () => {
+    refetch();
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
-    <UI.StRequestedListBlock key={request.eventId} types={request.status}>
+    <UI.StRequestedListBlock
+      key={request.eventId}
+      types={request.status}
+      onClick={() => getDetail()}
+    >
+      {modalOpen && (
+        <Modal closeModal={closeModal}>
+          <RequestDetail data={data} isLoading={isLoading} />
+        </Modal>
+      )}
       <UI.StLeftBlock>
         <UI.StNameDateBlock>
           <UI.StNameDateDiv>
@@ -34,14 +37,13 @@ const RequestedOne = ({ request }: Props) => {
         </UI.StNameDateBlock>
         <UI.StContentSpan>
           📎 |{' '}
-          {request.status === 'submit' ? (
-            request.title
-          ) : (
+          {request.status === 'deny' ? (
             <UI.StRejectedSpan>{request.title}</UI.StRejectedSpan>
+          ) : (
+            request.title
           )}
         </UI.StContentSpan>
       </UI.StLeftBlock>
-      <UI.StCircleBlock types={request.status}>{statusCircle}</UI.StCircleBlock>
     </UI.StRequestedListBlock>
   );
 };
