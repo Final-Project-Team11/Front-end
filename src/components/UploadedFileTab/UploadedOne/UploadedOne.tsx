@@ -28,7 +28,7 @@ const UploadedOne = ({ file, type }: Props) => {
 
   return (
     <>
-      <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}>
+      <UI.StUploadedFileBlock onClick={modalOpenHandler}>
         <UI.StNameDateBlock>
           <UI.StContentSpan>
             <Person colors="gray" /> | {file.userName}
