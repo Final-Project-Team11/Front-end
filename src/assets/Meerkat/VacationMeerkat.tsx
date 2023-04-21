@@ -1,5 +1,7 @@
 import React from 'react';
 
+// 휴가 즐기는 미어캣 - 마이페이지, 매니저페이지
+
 const VacationMeerkat = () => {
   return (
     <svg viewBox="0 0 241.98 83.82" width={'250px'} height={'85px'}>

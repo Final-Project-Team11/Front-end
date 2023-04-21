@@ -7,7 +7,9 @@ import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from './styles';
 import Board from '../../components/Board/Board';
-import VacationMeerkat from '../../assets/Icons/VacationMeerkat';
+import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
+import WaitVacation from '../../assets/Meerkat/WaitVacation';
+import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
 
 const Manager = () => {
   return (
@@ -20,7 +22,9 @@ const Manager = () => {
         <UI.MainArea>
           <UI.FeedArea>
             <Feed />
-            <VacationMeerkat />
+            {/* <VacationMeerkat /> */}
+            {/* <WaitVacation /> */}
+            <WorkingMeerkat />
           </UI.FeedArea>
           <UI.TabArea>
             <UI.MiddleArea>
