@@ -53,12 +53,22 @@ export const StInfoSpan = styled.span`
   font-size: 15px;
 `;
 
-export const StProfileBlock = styled.div`
-  background-color: black;
+export const StProfileImg = styled.div`
+  background-color: white;
   width: 55px;
   height: 55px;
 
   margin-bottom: 20px;
 
   border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 80%;
+    height: 90%;
+    object-fit: cover;
+  }
 `;
