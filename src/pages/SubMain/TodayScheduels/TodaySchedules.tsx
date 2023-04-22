@@ -6,14 +6,17 @@ import * as styles from './styles';
 import { EventObject } from '@toast-ui/calendar/*';
 import FolderIcon from '../../../assets/Icons/FolderIcon';
 import TagIcon from '../../../assets/Icons/TagIcon';
+import { CalendarProps } from '../interfaces';
 
 const TodaySchedules = (props: TodaysProps) => {
-  const schedules = useContext<Partial<EventObject>[]>(CalendarContext);
+  const schedules = useContext<CalendarProps[]>(CalendarContext);
   const today = props.todayData ? props.todayData : new Date().getDate();
   const filterSchedules = schedules?.filter(item => {
-    const startDay = new Date(item.start);
-    const endDay = new Date(item.end);
-    return startDay.getDate() <= today && endDay.getDate() >= today;
+    const startDay = item.start && new Date(item.start);
+    const endDay = item.end && new Date(item.end);
+
+    if (startDay !== undefined && endDay !== undefined)
+      return startDay.getDate() <= today && endDay.getDate() >= today;
   });
 
   return (
@@ -21,39 +24,45 @@ const TodaySchedules = (props: TodaysProps) => {
       <styles.StContainer>
         {filterSchedules.length !== 0 ? (
           filterSchedules.map(item => {
-            const startDay = new Date(item.start);
-            const title = item.title.split('-')[0];
-            return (
-              <styles.StScheduleBlock key={nanoid()}>
-                <styles.StContentBlock>
-                  <styles.StMarkBlock backgroundColor={item.backgroundColor} />
-                  <styles.StDateBlock>
-                    <styles.StSpan>{startDay.getFullYear()}</styles.StSpan>
-                    <styles.StSpan>/</styles.StSpan>
-                    <styles.StSpan>
-                      {startDay.getMonth().toString().padStart(2, '0')}
-                    </styles.StSpan>
-                    <styles.StSpan>/</styles.StSpan>
-                    <styles.StSpan>{startDay.getDate()}</styles.StSpan>
-                  </styles.StDateBlock>
-                  <styles.StDateBlock>
-                    <styles.StSpan>{startDay.getHours()}</styles.StSpan>
-                    <styles.StSpan>:</styles.StSpan>
-                    <styles.StSpan>
-                      {startDay.getMinutes().toString().padStart(2, '0')}
-                    </styles.StSpan>
-                  </styles.StDateBlock>
-                  <styles.StBlock>
-                    <span>{item.userName}</span>
-                  </styles.StBlock>
-                  <styles.StBlock>
-                    <span>{title}</span>
-                  </styles.StBlock>
-                </styles.StContentBlock>
-                <div>{item.File && <FolderIcon />}</div>
-                <div>{item.attendees && <TagIcon />}</div>
-              </styles.StScheduleBlock>
-            );
+            const startDay = item.start && new Date(item.start);
+            const title = item.title && item.title.split('-')[0];
+            if (startDay !== undefined) {
+              return (
+                <styles.StScheduleBlock key={nanoid()}>
+                  <styles.StContentBlock>
+                    <styles.StMarkBlock backgroundColor={item.backgroundColor} />
+                    <styles.StDateBlock>
+                      <styles.StSpan>{startDay.getFullYear()}</styles.StSpan>
+                      <styles.StSpan>/</styles.StSpan>
+                      <styles.StSpan>
+                        {startDay.getMonth().toString().padStart(2, '0')}
+                      </styles.StSpan>
+                      <styles.StSpan>/</styles.StSpan>
+                      <styles.StSpan>{startDay.getDate()}</styles.StSpan>
+                    </styles.StDateBlock>
+                    <styles.StDateBlock>
+                      <styles.StSpan>{startDay.getHours()}</styles.StSpan>
+                      <styles.StSpan>:</styles.StSpan>
+                      <styles.StSpan>
+                        {startDay.getMinutes().toString().padStart(2, '0')}
+                      </styles.StSpan>
+                    </styles.StDateBlock>
+                    <styles.StBlock>
+                      <span>{item.userName}</span>
+                    </styles.StBlock>
+                    <styles.StBlock>
+                      <span>{title}</span>
+                    </styles.StBlock>
+                  </styles.StContentBlock>
+                  <styles.StIconBlock>
+                    <div>{item.fileLocation && <FolderIcon />}</div>
+                    <div style={{ marginBottom: '-5px' }}>
+                      {item.attendees && <TagIcon />}
+                    </div>
+                  </styles.StIconBlock>
+                </styles.StScheduleBlock>
+              );
+            }
           })
         ) : (
           <styles.StBlankBlock>
