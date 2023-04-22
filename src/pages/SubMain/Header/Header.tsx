@@ -20,7 +20,15 @@ function Header(props: HeaderProps) {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
     const authLevel = decoded ? decoded.authLevel : '';
-    authLevel === 3 ? navigate('/mypage') : navigate('/manager');
+    if (authLevel === 1) {
+      navigate('/business');
+    } else if (authLevel === 2) {
+      navigate('/manager');
+    } else if (authLevel === 3) {
+      navigate('/mypage');
+    } else {
+      navigate('/mypage');
+    }
   };
 
   return (
