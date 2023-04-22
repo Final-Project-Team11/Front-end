@@ -11,9 +11,8 @@ const UploadedOne = ({ file, type }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const payload = {
-    id: file.eventId,
+    eventId: file.eventId,
     types: type,
-    userId: file.userId,
   };
 
   const { data, refetch, isLoading } = useGetUploadedDetail(payload);
