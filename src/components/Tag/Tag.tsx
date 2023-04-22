@@ -6,7 +6,6 @@ import { TagElement } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
-import { COLOR } from '../../styles/colors';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
@@ -43,7 +42,7 @@ const Tag = ({ types }: TagBlockCssProps) => {
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
 
   // props로 줄 icon
-  const icon = <CalendarIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+  const icon = <CalendarIcon usage="title" />;
 
   return (
     <Board icon={icon} title="tag" types={types}>

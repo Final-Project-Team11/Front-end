@@ -19,9 +19,11 @@ const ButtonInput = ({
   inputId,
   value,
   onChange,
+  style,
+  buttonStyle,
 }: InputProps) => {
   return (
-    <StColumnBlock>
+    <StColumnBlock style={style}>
       <StInputLabel htmlFor={inputId}>{children}</StInputLabel>
       <StInputButtonBlock>
         <StColumnInput
@@ -34,7 +36,7 @@ const ButtonInput = ({
           placeholder={placeholder}
           name={name}
         />
-        <StCheckButton onClick={onClick} type="button">
+        <StCheckButton onClick={onClick} type="button" style={buttonStyle}>
           {buttonTag}
         </StCheckButton>
       </StInputButtonBlock>

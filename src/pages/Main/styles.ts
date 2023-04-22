@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from '../../styles/colors';
 
 interface StyleProps {
-  tab: number;
+  tab: boolean;
 }
 
 const StWrap = styled.div`
@@ -19,7 +19,7 @@ const StTabButton = styled.button<StyleProps>`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
+    tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED};
 
   opacity: 1;
   &:hover {

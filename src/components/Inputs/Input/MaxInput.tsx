@@ -11,9 +11,10 @@ const MaxInput = ({
   value,
   onChange,
   name,
+  style,
 }: InputProps) => {
   return (
-    <StColumnBlock types={types}>
+    <StColumnBlock types={types} style={style}>
       <StInputLabel types={types} htmlFor={inputId}>
         {children}
       </StInputLabel>
@@ -26,6 +27,7 @@ const MaxInput = ({
         onChange={onChange}
         placeholder={placeholder}
         name={name}
+        style={style}
       />
     </StColumnBlock>
   );

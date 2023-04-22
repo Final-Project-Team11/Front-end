@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface DaumAddressAPIProps {
   selectedAddressHandler: (postcode: string, roadAddress: string) => void;
@@ -56,16 +57,64 @@ const DaumAddressAPI: React.FC<DaumAddressAPIProps> = ({ selectedAddressHandler 
   };
 
   return (
-    <div>
-      <input type="text" ref={postcodeRef} placeholder="우편번호" />
-      <button type="button" onClick={searchAddressHandler}>
-        우편번호 찾기
-      </button>
-      <br />
-      <input type="text" ref={roadAddressRef} placeholder="도로명주소" />
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginBottom: '25px',
+      }}
+    >
+      <div>
+        <label style={{ display: 'flex', flexDirection: 'column' }}>
+          <StSpan>회사 주소</StSpan>
+          <StInput ref={postcodeRef} placeholder="우편번호" style={{}} />
+        </label>
+      </div>
+      <StInput ref={roadAddressRef} placeholder="도로명주소" />
+      <StButton type="button" onClick={searchAddressHandler}>
+        주소 검색
+      </StButton>
       <span ref={guideRef} style={{ color: '#ff0000', display: 'none' }}></span>
     </div>
   );
 };
 
 export default DaumAddressAPI;
+
+export const StInput = styled.input`
+  width: 290px;
+  height: 50px;
+  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
+  font-size: 15px;
+  border: none;
+  padding: 15px;
+  box-sizing: border-box;
+
+  margin-right: 15px;
+`;
+
+export const StButton = styled.button`
+  width: 145px;
+  height: 50px;
+  margin-top: 15px;
+
+  border: 1px solid #badaff;
+  border-radius: 7px;
+  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
+  box-sizing: border-box;
+
+  background-color: #fff;
+  text-align: center;
+  font-size: 15px;
+  color: #badaff;
+  font-weight: bold;
+`;
+
+export const StSpan = styled.span`
+  font-size: 16px;
+  font-weight: bolder;
+  color: #484240;
+
+  margin-bottom: 15px;
+`;

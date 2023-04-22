@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { FeedTitleProps } from './interfaces';
 import * as UI from './style';
-import { TabContext } from '../../pages/Main/Main';
+import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
 
 const FeedTitle = ({ clickFn }: FeedTitleProps) => {
-  const tab = useContext<number>(TabContext);
+  const [tab] = useContext(ChangeTabContext);
   return (
     <UI.StFeedTitleBlock>
       <UI.StFeedTitleH1 tab={tab}>todo</UI.StFeedTitleH1>

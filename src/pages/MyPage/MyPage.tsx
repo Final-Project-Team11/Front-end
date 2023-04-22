@@ -5,6 +5,8 @@ import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
 import MyRequest from '../../components/MyRequest/MyRequest';
 import * as UI from './styles';
+import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
+import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
 
 const MyPage = () => {
   return (
@@ -12,19 +14,24 @@ const MyPage = () => {
       <UI.Wrapper>
         <UI.Header>
           <Card />
-          <UI.Calendar>캘린더영역</UI.Calendar>
+          <OneWeekCalendar />
         </UI.Header>
         <UI.MainArea>
-          <Feed />
+          <UI.FeedArea>
+            <Feed />
+            {/* <VacationMeerkat /> */}
+            {/* <WaitVacation /> */}
+            <WorkingMeerkat />
+          </UI.FeedArea>
           <UI.TabArea>
             <Tag types="MyPage" />
             <UI.MiddleArea>
-              <UploadedFileTab type="myfiles" />
+              <UploadedFileTab type="reportfiles" />
               <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
               <MyRequest />
-              <UploadedFileTab type="reportfiles" />
+              <UploadedFileTab type="myfiles" />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>

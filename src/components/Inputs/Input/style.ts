@@ -2,6 +2,23 @@ import styled, { css } from 'styled-components';
 import { CssProps, InputStyle } from './interfaces';
 
 const inputStyle: InputStyle = {
+  login: {
+    width: '430px',
+    height: '50px',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+    fontSize: '15px',
+    border: 'none',
+    padding: '15px',
+  },
+  signup: {
+    width: '595px',
+    height: '50px',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+    fontSize: '15px',
+    border: 'none',
+    padding: '15px',
+    margin: '15px 165px 25px 0',
+  },
   max: {
     width: '600px',
   },
@@ -22,12 +39,8 @@ export const StColumnBlock = styled.div<CssProps>`
 
 export const StInputLabel = styled.label<CssProps>`
   font-size: 16px;
-
-  ${({ types }) =>
-    types &&
-    css`
-      font-size: ${inputStyle[types].fontSize};
-    `};
+  font-weight: bolder;
+  color: #484240;
 `;
 
 export const StColumnInput = styled.input<CssProps>`

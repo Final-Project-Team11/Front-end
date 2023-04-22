@@ -67,6 +67,12 @@ const StContainer = styled.div`
   color: #484240;
 `;
 
+const StIconBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
 export {
   StSpan,
   StDateBlock,
@@ -77,4 +83,5 @@ export {
   StContainer,
   StContentBlock,
   StBlankBlock,
+  StIconBlock,
 };

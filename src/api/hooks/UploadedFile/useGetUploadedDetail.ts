@@ -3,16 +3,15 @@ import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
 
 interface Payload {
-  id: number;
+  eventId: number;
   types: 'myfiles' | 'meetingfiles' | 'reportfiles';
-  userId: string;
 }
 
-export const useGetUploadedDetail = ({ id, types, userId }: Payload) => {
+export const useGetUploadedDetail = ({ eventId, types }: Payload) => {
   const { data, refetch, isLoading } = useQuery({
-    queryKey: [keys.GET_UPLOADED_DETAIL, id],
+    queryKey: [keys.GET_UPLOADED_DETAIL, eventId],
     queryFn: async () => {
-      const response = await apis.get(`/${types}/detail?userId=${userId}&eventId=${id}`);
+      const response = await apis.get(`/${types}/${eventId}`);
       return response.data;
     },
     enabled: false,

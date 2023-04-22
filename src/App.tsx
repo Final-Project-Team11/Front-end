@@ -3,6 +3,7 @@ import Router from './shared/Router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import GlobalStyle from './styles/GlobalStyle';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { TabContext } from './api/hooks/Main/useTabContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,7 +18,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <GlobalStyle />
-      <Router />
+      <TabContext>
+        <Router />
+      </TabContext>
     </QueryClientProvider>
   );
 }

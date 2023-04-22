@@ -1,5 +1,11 @@
 import { Options, TZDate } from '@toast-ui/calendar';
-import { InitialCalendar, ScheduleProps, ServerProps, VacationProps } from './interfaces';
+import {
+  CalendarProps,
+  InitialCalendar,
+  ScheduleProps,
+  ServerProps,
+  VacationProps,
+} from './interfaces';
 import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
@@ -27,18 +33,20 @@ export function subtractDate(d: TZDate, steps: number) {
   return date;
 }
 
-export function settingSchedule(schedule: ScheduleProps) {
-  const ISSUE = 'Meetings';
-  const OTHER = 'Reports';
+export function settingSchedule(schedule: ScheduleProps): CalendarProps {
+  const ISSUE = 'Issues';
+  const OTHER = 'Others';
   const BUSINESS_TRIP = 'Schedules';
-  const MEETING = 'Issues';
+  const MEETING = 'Meetings';
+  const REPORT = 'Reports';
+  const MEETINGREPORT = 'MeetingReport';
 
   const title = schedule?.userName
     ? schedule?.title + '-' + schedule?.userName
     : schedule?.eventType;
 
   const newData = {
-    id: schedule?.userId,
+    id: schedule?.eventId,
     calendarId: schedule?.eventType,
     title: title,
     start: schedule.startDay,
@@ -46,21 +54,42 @@ export function settingSchedule(schedule: ScheduleProps) {
     body: schedule.content,
     attendees: schedule.mentions,
     userName: schedule.userName,
+    userId: schedule.userId,
+    fileName: schedule.fileName,
+    fileLocation: schedule.fileLocation,
   };
 
   switch (schedule?.eventType) {
     case ISSUE:
       return {
         ...newData,
-        backgroundColor: COLOR.SCHEDULE_BLUE,
-        borderColor: COLOR.SCHEDULE_BLUE,
-        dragBackgroundColor: COLOR.SCHEDULE_BLUE,
+        backgroundColor: COLOR.CONBANTION_BAR,
+        borderColor: COLOR.CONBANTION_BAR,
+        dragBackgroundColor: COLOR.CONBANTION_BAR,
         color: COLOR.WHITE_COLOR,
         end: schedule.startDay,
         isReadOnly: true,
         location: schedule.location,
       };
+    case REPORT:
+      return {
+        ...newData,
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
+        start: schedule.enrollDay,
+        end: schedule.enrollDay,
+        isReadOnly: true,
+      };
     case OTHER:
+      return {
+        ...newData,
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
+        isReadOnly: true,
+      };
+    case MEETINGREPORT:
       return {
         ...newData,
         backgroundColor: COLOR.OTHER_BAR,
@@ -84,6 +113,7 @@ export function settingSchedule(schedule: ScheduleProps) {
         dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
         location: schedule.location,
+        end: schedule.startDay,
       };
 
     default:
@@ -109,7 +139,7 @@ export function settingVacation(vacation: VacationProps) {
     : vacation?.typeDetail;
 
   const newData = {
-    id: vacation?.userId,
+    id: vacation?.eventId,
     calendarId: vacation?.typeDetail,
     start: vacation.startDay,
     end: vacation.endDay,
@@ -141,6 +171,7 @@ export function settingVacation(vacation: VacationProps) {
         backgroundColor: COLOR.MONTHLY_VACTION_BAR,
         borderColor: COLOR.MONTHLY_VACTION_BAR,
         dragBackgroundColor: COLOR.MONTHLY_VACTION_BAR,
+        color: COLOR.WHITE_COLOR,
         isReadOnly: true,
       };
     case SICK_DAY:
@@ -164,8 +195,8 @@ export function settingVacation(vacation: VacationProps) {
   }
 }
 
-export function initCalendar(tab: number): InitialCalendar[] {
-  if (tab === 0) {
+export function initCalendar(tab: boolean): InitialCalendar[] {
+  if (tab === false) {
     return [
       {
         id: '0',
@@ -197,7 +228,7 @@ export function initCalendar(tab: number): InitialCalendar[] {
         dragBackgroundColor: COLOR.MEETING_BAR,
       },
     ];
-  } else if (tab === 1) {
+  } else if (tab === true) {
     return [
       {
         id: '0',
@@ -264,8 +295,8 @@ export function initCalendar(tab: number): InitialCalendar[] {
   }
 }
 
-export function getCanlendarName(tab: number, id: string | undefined): string {
-  if (tab === 0) {
+export function getCanlendarName(tab: boolean, id: string | undefined): string {
+  if (tab === false) {
     switch (id) {
       case '0':
         return '회의';
@@ -301,27 +332,26 @@ interface postFormatProps {
   postInfo: ServerProps;
 }
 
-export function postFormat(tab: number, schedule: ScheduleProps): postFormatProps {
+export function postFormat(tab: boolean, schedule: CalendarProps): postFormatProps {
   const defaultFormat = {
-    startDay: schedule.startDay?.toString(),
+    startDay: schedule.start?.toString(),
     title: schedule.title,
-    content: schedule.content,
+    content: schedule.body,
   };
 
-  if (tab === 0) {
-    switch (schedule.eventType) {
+  if (tab === false) {
+    switch (schedule.calendarId) {
       case '0': {
         const postData = {
           url: 'meeting', //Isssue
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
-            eventType: 'Meetings',
-            endDay: schedule.endDay?.toString(),
-            startTime:
-              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+            eventType: 'Issues',
+            endDay: schedule.end?.toString(),
+            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
         };
         return postData;
@@ -332,9 +362,9 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           url: 'other',
           postInfo: {
             ...defaultFormat,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
-            endDay: schedule.endDay?.toString(),
+            endDay: schedule.end?.toString(),
           },
         };
         return postData;
@@ -345,8 +375,9 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
+            endDay: schedule.end?.toString(),
           },
         };
         return postData;
@@ -357,11 +388,10 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.ref,
+            ref: schedule.attendees,
             file: schedule.file,
-            eventType: 'MeetingReports',
-            startTime:
-              schedule.startDay?.getHours() + ':' + schedule.startDay?.getMinutes(),
+            eventType: 'Meetings',
+            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
         };
         return postData;
@@ -375,13 +405,13 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
           },
         };
     }
-  } else if (tab === 1) {
+  } else if (tab === true) {
     const postData = {
       url: 'vacation',
       postInfo: {
-        typeDetail: getCanlendarName(tab, schedule.eventType),
-        startDay: schedule.startDay?.toString(),
-        endDay: schedule.endDay?.toString(),
+        typeDetail: getCanlendarName(tab, schedule.calendarId),
+        startDay: schedule.start?.toString(),
+        endDay: schedule.end?.toString(),
       },
     };
     return postData;
@@ -393,17 +423,32 @@ export function postFormat(tab: number, schedule: ScheduleProps): postFormatProp
   }
 }
 
-export function getScheduleColor(eventType: string): string {
-  switch (eventType) {
-    case '0':
-      return COLOR.VACATION_RED;
-    case '01':
-      return COLOR.HALF_DAY_OFF_BAR;
-    case '2':
-      return COLOR.MONTHLY_VACTION_BAR;
-    case '3':
-      return COLOR.SICK_DAY_BAR;
-    default:
-      return COLOR.VACATION_RED;
+export function getScheduleColor(tab: boolean, eventType: string): string {
+  if (tab === false) {
+    switch (eventType) {
+      case '0':
+        return COLOR.CONBANTION_BAR;
+      case '1':
+        return COLOR.OTHER_BAR;
+      case '2':
+        return COLOR.BUSINESS_TRIP_BAR;
+      case '3':
+        return COLOR.MEETING_BAR;
+      default:
+        return COLOR.VACATION_RED;
+    }
+  } else {
+    switch (eventType) {
+      case '0':
+        return COLOR.VACATION_RED;
+      case '1':
+        return COLOR.HALF_DAY_OFF_BAR;
+      case '2':
+        return COLOR.MONTHLY_VACTION_BAR;
+      case '3':
+        return COLOR.SICK_DAY_BAR;
+      default:
+        return COLOR.VACATION_RED;
+    }
   }
 }

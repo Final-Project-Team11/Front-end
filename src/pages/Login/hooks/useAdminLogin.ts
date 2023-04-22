@@ -30,7 +30,6 @@ export const useAdminLogin = () => {
     },
     onSuccess: data => {
       const token = data.token;
-      alert(data.message);
       setCookie('token', token);
       navigate('/main');
     },

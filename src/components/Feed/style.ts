@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
 import { TitleProps } from './interfaces';
 // 공통
 
 export const StWrapperBlock = styled.div`
   width: 250px;
-  height: 700px;
+  height: 635px;
 
   display: flex;
   flex-direction: column;
@@ -47,15 +47,28 @@ export const StFeedTitleBlock = styled.div`
 
 export const StPlusSpan = styled.span<TitleProps>`
   font-size: 20px;
-  color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
-
+  ${({ tab }) =>
+    tab === false
+      ? css`
+          color: ${COLOR.SCHEDULE_BLUE};
+        `
+      : css`
+          color: ${COLOR.VACATION_RED};
+        `};
   cursor: pointer;
 `;
 
 export const StFeedTitleH1 = styled.h1<TitleProps>`
   font-size: 30px;
   font-weight: 900;
-  color: ${({ tab }) =>
-    tab === 0 ? COLOR.SCHEDULE_BLUE : tab === 1 ? COLOR.VACATION_RED : COLOR.PAGE_BLUE};
+  color: ${COLOR.PAGE_BLUE};
+
+  ${({ tab }) =>
+    tab === false
+      ? css`
+          color: ${COLOR.SCHEDULE_BLUE};
+        `
+      : css`
+          color: ${COLOR.VACATION_RED};
+        `};
 `;

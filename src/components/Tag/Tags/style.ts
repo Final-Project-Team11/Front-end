@@ -15,7 +15,7 @@ export const StTagsBlock = styled.div<BlockProps>`
 
   overflow-x: hidden;
 
-  margin-bottom: 2px;
+  margin-bottom: 7px;
   line-height: 20px;
 
   color: ${({ isChecked }) => (isChecked ? COLOR.PAGE_DONE : COLOR.PAGE_SPAN)};

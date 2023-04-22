@@ -2,20 +2,30 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { keys } from '../../utils/createQueryKey';
 import api from '../../axios/api';
+import { getCookie } from '../../auth/CookieUtils';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
-const useGetMain = (type: number) => {
+const useGetMain = (type: boolean) => {
   const today = new Date();
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_MAIN, type],
     queryFn: async () => {
-      if (type === 0) {
+      const token = getCookie('token');
+      const decoded = token && jwtDecode<JwtPayload>(token);
+      const teamId = decoded.teamId;
+
+      if (type === false) {
         const data = await api.get(
-          `/totalSchedule/2?year=${today.getFullYear()}&month=${today.getMonth() + 1}`
+          `/totalSchedule/${teamId}?year=${today.getFullYear()}&month=${
+            today.getMonth() + 1
+          }`
         );
         return data.data.main;
-      } else if (type === 1) {
+      } else if (type === true) {
         const data = await api.get(
-          `/totalVacation/2?year=${today.getFullYear()}&month=${today.getMonth() + 1}`
+          `/totalVacation/${teamId}?year=${today.getFullYear()}&month=${
+            today.getMonth() + 1
+          }`
         );
 
         return data.data.main.vacation;

@@ -15,11 +15,11 @@ const Tags = ({ tag, types }: TagsProps) => {
   };
 
   return (
-    <UI.StTagsBlock
-      isChecked={isChecked}
-      onClick={() => !isChecked && clickTagHandler(mentionId)}
-    >
-      <UI.StContentSpan types={types}>
+    <UI.StTagsBlock isChecked={isChecked}>
+      <UI.StContentSpan
+        types={types}
+        onClick={() => !isChecked && clickTagHandler(mentionId)}
+      >
         @ / {title} {userName}
       </UI.StContentSpan>
     </UI.StTagsBlock>

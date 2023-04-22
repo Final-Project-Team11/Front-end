@@ -13,7 +13,7 @@ export const useSignup = () => {
     {
       onSuccess() {
         alert('가입이 완료되었습니다.');
-        navigate('/');
+        navigate('/login');
       },
       onError() {
         alert('가입에 실패하였습니다.');

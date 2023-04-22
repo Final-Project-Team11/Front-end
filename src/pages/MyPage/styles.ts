@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const Frame = styled.div`
-  width: 1920px;
-  height: 1080px;
+  /* width: 1920px;
+  height: 1080px; */
+  width: 100%;
+  height: 100%;
 
   display: flex;
   justify-content: center;
@@ -13,6 +15,7 @@ export const Wrapper = styled.div`
   width: 1200px;
   height: 100%;
   padding-top: 40px;
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
@@ -44,9 +47,18 @@ export const MainArea = styled.div`
   gap: 28px;
 `;
 
+export const FeedArea = styled.div`
+  width: 250px;
+  height: 735px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const TabArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 735px;
 
   margin-top: 14px;
 
@@ -56,7 +68,7 @@ export const TabArea = styled.div`
 
 export const MiddleArea = styled.div`
   width: 260px;
-  height: 734px;
+  height: 735px;
 
   display: flex;
   flex-direction: column;

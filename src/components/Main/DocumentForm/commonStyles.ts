@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { COLOR } from '../../styles/colors';
+import { COLOR } from '../../../styles/colors';
 
 const StContainer = styled.div``;
 
@@ -65,6 +65,11 @@ const StInput = styled.input`
   &:disabled {
     background: none;
   }
+`;
+
+const StUserName = styled.div`
+  font-size: 20px;
+  width: 71px;
 `;
 
 const StTitleInput = styled.input`
@@ -194,4 +199,5 @@ export {
   StOpenBlock,
   StOpenButton,
   StTitleInput,
+  StUserName,
 };
