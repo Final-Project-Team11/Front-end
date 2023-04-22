@@ -11,6 +11,8 @@ export interface ScheduleProps {
   location?: string;
   ref?: string[];
   file?: string | File;
+  fileLocation?: string;
+  fileName?: string;
   userId?: string;
   backgroundColor?: string;
   startTime?: string;
@@ -61,6 +63,8 @@ export interface CalendarProps {
   userId?: string;
   userName?: string;
   file?: string | File;
+  fileLocation?: string;
+  fileName?: string;
 
   color?: string;
   backgroundColor?: string;
