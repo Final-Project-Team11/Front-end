@@ -34,11 +34,12 @@ export function subtractDate(d: TZDate, steps: number) {
 }
 
 export function settingSchedule(schedule: ScheduleProps): CalendarProps {
-  const ISSUE = 'Meetings';
+  const ISSUE = 'Issues';
   const OTHER = 'Others';
   const BUSINESS_TRIP = 'Schedules';
-  const MEETING = 'Issues';
+  const MEETING = 'Meetings';
   const REPORT = 'Reports';
+  const MEETINGREPORT = 'MeetingReport';
 
   const title = schedule?.userName
     ? schedule?.title + '-' + schedule?.userName
@@ -54,15 +55,17 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
     attendees: schedule.mentions,
     userName: schedule.userName,
     userId: schedule.userId,
+    fileName: schedule.fileName,
+    fileLocation: schedule.fileLocation,
   };
 
   switch (schedule?.eventType) {
     case ISSUE:
       return {
         ...newData,
-        backgroundColor: COLOR.SCHEDULE_BLUE,
-        borderColor: COLOR.SCHEDULE_BLUE,
-        dragBackgroundColor: COLOR.SCHEDULE_BLUE,
+        backgroundColor: COLOR.CONBANTION_BAR,
+        borderColor: COLOR.CONBANTION_BAR,
+        dragBackgroundColor: COLOR.CONBANTION_BAR,
         color: COLOR.WHITE_COLOR,
         end: schedule.startDay,
         isReadOnly: true,
@@ -86,6 +89,14 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
         dragBackgroundColor: COLOR.OTHER_BAR,
         isReadOnly: true,
       };
+    case MEETINGREPORT:
+      return {
+        ...newData,
+        backgroundColor: COLOR.OTHER_BAR,
+        borderColor: COLOR.OTHER_BAR_BOARD,
+        dragBackgroundColor: COLOR.OTHER_BAR,
+        isReadOnly: true,
+      };
     case BUSINESS_TRIP:
       return {
         ...newData,
@@ -102,6 +113,7 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
         dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
         location: schedule.location,
+        end: schedule.startDay,
       };
 
     default:
@@ -337,7 +349,7 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
             location: schedule.location,
             ref: schedule.attendees,
             file: schedule.file,
-            eventType: 'Meetings',
+            eventType: 'Issues',
             endDay: schedule.end?.toString(),
             startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
@@ -365,6 +377,7 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
             location: schedule.location,
             ref: schedule.attendees,
             file: schedule.file,
+            endDay: schedule.end?.toString(),
           },
         };
         return postData;
@@ -377,7 +390,7 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
             location: schedule.location,
             ref: schedule.attendees,
             file: schedule.file,
-            eventType: 'MeetingReports',
+            eventType: 'Meetings',
             startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
           },
         };
