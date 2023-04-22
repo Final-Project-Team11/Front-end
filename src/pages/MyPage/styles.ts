@@ -10,19 +10,12 @@ export const Frame = styled.div`
   justify-content: center;
   align-items: flex-start;
 `;
-export const FeedArea = styled.div`
-  width: 250px;
-  height: 735px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
 
 export const Wrapper = styled.div`
   width: 1200px;
   height: 100%;
   padding-top: 40px;
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
@@ -54,9 +47,18 @@ export const MainArea = styled.div`
   gap: 28px;
 `;
 
+export const FeedArea = styled.div`
+  width: 250px;
+  height: 735px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const TabArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 735px;
 
   margin-top: 14px;
 
@@ -66,7 +68,7 @@ export const TabArea = styled.div`
 
 export const MiddleArea = styled.div`
   width: 260px;
-  height: 734px;
+  height: 735px;
 
   display: flex;
   flex-direction: column;

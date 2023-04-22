@@ -5,7 +5,7 @@ import UploadedFileTab from '../../components/UploadedFileTab';
 import Card from '../../components/Card';
 import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
-import * as UI from './styles';
+import * as UI from '../MyPage/styles';
 import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
 import WaitVacation from '../../assets/Meerkat/WaitVacation';
 import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
