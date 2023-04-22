@@ -80,6 +80,18 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       return formData;
     }
 
+    case 'schedule': {
+      const formData = new FormData();
+      formData.append('startDay', payload.postInfo?.startDay || '');
+      formData.append('endDay', payload.postInfo?.endDay || '');
+      formData.append('title', payload.postInfo?.title || '');
+      formData.append('location', payload.postInfo?.location || '');
+      formData.append('content', payload.postInfo?.content || '');
+      payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
+      formData.append('file', payload.postInfo?.file || '');
+      return formData;
+    }
+
     default:
       return undefined;
   }
