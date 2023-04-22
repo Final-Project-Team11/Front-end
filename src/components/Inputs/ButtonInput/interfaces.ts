@@ -11,14 +11,16 @@ export interface InputProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
+  buttonStyle?: React.CSSProperties;
 }
 
 export interface Type {
-  types: 'button';
+  types: 'button' | 'business';
 }
 
 export interface ButtonProps {
   children?: React.ReactNode;
+  buttonStyle?: React.CSSProperties;
 }
 
 export interface InputStyle {
@@ -38,4 +40,5 @@ export interface CssProps {
   Bgcolor?: string;
   border?: string;
   style?: React.CSSProperties;
+  buttonStyle?: React.CSSProperties;
 }
