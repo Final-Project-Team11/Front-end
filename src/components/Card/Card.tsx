@@ -20,10 +20,12 @@ const Card = ({ tab }: CardProps) => {
         <UI.StTeamNameH1>
           {userInfo.team} : {userInfo.userName}
         </UI.StTeamNameH1>
-        <UI.StDateBlock>
-          <UI.StInfoSpan>월급일 : D-{userInfo.salaryDay}</UI.StInfoSpan>
-          <UI.StInfoSpan>남은연차 : {userInfo.remainDay}</UI.StInfoSpan>
-        </UI.StDateBlock>
+        {userInfo.team !== 'CEO' ? (
+          <UI.StDateBlock>
+            <UI.StInfoSpan>월급일 : D-{userInfo.salaryDay}</UI.StInfoSpan>
+            <UI.StInfoSpan>남은연차 : {userInfo.remainDay}</UI.StInfoSpan>
+          </UI.StDateBlock>
+        ) : null}
       </UI.StInfoBlock>
       <UI.StProfileImg>
         <img src={profileImg} alt="" />
