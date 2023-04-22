@@ -11,7 +11,9 @@ const MyRequestList = ({ file }: FileProps) => {
       <UI.StSpanBlock>
         <UI.StNameDateBlock>
           <UI.StFileSpan>
-            <Person colors="gray" /> &nbsp; | {file.userName}
+            <Person colors={file.status === 'submit' ? 'black' : 'gray'} />
+            &nbsp; |&nbsp;
+            {file.userName}
           </UI.StFileSpan>
           <UI.StDateSpan className="date">
             {file.startDay === file.endDay
@@ -20,7 +22,7 @@ const MyRequestList = ({ file }: FileProps) => {
           </UI.StDateSpan>
         </UI.StNameDateBlock>
         <UI.StFileSpan>
-          <CalendarIcon usage={file.status === 'submit' ? 'insideTrue' : 'insideFalse'} />{' '}
+          <CalendarIcon usage={file.status === 'submit' ? 'insideTrue' : 'insideFalse'} />
           &nbsp; |&nbsp;
           {file.status === 'submit' ? (
             file.title

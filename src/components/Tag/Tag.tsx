@@ -6,7 +6,6 @@ import { TagElement } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
-import { COLOR } from '../../styles/colors';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드

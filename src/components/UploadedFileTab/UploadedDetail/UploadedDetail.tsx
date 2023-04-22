@@ -38,12 +38,12 @@ const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
       </UI.ContentArea>
       <UI.Footer>
         <UI.FooterHalf>
-          <UI.FooterSpanBlock>파일</UI.FooterSpanBlock>
+          <UI.FooterSpanBlock>{files.fileName}</UI.FooterSpanBlock>
         </UI.FooterHalf>
         <UI.Devider positions="Footer" />
         <UI.FooterHalf>
-          {files.ref?.map(tag => {
-            return <UI.FooterSpanBlock>@ {tag}</UI.FooterSpanBlock>;
+          {files.ref?.map((tag, idx) => {
+            return <UI.FooterSpanBlock key={idx}>@ {tag}</UI.FooterSpanBlock>;
           })}
         </UI.FooterHalf>
       </UI.Footer>

@@ -55,7 +55,7 @@ const Request = () => {
     : [];
 
   return (
-    <Board icon={icon} title="RequestedList">
+    <Board icon={icon} title="출장 관련">
       <UI.StInsideBlock ref={targetDiv}>
         {requests.map(request => {
           return <RequestedOne key={request.eventId} request={request} />;
