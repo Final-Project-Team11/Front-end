@@ -9,6 +9,7 @@ import Business from '../pages/Business/Business';
 import Write from '../pages/Write/Write';
 import { SubMain } from '../pages/SubMain/SubMain';
 import React from 'react';
+import NotFound from '../pages/NotFound/NotFound';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/manager" element={<Manager />} />
         <Route path="/business" element={<Business />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
