@@ -11,6 +11,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   background,
   border,
   onChange,
+  style,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState('');
@@ -31,6 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         color={color}
         background={background}
         border={border}
+        style={style}
       >
         {selectedItem || children}
         {'  '}
@@ -48,6 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   color={color}
                   background={background}
                   border={border}
+                  style={style}
                 >
                   {item.name}
                 </StLi>

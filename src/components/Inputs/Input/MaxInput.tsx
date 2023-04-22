@@ -27,6 +27,7 @@ const MaxInput = ({
         onChange={onChange}
         placeholder={placeholder}
         name={name}
+        style={style}
       />
     </StColumnBlock>
   );

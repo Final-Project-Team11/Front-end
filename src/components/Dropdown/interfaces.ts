@@ -7,6 +7,7 @@ export interface DropdownProps {
   border?: string;
   value?: number | string;
   onChange?: (value: number | string) => void;
+  style?: React.CSSProperties;
 }
 
 export interface CssProps {
@@ -14,6 +15,7 @@ export interface CssProps {
   color?: string;
   background?: string;
   border?: string;
+  style?: React.CSSProperties;
 }
 
 export interface Sizes {
