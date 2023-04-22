@@ -46,14 +46,6 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
     props.body !== undefined && setContentValue(props.body);
   }, [props]);
 
-  // const swalWithBootstrapButtons = Swal.mixin({
-  //   customClass: {
-  //     confirmButton: 'btn btn-success',
-  //     cancelButton: 'btn btn-danger',
-  //   },
-  //   buttonsStyling: false,
-  // });
-
   const SaveClickHandler = () => {
     if (disable === false) {
       Swal.fire({
@@ -196,7 +188,12 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
           </styles.StOpenButton>
         </styles.StOpenBlock>
         <styles.StFileBlock>
-          <FileUpload onFileHandler={SetFormFile} disable={disable} />
+          <FileUpload
+            fileName={props.fileName}
+            fileLocation={props.fileLocation}
+            onFileHandler={SetFormFile}
+            disable={disable}
+          />
         </styles.StFileBlock>
       </styles.StContentBlock>
 

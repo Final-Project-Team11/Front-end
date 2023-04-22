@@ -150,6 +150,8 @@ export function SubMain({ view }: { view: ViewType }) {
       backgroundColor: getScheduleColor(tab, res.calendarId),
       location: res.location,
       userName: user.userInfo.userName,
+      fileName: '',
+      fileLocation: '',
     };
 
     console.log('newData', newData);

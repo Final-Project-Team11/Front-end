@@ -15,6 +15,8 @@ export interface ScheduleProps {
     file?: File | string;
     backgroundColor?: string;
     location?: string;
+    fileLocation?: string;
+    fileName?: string;
   };
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
   onCancelHandler?: () => void;

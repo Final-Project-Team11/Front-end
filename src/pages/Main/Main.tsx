@@ -14,8 +14,13 @@ const Main = () => {
   const { data, isLoading } = useGetMain(tab);
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
+  console.log('data', data);
   useEffect(() => {
     if (tab === false) {
+      const issues: Partial<EventObject>[] = data?.issue?.map((issue: ScheduleProps) =>
+        settingSchedule(issue)
+      );
+
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
         (schedule: ScheduleProps) => settingSchedule(schedule)
       );
@@ -26,14 +31,21 @@ const Main = () => {
         settingSchedule(other)
       );
 
-      const meeting: Partial<EventObject>[] = data?.meeting?.map((other: ScheduleProps) =>
-        settingSchedule(other)
+      const meetings: Partial<EventObject>[] = data?.meeting?.map(
+        (meeting: ScheduleProps) => settingSchedule(meeting)
       );
+
+      const meetingReports: Partial<EventObject>[] = data?.meetingReport?.map(
+        (meetingReport: ScheduleProps) => settingSchedule(meetingReport)
+      );
+
       const events: Partial<EventObject>[] = [];
+      issues !== undefined && events.push(...issues);
       schedules !== undefined && events.push(...schedules);
       reports !== undefined && events.push(...reports);
       others !== undefined && events.push(...others);
-      meeting !== undefined && events.push(...meeting);
+      meetings !== undefined && events.push(...meetings);
+      meetingReports !== undefined && events.push(...meetingReports);
       setFilterData(events);
 
       console.log('events', events);
