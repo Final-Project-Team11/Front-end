@@ -11,6 +11,15 @@ const inputStyle: InputStyle = {
     padding: '15px',
     margin: '0 0 25px',
   },
+  business: {
+    width: '340px',
+    height: '50px',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+    fontSize: '15px',
+    border: 'none',
+    padding: '15px',
+    margin: '0 0 25px',
+  },
 };
 
 export const StColumnBlock = styled.div`
