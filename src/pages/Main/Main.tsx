@@ -21,6 +21,7 @@ const Main = () => {
         settingSchedule(issue)
       );
 
+      console.log('data', data);
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
         (schedule: ScheduleProps) => settingSchedule(schedule)
       );
