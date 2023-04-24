@@ -18,7 +18,7 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
     let message: string;
     if (params.types === 'accept' ? (message = '수락') : (message = '거절'))
       Swal.fire({
-        title: `정말 ${message}하시겠습니까?`,
+        title: `${message}하시겠습니까?`,
         text: "You won't be able to revert this!",
         icon: 'question',
         showCancelButton: true,
@@ -26,7 +26,15 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
         cancelButtonColor: COLOR.VACATION_RED,
         confirmButtonText: message,
         customClass: {
-          container: 'swal-custom-z-index',
+          popup: 'swal-custom-z-index',
+        },
+        // 직접 style 속성 추가
+        didOpen: () => {
+          const popup = document.querySelector('.swal-custom-z-index');
+          if (popup) {
+            // 타입을 강제로 HTMLElement로 캐스팅
+            (popup as HTMLElement).style.zIndex = '2500'; // 기존 모달의 z-index보다 높은 값을 설정하세요
+          }
         },
       }).then(result => {
         if (result.isConfirmed) {
