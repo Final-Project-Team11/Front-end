@@ -11,7 +11,6 @@ interface FileUploadProps {
   fileName?: string;
 }
 const FileUpload = (props: FileUploadProps) => {
-  console.log('FileUpload', props);
   const [files, setFiles] = useState<File>();
   const [fileNames, setFileNames] = useState<string[]>([]);
   const ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +32,6 @@ const FileUpload = (props: FileUploadProps) => {
     }
   }, [props.fileName]);
 
-  console.log('newFileName', fileNames);
   return (
     <styles.StContainer>
       <FolderIcon />
