@@ -11,4 +11,5 @@ export interface DetailProps {
     ref: string[];
   };
   isLoading: boolean;
+  closeModal: () => void;
 }
