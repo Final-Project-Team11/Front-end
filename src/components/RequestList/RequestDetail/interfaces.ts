@@ -13,3 +13,8 @@ export interface DetailProps {
   isLoading: boolean;
   closeModal: () => void;
 }
+
+export interface DecideParams {
+  eventId: number;
+  types: string;
+}

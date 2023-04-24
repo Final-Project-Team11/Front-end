@@ -41,8 +41,8 @@ const Request = () => {
 
   if (isLoading) {
     return (
-      <Board icon={icon} title="RequestedList">
-        <UI.StInsideBlock ref={targetDiv}></UI.StInsideBlock>
+      <Board icon={icon} title="출장 관련">
+        <UI.StInsideBlock></UI.StInsideBlock>
       </Board>
     );
   }

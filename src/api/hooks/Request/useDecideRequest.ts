@@ -2,11 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 
-export const useAcceptRequest = () => {
+interface DecideParams {
+  eventId: number;
+  types: string;
+}
+
+export const useDecideRequest = () => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: async (eventId: number) => {
-      const response = await apis.put(`/schedule/${eventId}/accept`);
+    mutationFn: async (params: DecideParams) => {
+      const response = await apis.put(`/schedule/${params.eventId}/${params.types}`);
+      console.log(response.data);
       return response.data;
     },
     onSuccess: () => {
@@ -14,6 +20,6 @@ export const useAcceptRequest = () => {
     },
   });
   return {
-    acceptRequest: mutate,
+    decideRequest: mutate,
   };
 };

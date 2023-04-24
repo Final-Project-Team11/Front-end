@@ -1,17 +1,48 @@
 import React from 'react';
 import * as UI from './style';
-import { DetailProps } from './interfaces';
-import { useAcceptRequest } from '../../../api/hooks/Request/useAcceptRequest';
+import { DecideParams, DetailProps } from './interfaces';
+import { useDecideRequest } from '../../../api/hooks/Request/useDecideRequest';
+import Swal from 'sweetalert2';
+import { COLOR } from '../../../styles/colors';
 
 const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
   if (isLoading) {
     return <div>Loading....</div>;
   }
 
-  const { acceptRequest } = useAcceptRequest();
+  // 수락 거절 버튼 핸들러
+  const { decideRequest } = useDecideRequest();
+  const acceptBtnClickHandler = (params: DecideParams) => {
+    // decideRequest(params);
 
-  const acceptBtnClickHandler = (eventId: number) => {
-    acceptRequest(eventId);
+    let message: string;
+    if (params.types === 'accept' ? (message = '수락') : (message = '거절'))
+      Swal.fire({
+        title: `정말 ${message}하시겠습니까?`,
+        text: "You won't be able to revert this!",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: COLOR.PAGE_BLUE,
+        cancelButtonColor: COLOR.VACATION_RED,
+        confirmButtonText: message,
+        customClass: {
+          container: 'swal-custom-z-index',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          decideRequest(params);
+          Swal.fire(`${message}되었습니다.`, 'success');
+        }
+      });
+  };
+
+  const acceptParam = {
+    eventId: data.eventId,
+    types: 'accept',
+  };
+  const declineParam = {
+    eventId: data.eventId,
+    types: 'deny',
   };
 
   return (
@@ -27,11 +58,14 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
         <UI.TitleSpan>{data.title}</UI.TitleSpan>
         <UI.DecideButton
           types="accept"
-          onClick={() => acceptBtnClickHandler(data.eventId)}
+          onClick={() => acceptBtnClickHandler(acceptParam)}
         >
           수락
         </UI.DecideButton>
-        <UI.DecideButton types="decline" onClick={closeModal}>
+        <UI.DecideButton
+          types="decline"
+          onClick={() => acceptBtnClickHandler(declineParam)}
+        >
           닫기
         </UI.DecideButton>
         <UI.Devider positions="Header" />
