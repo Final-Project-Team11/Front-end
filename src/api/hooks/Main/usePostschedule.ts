@@ -33,8 +33,7 @@ const usePostschedule = () => {
       return data;
     },
     onSuccess: () => {
-      console.log('success');
-      queryClient.invalidateQueries([keys.GET_MAIN, 0]);
+      queryClient.invalidateQueries([keys.GET_MAIN, false]);
     },
   });
 
