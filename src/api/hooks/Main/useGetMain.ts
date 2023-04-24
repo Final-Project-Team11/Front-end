@@ -7,6 +7,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 const useGetMain = (type: boolean) => {
   const today = new Date();
+
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_MAIN, type],
     queryFn: async () => {
@@ -27,7 +28,6 @@ const useGetMain = (type: boolean) => {
             today.getMonth() + 1
           }`
         );
-
         return data.data.main.vacation;
       }
     },
