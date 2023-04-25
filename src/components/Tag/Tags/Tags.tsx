@@ -1,12 +1,10 @@
 import React from 'react';
-import { TagsProps } from './interfaces';
+import { TagsProps } from '../interfaces';
 
 import * as UI from './style';
 import { usePatchTag } from '../../../api/hooks/Tag/usePatchTag';
 
 const Tags = ({ tag, types }: TagsProps) => {
-  const { eventId, title, userName, mentionId, isChecked, eventType } = tag;
-
   const { tagCheck } = usePatchTag();
 
   // 멘션 클릭 시 체크
@@ -15,12 +13,12 @@ const Tags = ({ tag, types }: TagsProps) => {
   };
 
   return (
-    <UI.StTagsBlock isChecked={isChecked}>
+    <UI.StTagsBlock isChecked={tag.isChecked}>
       <UI.StContentSpan
         types={types}
-        onClick={() => !isChecked && clickTagHandler(mentionId)}
+        onClick={() => !tag.isChecked && clickTagHandler(tag.mentionId)}
       >
-        @ / {title} {userName}
+        @ / {tag.title} {tag.userName}
       </UI.StContentSpan>
     </UI.StTagsBlock>
   );
