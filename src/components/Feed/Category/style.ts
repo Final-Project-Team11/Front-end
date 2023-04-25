@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../../styles/colors';
-import { CategoryStyle } from './interfaces';
+interface CategoryStyle {
+  tab: boolean;
+}
 
 export const StCategoryBlock = styled.div`
   width: 100%;

@@ -2,12 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 
-export const useDeleteTodo = () => {
+interface Payload {
+  type: 'category' | 'todo';
+  id: number;
+}
+
+export const useDeleteFeed = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: async (todoId: number) => {
-      const data = await apis.delete(`feed/todo/${todoId}`);
+    mutationFn: async (payload: Payload) => {
+      const data = await apis.delete(`feed/${payload.type}/${payload.id}`);
+
       return data.data;
     },
     onSuccess: () => {
@@ -16,8 +22,8 @@ export const useDeleteTodo = () => {
   });
 
   return {
-    deleteTodo: async (todoId: number) => {
-      await mutate(todoId);
+    deleteFeed: async (payload: Payload) => {
+      await mutate(payload);
     },
   };
 };
