@@ -2,18 +2,10 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-
-interface RequestInfo {
-  eventId: number;
-  userName: string;
-  title: string;
-  file: string;
-  enrollDay: string;
-  status: 'submit' | 'accept' | 'deny';
-}
+import { RequestTabType } from '../../../components/RequestList/interfaces';
 
 interface PageData {
-  schedule: RequestInfo[];
+  schedule: RequestTabType[];
   pageNum: number;
 }
 
@@ -26,6 +18,7 @@ export const useGetRequest = () => {
     queryKey: [keys.GET_REQUEST_LIST], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
       const response = await apis.get(`/schedule?size=5&page=${pageParam}`);
+      console.log(response.data);
       return { ...response.data, pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {
