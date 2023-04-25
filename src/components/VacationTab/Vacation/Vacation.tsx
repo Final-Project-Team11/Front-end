@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import * as UI from './style';
-import { VacateProps } from './interfaces';
 import { BsCheckCircle, BsXCircle, BsCircle, BsCheck, BsX } from 'react-icons/bs';
 import { usePutDecision } from '../../../api/hooks/Vacation/usePutDecision';
+import { VacationList } from '../interfaces';
 
-const Vacation = ({ vacation }: VacateProps) => {
+const Vacation = ({ vacation }: { vacation: VacationList }) => {
   // 선택창 등장, 퇴장을 위한 state
   const [hover, setHover] = useState(false);
 
@@ -39,15 +39,15 @@ const Vacation = ({ vacation }: VacateProps) => {
   // PATCH 요청용 payload
   interface Payload {
     status: 'submit' | 'accept' | 'deny';
-    eventId: number;
+    Id: number;
   }
   const accept: Payload = {
     status: 'accept',
-    eventId: vacation.eventId,
+    Id: vacation.Id,
   };
   const deny: Payload = {
     status: 'deny',
-    eventId: vacation.eventId,
+    Id: vacation.Id,
   };
 
   const { mutate } = usePutDecision();
@@ -56,7 +56,7 @@ const Vacation = ({ vacation }: VacateProps) => {
     <UI.StListBlock onMouseLeave={() => setHover(false)}>
       <UI.StSpanBlock status={vacation.status}>
         <UI.StNormalSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StNormalSpan>
-        <UI.StNormalSpan>{`기간 | ${vacation.startDay} ~ ${vacation.endDay}`}</UI.StNormalSpan>
+        <UI.StNormalSpan>{`기간 | ${vacation.start} ~ ${vacation.end}`}</UI.StNormalSpan>
       </UI.StSpanBlock>
 
       {/* hover 가 true 면 선택창, false 면 requestStatus 그대로 */}
