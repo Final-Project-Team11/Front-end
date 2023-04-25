@@ -11,7 +11,12 @@ export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
   const [tab] = useContext(ChangeTabContext);
-  const { data, isLoading } = useGetMain(tab);
+  const today = new Date();
+  const { data, isLoading } = useGetMain({
+    type: tab,
+    year: today.getFullYear().toString(),
+    month: (today.getMonth() + 1).toString(),
+  });
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
   useEffect(() => {
