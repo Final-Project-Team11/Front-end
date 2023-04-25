@@ -1,8 +1,29 @@
+export interface File {
+  fileName: string;
+  fileLocation: string;
+}
 export interface RequestInfo {
-  eventId: number;
-  userName: string;
+  Files: File[];
+  Id: number;
+  attendees: string[];
+  body: string;
+  end: string;
+  start: string;
+  status: 'submit' | 'accept' | 'deny';
   title: string;
-  file: string;
+  userName: string;
+}
+export interface DetailProps {
+  data: RequestInfo | undefined;
+  isLoading: boolean;
+}
+
+export interface RequestTabType {
+  Id: number;
+  createdAt: string;
   enrollDay: string;
   status: 'submit' | 'accept' | 'deny';
+  title: string;
+  userName: string;
+  files: File[];
 }
