@@ -152,7 +152,7 @@ const Login = () => {
     const checkToken = getCookie('token');
     if (checkToken) {
       alert('이미 로그인 된 계정입니다.');
-      navigate(-1);
+      navigate('/main');
     }
   }, [navigate]);
 

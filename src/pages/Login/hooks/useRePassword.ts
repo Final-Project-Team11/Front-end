@@ -12,7 +12,7 @@ export const useRePassword = () => {
   const { mutate } = useMutation({
     mutationFn: async (item: RePassword) => {
       const { password } = item;
-      const data = await apis.patch(`login/rePassword`, { password });
+      const data = await apis.patch(`users/password`, { password });
       return data.data;
     },
     onSuccess: () => {
