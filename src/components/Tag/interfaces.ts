@@ -2,12 +2,16 @@ export interface TagBlockCssProps {
   types: 'MyPage' | 'ManagerPage';
 }
 
-export interface TagElement {
-  eventId: number;
-  enrollDay: string;
-  title: string;
+export interface Mention {
+  Id: number;
+  calenderId: string;
   userName: string;
+  isChecked: boolean;
   mentionId: number;
-  isChecked: 0 | 1;
-  eventType: string;
+  title: string;
+}
+
+export interface TagsProps {
+  tag: Mention;
+  types: 'MyPage' | 'ManagerPage';
 }

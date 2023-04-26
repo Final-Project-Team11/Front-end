@@ -2,13 +2,45 @@ export interface UploadedFileTabProps {
   type: 'myfiles' | 'meetingfiles' | 'reportfiles';
 }
 
-export interface UploadedFileList {
-  enrollDay: string;
-  eventId: number;
-  file: string;
+export interface File {
   fileName: string;
-  title: string;
+  fileLocation: string;
+}
+
+export interface UploadedFileList {
+  Id: number;
+  calenderId: number;
+  start: string;
+  end: string;
   userName: string;
-  eventType?: string;
-  userId: string;
+  userId?: number;
+  title: string;
+  files: File[];
+}
+
+export interface Props {
+  file: UploadedFileList;
+  type: 'myfiles' | 'meetingfiles' | 'reportfiles';
+}
+
+interface Detail {
+  Id: number;
+  start: string;
+  end: string;
+  userName: string;
+  title: string;
+  body: string;
+  attendees: string[];
+  files: File[];
+}
+
+export interface DetailProps {
+  data: {
+    meetingfile: Detail;
+    myfile: Detail;
+    reportfile: Detail;
+  };
+  isLoading: boolean;
+  type: 'myfiles' | 'meetingfiles' | 'reportfiles';
+  closeModal: () => void;
 }
