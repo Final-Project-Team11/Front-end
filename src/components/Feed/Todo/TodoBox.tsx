@@ -1,17 +1,16 @@
 import React from 'react';
 import * as UI from './style';
-
-import { TodoBoxProps } from './interfaces';
 import { BsX } from 'react-icons/bs';
-import { useDeleteTodo } from '../../../api/hooks/Feed/useDeleteTodo';
+import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { useCheckTodo } from '../../../api/hooks/Feed/useCheckTodo';
+import { Todo } from '../interfaces';
 
-const TodoBox = ({ todo }: TodoBoxProps) => {
-  const { deleteTodo } = useDeleteTodo();
+const TodoBox = ({ todo }: { todo: Todo }) => {
+  const { deleteFeed } = useDeleteFeed();
 
   //투두 삭제
   const deleteBtnHandler = (): void => {
-    deleteTodo(todo.todoId);
+    deleteFeed({ type: 'todo', id: todo.todoId });
   };
 
   const { checkTodo } = useCheckTodo();

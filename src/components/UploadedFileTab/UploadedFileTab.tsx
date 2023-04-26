@@ -63,7 +63,7 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
     <Board icon={icon} title={title}>
       <UI.StInsideBlock ref={targetDiv}>
         {files.map((file: UploadedFileList) => {
-          return <UploadedOne key={file.eventId} file={file} type={type} />;
+          return <UploadedOne key={file.Id} file={file} type={type} />;
         })}
       </UI.StInsideBlock>
     </Board>

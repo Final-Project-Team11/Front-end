@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 import * as UI from './style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
-import { CategoryBoxProps } from './interfaces';
+import { Category } from '../interfaces';
 import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
-import { useDeleteCategory } from '../../../api/hooks/Feed/useDeleteCategory';
+import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 
-const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
+const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
   const [tab] = useContext(ChangeTabContext);
@@ -42,10 +42,10 @@ const CategoryBox = ({ categoryId, categoryName, todos }: CategoryBoxProps) => {
     });
   }
 
-  const { deleteCategory } = useDeleteCategory();
+  const { deleteFeed } = useDeleteFeed();
 
   const deleteBtnHandler = () => {
-    deleteCategory(categoryId);
+    deleteFeed({ type: 'category', id: categoryId });
   };
 
   return (

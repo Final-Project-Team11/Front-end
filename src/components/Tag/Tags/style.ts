@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 
 interface BlockProps {
-  isChecked: 0 | 1;
+  isChecked: boolean;
 }
 
 interface SpanProps {

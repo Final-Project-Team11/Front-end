@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import * as UI from './style';
-import { AddCategoryProps, SentCategory } from './interfaces';
+import { AddCategoryProps, SentCategory } from '../interfaces';
 import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
 import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 

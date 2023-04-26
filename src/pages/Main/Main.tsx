@@ -1,7 +1,7 @@
 import React, { useEffect, createContext, useState, useContext } from 'react';
 import { SubMain } from '../SubMain/SubMain';
 import useGetMain from '../../api/hooks/Main/useGetMain';
-import { ScheduleProps } from '../SubMain/interfaces';
+import { CalendarProps, ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
@@ -11,47 +11,54 @@ export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
   const [tab] = useContext(ChangeTabContext);
-  const { data, isLoading } = useGetMain(tab);
+  const today = new Date();
+  const { data, isLoading } = useGetMain({
+    type: tab,
+    year: today.getFullYear().toString(),
+    month: (today.getMonth() + 1).toString(),
+  });
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
-  console.log('data', data);
+  console.log(data);
   useEffect(() => {
     if (tab === false) {
-      const issues: Partial<EventObject>[] = data?.issue?.map((issue: ScheduleProps) =>
+      const issues: Partial<EventObject>[] = data?.issue?.map((issue: CalendarProps) =>
         settingSchedule(issue)
       );
-
       const schedules: Partial<EventObject>[] = data?.schedule?.map(
-        (schedule: ScheduleProps) => settingSchedule(schedule)
+        (schedule: CalendarProps) => settingSchedule(schedule)
       );
-      const reports: Partial<EventObject>[] = data?.report?.map((report: ScheduleProps) =>
+      const reports: Partial<EventObject>[] = data?.report?.map((report: CalendarProps) =>
         settingSchedule(report)
       );
-      const others: Partial<EventObject>[] = data?.other?.map((other: ScheduleProps) =>
+      const others: Partial<EventObject>[] = data?.other?.map((other: CalendarProps) =>
         settingSchedule(other)
       );
 
       const meetings: Partial<EventObject>[] = data?.meeting?.map(
-        (meeting: ScheduleProps) => settingSchedule(meeting)
+        (meeting: CalendarProps) => settingSchedule(meeting)
+      );
+
+      const events: Partial<EventObject>[] = data?.event?.map((event: CalendarProps) =>
+        settingSchedule(event)
       );
 
       const meetingReports: Partial<EventObject>[] = data?.meetingReport?.map(
-        (meetingReport: ScheduleProps) => settingSchedule(meetingReport)
+        (meetingReport: CalendarProps) => settingSchedule(meetingReport)
       );
 
-      const events: Partial<EventObject>[] = [];
-      issues !== undefined && events.push(...issues);
-      schedules !== undefined && events.push(...schedules);
-      reports !== undefined && events.push(...reports);
-      others !== undefined && events.push(...others);
-      meetings !== undefined && events.push(...meetings);
-      meetingReports !== undefined && events.push(...meetingReports);
-      setFilterData(events);
-
-      console.log('events', events);
+      const eventList: Partial<EventObject>[] = [];
+      issues !== undefined && eventList.push(...issues);
+      schedules !== undefined && eventList.push(...schedules);
+      reports !== undefined && eventList.push(...reports);
+      others !== undefined && eventList.push(...others);
+      events !== undefined && eventList.push(...events);
+      meetings !== undefined && eventList.push(...meetings);
+      meetingReports !== undefined && eventList.push(...meetingReports);
+      setFilterData(eventList);
     } else {
       const events: Partial<EventObject>[] = [];
-      const vacations: Partial<EventObject>[] = data?.map((vacation: ScheduleProps) =>
+      const vacations: Partial<EventObject>[] = data?.map((vacation: CalendarProps) =>
         settingVacation(vacation)
       );
       vacations !== undefined && events.push(...vacations);

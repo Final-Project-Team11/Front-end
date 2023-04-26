@@ -35,7 +35,7 @@ const TodaySchedules = (props: TodaysProps) => {
                       <styles.StSpan>{startDay.getFullYear()}</styles.StSpan>
                       <styles.StSpan>/</styles.StSpan>
                       <styles.StSpan>
-                        {startDay.getMonth().toString().padStart(2, '0')}
+                        {(startDay.getMonth() + 1).toString().padStart(2, '0')}
                       </styles.StSpan>
                       <styles.StSpan>/</styles.StSpan>
                       <styles.StSpan>{startDay.getDate()}</styles.StSpan>
@@ -55,7 +55,7 @@ const TodaySchedules = (props: TodaysProps) => {
                     </styles.StBlock>
                   </styles.StContentBlock>
                   <styles.StIconBlock>
-                    <div>{item.fileLocation && <FolderIcon />}</div>
+                    <div>{item.files && <FolderIcon />}</div>
                     <div style={{ marginBottom: '-5px' }}>
                       {item.attendees && <TagIcon />}
                     </div>

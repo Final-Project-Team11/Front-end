@@ -2,17 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-
-interface Mention {
-  enrollDay: string;
-  eventId: number;
-  eventType: string;
-  file: string;
-  isChecked: 0 | 1;
-  mentionId: number;
-  title: string;
-  userName: string;
-}
+import { Mention } from '../../../components/Tag/interfaces';
 
 interface PageData {
   mention: Mention[];

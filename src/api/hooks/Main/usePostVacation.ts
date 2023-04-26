@@ -11,7 +11,7 @@ interface Paylaod {
     location?: string;
     content?: string;
     ref?: string[]; //멘션
-    file?: File | string;
+    file?: File[] | string;
     eventType?: string;
     startTime?: string;
   };
@@ -27,8 +27,7 @@ const usePostVacation = () => {
       return data;
     },
     onSuccess: () => {
-      console.log('success');
-      queryClient.invalidateQueries([keys.GET_MAIN, 1]);
+      queryClient.invalidateQueries([keys.GET_MAIN, true]);
     },
   });
 
