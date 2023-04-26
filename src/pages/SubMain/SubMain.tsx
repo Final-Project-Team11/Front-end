@@ -139,6 +139,7 @@ export function SubMain({ view }: { view: ViewType }) {
     const userId = decoded ? decoded.userId : '';
 
     const newData = {
+      id: res.id,
       calendarId: res.calendarId,
       title: res.title,
       start: res.start,
@@ -150,11 +151,9 @@ export function SubMain({ view }: { view: ViewType }) {
       backgroundColor: getScheduleColor(tab, res.calendarId),
       location: res.location,
       userName: user.userInfo.userName,
-      fileName: '',
-      fileLocation: '',
+      files: undefined,
     };
 
-    console.log('newData', newData);
     setClickData(newData);
     setClickDetail(true);
     setClickEvent(res);
@@ -200,6 +199,7 @@ export function SubMain({ view }: { view: ViewType }) {
     console.log('Event Info : ', res.event);
     console.groupEnd();
 
+    console.log(schedules);
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].id === res.event.id) {
         setClickData(schedules[i]);
@@ -256,7 +256,6 @@ export function SubMain({ view }: { view: ViewType }) {
   };
 
   const onDeleteEvent = () => {
-    console.log('cancel');
     clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
     setClickDetail(false);
   };
@@ -329,13 +328,15 @@ export function SubMain({ view }: { view: ViewType }) {
         <TodaySchedules todayData={todayData} />
       ) : tab === false ? (
         <ScheduleFormat
-          props={{ ...clickData, propsRef: detailRef }}
+          props={{ ...clickData }}
+          propsRef={detailRef}
           onReturnHandler={setClickDetail}
           onCancelHandler={onDeleteEvent}
         />
       ) : (
         <VacationFormat
-          props={{ ...clickData, propsRef: detailRef }}
+          props={{ ...clickData }}
+          propsRef={detailRef}
           onReturnHandler={setClickDetail}
           onCancelHandler={onDeleteEvent}
         />
