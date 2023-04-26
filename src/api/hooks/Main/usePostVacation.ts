@@ -11,7 +11,7 @@ interface Paylaod {
     location?: string;
     content?: string;
     ref?: string[]; //멘션
-    file?: File | string;
+    file?: File[] | string;
     eventType?: string;
     startTime?: string;
   };
