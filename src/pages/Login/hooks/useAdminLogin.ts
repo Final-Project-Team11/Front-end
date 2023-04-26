@@ -25,7 +25,7 @@ export const useAdminLogin = () => {
 
   const login = useMutation<AdminLoginResponse, Error, AdminLoginInfo>({
     mutationFn: async (item: AdminLoginInfo) => {
-      const data = await apis.post<AdminLoginResponse>('/adminlogin', item);
+      const data = await apis.post<AdminLoginResponse>('/auth/admin', item);
       return data.data;
     },
     onSuccess: data => {

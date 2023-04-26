@@ -5,9 +5,13 @@ import api from '../../axios/api';
 import { getCookie } from '../../auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 
-const useGetMain = (type: boolean) => {
-  const today = new Date();
+interface GetMainProps {
+  type: boolean;
+  year: string;
+  month: string;
+}
 
+const useGetMain = ({ type, year, month }: GetMainProps) => {
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_MAIN, type],
     queryFn: async () => {
@@ -17,16 +21,12 @@ const useGetMain = (type: boolean) => {
 
       if (type === false) {
         const data = await api.get(
-          `/totalSchedule/${teamId}?year=${today.getFullYear()}&month=${
-            today.getMonth() + 1
-          }`
+          `/totalSchedule/${teamId}?year=${year}&month=${month}`
         );
         return data.data.main;
       } else if (type === true) {
         const data = await api.get(
-          `/totalVacation/${teamId}?year=${today.getFullYear()}&month=${
-            today.getMonth() + 1
-          }`
+          `/totalVacation/${teamId}?year=${year}&month=${month}`
         );
         return data.data.main.vacation;
       }

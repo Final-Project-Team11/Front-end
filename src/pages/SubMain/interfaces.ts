@@ -52,7 +52,8 @@ export interface InitialCalendar {
 }
 
 export interface CalendarProps {
-  id?: number | string;
+  id?: string | number;
+  Id?: string | number;
   calendarId?: string;
   title?: string;
   body?: string;
@@ -62,10 +63,15 @@ export interface CalendarProps {
   location?: string;
   userId?: string;
   userName?: string;
-  file?: string | File;
-  fileLocation?: string;
-  fileName?: string;
+  typeDetail?: string;
+  files?: [
+    {
+      fileLocation?: string;
+      fileName?: string;
+    }
+  ];
 
+  fileList?: File[] | undefined; //서버에서 정보 받을 때,
   color?: string;
   backgroundColor?: string;
   dragBackgroundColor?: string;

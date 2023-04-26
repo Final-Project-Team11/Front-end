@@ -5,9 +5,19 @@ import main2 from '../../assets/images/home/main2.jpg';
 import main3 from '../../assets/images/home/main3.jpg';
 import main4 from '../../assets/images/home/main4.jpg';
 import styled from 'styled-components';
+import React from 'react';
+import { getCookie } from '../../api/auth/CookieUtils';
 
 const Home = () => {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const checkToken = getCookie('token');
+    if (checkToken) {
+      alert('이미 로그인 된 계정입니다.');
+      navigate('/main');
+    }
+  }, [navigate]);
 
   return (
     <StBlock>

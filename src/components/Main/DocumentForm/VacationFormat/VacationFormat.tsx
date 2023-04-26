@@ -17,9 +17,14 @@ import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 
-const VacationFormat = ({ props, onReturnHandler, onCancelHandler }: ScheduleProps) => {
+const VacationFormat = ({
+  props,
+  onReturnHandler,
+  onCancelHandler,
+  propsRef,
+}: ScheduleProps) => {
   const mutation = usePostVacation();
-  const [FormFiles, SetFormFile] = useState<File>();
+  const [FormFiles, SetFormFile] = useState<File[]>();
   const [tab] = useContext(ChangeTabContext);
 
   const SaveClickHandler = () => {
@@ -97,7 +102,7 @@ const VacationFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
 
   console.log('disable', disable);
   return (
-    <styles.StContainer ref={props.propsRef}>
+    <styles.StContainer ref={propsRef}>
       <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>

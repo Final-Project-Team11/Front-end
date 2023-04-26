@@ -10,7 +10,7 @@ export const useCompanyIdValidation = () => {
 
   const checkCompanyId = useMutation(
     async (item: string) => {
-      const data = await apis.post(`/idCheck`, {
+      const data = await apis.post(`/members/exists`, {
         companyId: item,
       });
       return data;
