@@ -5,15 +5,17 @@ import { keys } from '../../utils/createQueryKey';
 
 interface Paylaod {
   postInfo?: {
-    startDay?: string;
-    endDay?: string;
+    Id?: string | number;
+    calendarId?: string;
     title?: string;
+    body?: string;
+    start?: Date;
+    end?: Date;
+    attendees?: string[];
     location?: string;
-    content?: string;
-    ref?: string[]; //멘션
-    file?: File | string;
-    eventType?: string;
-    startTime?: string;
+    userId?: string;
+    userName?: string;
+    fileList?: File[] | undefined;
   };
   url: string;
 }
@@ -22,7 +24,7 @@ const usePostschedule = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: Paylaod) => {
-      console.log(payload);
+      console.log('payload', payload);
 
       const formData = getFormData(payload);
       const data = await api.post(`/${payload.url}`, formData, {
@@ -30,10 +32,14 @@ const usePostschedule = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log('data', data);
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_MAIN, false]);
+    },
+    onError: () => {
+      console.log('test');
     },
   });
 
@@ -43,51 +49,58 @@ const usePostschedule = () => {
 export default usePostschedule;
 
 const getFormData = (payload: Paylaod): FormData | undefined => {
+  const start = payload.postInfo?.start?.toString();
+  const end = payload.postInfo?.end?.toString();
+  const formData = new FormData();
   switch (payload.url) {
     case 'meeting': {
-      const formData = new FormData();
-      formData.append('file', payload.postInfo?.file || '');
-      formData.append('startDay', payload.postInfo?.startDay || '');
-      formData.append('startTime', payload.postInfo?.startTime || '');
+      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      formData.append('start', start || '');
+      formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
-      formData.append('content', payload.postInfo?.content || '');
-      formData.append('file', payload.postInfo?.location || '');
-      payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
-      formData.append('eventType', payload.postInfo?.eventType || '');
+      formData.append('body', payload.postInfo?.body || '');
+      formData.append('calendarId', payload.postInfo?.calendarId || '');
       formData.append('location', payload.postInfo?.location || '');
+      payload.postInfo?.attendees?.map((item, index) =>
+        formData.append(`attendees[${index}]`, item)
+      );
+
       return formData;
     }
 
     case 'report': {
-      const formData = new FormData();
       formData.append('title', payload.postInfo?.title || '');
-      formData.append('content', payload.postInfo?.content || '');
-      payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
-      formData.append('file', payload.postInfo?.file || '');
-      formData.append('enrollDay', payload.postInfo?.startDay || '');
+      formData.append('body', payload.postInfo?.body || '');
+      payload.postInfo?.attendees?.map((item, index) =>
+        formData.append(`attendees[${index}]`, item)
+      );
+      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      formData.append('start', start || '');
       return formData;
     }
 
     case 'other': {
-      const formData = new FormData();
-      formData.append('startDay', payload.postInfo?.startDay || '');
-      formData.append('endDay', payload.postInfo?.endDay || '');
+      formData.append('start', start || '');
+      formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
-      formData.append('content', payload.postInfo?.content || '');
-      payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
-      formData.append('file', payload.postInfo?.file || '');
+      formData.append('body', payload.postInfo?.body || '');
+      payload.postInfo?.attendees?.map((item, index) =>
+        formData.append(`attendees[${index}]`, item)
+      );
+      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
       return formData;
     }
 
     case 'schedule': {
-      const formData = new FormData();
-      formData.append('startDay', payload.postInfo?.startDay || '');
-      formData.append('endDay', payload.postInfo?.endDay || '');
+      formData.append('start', start || '');
+      formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
       formData.append('location', payload.postInfo?.location || '');
-      formData.append('content', payload.postInfo?.content || '');
-      payload.postInfo?.ref?.map((item, index) => formData.append(`ref[${index}]`, item));
-      formData.append('file', payload.postInfo?.file || '');
+      formData.append('body', payload.postInfo?.body || '');
+      payload.postInfo?.attendees?.map((item, index) =>
+        formData.append(`attendees[${index}]`, item)
+      );
+      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
       return formData;
     }
 
