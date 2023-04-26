@@ -7,6 +7,8 @@ const RequestDetail = ({ data, isLoading }: DetailProps) => {
     return <div>Loading....</div>;
   }
 
+  console.log(data);
+
   return (
     <UI.Modal>
       <UI.Header>
@@ -23,7 +25,7 @@ const RequestDetail = ({ data, isLoading }: DetailProps) => {
       </UI.ContentArea>
       <UI.Footer>
         <UI.FooterHalf>
-          {data.Files.map((file, idx) => {
+          {data.files.map((file, idx) => {
             if (file.fileName && file.fileLocation) {
               return (
                 <React.Fragment key={idx}>

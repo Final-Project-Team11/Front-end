@@ -3,7 +3,7 @@ export interface File {
   fileLocation: string;
 }
 export interface RequestInfo {
-  Files: File[];
+  files: File[];
   Id: number;
   attendees: string[];
   body: string;
