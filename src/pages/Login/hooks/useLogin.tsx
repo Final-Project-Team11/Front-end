@@ -30,7 +30,7 @@ export const useLogin = () => {
 
   const login = useMutation<LoginResponse, Error, LoginInfo>({
     mutationFn: async (item: LoginInfo) => {
-      const data = await apis.post<LoginResponse>('/login', item);
+      const data = await apis.post<LoginResponse>('/auth/user', item);
       return data.data;
     },
     onSuccess: data => {
