@@ -1,7 +1,7 @@
 import React from 'react';
 import * as UI from './style';
 import { BsCheckCircle, BsXCircle, BsCircle } from 'react-icons/bs';
-import { FileProps } from './interfaces';
+import { FileProps } from '../interfaces';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
 
@@ -16,9 +16,7 @@ const MyRequestList = ({ file }: FileProps) => {
             {file.userName}
           </UI.StFileSpan>
           <UI.StDateSpan className="date">
-            {file.startDay === file.endDay
-              ? file.startDay
-              : `${file.startDay} ~ ${file.endDay}`}
+            {file.start === file.end ? file.start : `${file.start} ~ ${file.end}`}
           </UI.StDateSpan>
         </UI.StNameDateBlock>
         <UI.StFileSpan>

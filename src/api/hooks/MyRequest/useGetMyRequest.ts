@@ -2,20 +2,10 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-
-interface Request {
-  eventId: number;
-  userName: string;
-  title: string;
-  file?: string;
-  fileName?: string;
-  startDay: string;
-  endDay: string;
-  status: 'submit' | 'accept' | 'deny';
-}
+import { MyListProps } from '../../../components/MyRequest/interfaces';
 
 interface PageData {
-  schedule: Request[];
+  schedule: MyListProps[];
   pageNum: number;
 }
 

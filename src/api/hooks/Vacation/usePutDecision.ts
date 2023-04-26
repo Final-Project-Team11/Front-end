@@ -4,14 +4,14 @@ import { keys } from '../../utils/createQueryKey';
 
 interface Payload {
   status: 'submit' | 'accept' | 'deny';
-  eventId: number;
+  Id: number;
 }
 
 export const usePutDecision = () => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async (payload: Payload) => {
-      const result = await apis.put(`/vacation/${payload.eventId}/${payload.status}`);
+      const result = await apis.put(`/vacation/${payload.Id}/${payload.status}`);
       return result.data;
     },
     onSuccess: () => {

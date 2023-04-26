@@ -1,7 +1,7 @@
 export interface FeedTitleProps {
   clickFn: () => void;
 }
-interface Todo {
+export interface Todo {
   todoId: number;
   todo: string;
   isDone: boolean;
@@ -14,4 +14,27 @@ export interface Category {
 
 export interface TitleProps {
   tab?: boolean;
+}
+
+//AddCategory
+export interface AddCategoryProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setValue: (value: string) => void;
+  inputHandler: (value: React.SetStateAction<boolean>) => void;
+}
+export interface SentCategory {
+  category: string;
+}
+
+//AddTodo
+export interface AddTodoProps extends AddCategoryProps {
+  categoryId: number;
+}
+
+export interface SentTodo {
+  categoryId: number;
+  content: {
+    content: string;
+  };
 }

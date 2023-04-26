@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import * as UI from './style';
-import { Props } from './interfaces';
 import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
 import Modal from '../../Modal/Modal';
 import RequestDetail from '../RequestDetail/RequestDetail';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
+import { RequestTabType } from '../interfaces';
 
-const RequestedOne = ({ request }: Props) => {
-  const { data, refetch, isLoading } = useGetRequestDetail(request.eventId);
+const RequestedOne = ({ request }: { request: RequestTabType }) => {
+  const { data, refetch, isLoading } = useGetRequestDetail(request.Id);
   const [modalOpen, setModalOpen] = useState(false);
+
+  if (isLoading) <div>Loading...</div>;
 
   const getDetail = () => {
     refetch();
@@ -22,7 +24,7 @@ const RequestedOne = ({ request }: Props) => {
   return (
     <>
       <UI.StRequestedListBlock
-        key={request.eventId}
+        key={request.Id}
         types={request.status}
         onClick={() => getDetail()}
       >

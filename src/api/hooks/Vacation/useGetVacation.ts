@@ -2,18 +2,10 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-
-interface Vacation {
-  eventId: number;
-  userName: string;
-  typeDetail: string;
-  startDay: string;
-  endDay: string;
-  status: 'submit' | 'accept' | 'deny';
-}
+import { VacationList } from '../../../components/VacationTab/interfaces';
 
 interface PageData {
-  vacation: Vacation[];
+  vacation: VacationList[];
   pageNum: number;
 }
 
@@ -26,6 +18,7 @@ export const useGetVacation = () => {
     queryKey: [keys.GET_VACATION_LIST], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
       const response = await apis.get(`/vacation?size=8&page=${pageParam}`);
+      console.log(response.data);
       return { ...response.data, pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {
