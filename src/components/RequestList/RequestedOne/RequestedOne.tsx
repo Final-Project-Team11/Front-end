@@ -7,7 +7,13 @@ import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
 import { RequestTabType } from '../interfaces';
 
-const RequestedOne = ({ request }: { request: RequestTabType }) => {
+const RequestedOne = ({
+  request,
+  icon,
+}: {
+  request: RequestTabType;
+  icon: JSX.Element;
+}) => {
   const { data, refetch, isLoading } = useGetRequestDetail(request.Id);
   const [modalOpen, setModalOpen] = useState(false);
 

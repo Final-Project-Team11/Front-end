@@ -1,3 +1,12 @@
+export interface RequestType {
+  type: 'schedule' | 'other';
+}
+
+export interface RequestTypes {
+  title: '출장관련' | '결재요청';
+  icon: JSX.Element;
+}
+
 export interface File {
   fileName: string;
   fileLocation: string;

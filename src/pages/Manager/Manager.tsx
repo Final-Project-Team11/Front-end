@@ -37,8 +37,8 @@ const Manager = () => {
               <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
-              <Request />
-              <AuthRequest />
+              <Request type="schedule" />
+              <Request type="other" />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>
