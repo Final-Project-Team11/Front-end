@@ -34,3 +34,14 @@ export const StTitleSpan = styled.span`
   color: ${COLOR.PAGE_DONE};
   font-size: 13px;
 `;
+
+export const StInsideBlock = styled.div`
+  width: 100%;
+  height: 100%;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;

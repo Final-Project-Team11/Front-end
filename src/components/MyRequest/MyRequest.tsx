@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import * as UI from './style';
 import MyRequestList from './MyRequestList';
 import { useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
 import Board from '../Board/Board';
@@ -44,12 +43,10 @@ const MyRequest = () => {
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   return (
-    <Board icon={icon} title="내가 올린 결재">
-      <UI.StUploadedFileBlock ref={targetDiv}>
-        {files.map(file => {
-          return <MyRequestList key={file.Id} file={file} />;
-        })}
-      </UI.StUploadedFileBlock>
+    <Board icon={icon} title="내가 올린 결재" targetDiv={targetDiv}>
+      {files.map(file => {
+        return <MyRequestList key={file.Id} file={file} />;
+      })}
     </Board>
   );
 };
