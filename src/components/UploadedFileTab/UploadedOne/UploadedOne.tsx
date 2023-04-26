@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as UI from './style';
-import { Props } from './interfaces';
+import { Props } from '../interfaces';
 import Modal from '../../Modal/Modal';
 import UploadedDetail from '../UploadedDetail';
 import { useGetUploadedDetail } from '../../../api/hooks/UploadedFile/useGetUploadedDetail';
@@ -11,7 +11,7 @@ const UploadedOne = ({ file, type }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const payload = {
-    eventId: file.eventId,
+    eventId: file.Id,
     types: type,
   };
 
@@ -32,10 +32,10 @@ const UploadedOne = ({ file, type }: Props) => {
           <UI.StContentSpan>
             <Person colors="gray" /> | {file.userName}
           </UI.StContentSpan>
-          <UI.StDateSpan className="date"> {file.enrollDay}</UI.StDateSpan>
+          <UI.StDateSpan className="date"> {file.start}</UI.StDateSpan>
         </UI.StNameDateBlock>
         <UI.StContentSpan>
-          <File colors="gray" /> | {file.fileName}
+          <File colors="gray" /> | {file.files[0].fileName}
         </UI.StContentSpan>
       </UI.StUploadedFileBlock>
       {modalOpen && (
