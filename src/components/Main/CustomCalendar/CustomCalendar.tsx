@@ -128,11 +128,12 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
+  // const CountArr = Array.from({ length: 32 }, () => [false, false, false]);
+  // console.log('CountArr', CountArr);
+  const ArrRef = useRef(Array.from({ length: 32 }, () => [false, false, false]));
   const returnEvent = useCallback(() => {
-    const CountArr = Array.from({ length: 31 }, () => [false, false, false]);
-
-    console.log('CountArr', CountArr);
-
+    test();
+    const CountArr = Array.from({ length: 32 }, () => [false, false, false]);
     const eventArr = schedules.map(item => {
       const blockCount = item.endDay.getDate() - item.startDay.getDate();
       const leftCount = item.startDay.getDate() - selectedDate;
@@ -140,29 +141,36 @@ const CustomCalendar = (props: CalendarProps) => {
       const widthPercent = (100 / 7) * (blockCount + 1) + '%';
 
       let tempValue = 0;
-
       for (let j = 0; j < 3; j++) {
-        if (CountArr[Number(item.startDay.getDate())][j] === false) {
+        if (ArrRef.current[Number(item.startDay.getDate())][j] === false) {
           tempValue = j + 1;
+          console.log('tempValue', Number(item.startDay.getDate()), tempValue);
           break;
         }
       }
 
       const topPercent = (100 / 4) * tempValue + '%';
+      console.log('topPercent', topPercent);
 
-      for (
-        let i = Number(item.startDay.getDate());
-        i <= Number(item.endDay.getDate());
-        i++
-      ) {
-        for (let j = 0; j < 3; j++) {
-          if (CountArr[i][j] === false) {
-            CountArr[i][j] = true;
+      for (let i = 0; i < 3; i++) {
+        let isValue = false;
+        const newRefArr = [...ArrRef.current];
+        for (
+          let j = Number(item.startDay.getDate());
+          j <= Number(item.endDay.getDate());
+          j++
+        ) {
+          if (newRefArr[j][i] === false) {
+            console.log('j', j, i);
 
-            console.log('start :', i);
-            console.log('index :', j);
-            break;
+            newRefArr[i][j] = true;
+            isValue = true;
           }
+        }
+
+        if (isValue === true) {
+          ArrRef.current = newRefArr;
+          break;
         }
       }
 
@@ -189,3 +197,10 @@ const CustomCalendar = (props: CalendarProps) => {
 };
 
 export default CustomCalendar;
+
+function test() {
+  const testCountArr = Array.from({ length: 32 }, () => [false, false, false]);
+  console.log('testCountArr', testCountArr);
+  testCountArr[25][1] = true;
+  console.log('testCountArr', testCountArr);
+}
