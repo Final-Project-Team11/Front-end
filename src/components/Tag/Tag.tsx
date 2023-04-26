@@ -5,7 +5,6 @@ import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
-import useThrottleCallback from '../../hooks/common/useThrottleCallback';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
@@ -14,24 +13,20 @@ const Tag = ({ types }: TagBlockCssProps) => {
   // div 의 스크롤을 감지하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
-  // 스크롤 이벤트 - 무한스크롤 기본 코드 - useThrottleCallback 사용해서 최적화
-  const handleScroll = useThrottleCallback(
-    () => {
-      const container = targetDiv.current;
+  // 스크롤 이벤트 - 무한스크롤 기본 코드
+  const handleScroll = () => {
+    const container = targetDiv.current;
 
-      if (container) {
-        const scrollHeight = container.scrollHeight;
-        const scrollTop = container.scrollTop;
-        const clientHeight = container.clientHeight;
+    if (container) {
+      const scrollHeight = container.scrollHeight;
+      const scrollTop = container.scrollTop;
+      const clientHeight = container.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
-          fetchNextPage();
-        }
+      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
+        fetchNextPage();
       }
-    },
-    1500,
-    'scroll'
-  );
+    }
+  };
 
   // div에 스크롤 이벤트 추가.
   useEffect(() => {
