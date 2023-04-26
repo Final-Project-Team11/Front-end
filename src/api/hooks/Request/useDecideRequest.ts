@@ -4,7 +4,8 @@ import { keys } from '../../utils/createQueryKey';
 
 interface DecideParams {
   eventId: number;
-  types: string;
+  type: 'schedule' | 'other';
+  types: 'accept' | 'deny';
 }
 
 export const useDecideRequest = () => {

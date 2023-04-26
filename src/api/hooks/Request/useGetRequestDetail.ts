@@ -3,11 +3,16 @@ import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
 import { RequestInfo } from '../../../components/RequestList/interfaces';
 
-export const useGetRequestDetail = (id: number) => {
+interface Payload {
+  type: 'schedule' | 'other';
+  id: number;
+}
+
+export const useGetRequestDetail = (payload: Payload) => {
   const { data, refetch, isLoading } = useQuery<RequestInfo>({
-    queryKey: [keys.GET_REQUEST_DETAIL, id],
+    queryKey: [keys.GET_REQUEST_DETAIL, payload.id],
     queryFn: async () => {
-      const response = await apis.get(`/schedule/${id}`);
+      const response = await apis.get(`/${payload.type}/${payload.id}`);
       return response.data;
     },
     enabled: false,

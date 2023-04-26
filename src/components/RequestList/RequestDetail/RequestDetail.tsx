@@ -5,7 +5,7 @@ import { useDecideRequest } from '../../../api/hooks/Request/useDecideRequest';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 
-const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
+const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
   if (isLoading || !data) {
     return <div>Loading....</div>;
   }
@@ -20,6 +20,7 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
     const sweetAlertDiv = document.getElementById('sweetAlertDiv');
     if (!sweetAlertDiv) return;
 
+    // alert 창
     Swal.fire({
       title: `${message}하시겠습니까?`,
       text: "You won't be able to revert this!",
@@ -47,12 +48,15 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
     });
   };
 
-  const acceptParam = {
+  // 승인, 거절 클릭 시 요청 보낼 payload
+  const acceptParam: DecideParams = {
     eventId: data.Id,
+    type: type, // 출장요청, 결재요청 구분
     types: 'accept',
   };
-  const declineParam = {
+  const declineParam: DecideParams = {
     eventId: data.Id,
+    type: type, // 출장요청, 결재요청 구분
     types: 'deny',
   };
 
