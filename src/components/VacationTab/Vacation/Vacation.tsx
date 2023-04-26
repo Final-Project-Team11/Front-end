@@ -36,6 +36,27 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
       break;
   }
 
+  // 휴가 타입
+  let vacationType;
+  switch (vacation.typeDetail) {
+    case '0': {
+      vacationType = '휴가';
+      break;
+    }
+    case '1': {
+      vacationType = '반차';
+      break;
+    }
+    case '2': {
+      vacationType = '월차';
+      break;
+    }
+    case '3': {
+      vacationType = '병가';
+      break;
+    }
+  }
+
   // PATCH 요청용 payload
   interface Payload {
     status: 'submit' | 'accept' | 'deny';
@@ -55,7 +76,7 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
   return (
     <UI.StListBlock onMouseLeave={() => setHover(false)}>
       <UI.StSpanBlock status={vacation.status}>
-        <UI.StNormalSpan>{`${vacation.typeDetail} | ${vacation.userName}`}</UI.StNormalSpan>
+        <UI.StNormalSpan>{`${vacationType} | ${vacation.userName}`}</UI.StNormalSpan>
         <UI.StNormalSpan>{`기간 | ${vacation.start} ~ ${vacation.end}`}</UI.StNormalSpan>
       </UI.StSpanBlock>
 
@@ -65,14 +86,14 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
           <UI.StDecAcceptBlock
             className="decision"
             status={true}
-            onClick={() => mutate(accept)}
+            onClick={() => mutate(deny)}
           >
             <BsX />
           </UI.StDecAcceptBlock>
           <UI.StDecAcceptBlock
             className="decision"
             status={false}
-            onClick={() => mutate(deny)}
+            onClick={() => mutate(accept)}
           >
             <BsCheck />
           </UI.StDecAcceptBlock>
