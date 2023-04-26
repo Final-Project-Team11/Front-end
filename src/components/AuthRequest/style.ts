@@ -1,17 +1,6 @@
 import styled from 'styled-components';
 import { COLOR } from '../../styles/colors';
 
-export const StInsideBlock = styled.div`
-  width: 100%;
-  height: 100%;
-
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
 export const StUploadedFileBlock = styled.div`
   width: 100%;
   height: fit-content;

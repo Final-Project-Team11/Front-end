@@ -1,8 +1,8 @@
 export interface VacationList {
-  eventId: number;
+  Id: number;
   userName: string;
   typeDetail: string;
-  startDay: string;
-  endDay: string;
+  start: string;
+  end: string;
   status: 'submit' | 'accept' | 'deny';
 }

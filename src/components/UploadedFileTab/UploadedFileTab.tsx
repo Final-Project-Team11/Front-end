@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
-import * as UI from './style';
 import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
 import Board from '../Board/Board';
 import UploadedOne from './UploadedOne/UploadedOne';
@@ -60,12 +59,10 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   }
 
   return (
-    <Board icon={icon} title={title}>
-      <UI.StInsideBlock ref={targetDiv}>
-        {files.map((file: UploadedFileList) => {
-          return <UploadedOne key={file.eventId} file={file} type={type} />;
-        })}
-      </UI.StInsideBlock>
+    <Board icon={icon} title={title} targetDiv={targetDiv}>
+      {files.map((file: UploadedFileList) => {
+        return <UploadedOne key={file.Id} file={file} type={type} />;
+      })}
     </Board>
   );
 };

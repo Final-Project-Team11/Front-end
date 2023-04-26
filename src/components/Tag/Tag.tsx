@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import * as UI from './style';
 import Tags from './Tags/Tags';
 import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
-import { TagElement } from './interfaces';
+import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
@@ -45,12 +44,10 @@ const Tag = ({ types }: TagBlockCssProps) => {
   const icon = <CalendarIcon usage="title" />;
 
   return (
-    <Board icon={icon} title="tag" types={types}>
-      <UI.StInsideBlock ref={targetDiv}>
-        {tags.map((tag: TagElement) => {
-          return <Tags key={tag.mentionId} tag={tag} types={types} />;
-        })}
-      </UI.StInsideBlock>
+    <Board icon={icon} title="tag" types={types} targetDiv={targetDiv}>
+      {tags.map((tag: Mention) => {
+        return <Tags key={tag.mentionId} tag={tag} types={types} />;
+      })}
     </Board>
   );
 };

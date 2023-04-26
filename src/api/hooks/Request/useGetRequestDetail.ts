@@ -1,20 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
-
-interface RequestInfo {
-  eventId: number;
-  userName: string;
-  startDay: string;
-  endDay: string;
-  title: string;
-  content: string;
-  ref: string[]; //참조
-  file: string; //(저장 경로)
-}
+import { RequestInfo } from '../../../components/RequestList/interfaces';
 
 export const useGetRequestDetail = (id: number) => {
-  const { data, refetch, isLoading } = useQuery({
+  const { data, refetch, isLoading } = useQuery<RequestInfo>({
     queryKey: [keys.GET_REQUEST_DETAIL, id],
     queryFn: async () => {
       const response = await apis.get(`/schedule/${id}`);

@@ -1,13 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
-
-interface Todo {
-  todoId: number;
-  todo: string;
-  isDone: boolean;
-}
+import { Todo } from '../../../components/Feed/interfaces';
 
 interface Feed {
   feed: {
