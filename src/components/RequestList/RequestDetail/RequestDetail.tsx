@@ -2,7 +2,7 @@ import React from 'react';
 import * as UI from './style';
 import { DecideParams, DetailProps } from '../interfaces';
 import { useDecideRequest } from '../../../api/hooks/Request/useDecideRequest';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 
 const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
@@ -14,35 +14,37 @@ const RequestDetail = ({ data, isLoading, closeModal }: DetailProps) => {
   const { decideRequest } = useDecideRequest();
   const acceptBtnClickHandler = (params: DecideParams) => {
     let message: string;
-    if (params.types === 'accept' ? (message = '수락') : (message = '거절')) {
-      const sweetAlertDiv = document.getElementById('sweetAlertDiv');
-      if (!sweetAlertDiv) return;
+    params.types === 'accept' ? (message = '수락') : (message = '거절');
+    let icon: SweetAlertIcon;
+    params.types === 'accept' ? (icon = 'success') : (icon = 'error');
+    const sweetAlertDiv = document.getElementById('sweetAlertDiv');
+    if (!sweetAlertDiv) return;
 
-      Swal.fire({
-        title: `${message}하시겠습니까?`,
-        text: "You won't be able to revert this!",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: COLOR.PAGE_BLUE,
-        cancelButtonColor: COLOR.VACATION_RED,
-        confirmButtonText: message,
-        target: sweetAlertDiv, // 여기에 target 속성을 추가
-        customClass: {
-          popup: 'swal-custom-z-index',
-        },
-        didOpen: () => {
-          const popup = document.querySelector('.swal-custom-z-index');
-          if (popup) {
-            (popup as HTMLElement).style.zIndex = '2500';
-          }
-        },
-      }).then(result => {
-        if (result.isConfirmed) {
-          decideRequest(params);
-          Swal.fire(`${message}되었습니다.`, 'success');
+    Swal.fire({
+      title: `${message}하시겠습니까?`,
+      text: "You won't be able to revert this!",
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: COLOR.PAGE_BLUE,
+      cancelButtonColor: COLOR.VACATION_RED,
+      confirmButtonText: message,
+      cancelButtonText: '닫기',
+      target: sweetAlertDiv, // 여기에 target 속성을 추가
+      customClass: {
+        popup: 'swal-custom-z-index',
+      },
+      didOpen: () => {
+        const popup = document.querySelector('.swal-custom-z-index');
+        if (popup) {
+          (popup as HTMLElement).style.zIndex = '2500';
         }
-      });
-    }
+      },
+    }).then(result => {
+      if (result.isConfirmed) {
+        decideRequest(params);
+        Swal.fire(`${message}되었습니다.`, 'success');
+      }
+    });
   };
 
   const acceptParam = {
