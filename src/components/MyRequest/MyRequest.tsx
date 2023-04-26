@@ -47,7 +47,7 @@ const MyRequest = () => {
     <Board icon={icon} title="내가 올린 결재">
       <UI.StUploadedFileBlock ref={targetDiv}>
         {files.map(file => {
-          return <MyRequestList key={file.eventId} file={file} />;
+          return <MyRequestList key={file.Id} file={file} />;
         })}
       </UI.StUploadedFileBlock>
     </Board>
