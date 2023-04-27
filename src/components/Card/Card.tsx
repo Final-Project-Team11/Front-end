@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
-import profileImg from '../../assets/images/profile-default.jpg';
 import { CardProps } from './interfaces';
 import Modal from '../Modal/Modal';
 import CardDetail from './CardDetail/CardDetail';
