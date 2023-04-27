@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from './style';
-import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import profileImg from '../../assets/images/profile-default.jpg';
 
 interface CardProps {
@@ -8,7 +8,7 @@ interface CardProps {
 }
 
 const Card = ({ tab }: CardProps) => {
-  const { userInfo, infoIsLoading } = GetCardInfo();
+  const { userInfo, infoIsLoading } = useGetCardInfo();
 
   if (infoIsLoading || !userInfo) {
     return <h1>...loading</h1>;
