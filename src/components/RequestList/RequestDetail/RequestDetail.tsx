@@ -42,6 +42,7 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
       },
     }).then(result => {
       if (result.isConfirmed) {
+        closeModal();
         decideRequest(params);
         Swal.fire(`${message}되었습니다.`, 'success');
       }
