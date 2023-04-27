@@ -1,31 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { AdminLoginInfo } from '../../MasterSignup/interfaces';
-import apis from '../../../api/axios/api';
 import { setCookie } from '../../../api/auth/CookieUtils';
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AdminLoginInfo } from '../components/AdminLoginForm';
+import apis from '../../../api/axios/api';
 
-export interface AdminLoginResponse {
+export type LoginResponse = {
   token: string;
   message: string;
-}
+};
 
-export const useAdminLogin = () => {
+export const useAdminLogin = (reset: () => void) => {
   const navigate = useNavigate();
 
-  const [adminLoginInfo, setAdminLoginInfo] = React.useState<AdminLoginInfo>({
-    companyId: '',
-    password: '',
-  });
-
-  const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setAdminLoginInfo({ ...adminLoginInfo, [name]: value });
-  };
-
-  const login = useMutation<AdminLoginResponse, Error, AdminLoginInfo>({
+  const login = useMutation<LoginResponse, Error, AdminLoginInfo>({
     mutationFn: async (item: AdminLoginInfo) => {
-      const data = await apis.post<AdminLoginResponse>('/adminlogin', item);
+      const data = await apis.post<LoginResponse>('/auth/admin', item);
       return data.data;
     },
     onSuccess: data => {
@@ -35,12 +24,12 @@ export const useAdminLogin = () => {
     },
     onError() {
       alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
-      setAdminLoginInfo({ companyId: '', password: '' });
+      reset();
     },
   });
-  const submitLoginHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login.mutate(adminLoginInfo);
+  const AdminLoginHandler = (data: AdminLoginInfo) => {
+    login.mutate(data);
   };
-  return { adminLoginInfo, submitLoginHandler, changeInputHandler };
+
+  return { AdminLoginHandler };
 };
