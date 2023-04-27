@@ -31,6 +31,8 @@ export const StCardBlock = styled.div<CardStyleProps>`
   padding: 19px;
   box-sizing: border-box;
 
+  cursor: pointer;
+
   box-shadow: rgba(212, 229, 249, 1) 0px 1px 9px -1px;
   text-shadow: 0px 1px 4px rgba(148, 177, 211, 0.94);
 `;
