@@ -4,19 +4,21 @@ import { keys } from '../../utils/createQueryKey';
 
 interface DecideParams {
   eventId: number;
-  types: string;
+  type: 'schedule' | 'other';
+  types: 'accept' | 'deny';
 }
 
 export const useDecideRequest = () => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async (params: DecideParams) => {
-      const response = await apis.put(`/schedule/${params.eventId}/${params.types}`);
-      console.log(response.data);
-      return response.data;
+      const response = await apis.put(
+        `/${params.type}/${params.eventId}/${params.types}`
+      );
+      return { ...response.data, params };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries([keys.GET_REQUEST_LIST]);
+    onSuccess: data => {
+      queryClient.invalidateQueries([keys.GET_REQUEST_LIST, data.params.type]);
     },
   });
   return {

@@ -45,6 +45,10 @@ export const TitleSpan = styled.span`
   font-weight: bold;
 `;
 
+export const ContentSpan = styled.span`
+  font-size: 15px;
+`;
+
 export const Devider = styled.hr<DeviderProps>`
   width: 95%;
   height: 1px;
@@ -61,10 +65,6 @@ export const ContentArea = styled.div`
 
   padding: 76px;
   box-sizing: border-box;
-`;
-
-export const ContentSpan = styled.span`
-  font-size: 15px;
 `;
 
 export const Footer = styled.div`

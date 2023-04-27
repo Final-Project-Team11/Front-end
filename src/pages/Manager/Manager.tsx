@@ -9,7 +9,6 @@ import * as UI from '../MyPage/styles';
 import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
 import WaitVacation from '../../assets/Meerkat/WaitVacation';
 import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
-import AuthRequest from '../../components/AuthRequest/AuthRequest';
 import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
 
 const Manager = () => {
@@ -37,8 +36,8 @@ const Manager = () => {
               <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
-              <Request />
-              <AuthRequest />
+              <Request type="schedule" />
+              <Request type="other" />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>
