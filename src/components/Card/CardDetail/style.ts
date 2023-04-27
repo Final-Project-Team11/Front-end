@@ -13,7 +13,6 @@ export const StCardDetailBlock = styled.div`
 `;
 
 export const StTopBlock = styled.div`
-  background-color: beige;
   width: 100%;
   height: 35%;
 
@@ -23,7 +22,6 @@ export const StTopBlock = styled.div`
 `;
 
 export const StTopRightBlock = styled.div`
-  background-color: yellow;
   width: 45%;
   height: 100%;
 
@@ -38,7 +36,7 @@ export const StTopLeftBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   position: relative;
 `;
@@ -64,14 +62,12 @@ export const StProfileImg = styled.div`
 `;
 
 export const StProfileModifyInput = styled.input`
-  background-color: beige;
   width: 150px;
   height: 30px;
   display: none;
 `;
 
 export const StMiddleBlock = styled.div`
-  background-color: bisque;
   width: 100%;
   height: 40%;
 
@@ -81,12 +77,12 @@ export const StMiddleBlock = styled.div`
 `;
 
 export const StInfoBlock = styled.div`
-  background-color: azure;
   width: 100%;
   height: 30%;
 
   font-size: 30px;
   font-weight: bolder;
+  gap: 15px;
 
   display: flex;
   align-items: center;
@@ -95,14 +91,13 @@ export const StInfoBlock = styled.div`
 export const StInfoType = styled.div`
   width: 40%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   font-size: 30px;
   font-weight: bolder;
 `;
 
 export const StBottomBlock = styled.div`
-  background-color: aqua;
   width: 100%;
   height: 25%;
 
@@ -135,6 +130,6 @@ export const StImgEditButton = styled.div`
   cursor: pointer;
 
   position: absolute;
-  right: 38px;
-  bottom: 43px;
+  right: 32px;
+  bottom: 30px;
 `;

@@ -8,9 +8,9 @@ import { FaPen } from 'react-icons/fa';
 
 const CardDetail = () => {
   const { data, isLoading } = useGetCardDetail();
-  // if (isLoading || !data) {
-  //   return <div>loading...</div>;
-  // }
+  if (isLoading || !data) {
+    return <div>loading...</div>;
+  }
 
   // 수정모드 동작 상태
   const [isEditMode, setIsEditMode] = useState(false);
