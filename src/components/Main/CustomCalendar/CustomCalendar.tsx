@@ -10,6 +10,7 @@ import {
   StEventContainer,
 } from './styles';
 import Weekday from './Weekday';
+import useGetWeeklyInfo from '../../../api/hooks/Weekly/useGetWeeklyInfo';
 
 interface CalendarProps {
   width: string;
@@ -37,6 +38,8 @@ const CustomCalendar = (props: CalendarProps) => {
   const end3 = new Date(new Date().setDate(start3.getDate() + 1));
   const end4 = new Date(new Date().setDate(start4.getDate() + 1));
 
+  const data = useGetWeeklyInfo();
+  console.log(data);
   const widthPercent = (100 / 7).toString() + '%';
 
   const schedules: ISchedule[] = [
@@ -71,8 +74,8 @@ const CustomCalendar = (props: CalendarProps) => {
     {
       eventId: 0,
       userName: '찬우',
-      startDay: start4,
-      endDay: end4,
+      startDay: start3,
+      endDay: end3,
       title: 'text',
     },
   ];
@@ -128,60 +131,56 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  // const CountArr = Array.from({ length: 32 }, () => [false, false, false]);
-  // console.log('CountArr', CountArr);
   const ArrRef = useRef(Array.from({ length: 32 }, () => [false, false, false]));
+
+  interface Position {
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  }
+
   const returnEvent = useCallback(() => {
-    test();
-    const CountArr = Array.from({ length: 32 }, () => [false, false, false]);
-    const eventArr = schedules.map(item => {
-      const blockCount = item.endDay.getDate() - item.startDay.getDate();
-      const leftCount = item.startDay.getDate() - selectedDate;
-      const leftPercent = (100 / 7) * leftCount + '%';
-      const widthPercent = (100 / 7) * (blockCount + 1) + '%';
+    const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
+    const positions: Position[] = [];
 
-      let tempValue = 0;
-      for (let j = 0; j < 3; j++) {
-        if (ArrRef.current[Number(item.startDay.getDate())][j] === false) {
-          tempValue = j + 1;
-          console.log('tempValue', Number(item.startDay.getDate()), tempValue);
-          break;
-        }
-      }
+    const resultArr = [];
+    for (let i = 0; i < schedules.length; i++) {
+      const value = schedules[i].endDay.getDate() - schedules[i].startDay.getDate();
+      const totalDay = new Date(
+        schedules[i].startDay.getFullYear(),
+        schedules[i].startDay.getMonth() + 1,
+        0
+      ).getDate();
 
-      const topPercent = (100 / 4) * tempValue + '%';
-      console.log('topPercent', topPercent);
+      const blockCount = value >= 0 ? value : Number(totalDay + value);
+      console.log(blockCount);
 
-      for (let i = 0; i < 3; i++) {
-        let isValue = false;
-        const newRefArr = [...ArrRef.current];
-        for (
-          let j = Number(item.startDay.getDate());
-          j <= Number(item.endDay.getDate());
-          j++
-        ) {
-          if (newRefArr[j][i] === false) {
-            console.log('j', j, i);
+      for (let view = 0; view < 3; view++) {
+        const day = schedules[i].startDay.getDate();
 
-            newRefArr[i][j] = true;
-            isValue = true;
+        if (calendarDays[day][view] === false) {
+          for (let i = 0; i < blockCount + 1; i++) {
+            calendarDays[day + i][view] = true;
+            console.log(true, day + i, view);
           }
-        }
 
-        if (isValue === true) {
-          ArrRef.current = newRefArr;
+          const top = (100 / 4) * (view + 1) + '%';
+          const leftCount = schedules[i].startDay.getDate() - selectedDate;
+          const leftPercent = (100 / 7) * leftCount + 0.35 + '%';
+          const widthPercent = (100 / 7) * (blockCount + 1) - 2 + '%';
+
+          resultArr.push(
+            <StEventBlock top={top} width={widthPercent} left={leftPercent}>
+              {schedules[i].title}
+            </StEventBlock>
+          );
           break;
         }
       }
+    }
 
-      return (
-        <StEventBlock top={topPercent} width={widthPercent} left={leftPercent}>
-          {item.title}
-        </StEventBlock>
-      );
-    });
-
-    return eventArr;
+    return resultArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
   return (
@@ -197,10 +196,3 @@ const CustomCalendar = (props: CalendarProps) => {
 };
 
 export default CustomCalendar;
-
-function test() {
-  const testCountArr = Array.from({ length: 32 }, () => [false, false, false]);
-  console.log('testCountArr', testCountArr);
-  testCountArr[25][1] = true;
-  console.log('testCountArr', testCountArr);
-}
