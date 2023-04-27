@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import * as UI from './style';
 import Vacation from './Vacation/Vacation';
 import { useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
@@ -54,12 +53,10 @@ const VacationTab = () => {
   const icon = <CalendarIcon usage="title" />;
 
   return (
-    <Board icon={icon} title="휴가 요청">
-      <UI.StInsideBlock ref={targetDiv}>
-        {vacations?.map((vacation: VacationList) => {
-          return <Vacation key={vacation.Id} vacation={vacation} />;
-        })}
-      </UI.StInsideBlock>
+    <Board icon={icon} title="휴가 요청" targetDiv={targetDiv}>
+      {vacations?.map((vacation: VacationList) => {
+        return <Vacation key={vacation.Id} vacation={vacation} />;
+      })}
     </Board>
   );
 };

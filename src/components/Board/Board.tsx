@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import * as UI from './style';
 
 interface ComponentProps {
@@ -6,9 +6,10 @@ interface ComponentProps {
   icon: React.ReactElement | string;
   title: string;
   types?: 'MyPage' | 'ManagerPage';
+  targetDiv: RefObject<HTMLDivElement>;
 }
 
-const Board = ({ children, icon, title, types }: ComponentProps) => {
+const Board = ({ children, icon, title, types, targetDiv }: ComponentProps) => {
   return (
     <UI.StTabBlock types={types}>
       <UI.StIconBlock>
@@ -16,7 +17,7 @@ const Board = ({ children, icon, title, types }: ComponentProps) => {
         {icon}
         <UI.StTitleSpan>{title}</UI.StTitleSpan>
       </UI.StIconBlock>
-      {children}
+      <UI.StInsideBlock ref={targetDiv}>{children}</UI.StInsideBlock>
     </UI.StTabBlock>
   );
 };

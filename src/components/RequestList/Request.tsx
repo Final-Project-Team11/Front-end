@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import * as UI from './style';
 import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';
@@ -40,8 +39,8 @@ const Request = () => {
 
   if (isLoading) {
     return (
-      <Board icon={icon} title="RequestedList">
-        <UI.StInsideBlock ref={targetDiv}></UI.StInsideBlock>
+      <Board icon={icon} title="RequestedList" targetDiv={targetDiv}>
+        ...loading
       </Board>
     );
   }
@@ -54,12 +53,10 @@ const Request = () => {
     : [];
 
   return (
-    <Board icon={icon} title="출장 관련">
-      <UI.StInsideBlock ref={targetDiv}>
-        {requests.map(request => {
-          return <RequestedOne key={request.Id} request={request} />;
-        })}
-      </UI.StInsideBlock>
+    <Board icon={icon} title="출장 관련" targetDiv={targetDiv}>
+      {requests.map(request => {
+        return <RequestedOne key={request.Id} request={request} />;
+      })}
     </Board>
   );
 };
