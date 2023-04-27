@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
-
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';
-import { RequestInfo } from './interfaces';
+import { RequestTabType } from './interfaces';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
 
@@ -48,7 +47,7 @@ const Request = () => {
   }
 
   const requests = data
-    ? data.pages.reduce<RequestInfo[]>(
+    ? data.pages.reduce<RequestTabType[]>(
         (acc, page) => (page.schedule ? [...acc, ...page.schedule] : acc),
         []
       )
@@ -58,7 +57,7 @@ const Request = () => {
     <Board icon={icon} title="출장 관련">
       <UI.StInsideBlock ref={targetDiv}>
         {requests.map(request => {
-          return <RequestedOne key={request.eventId} request={request} />;
+          return <RequestedOne key={request.Id} request={request} />;
         })}
       </UI.StInsideBlock>
     </Board>

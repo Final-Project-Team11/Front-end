@@ -5,7 +5,6 @@ import { useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
-import { COLOR } from '../../styles/colors';
 
 const VacationTab = () => {
   // Vacation 리스트 GET 요청
@@ -58,7 +57,7 @@ const VacationTab = () => {
     <Board icon={icon} title="휴가 요청">
       <UI.StInsideBlock ref={targetDiv}>
         {vacations?.map((vacation: VacationList) => {
-          return <Vacation key={vacation.eventId} vacation={vacation} />;
+          return <Vacation key={vacation.Id} vacation={vacation} />;
         })}
       </UI.StInsideBlock>
     </Board>

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from './style';
-import { DetailProps } from './interfaces';
+import { DetailProps } from '../interfaces';
 
 const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
   if (isLoading || !data) {
@@ -27,22 +27,24 @@ const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
     <UI.Modal>
       <UI.Header>
         <UI.HeaderIcon />
-        <UI.TitleSpan>{files.enrollDay}</UI.TitleSpan>
+        <UI.TitleSpan>{files.start}</UI.TitleSpan>
         <UI.TitleSpan>{files.userName}</UI.TitleSpan>
         <UI.TitleSpan>{files.title}</UI.TitleSpan>
         <UI.CloseButton onClick={closeModal}>닫기</UI.CloseButton>
         <UI.Devider positions="Header" />
       </UI.Header>
       <UI.ContentArea>
-        <UI.ContentSpan>{files.content}</UI.ContentSpan>
+        <UI.ContentSpan>{files.body}</UI.ContentSpan>
       </UI.ContentArea>
       <UI.Footer>
         <UI.FooterHalf>
-          <UI.FooterSpanBlock>{files.fileName}</UI.FooterSpanBlock>
+          {files.files.map(file => {
+            return <UI.FooterSpanBlock>{file.fileName}</UI.FooterSpanBlock>;
+          })}
         </UI.FooterHalf>
         <UI.Devider positions="Footer" />
         <UI.FooterHalf>
-          {files.ref?.map((tag, idx) => {
+          {files.attendees?.map((tag, idx) => {
             return <UI.FooterSpanBlock key={idx}>@ {tag}</UI.FooterSpanBlock>;
           })}
         </UI.FooterHalf>

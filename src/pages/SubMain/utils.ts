@@ -1,11 +1,5 @@
 import { Options, TZDate } from '@toast-ui/calendar';
-import {
-  CalendarProps,
-  InitialCalendar,
-  ScheduleProps,
-  ServerProps,
-  VacationProps,
-} from './interfaces';
+import { CalendarProps, InitialCalendar, ServerProps, VacationProps } from './interfaces';
 import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
@@ -33,63 +27,42 @@ export function subtractDate(d: TZDate, steps: number) {
   return date;
 }
 
-export function settingSchedule(schedule: ScheduleProps): CalendarProps {
-  const ISSUE = 'Issues';
-  const OTHER = 'Others';
-  const BUSINESS_TRIP = 'Schedules';
-  const MEETING = 'Meetings';
-  const REPORT = 'Reports';
-  const MEETINGREPORT = 'MeetingReport';
+export function settingSchedule(schedule: CalendarProps): CalendarProps {
+  const MEETING = '0';
+  const EVENT = '1';
+  const BUSINESS_TRIP = '2';
+  const ISSUE = '3';
 
   const title = schedule?.userName
     ? schedule?.title + '-' + schedule?.userName
-    : schedule?.eventType;
+    : schedule?.calendarId;
 
   const newData = {
-    id: schedule?.eventId,
-    calendarId: schedule?.eventType,
+    id: schedule?.Id?.toString(),
+    calendarId: schedule?.calendarId,
     title: title,
-    start: schedule.startDay,
-    end: schedule.endDay,
-    body: schedule.content,
-    attendees: schedule.mentions,
+    start: schedule.start,
+    end: schedule.end,
+    body: schedule.body,
+    attendees: schedule.attendees,
     userName: schedule.userName,
     userId: schedule.userId,
-    fileName: schedule.fileName,
-    fileLocation: schedule.fileLocation,
+    files: schedule.files,
   };
 
-  switch (schedule?.eventType) {
-    case ISSUE:
+  switch (schedule?.calendarId) {
+    case MEETING:
       return {
         ...newData,
         backgroundColor: COLOR.CONBANTION_BAR,
         borderColor: COLOR.CONBANTION_BAR,
         dragBackgroundColor: COLOR.CONBANTION_BAR,
         color: COLOR.WHITE_COLOR,
-        end: schedule.startDay,
+        end: schedule.end,
         isReadOnly: true,
         location: schedule.location,
       };
-    case REPORT:
-      return {
-        ...newData,
-        backgroundColor: COLOR.OTHER_BAR,
-        borderColor: COLOR.OTHER_BAR_BOARD,
-        dragBackgroundColor: COLOR.OTHER_BAR,
-        start: schedule.enrollDay,
-        end: schedule.enrollDay,
-        isReadOnly: true,
-      };
-    case OTHER:
-      return {
-        ...newData,
-        backgroundColor: COLOR.OTHER_BAR,
-        borderColor: COLOR.OTHER_BAR_BOARD,
-        dragBackgroundColor: COLOR.OTHER_BAR,
-        isReadOnly: true,
-      };
-    case MEETINGREPORT:
+    case EVENT:
       return {
         ...newData,
         backgroundColor: COLOR.OTHER_BAR,
@@ -105,7 +78,7 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
         dragBackgroundColor: COLOR.BUSINESS_TRIP_BAR,
         isReadOnly: true,
       };
-    case MEETING:
+    case ISSUE:
       return {
         ...newData,
         backgroundColor: COLOR.MEETING_BAR,
@@ -113,7 +86,6 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
         dragBackgroundColor: COLOR.MEETING_BAR,
         isReadOnly: true,
         location: schedule.location,
-        end: schedule.startDay,
       };
 
     default:
@@ -128,7 +100,7 @@ export function settingSchedule(schedule: ScheduleProps): CalendarProps {
   }
 }
 
-export function settingVacation(vacation: VacationProps) {
+export function settingVacation(vacation: CalendarProps) {
   const VACATION = '휴가';
   const HALF_DAY_OFF = '반차';
   const MONTHLY_VACTION = '월차';
@@ -139,10 +111,10 @@ export function settingVacation(vacation: VacationProps) {
     : vacation?.typeDetail;
 
   const newData = {
-    id: vacation?.eventId,
+    id: vacation?.Id,
     calendarId: vacation?.typeDetail,
-    start: vacation.startDay,
-    end: vacation.endDay,
+    start: vacation.start,
+    end: vacation.end,
     title: title,
     userName: vacation.userName,
   };
@@ -208,7 +180,7 @@ export function initCalendar(tab: boolean): InitialCalendar[] {
       },
       {
         id: '1',
-        name: '기타',
+        name: '이벤트',
         backgroundColor: COLOR.OTHER_BAR,
         borderColor: COLOR.OTHER_BAR_BOARD,
         dragBackgroundColor: COLOR.OTHER_BAR_BOARD,
@@ -329,14 +301,20 @@ export function getCanlendarName(tab: boolean, id: string | undefined): string {
 
 interface postFormatProps {
   url: string;
-  postInfo: ServerProps;
+  postInfo: CalendarProps;
 }
 
 export function postFormat(tab: boolean, schedule: CalendarProps): postFormatProps {
+  const strStart = schedule.start?.toString();
+  const start = new Date(strStart || '');
+
+  const strEnd = schedule.end?.toString();
+  const end = new Date(strEnd || '');
   const defaultFormat = {
-    startDay: schedule.start?.toString(),
+    start: start,
+    end: end,
     title: schedule.title,
-    content: schedule.body,
+    body: schedule.body,
   };
 
   if (tab === false) {
@@ -347,11 +325,9 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.attendees,
-            file: schedule.file,
-            eventType: 'Issues',
-            endDay: schedule.end?.toString(),
-            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
+            attendees: schedule.attendees,
+            fileList: schedule.fileList,
+            calendarId: schedule.calendarId,
           },
         };
         return postData;
@@ -359,12 +335,13 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
 
       case '1': {
         const postData = {
-          url: 'other',
+          url: 'meeting',
           postInfo: {
             ...defaultFormat,
-            ref: schedule.attendees,
-            file: schedule.file,
-            endDay: schedule.end?.toString(),
+            location: schedule.location,
+            attendees: schedule.attendees,
+            calendarId: schedule.calendarId,
+            fileList: schedule.fileList,
           },
         };
         return postData;
@@ -375,9 +352,8 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.attendees,
-            file: schedule.file,
-            endDay: schedule.end?.toString(),
+            attendees: schedule.attendees,
+            fileList: schedule.fileList,
           },
         };
         return postData;
@@ -388,10 +364,9 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
           postInfo: {
             ...defaultFormat,
             location: schedule.location,
-            ref: schedule.attendees,
-            file: schedule.file,
-            eventType: 'Meetings',
-            startTime: schedule.start?.getHours() + ':' + schedule.start?.getMinutes(),
+            attendees: schedule.attendees,
+            fileList: schedule.fileList,
+            calendarId: schedule.calendarId,
           },
         };
         return postData;
@@ -409,9 +384,9 @@ export function postFormat(tab: boolean, schedule: CalendarProps): postFormatPro
     const postData = {
       url: 'vacation',
       postInfo: {
-        typeDetail: getCanlendarName(tab, schedule.calendarId),
-        startDay: schedule.start?.toString(),
-        endDay: schedule.end?.toString(),
+        typeDetail: schedule.calendarId,
+        start: start,
+        end: end,
       },
     };
     return postData;

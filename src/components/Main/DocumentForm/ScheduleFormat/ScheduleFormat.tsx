@@ -21,12 +21,16 @@ import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 
-const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: ScheduleProps) => {
+const ScheduleFormat = ({
+  props,
+  onReturnHandler,
+  onCancelHandler,
+  propsRef,
+}: ScheduleProps) => {
   const mutation = usePostschedule();
   const [zoomClick, setZoomClick] = useState(false);
   const [tab] = useContext(ChangeTabContext);
-  const { data, isLoading } = useGetTeamInfo();
-  const [FormFiles, SetFormFile] = useState<File>();
+  const [FormFiles, SetFormFile] = useState<File[]>();
 
   const token = getCookie('token');
   const decoded = token && jwtDecode<JwtPayload>(token);
@@ -39,7 +43,7 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    console.log('props', props.userName);
+    console.log('props', props);
     props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInputValue(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
@@ -60,7 +64,7 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
         if (result.isConfirmed) {
           const newProps = {
             ...props,
-            file: FormFiles,
+            fileList: FormFiles,
             attendees: mention,
             body: content,
             title: title,
@@ -111,7 +115,7 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
   };
 
   return (
-    <styles.StContainer ref={props.propsRef}>
+    <styles.StContainer ref={propsRef}>
       <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
@@ -188,12 +192,7 @@ const ScheduleFormat = ({ props, onReturnHandler, onCancelHandler }: SchedulePro
           </styles.StOpenButton>
         </styles.StOpenBlock>
         <styles.StFileBlock>
-          <FileUpload
-            fileName={props.fileName}
-            fileLocation={props.fileLocation}
-            onFileHandler={SetFormFile}
-            disable={disable}
-          />
+          <FileUpload onFileHandler={SetFormFile} disable={disable} files={props.files} />
         </styles.StFileBlock>
       </styles.StContentBlock>
 

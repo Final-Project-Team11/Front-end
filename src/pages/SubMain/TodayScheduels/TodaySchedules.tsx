@@ -55,7 +55,7 @@ const TodaySchedules = (props: TodaysProps) => {
                     </styles.StBlock>
                   </styles.StContentBlock>
                   <styles.StIconBlock>
-                    <div>{item.fileLocation && <FolderIcon />}</div>
+                    <div>{item.files && <FolderIcon />}</div>
                     <div style={{ marginBottom: '-5px' }}>
                       {item.attendees && <TagIcon />}
                     </div>
