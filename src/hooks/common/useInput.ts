@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-// 평범한 useInput
 export function useInput(
-  maxLength?: number
+  maxLength?: number,
+  initialValue?: string
 ): [string, (e: React.ChangeEvent<HTMLInputElement>) => void, (value: string) => void] {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(initialValue || '');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (maxLength) {
