@@ -13,9 +13,11 @@ const useGetWeeklyInfo = () => {
           today.getMonth() + 1
         }&day=${today.getDate()}`
       );
-      return data;
+      return data.data;
     },
   });
+
+  return { data, isLoading };
 };
 
 export default useGetWeeklyInfo;
