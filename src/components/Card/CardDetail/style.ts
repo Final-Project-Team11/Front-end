@@ -39,6 +39,8 @@ export const StTopLeftBlock = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  position: relative;
 `;
 
 export const StProfileImg = styled.div`
@@ -60,10 +62,12 @@ export const StProfileImg = styled.div`
     object-fit: cover;
   }
 `;
+
 export const StProfileModifyInput = styled.input`
   background-color: beige;
   width: 150px;
   height: 30px;
+  display: none;
 `;
 
 export const StMiddleBlock = styled.div`
@@ -114,4 +118,23 @@ export const StInfoSpan = styled.span`
 
 export const StModifyInput = styled.input`
   width: 200px;
+`;
+
+export const StImgEditButton = styled.div`
+  background-color: white;
+  width: 25px;
+  height: 25px;
+
+  border: 2px solid black;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 38px;
+  bottom: 43px;
 `;

@@ -4,6 +4,7 @@ import { StButton } from '../../Button/styles';
 import useInput from '../../../hooks/common/useInput';
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
+import { FaPen } from 'react-icons/fa';
 
 const CardDetail = () => {
   const { data, isLoading } = useGetCardDetail();
@@ -55,21 +56,30 @@ const CardDetail = () => {
     mutate(formData);
   };
 
+  const handleButtonClick = () => {
+    imgInputRef?.current?.click();
+  };
+
   return (
     <UI.StCardDetailBlock>
       <UI.StTopBlock>
         <UI.StTopLeftBlock>
           <UI.StProfileImg>
             <img src={img ? (img.result as string) : data?.profileImg} alt="" />
+            {isEditMode && (
+              <>
+                <UI.StProfileModifyInput
+                  type="file"
+                  ref={imgInputRef}
+                  accept="image/*"
+                  onChange={imgPreviewHandler}
+                />
+                <UI.StImgEditButton onClick={handleButtonClick}>
+                  <FaPen />
+                </UI.StImgEditButton>
+              </>
+            )}
           </UI.StProfileImg>
-          {isEditMode && (
-            <UI.StProfileModifyInput
-              type="file"
-              ref={imgInputRef}
-              accept="image/*"
-              onChange={imgPreviewHandler}
-            />
-          )}
         </UI.StTopLeftBlock>
         <UI.StTopRightBlock></UI.StTopRightBlock>
       </UI.StTopBlock>
