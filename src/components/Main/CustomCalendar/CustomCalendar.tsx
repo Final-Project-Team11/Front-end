@@ -103,8 +103,6 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  const ArrRef = useRef(Array.from({ length: 32 }, () => [false, false, false]));
-
   interface Position {
     top: number;
     left: number;
@@ -114,8 +112,6 @@ const CustomCalendar = (props: CalendarProps) => {
 
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
-    const positions: Position[] = [];
-
     const resultArr = [];
 
     for (let i = 0; i < events.length; i++) {
