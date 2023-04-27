@@ -10,7 +10,6 @@ const StWeekdayBlock = styled.div<DayProps>`
   height: 90px;
   text-align: center;
   border: none;
-  border-right: 1px solid lightgray;
 `;
 
 const StScheduleblock = styled.div<WeedayCssProps>`
