@@ -37,8 +37,18 @@ const CustomCalendar = (props: CalendarProps) => {
 
     return { ...item, start: start, end: end };
   });
-  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => item);
-  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => item);
+  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
+  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
   const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
     const start = new Date(item.start);
     const end = new Date(item.end);
@@ -111,6 +121,7 @@ const CustomCalendar = (props: CalendarProps) => {
     width: number;
     height: number;
   }
+  console.log(events);
 
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
