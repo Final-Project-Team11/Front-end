@@ -13,6 +13,7 @@ export const usePatchDetail = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_CARD_DETAIL]);
+      queryClient.invalidateQueries([keys.GET_CARD_INFO]);
     },
   });
   return {
