@@ -38,6 +38,7 @@ interface EventProps {
   top?: string;
   width?: string;
   left?: string;
+  backgroundColor?: string;
 }
 
 const StEventBlock = styled.div<EventProps>`
@@ -46,7 +47,8 @@ const StEventBlock = styled.div<EventProps>`
   top: ${({ top }) => (top ? top : '14px')};
   left: ${({ left }) => (left ? left : '14%')};
 
-  background-color: blue;
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : 'blue'};
   color: white;
 
   white-space: nowrap;
