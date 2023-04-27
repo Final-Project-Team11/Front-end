@@ -55,8 +55,8 @@ export const StProfileImg = styled.div`
   overflow: hidden;
 
   img {
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 `;
@@ -105,4 +105,13 @@ export const StBottomBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+`;
+
+export const StInfoSpan = styled.span`
+  font-size: 30px;
+  font-weight: bolder;
+`;
+
+export const StModifyInput = styled.input`
+  width: 200px;
 `;
