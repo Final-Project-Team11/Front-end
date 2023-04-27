@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ISchedule } from './interfaces';
+import { ISchedule, IWeeklyInfo } from './interfaces';
 import {
   StWeek,
   StContainer,
@@ -11,6 +11,8 @@ import {
 } from './styles';
 import Weekday from './Weekday';
 import useGetWeeklyInfo from '../../../api/hooks/Weekly/useGetWeeklyInfo';
+import { is } from 'cheerio/lib/api/traversing';
+import { getScheduleColor } from '../../../pages/SubMain/utils';
 
 interface CalendarProps {
   width: string;
@@ -26,59 +28,29 @@ const CustomCalendar = (props: CalendarProps) => {
 
   const width = props.width.split('px')[0];
 
-  const start = new Date();
-  const start1 = new Date(new Date().setDate(start.getDate() + 1));
-  const start2 = new Date(new Date().setDate(start.getDate() + 2));
-  const start3 = new Date(new Date().setDate(start.getDate() + 3));
-  const start4 = new Date(new Date().setDate(start.getDate() + 4));
-
-  const end = new Date(new Date().setDate(start.getDate() + 1));
-  const end1 = new Date(new Date().setDate(start1.getDate() + 1));
-  const end2 = new Date(new Date().setDate(start2.getDate() + 1));
-  const end3 = new Date(new Date().setDate(start3.getDate() + 1));
-  const end4 = new Date(new Date().setDate(start4.getDate() + 1));
-
-  const data = useGetWeeklyInfo();
-  console.log(data);
+  const { data, isLoading } = useGetWeeklyInfo();
   const widthPercent = (100 / 7).toString() + '%';
 
-  const schedules: ISchedule[] = [
-    {
-      eventId: 0,
-      userName: '찬우',
-      startDay: start,
-      endDay: end,
-      title: 'textsadadasdasdasdasdadasdasdsadsadas',
-    },
-    {
-      eventId: 0,
-      userName: '찬우',
-      startDay: start1,
-      endDay: end1,
-      title: 'text',
-    },
-    {
-      eventId: 0,
-      userName: '찬우',
-      startDay: start2,
-      endDay: end2,
-      title: 'text',
-    },
-    {
-      eventId: 0,
-      userName: '찬우',
-      startDay: start3,
-      endDay: end3,
-      title: 'text',
-    },
-    {
-      eventId: 0,
-      userName: '찬우',
-      startDay: start3,
-      endDay: end3,
-      title: 'text',
-    },
-  ];
+  const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
+  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => item);
+  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => item);
+  const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
+
+  const events: IWeeklyInfo[] = [];
+  issue !== undefined && events.push(...issue);
+  other !== undefined && events.push(...other);
+  schedule !== undefined && events.push(...schedule);
+  meeting !== undefined && events.push(...meeting);
 
   const week = ['SUN', 'MON', 'TUE', 'WEN', 'THU', 'FRI', 'SAT']; //일주일
   const [selectedYear, setSelectedYear] = useState(today.year); //현재 선택된 연도
@@ -145,34 +117,34 @@ const CustomCalendar = (props: CalendarProps) => {
     const positions: Position[] = [];
 
     const resultArr = [];
-    for (let i = 0; i < schedules.length; i++) {
-      const value = schedules[i].endDay.getDate() - schedules[i].startDay.getDate();
-      const totalDay = new Date(
-        schedules[i].startDay.getFullYear(),
-        schedules[i].startDay.getMonth() + 1,
-        0
-      ).getDate();
 
-      const blockCount = value >= 0 ? value : Number(totalDay + value);
-      console.log(blockCount);
+    for (let i = 0; i < events.length; i++) {
+      const value = events[i].end.getDate() - events[i].start.getDate();
+      const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
 
       for (let view = 0; view < 3; view++) {
-        const day = schedules[i].startDay.getDate();
+        const day = events[i].start.getDate();
 
         if (calendarDays[day][view] === false) {
           for (let i = 0; i < blockCount + 1; i++) {
             calendarDays[day + i][view] = true;
-            console.log(true, day + i, view);
           }
 
           const top = (100 / 4) * (view + 1) + '%';
-          const leftCount = schedules[i].startDay.getDate() - selectedDate;
+          const leftValue = events[i].start.getDate() - selectedDate;
+          const leftCount = leftValue >= 0 ? leftValue : leftValue + dateTotalCount;
           const leftPercent = (100 / 7) * leftCount + 0.35 + '%';
           const widthPercent = (100 / 7) * (blockCount + 1) - 2 + '%';
+          const backgroundColor = getScheduleColor(false, events[i].calendarId);
 
           resultArr.push(
-            <StEventBlock top={top} width={widthPercent} left={leftPercent}>
-              {schedules[i].title}
+            <StEventBlock
+              top={top}
+              width={widthPercent}
+              left={leftPercent}
+              backgroundColor={backgroundColor}
+            >
+              {events[i].title}
             </StEventBlock>
           );
           break;
@@ -181,7 +153,7 @@ const CustomCalendar = (props: CalendarProps) => {
     }
 
     return resultArr;
-  }, [selectedYear, selectedMonth, dateTotalCount]);
+  }, [selectedYear, selectedMonth, events]);
 
   return (
     <StContainer width={width}>
@@ -189,7 +161,7 @@ const CustomCalendar = (props: CalendarProps) => {
       <StLine />
       <div style={{ position: 'relative' }}>
         <StDateBlcok>{returnDay()}</StDateBlcok>
-        <StEventContainer>{returnEvent()}</StEventContainer>
+        {data !== undefined && <StEventContainer>{returnEvent()}</StEventContainer>}
       </div>
     </StContainer>
   );
