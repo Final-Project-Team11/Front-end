@@ -1,20 +1,21 @@
+import apis from '../../../api/axios/api';
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
 import { AdminLoginInfo } from '../components/AdminLoginForm';
-import apis from '../../../api/axios/api';
+import { UserLoginInfo } from '../components/UserLoginForm';
 
 export type LoginResponse = {
   token: string;
   message: string;
 };
-
-export const useAdminLogin = (reset: () => void) => {
+// hook에 uri와 콜백함수를 인수로 전달
+export const useLogin = (reset: () => void, loginUri: string) => {
   const navigate = useNavigate();
 
-  const login = useMutation<LoginResponse, Error, AdminLoginInfo>({
-    mutationFn: async (item: AdminLoginInfo) => {
-      const data = await apis.post<LoginResponse>('/auth/admin', item);
+  const login = useMutation<LoginResponse, Error, AdminLoginInfo | UserLoginInfo>({
+    mutationFn: async (item: AdminLoginInfo | UserLoginInfo) => {
+      const data = await apis.post<LoginResponse>(loginUri, item);
       return data.data;
     },
     onSuccess: data => {
@@ -27,9 +28,9 @@ export const useAdminLogin = (reset: () => void) => {
       reset();
     },
   });
-  const AdminLoginHandler = (data: AdminLoginInfo) => {
+  const loginHandler = (data: AdminLoginInfo | UserLoginInfo) => {
     login.mutate(data);
   };
 
-  return { AdminLoginHandler };
+  return { loginHandler };
 };
