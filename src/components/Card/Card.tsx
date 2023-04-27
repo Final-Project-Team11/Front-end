@@ -12,14 +12,15 @@ const Card = ({ tab }: CardProps) => {
   const { data, refetch, isLoading } = useGetCardDetail();
   const [openModal, setOpenModal] = useState(false);
 
+  if (infoIsLoading || !userInfo) {
+    return <h1>...loading</h1>;
+  }
+
+  // 카드 클릭 시 Detail 요청, Modal open
   const onClickCardHandler = () => {
     refetch();
     setOpenModal(true);
   };
-
-  if (infoIsLoading || !userInfo) {
-    return <h1>...loading</h1>;
-  }
 
   return (
     <>
@@ -39,9 +40,9 @@ const Card = ({ tab }: CardProps) => {
           <img src={profileImg} alt="" />
         </UI.StProfileImg>
       </UI.StCardBlock>
-      {openModal && (
+      {openModal && data && (
         <Modal closeModal={() => setOpenModal(false)}>
-          <CardDetail />
+          <CardDetail data={data} />
         </Modal>
       )}
     </>
