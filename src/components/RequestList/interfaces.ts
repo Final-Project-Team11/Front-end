@@ -16,6 +16,7 @@ export interface RequestInfo {
 export interface DetailProps {
   data: RequestInfo | undefined;
   isLoading: boolean;
+  closeModal: () => void;
 }
 
 export interface RequestTabType {
@@ -26,4 +27,9 @@ export interface RequestTabType {
   title: string;
   userName: string;
   files: File[];
+}
+
+export interface DecideParams {
+  eventId: number;
+  types: string;
 }

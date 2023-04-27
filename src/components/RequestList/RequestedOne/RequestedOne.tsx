@@ -54,7 +54,7 @@ const RequestedOne = ({ request }: { request: RequestTabType }) => {
       </UI.StRequestedListBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
-          <RequestDetail data={data} isLoading={isLoading} />
+          <RequestDetail data={data} isLoading={isLoading} closeModal={closeModal} />
         </Modal>
       )}
     </>
