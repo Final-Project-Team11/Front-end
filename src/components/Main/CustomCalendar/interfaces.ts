@@ -5,3 +5,14 @@ export interface ISchedule {
   endDay: Date;
   title: string;
 }
+
+export interface IWeeklyInfo {
+  Id: number | string;
+  body: string;
+  calendarId: string;
+  end: Date;
+  start: Date;
+  title: string;
+  userId: string;
+  userName: string;
+}
