@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
 // 👆 Atom-component
-import { useLogin } from '../hooks/useUserLogin';
 import { SubmitForm } from '../styles';
 import { AdminLoginInfo } from './AdminLoginForm';
+import { useLogin } from '../hooks/useLogin';
 
 export type UserLoginInfo = AdminLoginInfo & {
   userId: string;
@@ -15,10 +15,10 @@ const UserLoginForm = () => {
   // react-hook-form의 객체를 생성
   const { register, handleSubmit, reset } = useForm<UserLoginInfo>();
   // hook에 제출 함수를 가져옴
-  const { userLoginHandler } = useLogin(reset);
+  const { loginHandler } = useLogin(reset, 'auth/user');
 
   return (
-    <SubmitForm onSubmit={handleSubmit(userLoginHandler)}>
+    <SubmitForm onSubmit={handleSubmit(loginHandler)}>
       <CustomInput
         inputType="login"
         placeholder="대표자 아이디를 입력해주세요"

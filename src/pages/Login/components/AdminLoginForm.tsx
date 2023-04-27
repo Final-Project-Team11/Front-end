@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
 // 👆 Atom-component
-import { useAdminLogin } from '../hooks/useAdminLogin';
 import { TextWrapper, SubmitForm, StSpan } from '../styles';
+import { useLogin } from '../hooks/useLogin';
 
 export type AdminLoginInfo = {
   companyId: string;
@@ -17,7 +17,7 @@ const AdminLoginForm = () => {
   // react-hook-form의 객체를 생성
   const { register, handleSubmit, reset } = useForm<AdminLoginInfo>();
   // hook에 제출 함수를 가져옴
-  const { AdminLoginHandler } = useAdminLogin(reset);
+  const { loginHandler } = useLogin(reset, 'auth/admin');
   const navigate = useNavigate();
 
   //아이디/비밀번호 찾기 클릭 시 표출
@@ -29,7 +29,7 @@ const AdminLoginForm = () => {
   };
 
   return (
-    <SubmitForm onSubmit={handleSubmit(AdminLoginHandler)}>
+    <SubmitForm onSubmit={handleSubmit(loginHandler)}>
       <CustomInput
         inputType="login"
         placeholder="대표자 아이디를 입력해주세요"
