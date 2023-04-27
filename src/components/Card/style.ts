@@ -62,11 +62,12 @@ export const StInfoSpan = styled.span`
 `;
 
 export const StProfileImg = styled.div`
-  background-color: white;
   width: 55px;
   height: 55px;
 
   margin-bottom: 20px;
+
+  overflow: hidden;
 
   border-radius: 50%;
 
@@ -75,8 +76,8 @@ export const StProfileImg = styled.div`
   align-items: center;
 
   img {
-    width: 80%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 `;

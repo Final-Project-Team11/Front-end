@@ -3,13 +3,12 @@ import * as UI from './style';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import profileImg from '../../assets/images/profile-default.jpg';
 import { CardProps } from './interfaces';
-import { useGetCardDetail } from '../../api/hooks/Card/useGetCardDetail';
 import Modal from '../Modal/Modal';
 import CardDetail from './CardDetail/CardDetail';
 
 const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
-  const { data, refetch, isLoading } = useGetCardDetail();
+
   const [openModal, setOpenModal] = useState(false);
 
   if (infoIsLoading || !userInfo) {
@@ -18,7 +17,6 @@ const Card = ({ tab }: CardProps) => {
 
   // 카드 클릭 시 Detail 요청, Modal open
   const onClickCardHandler = () => {
-    refetch();
     setOpenModal(true);
   };
 
@@ -37,12 +35,12 @@ const Card = ({ tab }: CardProps) => {
           ) : null}
         </UI.StInfoBlock>
         <UI.StProfileImg>
-          <img src={profileImg} alt="" />
+          <img src={userInfo.profileImg} alt="asdfasdfasd" />
         </UI.StProfileImg>
       </UI.StCardBlock>
-      {openModal && data && (
+      {openModal && (
         <Modal closeModal={() => setOpenModal(false)}>
-          <CardDetail data={data} />
+          <CardDetail />
         </Modal>
       )}
     </>

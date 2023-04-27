@@ -1,17 +1,22 @@
 import React, { useRef, useState } from 'react';
 import * as UI from './style';
-import { CardInfoType } from '../interfaces';
 import { StButton } from '../../Button/styles';
 import useInput from '../../../hooks/common/useInput';
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
+import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
 
-const CardDetail = ({ data }: { data: CardInfoType }) => {
+const CardDetail = () => {
+  const { data, isLoading } = useGetCardDetail();
+  // if (isLoading || !data) {
+  //   return <div>loading...</div>;
+  // }
+
   // 수정모드 동작 상태
   const [isEditMode, setIsEditMode] = useState(false);
 
   // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정
-  const [birthDay, birthDayHandler] = useInput(undefined, data.birthDay);
-  const [phoneNum, phoneNumHandler] = useInput(undefined, data.phoneNum);
+  const [birthDay, birthDayHandler] = useInput(undefined, data?.birthDay);
+  const [phoneNum, phoneNumHandler] = useInput(undefined, data?.phoneNum);
 
   // 인풋에서 이미지 가져올 useRef
   const imgInputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +60,7 @@ const CardDetail = ({ data }: { data: CardInfoType }) => {
       <UI.StTopBlock>
         <UI.StTopLeftBlock>
           <UI.StProfileImg>
-            <img src={img ? (img.result as string) : data.profileImg} alt="" />
+            <img src={img ? (img.result as string) : data?.profileImg} alt="" />
           </UI.StProfileImg>
           {isEditMode && (
             <UI.StProfileModifyInput
@@ -74,7 +79,7 @@ const CardDetail = ({ data }: { data: CardInfoType }) => {
           {isEditMode ? (
             <UI.StModifyInput value={birthDay} onChange={birthDayHandler} />
           ) : (
-            <UI.StInfoSpan>{data.birthDay}</UI.StInfoSpan>
+            <UI.StInfoSpan>{data?.birthDay}</UI.StInfoSpan>
           )}
         </UI.StInfoBlock>
         <UI.StInfoBlock>
@@ -82,12 +87,12 @@ const CardDetail = ({ data }: { data: CardInfoType }) => {
           {isEditMode ? (
             <UI.StModifyInput value={phoneNum} onChange={phoneNumHandler} />
           ) : (
-            <UI.StInfoSpan>{data.phoneNum}</UI.StInfoSpan>
+            <UI.StInfoSpan>{data?.phoneNum}</UI.StInfoSpan>
           )}
         </UI.StInfoBlock>
       </UI.StMiddleBlock>
       <UI.StBottomBlock>
-        <UI.StInfoType>입사일{data.joinDay}</UI.StInfoType>
+        <UI.StInfoType>입사일{data?.joinDay}</UI.StInfoType>
         {/* 수정모드 진입 버튼 */}
         {isEditMode ? (
           <StButton
