@@ -12,6 +12,7 @@ import { CloseModal } from '../interfaces';
 import { BsXSquareFill } from 'react-icons/bs';
 import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
+import CustomButton from '../../Atoms/Button/CustomButton';
 
 const CardDetail = ({ closeModal }: CloseModal) => {
   const { data } = useGetCardDetail();
@@ -211,16 +212,24 @@ const CardDetail = ({ closeModal }: CloseModal) => {
           <UI.StInfoType>입사일{data.joinDay}</UI.StInfoType>
           {/* 수정모드 진입 버튼 */}
           {isEditMode ? (
-            <button
+            <CustomButton
+              buttonType="Detail"
+              type="button"
               onClick={() => {
                 setIsEditMode(false);
                 inputSubmitHandler();
               }}
             >
               수정완료
-            </button>
+            </CustomButton>
           ) : (
-            <button onClick={() => setIsEditMode(true)}>수정하기</button>
+            <CustomButton
+              buttonType="Detail"
+              type="button"
+              onClick={() => setIsEditMode(true)}
+            >
+              수정하기
+            </CustomButton>
           )}
         </UI.StBottomBlock>
       </UI.StCardDetailBlock>
