@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { HeaderProps } from './interfaces';
 import * as styles from './styles';
 import { nanoid } from 'nanoid';
@@ -10,15 +10,16 @@ import { getCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import Dropdown from '../../../components/Dropdown/Dropdown';
 import { recoilReportState } from '../../../states/recoilReportState';
-import Modal from '../../../components/Modal/Modal';
 import ReportModal from '../../../components/Main/Modal/ReportModal/ReportModal';
+import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
+import Modal from '../../../components/Atoms/Modal/CustomModal';
 
 function Header(props: HeaderProps) {
   const navigate = useNavigate();
   const [tab, setTab] = useRecoilState(recoilTabState);
   const [open, setOpen] = useRecoilState(recoilReportState);
+  const currentTab = useRef<string | number>();
 
   const CardClickHandler = () => {
     const token = getCookie('token');
@@ -104,7 +105,7 @@ function Header(props: HeaderProps) {
               items={reports}
               onChange={value => {
                 setOpen(true);
-                console.log(value);
+                currentTab.current = value;
               }}
               style={{
                 width: '110px',
@@ -125,8 +126,7 @@ function Header(props: HeaderProps) {
       </styles.StContainer>
       {open && (
         <Modal closeModal={closeModal}>
-          {' '}
-          <ReportModal />{' '}
+          <ReportModal value={currentTab.current} />
         </Modal>
       )}
     </styles.StWrap>
