@@ -92,19 +92,25 @@ const CustomCalendar = (props: CalendarProps) => {
   }, []);
 
   const returnDay = useCallback(() => {
-    //선택된 달의 날짜들 반환 함수
+    // 선택된 달의 날짜들 반환 함수
     const dayArr = [];
-    //나중에 컴포넌트로 빼야겠다.
+    // 나중에 컴포넌트로 빼야겠다.
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
       if (week[day] == nowDay) {
         for (let i = 0; i < 7; i++) {
+          const dateValue =
+            today.date + i > dateTotalCount
+              ? today.date + i - dateTotalCount
+              : today.date + i;
           if (today.date + i > dateTotalCount) {
             dayArr.push(
-              <Weekday id={today.date + i - dateTotalCount} width={widthPercent} />
+              <Weekday key={`weekday-${dateValue}`} id={dateValue} width={widthPercent} />
             );
           } else {
-            dayArr.push(<Weekday id={today.date + i} width={widthPercent} />);
+            dayArr.push(
+              <Weekday key={`weekday-${dateValue}`} id={dateValue} width={widthPercent} />
+            );
           }
         }
       }
@@ -150,6 +156,7 @@ const CustomCalendar = (props: CalendarProps) => {
 
           resultArr.push(
             <StEventBlock
+              key={`eventblock-${i}`}
               top={top}
               width={widthPercent}
               left={leftPercent}
