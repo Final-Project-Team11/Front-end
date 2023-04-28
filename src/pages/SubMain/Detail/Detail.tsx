@@ -31,8 +31,8 @@ function Detail({ props }: ScheduleProps) {
   const [tab] = useContext(ChangeTabContext);
   const SaveClickHandler = () => {
     const newData = postFormat(tab, props);
-    console.log(newData);
-    mutation.mutate({ ...newData });
+    // console.log(newData);
+    // mutation.mutate({ ...newData });
   };
 
   const [author, autherHandler] = useInput();

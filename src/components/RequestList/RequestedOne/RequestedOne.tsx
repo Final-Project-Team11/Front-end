@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import * as UI from './style';
-import { Props } from './interfaces';
 import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
 import Modal from '../../Atoms/Modal/CustomModal';
 import RequestDetail from '../RequestDetail/RequestDetail';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
+import { RequestedOneProps } from '../interfaces';
 
-const RequestedOne = ({ request }: Props) => {
-  const { data, refetch, isLoading } = useGetRequestDetail(request.eventId);
+const RequestedOne = ({ request, type }: RequestedOneProps) => {
+  // GETdetail payload
+  const detailPayload = {
+    type: type,
+    id: request.Id,
+  };
+
+  const { data, refetch, isLoading } = useGetRequestDetail(detailPayload);
   const [modalOpen, setModalOpen] = useState(false);
+
+  if (isLoading) <div>Loading...</div>;
 
   const getDetail = () => {
     refetch();
@@ -22,7 +30,7 @@ const RequestedOne = ({ request }: Props) => {
   return (
     <>
       <UI.StRequestedListBlock
-        key={request.eventId}
+        key={request.Id}
         types={request.status}
         onClick={() => getDetail()}
       >
@@ -52,7 +60,12 @@ const RequestedOne = ({ request }: Props) => {
       </UI.StRequestedListBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
-          <RequestDetail data={data} isLoading={isLoading} />
+          <RequestDetail
+            data={data}
+            isLoading={isLoading}
+            closeModal={closeModal}
+            type={type}
+          />
         </Modal>
       )}
     </>

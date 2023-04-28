@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as UI from './style';
 import { StCircleBlock } from './style';
-import { AddTodoProps, SentTodo } from './interfaces';
+import { AddTodoProps, SentTodo } from '../interfaces';
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
 
 const AddTodo = ({
