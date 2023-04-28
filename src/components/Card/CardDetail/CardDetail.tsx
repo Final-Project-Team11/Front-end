@@ -5,6 +5,7 @@ import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
 import { FaPen } from 'react-icons/fa';
 import CustomInput from '../../Atoms/Input/CustomInput';
+import profileImg from '../../../assets/images/profile-default.jpg';
 
 const CardDetail = () => {
   const { data } = useGetCardDetail();
@@ -79,7 +80,16 @@ const CardDetail = () => {
       <UI.StTopBlock>
         <UI.StTopLeftBlock>
           <UI.StProfileImg>
-            <img src={img ? (img.result as string) : data?.profileImg} alt="" />
+            <img
+              src={
+                img
+                  ? (img.result as string)
+                  : data.profileImg
+                  ? data.profileImg
+                  : profileImg
+              }
+              alt=""
+            />
             {isEditMode && (
               <>
                 <UI.StProfileModifyInput
@@ -112,7 +122,7 @@ const CardDetail = () => {
               />
             </UI.StInputLabel>
           ) : (
-            <UI.StInfoSpan>{data?.birthDay}</UI.StInfoSpan>
+            <UI.StInfoSpan>{data.birthDay}</UI.StInfoSpan>
           )}
         </UI.StInfoBlock>
         <UI.StInfoBlock>
@@ -129,12 +139,12 @@ const CardDetail = () => {
               />
             </UI.StInputLabel>
           ) : (
-            <UI.StInfoSpan>{data?.phoneNum}</UI.StInfoSpan>
+            <UI.StInfoSpan>{data.phoneNum}</UI.StInfoSpan>
           )}
         </UI.StInfoBlock>
       </UI.StMiddleBlock>
       <UI.StBottomBlock>
-        <UI.StInfoType>입사일{data?.joinDay}</UI.StInfoType>
+        <UI.StInfoType>입사일{data.joinDay}</UI.StInfoType>
         {/* 수정모드 진입 버튼 */}
         {isEditMode ? (
           <button

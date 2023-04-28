@@ -4,6 +4,7 @@ import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { CardProps } from './interfaces';
 import CardDetail from './CardDetail/CardDetail';
 import CustomModal from '../Atoms/Modal/CustomModal';
+import profileImg from '../../assets/images/profile-default.jpg';
 
 const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
@@ -34,7 +35,10 @@ const Card = ({ tab }: CardProps) => {
           ) : null}
         </UI.StInfoBlock>
         <UI.StProfileImg>
-          <img src={userInfo.profileImg} alt="asdfasdfasd" />
+          <img
+            src={userInfo.profileImg ? userInfo.profileImg : profileImg}
+            alt="asdfasdfasd"
+          />
         </UI.StProfileImg>
       </UI.StCardBlock>
       {openModal && (

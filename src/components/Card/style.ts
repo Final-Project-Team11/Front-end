@@ -61,6 +61,7 @@ export const StInfoSpan = styled.span`
 `;
 
 export const StProfileImg = styled.div`
+  background-color: white;
   width: 55px;
   height: 55px;
 
