@@ -3,14 +3,12 @@ import styled from 'styled-components';
 interface LabelProps {
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  className?: string;
-  id?: string;
   name?: string;
 }
 
-const CustomLabel = ({ style, children, id, name, className }: LabelProps) => {
+const CustomLabel = ({ style, children, name }: LabelProps) => {
   return (
-    <StLabel style={style} className={className} id={id} name={name}>
+    <StLabel style={style} name={name}>
       {children}
     </StLabel>
   );

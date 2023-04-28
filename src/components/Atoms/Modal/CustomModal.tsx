@@ -5,20 +5,11 @@ import ReactDom from 'react-dom';
 export interface ModalProps {
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  className?: string;
-  id?: string;
   name?: string;
   closeModal: () => void;
 }
 
-const CustomModal = ({
-  style,
-  children,
-  className,
-  id,
-  name,
-  closeModal,
-}: ModalProps) => {
+const CustomModal = ({ style, children, name, closeModal }: ModalProps) => {
   // esc키 입력 시 모달 닫힘 함수
   const keyDown = (e: KeyboardEvent) => {
     if (e.keyCode === 27) {
@@ -35,7 +26,7 @@ const CustomModal = ({
   const modalContent = (
     <>
       <StModalBackground onClick={() => closeModal()} />
-      <StModal className={className} id={id} name={name} style={style}>
+      <StModal name={name} style={style}>
         {children}
       </StModal>
     </>
