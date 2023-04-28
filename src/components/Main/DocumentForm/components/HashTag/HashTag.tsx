@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import useGetTeamInfo from '../../../../../api/hooks/Main/useGetTeamInfo';
 import * as styles from './styles';
 import TagIcon from '../../../../../assets/Icons/TagIcon';
+import { nanoid } from 'nanoid';
 
 interface HashTagProps {
   mention?: string[];
@@ -33,8 +34,19 @@ const HashTag = (props: HashTagProps) => {
     if (current !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      setInputPosition({ top: absoluteTop, left, height, width });
-      console.log({ top, left, height, width });
+      if (data !== undefined) {
+        if (
+          absoluteTop + data.length * 20 >
+          screen.height - (document.body.clientHeight - absoluteTop) / 2
+        ) {
+          const newTop = absoluteTop - (data.length * 40 - height);
+          setInputPosition({ top: newTop, left, height, width });
+        } else {
+          setInputPosition({ top: absoluteTop, left, height, width });
+        }
+      }
+
+      // console.log({ top, left, height, width });
     }
   }, [tagList]);
 
@@ -116,8 +128,7 @@ const HashTag = (props: HashTagProps) => {
             <styles.StTeamMark>Team A :</styles.StTeamMark>
             {data?.map(item => {
               return (
-                <styles.StLiBlock onClick={onLiClickHandler}>
-                  {/* <styles.StImageBlock /> */}
+                <styles.StLiBlock key={nanoid()} onClick={onLiClickHandler}>
                   {item}
                 </styles.StLiBlock>
               );
