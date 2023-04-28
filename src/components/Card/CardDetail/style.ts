@@ -27,6 +27,7 @@ export const StTopRightBlock = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
 `;
 
 export const StTopLeftBlock = styled.div`
@@ -141,4 +142,11 @@ export const StInputLabel = styled.label`
   width: 200px;
   font-size: 10px;
   color: ${COLOR.PAGE_DONE};
+`;
+
+export const StCloseBlock = styled.div`
+  width: fit-content;
+  height: fit-content;
+  font-size: 30px;
+  cursor: pointer;
 `;

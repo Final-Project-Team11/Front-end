@@ -9,6 +9,7 @@ import profileImg from '../../../assets/images/profile-default.jpg';
 import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 import { CloseModal } from '../interfaces';
+import { BsXSquareFill } from 'react-icons/bs';
 
 const CardDetail = ({ closeModal }: CloseModal) => {
   const { data } = useGetCardDetail();
@@ -21,7 +22,7 @@ const CardDetail = ({ closeModal }: CloseModal) => {
     /^(19[0-9][0-9]|20\d{2})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
   const phoneNumValid = /^010-\d{4}-\d{4}$/;
 
-  // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정
+  // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정, 정규식으로 유효성 검사
   const [birthDay, birthDayHandler, , birthDayIsValid] = useInput(
     10,
     data?.birthDay,
@@ -56,7 +57,7 @@ const CardDetail = ({ closeModal }: CloseModal) => {
 
   const { mutate } = usePatchDetail();
 
-  // 업데이트
+  // 업데이트에 보낼 formData 세팅
   const file = imgInputRef.current?.files?.[0];
   const formData = new FormData();
   if (file) {
@@ -64,14 +65,17 @@ const CardDetail = ({ closeModal }: CloseModal) => {
   }
   formData.append('birthDay', birthDay);
   formData.append('phoneNum', phoneNum);
+
+  // 수정완료 버튼 핸들러
   const inputSubmitHandler = () => {
+    // sweetAlert Modal보다 상단에 띄우기 위한 타겟
     const sweetAlertDiv = document.getElementById('cardSweetAlertDiv');
     if (!sweetAlertDiv) return;
 
+    // 유효성 통과하면 sweetAlert로 더블체크
     if (birthDayIsValid && phoneNumIsValid) {
       Swal.fire({
         title: '변경사항을 저장하시겠습니까?',
-        // text: "You won't be able to revert this!",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: COLOR.PAGE_BLUE,
@@ -80,7 +84,7 @@ const CardDetail = ({ closeModal }: CloseModal) => {
         cancelButtonText: '취소',
         target: sweetAlertDiv,
         customClass: {
-          popup: 'swal-custom-z-index',
+          popup: 'swal-custom-z-index', //customClass로 z-index 높이기.
         },
         didOpen: () => {
           const popup = document.querySelector('.swal-custom-z-index');
@@ -89,6 +93,7 @@ const CardDetail = ({ closeModal }: CloseModal) => {
           }
         },
       }).then(result => {
+        // 더블체크 완료 후 formData 전송, 확인메세지, 모달 닫기
         if (result.isConfirmed) {
           mutate(formData);
 
@@ -104,6 +109,7 @@ const CardDetail = ({ closeModal }: CloseModal) => {
           });
         }
       });
+      //유효성 탈락 시 메세지
     } else if (birthDayIsValid && !phoneNumIsValid) {
       Swal.fire({
         icon: 'error',
@@ -159,7 +165,11 @@ const CardDetail = ({ closeModal }: CloseModal) => {
               )}
             </UI.StProfileImg>
           </UI.StTopLeftBlock>
-          <UI.StTopRightBlock></UI.StTopRightBlock>
+          <UI.StTopRightBlock>
+            <UI.StCloseBlock>
+              <BsXSquareFill onClick={() => closeModal()} />
+            </UI.StCloseBlock>
+          </UI.StTopRightBlock>
         </UI.StTopBlock>
         <UI.StMiddleBlock>
           <UI.StInfoBlock>
