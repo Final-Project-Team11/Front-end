@@ -2,19 +2,23 @@ import React, { useContext } from 'react';
 import { HeaderProps } from './interfaces';
 import * as styles from './styles';
 import { nanoid } from 'nanoid';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import Card from '../../../components/Card/Card';
-
 import ChangeVacation from '../../../assets/Meerkat/ChangeVacation';
 import ChangeSchedule from '../../../assets/Meerkat/ChangeSchedule';
-import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { getCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
+import { recoilTabState } from '../../../states/recoilTabState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import Dropdown from '../../../components/Dropdown/Dropdown';
+import { recoilReportState } from '../../../states/recoilReportState';
+import Modal from '../../../components/Modal/Modal';
+import ReportModal from '../../../components/Main/Modal/ReportModal/ReportModal';
 
 function Header(props: HeaderProps) {
-  const [tab, tabHandler] = useContext(ChangeTabContext);
   const navigate = useNavigate();
+  const [tab, setTab] = useRecoilState(recoilTabState);
+  const [open, setOpen] = useRecoilState(recoilReportState);
 
   const CardClickHandler = () => {
     const token = getCookie('token');
@@ -30,6 +34,16 @@ function Header(props: HeaderProps) {
       navigate('/mypage');
     }
   };
+
+  const closeModal = () => {
+    setOpen(false);
+  };
+
+  const reports = [
+    { name: '보고서(기타)', value: 0 },
+    { name: '회의록', value: 1 },
+    { name: '결재 요청서', value: 2 },
+  ];
 
   return (
     <styles.StWrap>
@@ -69,7 +83,11 @@ function Header(props: HeaderProps) {
         </styles.StDateBlock>
 
         <styles.StColorList>
-          <styles.StTabBlock onClick={() => tabHandler(!tab)}>
+          <styles.StTabBlock
+            onClick={() => {
+              setTab(!tab);
+            }}
+          >
             {tab === false ? <ChangeSchedule /> : <ChangeVacation />}
           </styles.StTabBlock>
           {props?.initialCalendars?.map(item => {
@@ -80,9 +98,37 @@ function Header(props: HeaderProps) {
               </styles.StColorContainer>
             );
           })}
-          <styles.StTeamBlock />
+          <styles.StTeamBlock>
+            <Dropdown
+              size="small"
+              items={reports}
+              onChange={value => {
+                setOpen(true);
+                console.log(value);
+              }}
+              style={{
+                width: '110px',
+                height: '30px',
+                boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+                fontSize: '11px',
+                border: 'none',
+                padding: '10px',
+                fontWeight: 'bold',
+                color: '#484240',
+                background: '#EAEAEA',
+              }}
+            >
+              보고서
+            </Dropdown>
+          </styles.StTeamBlock>
         </styles.StColorList>
       </styles.StContainer>
+      {open && (
+        <Modal closeModal={closeModal}>
+          {' '}
+          <ReportModal />{' '}
+        </Modal>
+      )}
     </styles.StWrap>
   );
 }
