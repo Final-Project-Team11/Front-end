@@ -3,7 +3,6 @@ import { postFormat } from '../../../../pages/SubMain/utils';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
 import useTextarea from '../../../../hooks/common/useTextarea';
-import Button from '../../../Button/Button';
 import { MdZoomInMap } from 'react-icons/md';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../../api/auth/CookieUtils';
@@ -16,6 +15,7 @@ import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
 import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
+import CustomButton from '../../../Atoms/Button/CustomButton';
 
 const VacationFormat = ({
   props,
@@ -128,22 +128,22 @@ const VacationFormat = ({
         <styles.StButtonBlock>
           {disable === false && (
             <>
-              <Button
-                color="black"
-                size="Detail"
-                borderRadius="19px"
+              <CustomButton
+                buttonType="Detail"
                 onClick={onCancelHandler}
+                style={{
+                  borderRadius: '19px',
+                }}
               >
                 취소하기
-              </Button>
-              <Button
-                color="black"
-                size="Detail"
-                borderRadius="19px"
+              </CustomButton>
+              <CustomButton
+                buttonType="Detail"
+                style={{ borderRadius: '19px' }}
                 onClick={SaveClickHandler}
               >
                 등록하기
-              </Button>
+              </CustomButton>
             </>
           )}
           <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>

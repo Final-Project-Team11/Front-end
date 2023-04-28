@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as UI from './style';
 import { Props } from '../interfaces';
-import Modal from '../../Modal/Modal';
+import Modal from '../../Atoms/Modal/CustomModal';
 import UploadedDetail from '../UploadedDetail';
 import { useGetUploadedDetail } from '../../../api/hooks/UploadedFile/useGetUploadedDetail';
 import Person from '../../../assets/Icons/Person';

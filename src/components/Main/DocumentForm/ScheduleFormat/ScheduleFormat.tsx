@@ -4,7 +4,6 @@ import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
 import useTextarea from '../../../../hooks/common/useTextarea';
-import Button from '../../../Button/Button';
 import { MdZoomInMap } from 'react-icons/md';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../../api/auth/CookieUtils';
@@ -20,6 +19,7 @@ import { AxiosError } from 'axios';
 import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
+import CustomButton from '../../../Atoms/Button/CustomButton';
 
 const ScheduleFormat = ({
   props,
@@ -135,22 +135,12 @@ const ScheduleFormat = ({
         <styles.StButtonBlock>
           {disable === false && userId === props.userId && (
             <>
-              <Button
-                color="black"
-                size="Detail"
-                borderRadius="5px"
-                onClick={onCancelHandler}
-              >
+              <CustomButton buttonType="Detail" onClick={onCancelHandler}>
                 취소하기
-              </Button>
-              <Button
-                color="black"
-                size="Detail"
-                borderRadius="5px"
-                onClick={SaveClickHandler}
-              >
+              </CustomButton>
+              <CustomButton buttonType="Detail" onClick={SaveClickHandler}>
                 등록하기
-              </Button>
+              </CustomButton>
             </>
           )}
           <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>

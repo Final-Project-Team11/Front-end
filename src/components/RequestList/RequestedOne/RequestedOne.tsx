@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
-import Modal from '../../Modal/Modal';
+import Modal from '../../Atoms/Modal/CustomModal';
 import RequestDetail from '../RequestDetail/RequestDetail';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
-import { RequestTabType } from '../interfaces';
+import { RequestedOneProps } from '../interfaces';
 
-const RequestedOne = ({ request }: { request: RequestTabType }) => {
-  const { data, refetch, isLoading } = useGetRequestDetail(request.Id);
+const RequestedOne = ({ request, type }: RequestedOneProps) => {
+  // GETdetail payload
+  const detailPayload = {
+    type: type,
+    id: request.Id,
+  };
+
+  const { data, refetch, isLoading } = useGetRequestDetail(detailPayload);
   const [modalOpen, setModalOpen] = useState(false);
 
   if (isLoading) <div>Loading...</div>;
@@ -54,7 +60,12 @@ const RequestedOne = ({ request }: { request: RequestTabType }) => {
       </UI.StRequestedListBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
-          <RequestDetail data={data} isLoading={isLoading} />
+          <RequestDetail
+            data={data}
+            isLoading={isLoading}
+            closeModal={closeModal}
+            type={type}
+          />
         </Modal>
       )}
     </>
