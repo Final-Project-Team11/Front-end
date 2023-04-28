@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import * as interfaces from './interfaces';
-import { UlStyleProps } from '../Main/DocumentForm/components/HashTag/interfaces';
+import { UlStyleProps } from '../../Main/DocumentForm/components/HashTag/interfaces';
 
 const sizes: interfaces.Sizes = {
   small: {
