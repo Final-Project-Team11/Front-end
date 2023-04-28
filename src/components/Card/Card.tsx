@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { CardProps } from './interfaces';
-import Modal from '../Modal/Modal';
 import CardDetail from './CardDetail/CardDetail';
+import CustomModal from '../Atoms/Modal/CustomModal';
 
 const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
@@ -38,9 +38,9 @@ const Card = ({ tab }: CardProps) => {
         </UI.StProfileImg>
       </UI.StCardBlock>
       {openModal && (
-        <Modal closeModal={() => setOpenModal(false)}>
+        <CustomModal closeModal={() => setOpenModal(false)}>
           <CardDetail />
-        </Modal>
+        </CustomModal>
       )}
     </>
   );
