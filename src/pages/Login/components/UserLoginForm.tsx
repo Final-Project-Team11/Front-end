@@ -44,11 +44,6 @@ const UserLoginForm = () => {
       <CustomButton
         buttonType="login"
         style={{
-          color: '#E64042',
-          fontSize: '15px',
-          fontWeight: 'bold',
-          borderRadius: '7px',
-          background: '#F6F6F6',
           marginTop: '20px',
         }}
       >
