@@ -82,9 +82,12 @@ export const StInfoBlock = styled.div`
 
   font-size: 30px;
   font-weight: bolder;
-  gap: 15px;
+
+  padding: 0 30px;
+  box-sizing: border-box;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -111,10 +114,6 @@ export const StInfoSpan = styled.span`
   font-weight: bolder;
 `;
 
-export const StModifyInput = styled.input`
-  width: 200px;
-`;
-
 export const StImgEditButton = styled.div`
   background-color: white;
   width: 25px;
@@ -132,4 +131,14 @@ export const StImgEditButton = styled.div`
   position: absolute;
   right: 32px;
   bottom: 30px;
+`;
+
+export const StModifyInput = styled.input`
+  width: 200px;
+`;
+
+export const StInputLabel = styled.label`
+  width: 200px;
+  font-size: 10px;
+  color: ${COLOR.PAGE_DONE};
 `;

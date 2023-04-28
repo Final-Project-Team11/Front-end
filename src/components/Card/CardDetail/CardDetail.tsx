@@ -4,16 +4,30 @@ import useInput from '../../../hooks/common/useInput';
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
 import { FaPen } from 'react-icons/fa';
+import CustomInput from '../../Atoms/Input/CustomInput';
 
 const CardDetail = () => {
-  const { data, isLoading } = useGetCardDetail();
+  const { data } = useGetCardDetail();
 
   // 수정모드 동작 상태
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // 인풋 검사 정규식
+  const birthDayValid =
+    /^(19[0-9][0-9]|20\d{2})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
+  const phoneNumValid = /^010-\d{4}-\d{4}$/;
+
   // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정
-  const [birthDay, birthDayHandler] = useInput(undefined, data?.birthDay);
-  const [phoneNum, phoneNumHandler] = useInput(undefined, data?.phoneNum);
+  const [birthDay, birthDayHandler, , birthDayIsValid] = useInput(
+    10,
+    data?.birthDay,
+    birthDayValid
+  );
+  const [phoneNum, phoneNumHandler, , phoneNumIsValid] = useInput(
+    13,
+    data?.phoneNum,
+    phoneNumValid
+  );
 
   // 인풋에서 이미지 가져올 useRef
   const imgInputRef = useRef<HTMLInputElement>(null);
@@ -56,6 +70,10 @@ const CardDetail = () => {
     imgInputRef?.current?.click();
   };
 
+  if (!data) {
+    return <div>loading...</div>;
+  }
+
   return (
     <UI.StCardDetailBlock>
       <UI.StTopBlock>
@@ -83,7 +101,16 @@ const CardDetail = () => {
         <UI.StInfoBlock>
           <UI.StInfoType>생일 : </UI.StInfoType>
           {isEditMode ? (
-            <UI.StModifyInput value={birthDay} onChange={birthDayHandler} />
+            <UI.StInputLabel htmlFor="">
+              {birthDayIsValid
+                ? '수정 가능합니다.'
+                : '올바른 형식이 아닙니다. yyyy/mm/dd 형식으로 입력해주세요'}
+              <CustomInput
+                inputType="cardInfo"
+                value={birthDay}
+                onChange={birthDayHandler}
+              />
+            </UI.StInputLabel>
           ) : (
             <UI.StInfoSpan>{data?.birthDay}</UI.StInfoSpan>
           )}
@@ -91,7 +118,16 @@ const CardDetail = () => {
         <UI.StInfoBlock>
           <UI.StInfoType>핸드폰 번호 : </UI.StInfoType>
           {isEditMode ? (
-            <UI.StModifyInput value={phoneNum} onChange={phoneNumHandler} />
+            <UI.StInputLabel htmlFor="">
+              {phoneNumIsValid
+                ? '수정 가능합니다.'
+                : '올바른 형식이 아닙니다. 010-1234-5678 형식으로 입력해주세요'}
+              <CustomInput
+                inputType="cardInfo"
+                value={phoneNum}
+                onChange={phoneNumHandler}
+              />
+            </UI.StInputLabel>
           ) : (
             <UI.StInfoSpan>{data?.phoneNum}</UI.StInfoSpan>
           )}
