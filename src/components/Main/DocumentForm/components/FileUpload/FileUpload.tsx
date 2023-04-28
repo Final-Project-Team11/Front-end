@@ -41,7 +41,7 @@ const FileUpload = (props: FileUploadProps) => {
       setFileList(newFileName);
     }
   };
-  console.log('fileList', fileList);
+
   useEffect(() => {
     if (props.files !== undefined) {
       setFileList(props.files);
