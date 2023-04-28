@@ -43,7 +43,7 @@ const Card = ({ tab }: CardProps) => {
       </UI.StCardBlock>
       {openModal && (
         <CustomModal closeModal={() => setOpenModal(false)}>
-          <CardDetail />
+          <CardDetail closeModal={() => setOpenModal(false)} />
         </CustomModal>
       )}
     </>

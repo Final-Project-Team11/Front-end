@@ -10,3 +10,7 @@ export interface CardInfoType {
   phoneNum: string;
   joinDay: string;
 }
+
+export interface CloseModal {
+  closeModal: () => void;
+}
