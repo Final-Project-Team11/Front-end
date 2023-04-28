@@ -81,9 +81,6 @@ const StColorNameBlock = styled.div`
 `;
 
 const StTeamBlock = styled.div`
-  width: 101px;
-  height: 26px;
-  background-color: lightgray;
   margin-left: 43px;
 `;
 

@@ -43,12 +43,11 @@ const ScheduleFormat = ({
   const [content, contentHandler, setContentValue] = useTextarea();
 
   useEffect(() => {
-    console.log('props', props);
     props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInputValue(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body !== undefined && setContentValue(props.body);
-  }, [props]);
+  }, [props.id]);
 
   const SaveClickHandler = () => {
     if (disable === false) {

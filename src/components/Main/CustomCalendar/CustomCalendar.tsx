@@ -29,6 +29,8 @@ const CustomCalendar = (props: CalendarProps) => {
   const width = props.width.split('px')[0];
 
   const { data, isLoading } = useGetWeeklyInfo();
+
+  console.log('data', data);
   const widthPercent = (100 / 7).toString() + '%';
 
   const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
@@ -119,8 +121,6 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  const ArrRef = useRef(Array.from({ length: 32 }, () => [false, false, false]));
-
   interface Position {
     top: number;
     left: number;
@@ -131,10 +131,9 @@ const CustomCalendar = (props: CalendarProps) => {
 
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
-    const positions: Position[] = [];
-
     const resultArr = [];
 
+    console.log('events', events);
     for (let i = 0; i < events.length; i++) {
       const value = events[i].end.getDate() - events[i].start.getDate();
       const blockCount = value >= 0 ? value : Number(dateTotalCount + value);

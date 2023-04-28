@@ -7,12 +7,13 @@ import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from 'react-icons/bs';
 import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
-import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
+import { recoilTabState } from '../../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {
