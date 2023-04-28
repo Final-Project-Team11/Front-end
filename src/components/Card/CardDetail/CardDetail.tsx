@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 import { CloseModal } from '../interfaces';
 import { BsXSquareFill } from 'react-icons/bs';
+import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
+import ProfileManager from '../../../assets/Meerkat/ProfileManager';
 
 const CardDetail = ({ closeModal }: CloseModal) => {
   const { data } = useGetCardDetail();
@@ -140,16 +142,14 @@ const CardDetail = ({ closeModal }: CloseModal) => {
         <UI.StTopBlock>
           <UI.StTopLeftBlock>
             <UI.StProfileImg>
-              <img
-                src={
-                  img
-                    ? (img.result as string)
-                    : data.profileImg
-                    ? data.profileImg
-                    : profileImg
-                }
-                alt=""
-              />
+              {img ? (
+                <img src={img.result as string} alt="" />
+              ) : data.profileImg ? (
+                <img src={data.profileImg} alt="" />
+              ) : (
+                <ProfileManager page="detail" />
+              )}
+
               {isEditMode && (
                 <>
                   <UI.StProfileModifyInput

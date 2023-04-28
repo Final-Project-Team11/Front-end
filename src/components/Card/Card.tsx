@@ -4,7 +4,8 @@ import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { CardProps } from './interfaces';
 import CardDetail from './CardDetail/CardDetail';
 import CustomModal from '../Atoms/Modal/CustomModal';
-import profileImg from '../../assets/images/profile-default.jpg';
+import ProfileEmployee from '../../assets/Meerkat/ProfileEmployee';
+import ProfileManager from '../../assets/Meerkat/ProfileManager';
 
 const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
@@ -35,10 +36,11 @@ const Card = ({ tab }: CardProps) => {
           ) : null}
         </UI.StInfoBlock>
         <UI.StProfileImg>
-          <img
-            src={userInfo.profileImg ? userInfo.profileImg : profileImg}
-            alt="asdfasdfasd"
-          />
+          {userInfo.profileImg ? (
+            <img src={userInfo.profileImg} alt="" />
+          ) : (
+            <ProfileEmployee page="page" />
+          )}
         </UI.StProfileImg>
       </UI.StCardBlock>
       {openModal && (
