@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
 
-export const GetCardInfo = () => {
+export const useGetCardInfo = () => {
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_CARD_INFO],
     queryFn: async () => {

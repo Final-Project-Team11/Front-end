@@ -26,9 +26,6 @@ interface CssProps {
 export const StModal = styled.div<CssProps>`
   z-index: 2000;
 
-  width: 100px;
-  height: 100px;
-
   position: fixed;
   top: 50%;
   left: 50%;

@@ -27,7 +27,7 @@ import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
 import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
-import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
 import React from 'react';
 
@@ -50,7 +50,7 @@ const viewModeOptions = [
 
 export function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
-  const user = GetCardInfo();
+  const user = useGetCardInfo();
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
