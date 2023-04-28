@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
-import { color } from 'framer-motion';
 
 interface CardStyleProps {
   tab?: boolean;
