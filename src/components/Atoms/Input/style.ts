@@ -13,6 +13,7 @@ const inputTypes: InputTypes = {
     fontSize: '15px',
     border: 'none',
     padding: '15px',
+    outline: 'none',
   },
   signup: {
     width: '595px',
@@ -21,6 +22,7 @@ const inputTypes: InputTypes = {
     fontSize: '15px',
     border: 'none',
     padding: '15px',
+    outline: 'none',
   },
   cardInfo: {
     width: '200px',
@@ -29,6 +31,7 @@ const inputTypes: InputTypes = {
     fontSize: '15px',
     border: 'none',
     padding: '15px',
+    outline: 'none',
   },
 };
 
