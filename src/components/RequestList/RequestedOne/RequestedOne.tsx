@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
-import Modal from '../../Modal/Modal';
+import Modal from '../../Atoms/Modal/CustomModal';
 import RequestDetail from '../RequestDetail/RequestDetail';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';

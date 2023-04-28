@@ -1,9 +1,6 @@
 import React from 'react';
 import { StForm, BackGround, StH1, NameTag, EmailInput, Svg } from './styles';
 import { StInput, StButton, StSpan } from './hooks/DaumAddressAPI';
-import MaxInput from '../../components/Inputs/Input/MaxInput';
-import ButtonInput from '../../components/Inputs/ButtonInput';
-import Button from '../../components/Button/Button';
 import { AdminSignupInfo } from './interfaces';
 import { useCompanyIdValidation } from './hooks/useCompanyIdValidation';
 import { useSignup } from './hooks/useSignup';
@@ -15,6 +12,9 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import SignupHello from '../../assets/Meerkat/SignupHello';
 import SignupMeerkat from '../../assets/Meerkat/SignupMeerkat';
+import CustomLabel from '../../components/Atoms/Label/CustomLabel';
+import CustomInput from '../../components/Atoms/Input/CustomInput';
+import CustomButton from '../../components/Atoms/Button/CustomButton';
 
 const MasterSignup = () => {
   const navigate = useNavigate();
@@ -152,68 +152,78 @@ const MasterSignup = () => {
           <SignupMeerkat />
         </div>
         <StForm onSubmit={submitSignInfoHandler}>
-          <MaxInput
-            types="signup"
-            type="text"
-            name="companyName"
-            placeholder="상호명을 입력해주세요."
-            value={signInfo.companyName}
-            onChange={e => changeInputHandler(e)}
-            style={{ marginTop: '100px' }}
-          >
+          <CustomLabel>
             상호명
-          </MaxInput>
-          <ButtonInput
-            types="button"
-            type="text"
-            name="companyNum"
-            value={signInfo.companyNum}
-            onChange={e => changeCompanyNumHandler(e)}
-            onClick={checkCompanyNumHandler}
-            buttonTag="인증 하기"
-            placeholder="-을 제외하고 입력해주세요."
-            style={{ marginBottom: '45px' }}
-          >
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="companyName"
+              value={signInfo.companyName}
+              onChange={changeInputHandler}
+              placeholder="상호명을 입력해주세요."
+            />
+          </CustomLabel>
+
+          <CustomLabel>
             사업자 등록번호
-          </ButtonInput>
-          {isValid !== null && (
-            <p>
-              {isValid ? '사업자번호가 유효합니다.' : '사업자번호가 유효하지 않습니다.'}
-            </p>
-          )}
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="companyNum"
+              value={signInfo.companyNum}
+              onChange={changeCompanyNumHandler}
+              placeholder="-을 제외하고 입력해주세요."
+            />
+            <CustomButton buttonType="signup" onClick={checkCompanyNumHandler}>
+              인증 하기
+            </CustomButton>
+            {isValid !== null && (
+              <p>
+                {isValid ? '사업자번호가 유효합니다.' : '사업자번호가 유효하지 않습니다.'}
+              </p>
+            )}
+          </CustomLabel>
+
           <DaumAddressAPI selectedAddressHandler={handleAddressSelected} />
-          <MaxInput
-            types="signup"
-            type="text"
-            value={detailAddress}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDetailAddress(e.target.value)
-            }
-            style={{ marginBottom: '45px' }}
-            placeholder="상세 주소를 입력해주세요."
-          >
+
+          <CustomLabel>
             상세주소
-          </MaxInput>
-          <MaxInput
-            types="signup"
-            type="text"
-            name="ceoName"
-            placeholder="대표자의 성명을 입력해주세요."
-            value={signInfo.ceoName}
-            onChange={e => changeInputHandler(e)}
-          >
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="detailAddress"
+              value={detailAddress}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetailAddress(e.target.value)
+              }
+              placeholder="상세 주소를 입력해주세요."
+            />
+          </CustomLabel>
+
+          <CustomLabel>
             대표자 성명
-          </MaxInput>
-          <MaxInput
-            types="signup"
-            type="text"
-            name="ceoNum"
-            placeholder="-을 제외하고 입력해주세요."
-            value={signInfo.ceoNum.toString()}
-            onChange={e => changeInputHandler(e)}
-          >
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="ceoName"
+              value={signInfo.ceoName}
+              onChange={e => changeInputHandler(e)}
+              placeholder="대표자의 성명을 입력해주세요."
+            />
+          </CustomLabel>
+
+          <CustomLabel>
             대표자 핸드폰 번호
-          </MaxInput>
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="ceoNum"
+              value={signInfo.ceoNum.toString()}
+              onChange={e => changeInputHandler(e)}
+              placeholder="-을 제외하고 입력해주세요."
+            />
+          </CustomLabel>
+
           <EmailInput>
             <NameTag>
               <StSpan>이메일</StSpan>
@@ -224,54 +234,66 @@ const MasterSignup = () => {
               인증 하기
             </StButton>
           </EmailInput>
-          <ButtonInput
-            types="button"
-            type="text"
-            name="companyId"
-            onClick={() => checkCompanyIdHandler(signInfo.companyId)}
-            buttonTag="중복확인"
-            placeholder="영 대, 소문자, 숫자 5자 이상 입력해주세요."
-            value={signInfo.companyId}
-            onChange={e => changeInputHandler(e)}
-          >
+
+          <CustomLabel>
             아이디
-          </ButtonInput>
-          {signInfo.companyId ? (
-            companyIdValidation ? (
-              <span>사용할 수 있는 아이디 입니다.</span>
-            ) : (
-              <span>중복확인이 필요합니다.</span>
-            )
-          ) : null}
-          <MaxInput
-            types="signup"
-            type="password"
-            name="password"
-            placeholder="영 대,소문자, 숫자, 특수문자 중 숫자, 특수문자를 포함하는 8자~15자"
-            value={signInfo.password}
-            onChange={e => changeInputHandler(e)}
-          >
+            <CustomInput
+              inputType="signup"
+              type="text"
+              name="companyId"
+              value={signInfo.companyId}
+              onChange={e => changeInputHandler(e)}
+              placeholder="영 대, 소문자, 숫자 5자 이상 입력해주세요."
+            />
+            <CustomButton
+              buttonType="signup"
+              onClick={() => checkCompanyIdHandler(signInfo.companyId)}
+            >
+              중복 확인
+            </CustomButton>
+            {signInfo.companyId ? (
+              companyIdValidation ? (
+                <span>사용할 수 있는 아이디 입니다.</span>
+              ) : (
+                <span>중복확인이 필요합니다.</span>
+              )
+            ) : null}
+          </CustomLabel>
+
+          <CustomLabel>
             비밀번호
-          </MaxInput>
-          <MaxInput
-            types="signup"
-            type="password"
-            placeholder="비밀번호를 한 번 더 입력해주세요."
-            value={checkPassword}
-            onChange={e => reCheckPasswordHandler(e)}
-          >
+            <CustomInput
+              inputType="signup"
+              type="password"
+              name="password"
+              value={signInfo.password}
+              onChange={e => changeInputHandler(e)}
+              placeholder="영 대,소문자, 숫자, 특수문자 중 숫자, 특수문자를 포함하는 8자~15자"
+            />
+          </CustomLabel>
+
+          <CustomLabel>
             비밀번호 확인
-          </MaxInput>
-          {checkPassword ? (
-            checkPasswordHandler(checkPassword) ? (
-              <span>비밀번호가 일치합니다.</span>
-            ) : (
-              <span>비밀번호가 일치하지 않습니다.</span>
-            )
-          ) : null}
+            <CustomInput
+              inputType="signup"
+              type="password"
+              name="password"
+              value={checkPassword}
+              onChange={e => reCheckPasswordHandler(e)}
+              placeholder="비밀번호를 한 번 더 입력해주세요."
+            />
+            {checkPassword ? (
+              checkPasswordHandler(checkPassword) ? (
+                <span>비밀번호가 일치합니다.</span>
+              ) : (
+                <span>비밀번호가 일치하지 않습니다.</span>
+              )
+            ) : null}
+          </CustomLabel>
+
           <div style={{ marginTop: '100px' }}>
-            <Button
-              size="signup"
+            <CustomButton
+              buttonType="signup"
               style={{
                 color: '#E64042',
                 fontSize: '15px',
@@ -285,9 +307,9 @@ const MasterSignup = () => {
               onClick={() => navigate('/login')}
             >
               취소
-            </Button>
-            <Button
-              size="signup"
+            </CustomButton>
+            <CustomButton
+              buttonType="signup"
               style={{
                 color: '#fff',
                 fontSize: '15px',
@@ -298,7 +320,7 @@ const MasterSignup = () => {
               }}
             >
               회원가입
-            </Button>
+            </CustomButton>
           </div>
         </StForm>
         <SignupHello />

@@ -3,7 +3,6 @@ import * as styles from './styles';
 
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
-import Button from '../../../components/Button/Button';
 import apis from '../../../api/axios/api';
 import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
@@ -11,6 +10,7 @@ import usePostschedule from '../../../api/hooks/Main/usePostschedule';
 import { postFormat } from '../utils';
 import { MdFolder } from 'react-icons/md';
 import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
+import CustomButton from '../../../components/Atoms/Button/CustomButton';
 
 interface ScheduleProps {
   props: {
@@ -73,14 +73,9 @@ function Detail({ props }: ScheduleProps) {
           </div>
         </styles.StTitleContentBlock>
         <styles.StButtonBlock>
-          <Button
-            color="black"
-            size="Detail"
-            borderRadius="5px"
-            onClick={SaveClickHandler}
-          >
+          <CustomButton buttonType="Detail" onClick={SaveClickHandler}>
             저장하기
-          </Button>
+          </CustomButton>
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>

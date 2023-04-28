@@ -1,16 +1,16 @@
-import * as interfaces from './interfaces';
 import { StModal, StModalBackground } from './styles';
 import { useEffect } from 'react';
 import ReactDom from 'react-dom';
 
-const Modal = ({
-  children,
-  size,
-  background,
-  name,
-  closeModal,
-  style = {},
-}: interfaces.ModalProps) => {
+export interface ModalProps {
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  name?: string;
+  closeModal: () => void;
+}
+
+const CustomModal = ({ style, children, name, closeModal }: ModalProps) => {
+  // esc키 입력 시 모달 닫힘 함수
   const keyDown = (e: KeyboardEvent) => {
     if (e.keyCode === 27) {
       closeModal();
@@ -25,11 +25,8 @@ const Modal = ({
 
   const modalContent = (
     <>
-      <StModalBackground
-        background={background}
-        onClick={() => closeModal()}
-      ></StModalBackground>
-      <StModal size={size} name={name} style={style}>
+      <StModalBackground onClick={() => closeModal()} />
+      <StModal name={name} style={style}>
         {children}
       </StModal>
     </>
@@ -46,4 +43,4 @@ const Modal = ({
   }
 };
 
-export default Modal;
+export default CustomModal;
