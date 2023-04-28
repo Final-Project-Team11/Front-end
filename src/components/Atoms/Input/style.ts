@@ -22,6 +22,20 @@ const inputTypes: InputTypes = {
     border: 'none',
     padding: '15px',
   },
+  title: {
+    width: '400px',
+    height: '50px',
+    fontSize: '15px',
+    border: 'none',
+    outline: 'none',
+  },
+  author: {
+    width: '200px',
+    height: '50px',
+    fontSize: '15px',
+    border: 'none',
+    outline: 'none',
+  },
 };
 
 export const StInput = styled.input.attrs<InputProps>(props => ({
