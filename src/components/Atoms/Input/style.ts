@@ -22,6 +22,14 @@ const inputTypes: InputTypes = {
     border: 'none',
     padding: '15px',
   },
+  cardInfo: {
+    width: '200px',
+    height: '50px',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+    fontSize: '15px',
+    border: 'none',
+    padding: '15px',
+  },
 };
 
 export const StInput = styled.input.attrs<InputProps>(props => ({
