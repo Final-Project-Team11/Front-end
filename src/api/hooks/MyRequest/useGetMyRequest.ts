@@ -29,5 +29,9 @@ export const useGetMyRequest = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return {
+    data,
+    fetchNextPage: () => fetchNextPage(),
+    hasNextPage: hasNextPage || false,
+  };
 };

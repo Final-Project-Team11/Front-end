@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import MyRequestList from './MyRequestList';
 import { useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
 import Board from '../Board/Board';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
+import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const MyRequest = () => {
   // 무한스크롤 코드
@@ -12,29 +13,7 @@ const MyRequest = () => {
   // div 의 스크롤을 감지하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
-  // 스크롤 이벤트 - 무한스크롤 기본 코드
-  const handleScroll = () => {
-    const container = targetDiv.current;
-
-    if (container) {
-      const scrollHeight = container.scrollHeight;
-      const scrollTop = container.scrollTop;
-      const clientHeight = container.clientHeight;
-
-      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
-        fetchNextPage();
-      }
-    }
-  };
-
-  // div에 스크롤 이벤트 추가.
-  useEffect(() => {
-    const container = targetDiv.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [handleScroll]);
+  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
 
   // data 존재 시
   const files = data ? data.pages.flatMap(page => page.schedule) : [];
