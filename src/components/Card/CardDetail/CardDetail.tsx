@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import * as UI from './style';
-import { StButton } from '../../Button/styles';
 import useInput from '../../../hooks/common/useInput';
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
@@ -8,9 +7,6 @@ import { FaPen } from 'react-icons/fa';
 
 const CardDetail = () => {
   const { data, isLoading } = useGetCardDetail();
-  if (isLoading || !data) {
-    return <div>loading...</div>;
-  }
 
   // 수정모드 동작 상태
   const [isEditMode, setIsEditMode] = useState(false);
@@ -105,19 +101,16 @@ const CardDetail = () => {
         <UI.StInfoType>입사일{data?.joinDay}</UI.StInfoType>
         {/* 수정모드 진입 버튼 */}
         {isEditMode ? (
-          <StButton
-            size="signup"
+          <button
             onClick={() => {
               setIsEditMode(false);
               inputSubmitHandler();
             }}
           >
             수정완료
-          </StButton>
+          </button>
         ) : (
-          <StButton size="signup" onClick={() => setIsEditMode(true)}>
-            수정하기
-          </StButton>
+          <button onClick={() => setIsEditMode(true)}>수정하기</button>
         )}
       </UI.StBottomBlock>
     </UI.StCardDetailBlock>
