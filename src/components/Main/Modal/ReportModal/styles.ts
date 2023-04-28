@@ -12,8 +12,11 @@ export const Modal = styled.div`
   display: flex;
   flex-direction: column;
 
+  background-color: white;
   box-shadow: rgba(15, 19, 24, 0.27) 0 4px 30px 8px;
 `;
+
+export const Form = styled.form``;
 
 export const Header = styled.div`
   /* background-color: yellow; */
@@ -28,6 +31,12 @@ export const Header = styled.div`
   gap: 20px;
 
   position: relative;
+`;
+
+export const ButtonBlock = styled.div`
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
 `;
 
 export const HeaderIcon = styled.div`
@@ -55,10 +64,23 @@ export const Devider = styled.hr<DeviderProps>`
 
 export const ContentArea = styled.div`
   width: 100%;
-  height: 467px;
+  height: 440px;
 
-  padding: 76px;
+  padding: 45px;
   box-sizing: border-box;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  border: none;
+  height: 100%;
+  outline: none;
+  font-size: 20px;
+  resize: none;
+
+  &:disabled {
+    background: none;
+  }
 `;
 
 export const ContentSpan = styled.span`
@@ -72,6 +94,20 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+`;
+
+export const FileBlock = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 27px 30px;
+  gap: 10px;
+  margin-left: 5px;
+`;
+
+export const AttendeesBlock = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 33px;
 `;
 
 export const FooterHalf = styled.div`
