@@ -22,7 +22,7 @@ import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
 import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
-import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import React from 'react';
 import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue, useRecoilState } from 'recoil';
