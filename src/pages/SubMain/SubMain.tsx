@@ -47,7 +47,7 @@ const viewModeOptions = [
 
 export function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
-  const user = GetCardInfo();
+  const user = useGetCardInfo();
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
