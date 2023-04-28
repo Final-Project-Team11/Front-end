@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ButtonProps } from './CustomButton';
+import { COLOR } from '../../../styles/colors';
 
 type ButtonType = {
   [key in ButtonProps['buttonType']]: React.CSSProperties;
@@ -30,6 +31,17 @@ const buttonTypes: ButtonType = {
     height: '40px',
     color: 'black',
     borderRadius: '5px',
+  },
+  ModalButton: {
+    backgroundColor: 'transparent',
+    width: '70px',
+    height: '26px',
+    fontSize: '10px',
+    color: `${COLOR.PAGE_BLUE}`,
+    cursor: 'pointer',
+    border: `1px solid ${COLOR.PAGE_BLUE}`,
+    borderRadius: '19px',
+    opacity: 1,
   },
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { StButton } from './style';
 
 export interface ButtonProps {
-  buttonType: 'login' | 'signup' | 'Detail';
+  buttonType: 'login' | 'signup' | 'Detail' | 'ModalButton';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
