@@ -7,8 +7,12 @@ import MyRequest from '../../components/MyRequest/MyRequest';
 import * as UI from './styles';
 import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
 import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
+import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
+import { useGetVacationStatus } from '../../api/hooks/Vacation/useGetVacationStatus';
 
 const MyPage = () => {
+  const { data } = useGetVacationStatus();
+
   return (
     <UI.Frame>
       <UI.Wrapper>
@@ -19,9 +23,11 @@ const MyPage = () => {
         <UI.MainArea>
           <UI.FeedArea>
             <Feed />
-            {/* <VacationMeerkat /> */}
+            <UI.SvgBlock>
+              <VacationMeerkat />
+            </UI.SvgBlock>
             {/* <WaitVacation /> */}
-            <WorkingMeerkat />
+            {/* <WorkingMeerkat /> */}
           </UI.FeedArea>
           <UI.TabArea>
             <Tag types="MyPage" />

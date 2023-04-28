@@ -33,12 +33,6 @@ export const Header = styled.div`
   height: fit-content;
 `;
 
-export const Calendar = styled.div`
-  background-color: aliceblue;
-  width: 823px;
-  height: 113px;
-`;
-
 export const MainArea = styled.div`
   width: 1098px;
   height: 748px;
@@ -73,4 +67,12 @@ export const MiddleArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+export const SvgBlock = styled.div`
+  background-color: yellow;
+  width: 250px;
+  height: 85px;
+
+  box-shadow: rgba(236, 241, 248, 1) 4px 0 9px 0;
 `;
