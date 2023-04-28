@@ -29,6 +29,8 @@ const CustomCalendar = (props: CalendarProps) => {
   const width = props.width.split('px')[0];
 
   const { data, isLoading } = useGetWeeklyInfo();
+
+  console.log('data', data);
   const widthPercent = (100 / 7).toString() + '%';
 
   const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
@@ -37,8 +39,18 @@ const CustomCalendar = (props: CalendarProps) => {
 
     return { ...item, start: start, end: end };
   });
-  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => item);
-  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => item);
+  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
+  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
   const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
     const start = new Date(item.start);
     const end = new Date(item.end);
@@ -114,6 +126,7 @@ const CustomCalendar = (props: CalendarProps) => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
     const resultArr = [];
 
+    console.log('events', events);
     for (let i = 0; i < events.length; i++) {
       const value = events[i].end.getDate() - events[i].start.getDate();
       const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
