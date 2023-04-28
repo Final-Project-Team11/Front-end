@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useRef } from 'react';
 import * as UI from './style';
 import { AddCategoryProps, SentCategory } from '../interfaces';
 import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
-import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
+import { recoilTabState } from '../../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
 
 const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryProps) => {
   // AddCategory 인풋 생기면 focus
   const inputRef = useRef<HTMLInputElement>(null);
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();

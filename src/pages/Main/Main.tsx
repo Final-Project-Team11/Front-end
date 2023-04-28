@@ -5,12 +5,16 @@ import { CalendarProps, ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
 import { StWrap, StTabButton, StButtonBlcok } from './styles';
-import { ChangeTabContext, TabContext } from '../../api/hooks/Main/useTabContext';
+import { recoilTabState } from '../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
+import { recoilCalendarState } from '../../states/recoilCalendarState';
+import { useSetRecoilState } from 'recoil';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
+  const setCalendarState = useSetRecoilState(recoilCalendarState);
   const today = new Date();
   const { data, isLoading } = useGetMain({
     type: tab,
@@ -19,7 +23,6 @@ const Main = () => {
   });
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
-  console.log(data);
   useEffect(() => {
     if (tab === false) {
       const issues: Partial<EventObject>[] = data?.issue?.map((issue: CalendarProps) =>
@@ -56,6 +59,7 @@ const Main = () => {
       meetings !== undefined && eventList.push(...meetings);
       meetingReports !== undefined && eventList.push(...meetingReports);
       setFilterData(eventList);
+      // setCalendarState(eventList);
     } else {
       const events: Partial<EventObject>[] = [];
       const vacations: Partial<EventObject>[] = data?.map((vacation: CalendarProps) =>
