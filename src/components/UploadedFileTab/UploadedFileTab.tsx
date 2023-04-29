@@ -10,12 +10,14 @@ import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   const { data, fetchNextPage, hasNextPage } = useGetFile(type);
+
+  // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 무한스크롤 커스텀훅
   useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
-  // 받아오는 데이터 풀어서 하나의 배열로.
+  // data.pages를 풀어서 하나의 배열로 -> useInfiniteQuery 에서 return 하는 data 형식 참고.
   const files = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
 
   // 받아오는 type 에 따라 보드 타이틀, icon 변경
