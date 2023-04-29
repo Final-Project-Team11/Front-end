@@ -1,16 +1,17 @@
+import { InfiniteQueryObserverResult } from '@tanstack/react-query';
 import { RefObject, useEffect } from 'react';
 
-interface HookType {
+interface HookType<T> {
   targetDiv: RefObject<HTMLDivElement>;
-  fetchNextPage: () => Promise<any>;
+  fetchNextPage: () => Promise<InfiniteQueryObserverResult<T>>;
   hasNextPage: boolean;
 }
 
-export const useInfiniteQueryHook = ({
+export const useInfiniteQueryHook = <T>({
   targetDiv,
   fetchNextPage,
   hasNextPage,
-}: HookType) => {
+}: HookType<T>) => {
   const handleScroll = () => {
     const container = targetDiv.current;
     if (container) {

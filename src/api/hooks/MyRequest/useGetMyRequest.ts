@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { MyListProps } from '../../../components/MyRequest/interfaces';
 
-interface PageData {
+export interface PageData {
   schedule: MyListProps[];
   pageNum: number;
 }

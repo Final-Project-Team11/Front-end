@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { Mention } from '../../../components/Tag/interfaces';
 
-interface PageData {
+export interface PageData {
   mention: Mention[];
   pageNum: number;
 }

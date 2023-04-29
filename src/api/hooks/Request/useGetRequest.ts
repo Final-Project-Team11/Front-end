@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { RequestTabType } from '../../../components/RequestList/interfaces';
 
 // PageData 타입은 schedule, other 둘 중 하나와 pageNum을 갖는다
-type PageData = {
+export type PageData = {
   pageNum: number;
 } & (
   | {

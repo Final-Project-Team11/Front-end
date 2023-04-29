@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Vacation from './Vacation/Vacation';
-import { useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
+import { PageData, useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
@@ -14,7 +14,7 @@ const VacationTab = () => {
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 무한스크롤 커스텀 훅
-  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
   // 원본배열 유지하며 새로운 데이터 추가
   const vacations = data ? data.pages.flatMap(page => page.vacation) : [];

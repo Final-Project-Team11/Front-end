@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Tags from './Tags/Tags';
-import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
+import { PageData, useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
 import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
@@ -15,7 +15,7 @@ const Tag = ({ types }: TagBlockCssProps) => {
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 무한스크롤 커스텀훅
-  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
   // data 존재 시
   const tags = data ? data.pages.flatMap(page => page.mention) : [];

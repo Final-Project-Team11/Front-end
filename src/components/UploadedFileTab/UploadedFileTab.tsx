@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
-import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
+import { PageData, useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
 import Board from '../Board/Board';
 import UploadedOne from './UploadedOne/UploadedOne';
 import FolderIcon from '../../assets/Icons/FolderIcon';
@@ -13,7 +13,7 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 무한스크롤 커스텀훅
-  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
   // 받아오는 데이터 풀어서 하나의 배열로.
   const files = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];

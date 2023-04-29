@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
+import { PageData, useGetRequest } from '../../api/hooks/Request/useGetRequest';
 import Board from '../Board/Board';
 import RequestedOne from './RequestedOne/RequestedOne';
 import { RequestType } from './interfaces';
@@ -19,7 +19,7 @@ const Request = ({ type }: RequestType) => {
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   //무한스크롤 커스텀훅
-  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
   // title에 들어갈 icon
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;

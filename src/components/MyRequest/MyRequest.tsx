@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import MyRequestList from './MyRequestList';
-import { useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
+import { PageData, useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
 import Board from '../Board/Board';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
@@ -14,7 +14,7 @@ const MyRequest = () => {
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
   // 무한스크롤 커스텀훅
-  useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
   // data 존재 시
   const files = data ? data.pages.flatMap(page => page.schedule) : [];

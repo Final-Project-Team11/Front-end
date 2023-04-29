@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { UploadedFileList } from '../../../components/UploadedFileTab/interfaces';
 
-interface PageData {
+export interface PageData {
   [x: string]: UploadedFileList[] | number;
 }
 
