@@ -13,6 +13,7 @@ const MyRequest = () => {
   // div 의 스크롤을 감지하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
+  // 무한스크롤 커스텀훅
   useInfiniteQueryHook({ targetDiv, fetchNextPage, hasNextPage });
 
   // data 존재 시

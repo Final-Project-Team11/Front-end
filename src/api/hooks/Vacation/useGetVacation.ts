@@ -30,5 +30,5 @@ export const useGetVacation = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };

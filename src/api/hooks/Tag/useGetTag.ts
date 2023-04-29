@@ -31,5 +31,5 @@ export const useMentionedSchedules = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };

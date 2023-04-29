@@ -33,5 +33,5 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };
