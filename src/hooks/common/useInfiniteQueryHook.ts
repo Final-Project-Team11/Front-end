@@ -1,5 +1,6 @@
 import { InfiniteQueryObserverResult } from '@tanstack/react-query';
-import { RefObject, useEffect } from 'react';
+import { RefObject, useCallback, useEffect } from 'react';
+import useThrottleCallback from './useThrottleCallback';
 
 interface HookType<T> {
   targetDiv: RefObject<HTMLDivElement>;
@@ -12,7 +13,7 @@ export const useInfiniteQueryHook = <T>({
   fetchNextPage,
   hasNextPage,
 }: HookType<T>) => {
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const container = targetDiv.current;
     if (container) {
       const scrollHeight = container.scrollHeight;
@@ -23,14 +24,16 @@ export const useInfiniteQueryHook = <T>({
         fetchNextPage();
       }
     }
-  };
+  }, [targetDiv, fetchNextPage, hasNextPage]);
+
+  const throttledHandleScroll = useThrottleCallback(handleScroll, 1500, 'scroll');
 
   // div에 스크롤 이벤트 추가.
   useEffect(() => {
     const container = targetDiv.current;
     if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
+      container.addEventListener('scroll', throttledHandleScroll);
+      return () => container.removeEventListener('scroll', throttledHandleScroll);
     }
   }, [targetDiv, handleScroll]);
 
