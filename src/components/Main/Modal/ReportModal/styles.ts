@@ -7,7 +7,7 @@ interface DeviderProps {
 
 export const Modal = styled.div`
   width: 1100px;
-  height: 663px;
+  min-height: 663px;
 
   display: flex;
   flex-direction: column;
@@ -43,13 +43,12 @@ export const HeaderIcon = styled.div`
   background-color: black;
   width: 11px;
   height: 26px;
-
   border-radius: 13px;
 `;
 
 export const TitleSpan = styled.span`
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 700;
 `;
 
 export const Devider = styled.hr<DeviderProps>`
@@ -64,7 +63,7 @@ export const Devider = styled.hr<DeviderProps>`
 
 export const ContentArea = styled.div`
   width: 100%;
-  height: 440px;
+  min-height: 440px;
 
   padding: 45px;
   box-sizing: border-box;
@@ -89,7 +88,7 @@ export const ContentSpan = styled.span`
 
 export const Footer = styled.div`
   width: 100%;
-  height: 120px;
+  min-height: 120px;
 
   display: flex;
   flex-direction: column;
@@ -99,15 +98,18 @@ export const Footer = styled.div`
 export const FileBlock = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   padding: 27px 30px;
   gap: 10px;
   margin-left: 5px;
+  margin-bottom: 5px;
 `;
 
 export const AttendeesBlock = styled.div`
   display: flex;
   align-items: center;
   padding: 0 33px;
+  margin-bottom: 10px;
 `;
 
 export const FooterHalf = styled.div`
