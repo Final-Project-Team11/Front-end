@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const StTagBlock = styled.div`
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   background-color: #f1f1f1;
@@ -29,4 +30,12 @@ const StContainer = styled.div`
   gap: 20px;
 `;
 
-export { StTagBlock, StInput, StPlusLabel, StContainer };
+const StFileListBlock = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const StIconBlock = styled.div``;
+
+export { StTagBlock, StInput, StPlusLabel, StContainer, StFileListBlock, StIconBlock };
