@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import * as UI from './style';
-import { BsCheckCircle, BsXCircle, BsCircle, BsCheck, BsX } from 'react-icons/bs';
+import { BsCheckCircle } from '@react-icons/all-files/bs/BsCheckCircle';
+import { BsXCircle } from '@react-icons/all-files/bs/BsXCircle';
+import { BsCircle } from '@react-icons/all-files/bs/BsCircle';
+import { BsCheck } from '@react-icons/all-files/bs/BsCheck';
+import { BsX } from '@react-icons/all-files/bs/BsX';
+
 import { usePutDecision } from '../../../api/hooks/Vacation/usePutDecision';
 import { VacationList } from '../interfaces';
 

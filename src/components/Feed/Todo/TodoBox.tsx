@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from './style';
-import { BsX } from 'react-icons/bs';
+import { BsX } from '@react-icons/all-files/bs/BsX';
 import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { useCheckTodo } from '../../../api/hooks/Feed/useCheckTodo';
 import { Todo } from '../interfaces';
