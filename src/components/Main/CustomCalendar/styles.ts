@@ -1,87 +1,79 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../styles/colors';
 
 const DAY_WIDTH = 150;
 const DAY_HEIGHT = 100;
 
-const Styear = styled.div`
-  font-size: 80px;
-  width: 50px;
-  text-align: left;
-  color: #e64042;
-  font-weight: 900;
-  margin-bottom: -30px;
-`;
+interface CalendarProps {
+  width: string;
+}
 
-const StMonth = styled.div`
-  font-size: 80px;
-  width: 50px;
-  display: flex;
-  color: #e64042;
-  font-weight: 900;
-`;
-
-const StTitleDateBlock = styled.div`
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-`;
-
-const StWeek = styled.div`
-  width: ${DAY_WIDTH}px;
-  height: 30px;
+const StWeek = styled.div<CalendarProps>`
+  width: ${({ width }) => (width ? width : '14%')};
+  height: 100%;
   text-align: center;
-  border-top: 5px solid #e64042;
-  padding-top: 20px;
-  color: #e64042;
+  color: ${COLOR.SCHEDULE_BLUE};
   font-weight: bold;
 `;
 
-const StWeekdayBlock = styled.div`
-  width: ${DAY_WIDTH}px;
-  height: ${DAY_HEIGHT}px;
-  text-align: center;
-  border: none;
+const StContainer = styled.div<CalendarProps>`
+  width: ${({ width }) => (width ? width + 'px' : '813px')};
+  height: 116px;
+  cursor: pointer;
 `;
-
-const StContainer = styled.div`
-  padding: 20px 20px;
-  border: 1px solid rgba(128, 128, 128, 0.267);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const StTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const Stpagination = styled.div``;
 
 const StWeekBlock = styled.div`
   display: flex;
+  padding-bottom: 5px;
 `;
 
 const StDateBlcok = styled.div`
-  width: 1050px;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  padding: 5px 0;
+  font-size: 12px;
+  border-bottom: 1px solid ${COLOR.SCHEDULE_BLUE};
+`;
+
+interface EventProps {
+  top?: string;
+  width?: string;
+  left?: string;
+  backgroundColor?: string;
+}
+
+const StEventBlock = styled.div<EventProps>`
+  position: absolute;
+  width: ${({ width }) => (width ? width : '14%')};
+  top: ${({ top }) => (top ? top : '14px')};
+  left: ${({ left }) => (left ? left : '14%')};
+
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : 'blue'};
+  color: white;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 3px;
+`;
+
+const StEventContainer = styled.div`
+  width: 100%;
+`;
+
+const StLine = styled.div`
+  border-top: 1px solid ${COLOR.SCHEDULE_BLUE};
 `;
 
 export {
-  Styear,
-  StMonth,
-  StTitleDateBlock,
   StWeek,
-  StWeekdayBlock,
   StContainer,
-  StTitle,
-  Stpagination,
   StWeekBlock,
   StDateBlcok,
+  StLine,
+  StEventBlock,
+  StEventContainer,
 };

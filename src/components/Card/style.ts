@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
-import { color } from 'framer-motion';
 
 interface CardStyleProps {
   tab?: boolean;
@@ -30,6 +29,8 @@ export const StCardBlock = styled.div<CardStyleProps>`
 
   padding: 19px;
   box-sizing: border-box;
+
+  cursor: pointer;
 
   box-shadow: rgba(212, 229, 249, 1) 0px 1px 9px -1px;
   text-shadow: 0px 1px 4px rgba(148, 177, 211, 0.94);
@@ -66,6 +67,8 @@ export const StProfileImg = styled.div`
 
   margin-bottom: 20px;
 
+  overflow: hidden;
+
   border-radius: 50%;
 
   display: flex;
@@ -73,8 +76,8 @@ export const StProfileImg = styled.div`
   align-items: center;
 
   img {
-    width: 80%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 `;

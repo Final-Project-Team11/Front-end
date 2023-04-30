@@ -1,7 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { AdminSignupInfo } from '../interfaces';
 import apis from '../../../api/axios/api';
+import { AdminLoginInfo } from '../../Login/components/AdminLoginForm';
+
+type AdminSignupInfo = AdminLoginInfo & {
+  companyName: string;
+  address: string;
+  ceoName: string;
+  ceoNum: string;
+  companyNum: string;
+};
 
 export const useSignup = () => {
   const navigate = useNavigate();

@@ -1,13 +1,14 @@
 import React from 'react';
-import * as UI from './style';
-import oneWeekCalendar from '../../assets/images/OneWeekCalendar.jpg';
+import CustomCalendar from '../Main/CustomCalendar/CustomCalendar';
+import { useNavigate } from 'react-router-dom';
 
 const OneWeekCalendar = () => {
-  return (
-    <UI.StCalendarBlock>
-      <img src={oneWeekCalendar} />
-    </UI.StCalendarBlock>
-  );
+  const navigate = useNavigate();
+  const moveMainHandler = () => {
+    navigate('/main');
+  };
+
+  return <CustomCalendar width="813px" onClick={moveMainHandler} />;
 };
 
 export default OneWeekCalendar;

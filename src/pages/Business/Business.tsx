@@ -1,9 +1,5 @@
 import React from 'react';
-import MaxInput from '../../components/Inputs/Input/MaxInput';
-import ButtonInput from '../../components/Inputs/ButtonInput/ButtonInput';
-import Dropdown from '../../components/Dropdown/Dropdown';
-import { StButton } from '../../components/Button/styles';
-import Modal from '../../components/Modal/Modal';
+import Dropdown from '../../components/Atoms/Dropdown/Dropdown';
 import { UserSignupInfo } from './interfaces';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,6 +12,10 @@ import { usePatchUser } from './hooks/usePatchUser';
 import { Wrapper, ViewUser, VuHeader, Vubody, StSpan, UserInfo } from './styles';
 import CreateUser from './CreateUser';
 import Swal from 'sweetalert2';
+import CustomModal from '../../components/Atoms/Modal/CustomModal';
+import CustomLabel from '../../components/Atoms/Label/CustomLabel';
+import CustomInput from '../../components/Atoms/Input/CustomInput';
+import CustomButton from '../../components/Atoms/Button/CustomButton';
 
 const Business = () => {
   // 모달 상태변수, 콜백함수
@@ -26,7 +26,6 @@ const Business = () => {
   };
 
   const { data, isLoading } = useGetUser();
-  console.log('데이터', data);
   const [selectedUser, setSelectedUser] = React.useState<Users>({
     userId: '',
     userName: '',
@@ -45,7 +44,6 @@ const Business = () => {
   const handleUserClick = (user: Users) => {
     setSelectedUser(user);
     setShowModal(true);
-    console.log('선택된', user);
   };
 
   if (!data && isLoading) {
@@ -134,24 +132,12 @@ const Business = () => {
 
   return (
     <Wrapper>
+      {/* <------------------------------유저 조회------------------------------> */}
       <ViewUser>
         <VuHeader>
           <StSpan>유저 조회</StSpan>
           <StSpan style={{ margin: '0 91px 0 60px' }}>부서별 보기</StSpan>
           {/* <Dropdown items={teams}>부서</Dropdown> */}
-          <MaxInput
-            types="login"
-            type="search"
-            style={{
-              width: '360px',
-              height: '33px',
-              background: 'none',
-              boxShadow: 'none',
-              borderBottom: '1px solid black',
-              boxSizing: 'border-box',
-              padding: '0 15px 15px',
-            }}
-          />
         </VuHeader>
         <Vubody>
           <div
@@ -225,8 +211,11 @@ const Business = () => {
               </div>
             );
           })}
+          {/* <------------------------------유저 조회------------------------------> */}
+
+          {/* <------------------------------유저 상세 조회------------------------------> */}
           {showModal && (
-            <Modal closeModal={closeModal} style={{ width: '640px' }}>
+            <CustomModal closeModal={closeModal} style={{ width: '640px' }}>
               <h1
                 style={{
                   width: '500px',
@@ -242,22 +231,20 @@ const Business = () => {
               >
                 유저 조회
               </h1>
-              <MaxInput
-                types="signup"
-                style={{ width: '500px' }}
-                value={selectedUser.userName}
-              >
+              <CustomLabel>
                 이름
-              </MaxInput>
-              <MaxInput
-                types="signup"
-                style={{ width: '500px', color: '#8AB2E0' }}
-                value={patchUserInfo.team}
-                name="team"
-                onChange={patchInputHandler}
-              >
+                <CustomInput inputType="signup" value={selectedUser.userName} />
+              </CustomLabel>
+              <CustomLabel>
                 부서
-              </MaxInput>
+                <CustomInput
+                  inputType="signup"
+                  type="text"
+                  value={patchUserInfo.team}
+                  name="team"
+                  onChange={patchInputHandler}
+                />
+              </CustomLabel>
               <div
                 style={{
                   display: 'flex',
@@ -266,58 +253,62 @@ const Business = () => {
                   color: '#8AB2E0',
                 }}
               >
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px', color: '#8AB2E0' }}
-                  type="text"
-                  name="rank"
-                  value={patchUserInfo.rank}
-                  onChange={patchInputHandler}
-                >
+                <CustomLabel>
                   직급
-                </MaxInput>
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px', color: '#8AB2E0' }}
-                  type="text"
-                  value={patchUserInfo.job}
-                  name="job"
-                  onChange={patchInputHandler}
-                >
+                  <CustomInput
+                    inputType="signup"
+                    type="text"
+                    name="rank"
+                    value={patchUserInfo.rank}
+                    onChange={patchInputHandler}
+                  />
+                </CustomLabel>
+                <CustomLabel>
                   직무
-                </MaxInput>
+                  <CustomInput
+                    inputType="signup"
+                    type="text"
+                    name="job"
+                    value={patchUserInfo.job}
+                    onChange={patchInputHandler}
+                  />
+                </CustomLabel>
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px' }}
-                  value={String(selectedUser.joinDay)}
-                >
+                <CustomLabel>
                   입사일
-                </MaxInput>
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px' }}
-                  value={selectedUser.salaryDay}
-                >
+                  <CustomInput
+                    inputType="signup"
+                    name="job"
+                    value={String(selectedUser.joinDay)}
+                  />
+                </CustomLabel>
+                <CustomLabel>
                   월급일
-                </MaxInput>
+                  <CustomInput
+                    inputType="signup"
+                    name="job"
+                    value={selectedUser.salaryDay}
+                  />
+                </CustomLabel>
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px' }}
-                  value={selectedUser.userId}
-                >
+                <CustomLabel>
                   아이디
-                </MaxInput>
-                <MaxInput
-                  types="signup"
-                  style={{ width: '240px' }}
-                  value={selectedUser.authLevel}
-                >
+                  <CustomInput
+                    inputType="signup"
+                    name="job"
+                    value={selectedUser.userId}
+                  />
+                </CustomLabel>
+                <CustomLabel>
                   권한
-                </MaxInput>
+                  <CustomInput
+                    inputType="signup"
+                    name="job"
+                    value={selectedUser.authLevel}
+                  />
+                </CustomLabel>
               </div>
               <Dropdown
                 size="small"
@@ -345,8 +336,8 @@ const Business = () => {
                   margin: '50px 0 ',
                 }}
               >
-                <StButton
-                  size="signup"
+                <CustomButton
+                  buttonType="signup"
                   onClick={patchUserHandler}
                   style={{
                     width: '150px',
@@ -359,9 +350,9 @@ const Business = () => {
                   }}
                 >
                   수정
-                </StButton>
-                <StButton
-                  size="signup"
+                </CustomButton>
+                <CustomButton
+                  buttonType="signup"
                   onClick={deleteUserHandler}
                   style={{
                     width: '150px',
@@ -374,9 +365,9 @@ const Business = () => {
                   }}
                 >
                   삭제
-                </StButton>
-                <StButton
-                  size="signup"
+                </CustomButton>
+                <CustomButton
+                  buttonType="signup"
                   onClick={closeModal}
                   style={{
                     width: '150px',
@@ -391,9 +382,9 @@ const Business = () => {
                   }}
                 >
                   닫기
-                </StButton>
+                </CustomButton>
               </div>
-            </Modal>
+            </CustomModal>
           )}
         </Vubody>
       </ViewUser>

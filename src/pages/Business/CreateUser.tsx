@@ -1,14 +1,14 @@
 import React from 'react';
 import { UserSignupInfo } from './interfaces';
-import MaxInput from '../../components/Inputs/Input/MaxInput';
-import { StButton } from '../../components/Button/styles';
-import Dropdown from '../../components/Dropdown/Dropdown';
+import Dropdown from '../../components/Atoms/Dropdown/Dropdown';
 import ReactDatePicker from 'react-datepicker';
-import ButtonInput from '../../components/Inputs/ButtonInput/ButtonInput';
 import { ko } from 'date-fns/locale';
 import { useUserIdValidation } from './hooks/useUserIdValidation';
 import { useSignup } from './hooks/useSignup';
 import 'react-datepicker/dist/react-datepicker.css';
+import CustomLabel from '../../components/Atoms/Label/CustomLabel';
+import CustomInput from '../../components/Atoms/Input/CustomInput';
+import CustomButton from '../../components/Atoms/Button/CustomButton';
 
 const CreateUser = () => {
   // 유저생성 상태변수
@@ -91,47 +91,48 @@ const CreateUser = () => {
       >
         유저 생성
       </h1>
-      <MaxInput
-        types="signup"
-        style={{ width: '500px' }}
-        type="text"
-        name="userName"
-        value={userInfo.userName}
-        onChange={changeInputHandler}
-      >
+
+      <CustomLabel>
         이름
-      </MaxInput>
-      <MaxInput
-        types="signup"
-        style={{ width: '500px' }}
-        type="text"
-        name="team"
-        value={userInfo.team}
-        onChange={changeInputHandler}
-      >
+        <CustomInput
+          inputType="signup"
+          type="text"
+          value={userInfo.userName}
+          name="userName"
+          onChange={changeInputHandler}
+        />
+      </CustomLabel>
+      <CustomLabel>
         부서
-      </MaxInput>
+        <CustomInput
+          inputType="signup"
+          type="text"
+          value={userInfo.team}
+          name="team"
+          onChange={changeInputHandler}
+        />
+      </CustomLabel>
       <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-        <MaxInput
-          types="signup"
-          style={{ width: '240px' }}
-          type="text"
-          name="rank"
-          value={userInfo.rank}
-          onChange={changeInputHandler}
-        >
+        <CustomLabel>
           직급
-        </MaxInput>
-        <MaxInput
-          types="signup"
-          style={{ width: '240px' }}
-          type="text"
-          name="job"
-          value={userInfo.job}
-          onChange={changeInputHandler}
-        >
+          <CustomInput
+            inputType="signup"
+            type="text"
+            value={userInfo.rank}
+            name="rank"
+            onChange={changeInputHandler}
+          />
+        </CustomLabel>
+        <CustomLabel>
           직무
-        </MaxInput>
+          <CustomInput
+            inputType="signup"
+            type="text"
+            value={userInfo.job}
+            name="job"
+            onChange={changeInputHandler}
+          />
+        </CustomLabel>
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
         입사일
@@ -141,16 +142,16 @@ const CreateUser = () => {
           locale={ko}
           dateFormat="yyyy년 MM월 dd일"
         />
-        <MaxInput
-          types="signup"
-          style={{ width: '240px' }}
-          type="text"
-          name="salaryDay"
-          value={userInfo.salaryDay}
-          onChange={changeInputHandler}
-        >
+        <CustomLabel>
           월급일
-        </MaxInput>
+          <CustomInput
+            inputType="signup"
+            type="text"
+            value={userInfo.salaryDay}
+            name="salaryDay"
+            onChange={changeInputHandler}
+          />
+        </CustomLabel>
       </div>
       <Dropdown
         size="small"
@@ -170,22 +171,24 @@ const CreateUser = () => {
       >
         권한
       </Dropdown>
-      <ButtonInput
-        types="business"
-        type="text"
-        name="userId"
-        value={userInfo.userId}
-        onChange={changeInputHandler}
-        onClick={() => checkUserIdHandler(userInfo.userId)}
-        buttonTag="중복검사"
-        style={{ marginTop: '25px' }}
-        buttonStyle={{ color: '#E64042', border: '1px solid #E64042' }}
-      >
+      <CustomLabel>
         아이디
-      </ButtonInput>
-      <br />
-      <StButton
-        size="login"
+        <CustomInput
+          inputType="signup"
+          type="text"
+          value={userInfo.userId}
+          name="userId"
+          onChange={changeInputHandler}
+        />
+        <CustomButton
+          buttonType="signup"
+          onClick={() => checkUserIdHandler(userInfo.userId)}
+        >
+          중복 검사
+        </CustomButton>
+      </CustomLabel>
+      <CustomButton
+        buttonType="login"
         style={{
           width: '500px',
           boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
@@ -197,7 +200,7 @@ const CreateUser = () => {
         }}
       >
         유저 생성
-      </StButton>
+      </CustomButton>
     </form>
   );
 };

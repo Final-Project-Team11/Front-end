@@ -6,11 +6,8 @@ import Card from '../../components/Card';
 import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from '../MyPage/styles';
-import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
-import WaitVacation from '../../assets/Meerkat/WaitVacation';
-import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
-import AuthRequest from '../../components/AuthRequest/AuthRequest';
 import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
+import VacationStatus from '../../components/VacationStatus/VacationStatus';
 
 const Manager = () => {
   return (
@@ -23,9 +20,7 @@ const Manager = () => {
         <UI.MainArea>
           <UI.FeedArea>
             <Feed />
-            {/* <VacationMeerkat /> */}
-            {/* <WaitVacation /> */}
-            <WorkingMeerkat />
+            <VacationStatus />
           </UI.FeedArea>
           <UI.TabArea>
             <UI.MiddleArea>
@@ -37,8 +32,8 @@ const Manager = () => {
               <UploadedFileTab type="meetingfiles" />
             </UI.MiddleArea>
             <UI.MiddleArea>
-              <Request />
-              <AuthRequest />
+              <Request type="schedule" />
+              <Request type="other" />
             </UI.MiddleArea>
           </UI.TabArea>
         </UI.MainArea>

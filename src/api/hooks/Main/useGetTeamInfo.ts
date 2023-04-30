@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import api from '../../axios/api';
 
 interface TeamInfo {
-  data: string[];
+  data: [{ userName: string; userId: string }];
   isLoading: boolean;
 }
 
@@ -14,9 +14,6 @@ const useGetTeamInfo = (): TeamInfo => {
     queryFn: async () => {
       const data = await api.get('teamUsers');
       return data.data;
-    },
-    onSuccess: () => {
-      console.log('success');
     },
   });
 

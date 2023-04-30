@@ -62,6 +62,11 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+.swal2-container {
+  z-index: 20000 !important;
+}
+
 `;
 
 export default GlobalStyle;

@@ -1,4 +1,13 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../styles/colors';
+
+interface DeviderProps {
+  positions: 'Header' | 'Footer';
+}
+
+interface ButtonProps {
+  types: 'accept' | 'decline';
+}
 
 export const Modal = styled.div`
   width: 1100px;
@@ -12,12 +21,14 @@ export const Header = styled.div`
   width: 100%;
   height: 73px;
 
-  padding-left: 30px;
+  padding: 0 30px;
   box-sizing: border-box;
 
   display: flex;
   align-items: center;
   gap: 20px;
+
+  position: relative;
 `;
 
 export const HeaderIcon = styled.div`
@@ -33,11 +44,18 @@ export const TitleSpan = styled.span`
   font-weight: bold;
 `;
 
-export const Devider = styled.hr`
+export const ContentSpan = styled.span`
+  font-size: 15px;
+`;
+
+export const Devider = styled.hr<DeviderProps>`
   width: 95%;
   height: 1px;
   border: none;
   background-color: gray;
+  position: absolute;
+  bottom: ${({ positions }) => (positions === 'Footer' ? '50px' : '-5px')};
+  left: 27.5px;
 `;
 
 export const ContentArea = styled.div`
@@ -48,16 +66,14 @@ export const ContentArea = styled.div`
   box-sizing: border-box;
 `;
 
-export const ContentSpan = styled.span`
-  font-size: 15px;
-`;
-
 export const Footer = styled.div`
   width: 100%;
   height: 120px;
 
   display: flex;
   flex-direction: column;
+
+  position: relative;
 `;
 
 export const FooterHalf = styled.div`
@@ -84,4 +100,33 @@ export const FooterSpanBlock = styled.div`
   align-items: center;
 
   border-radius: 13px;
+`;
+export const FooterFileA = styled.a`
+  background-color: gray;
+
+  color: white;
+  height: 26px;
+
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 13px;
+`;
+
+export const DecideButton = styled.button<ButtonProps>`
+  background-color: ${({ types }) => (types === 'decline' ? 'white' : 'black')};
+  width: 70px;
+  height: 26px;
+
+  font-size: 10px;
+  color: ${({ types }) => (types === 'decline' ? 'black' : 'white')};
+  cursor: pointer;
+
+  border: 1px solid black;
+  border-radius: 19px;
+  margin-left: ${({ types }) => (types === 'decline' ? 'auto' : '0')};
 `;

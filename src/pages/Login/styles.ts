@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// 탭
 export const StBlock = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,7 +8,11 @@ export const StBlock = styled.div`
   min-height: 100vh;
 `;
 
-export const Tap = styled.form`
+export const StSpan = styled.span`
+  font-size: 12px;
+`;
+
+export const SubmitForm = styled.form`
   width: 430px;
   height: 310px;
 
@@ -30,8 +33,7 @@ export const TextWrapper = styled.div`
   margin: 45px 0 13px 0;
 `;
 
-// 탭 선택 버튼
-export const TapButtonWrapper = styled.div`
+export const TabButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -45,7 +47,7 @@ interface TapButtonProps {
   isSelected: boolean;
 }
 
-export const TapButton = styled.div<TapButtonProps>`
+export const TabButton = styled.div<TapButtonProps>`
   font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};
   font-size: 20px;
   display: flex;

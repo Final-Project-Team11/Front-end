@@ -1,30 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { CalendarContext } from '../../Main/Main';
+import React, { useCallback, useContext } from 'react';
+
 import { nanoid } from 'nanoid';
 import { TodaysProps } from './interfaces';
 import * as styles from './styles';
-import { EventObject } from '@toast-ui/calendar/*';
 import FolderIcon from '../../../assets/Icons/FolderIcon';
 import TagIcon from '../../../assets/Icons/TagIcon';
 import { CalendarProps } from '../interfaces';
+import { CalendarContext } from '../../Main/Main';
 
 const TodaySchedules = (props: TodaysProps) => {
   const schedules = useContext<CalendarProps[]>(CalendarContext);
   const today = props.todayData ? props.todayData : new Date().getDate();
-  const filterSchedules = schedules?.filter(item => {
-    const startDay = item.start && new Date(item.start);
-    const endDay = item.end && new Date(item.end);
+  const filterSchedules = useCallback(
+    () =>
+      schedules?.filter(item => {
+        const startDay = item.start && new Date(item.start);
+        const endDay = item.end && new Date(item.end);
 
-    if (startDay !== undefined && endDay !== undefined)
-      return startDay.getDate() <= today && endDay.getDate() >= today;
-  });
+        if (startDay !== undefined && endDay !== undefined)
+          return startDay.getDate() <= today && endDay.getDate() >= today;
+      }),
+    [today]
+  );
 
   return (
     <styles.StWrap>
       <styles.StContainer>
-        {filterSchedules.length !== 0 ? (
-          filterSchedules.map(item => {
+        {filterSchedules().length !== 0 ? (
+          filterSchedules().map(item => {
             const startDay = item.start && new Date(item.start);
+            const endDay = item.end && new Date(item.end);
             const title = item.title && item.title.split('-')[0];
             if (startDay !== undefined) {
               return (
@@ -32,13 +37,18 @@ const TodaySchedules = (props: TodaysProps) => {
                   <styles.StContentBlock>
                     <styles.StMarkBlock backgroundColor={item.backgroundColor} />
                     <styles.StDateBlock>
-                      <styles.StSpan>{startDay.getFullYear()}</styles.StSpan>
-                      <styles.StSpan>/</styles.StSpan>
                       <styles.StSpan>
-                        {(startDay.getMonth() + 1).toString().padStart(2, '0')}
+                        {startDay.getFullYear()}/
+                        {(startDay.getMonth() + 1).toString().padStart(2, '0')}/
+                        {startDay.getDate()}
                       </styles.StSpan>
-                      <styles.StSpan>/</styles.StSpan>
-                      <styles.StSpan>{startDay.getDate()}</styles.StSpan>
+                      {endDay !== undefined && (
+                        <styles.StSpan>
+                          -{endDay.getFullYear()}/
+                          {(endDay.getMonth() + 1).toString().padStart(2, '0')}/
+                          {endDay.getDate()}
+                        </styles.StSpan>
+                      )}
                     </styles.StDateBlock>
                     <styles.StDateBlock>
                       <styles.StSpan>{startDay.getHours()}</styles.StSpan>

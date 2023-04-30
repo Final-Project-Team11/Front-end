@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
-import Modal from '../../Modal/Modal';
-import RequestDetail from '../RequestDetail/RequestDetail';
+import Modal from '../../Atoms/Modal/CustomModal';
+import RequestDetail from '../RequestDetail';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';
-import { RequestTabType } from '../interfaces';
+import { RequestedOneProps } from '../interfaces';
 
-const RequestedOne = ({ request }: { request: RequestTabType }) => {
-  const { data, refetch, isLoading } = useGetRequestDetail(request.Id);
+const RequestedOne = ({ request, type }: RequestedOneProps) => {
+  // GETdetail payload
+  const detailPayload = {
+    type: type,
+    id: request.Id,
+  };
+
+  const { data, refetch, isLoading } = useGetRequestDetail(detailPayload);
   const [modalOpen, setModalOpen] = useState(false);
 
   if (isLoading) <div>Loading...</div>;
 
+  // 모달을 띄우고, GETdetail 요청을 보내서 모달에 전달.
   const getDetail = () => {
     refetch();
     setModalOpen(true);
@@ -28,33 +35,30 @@ const RequestedOne = ({ request }: { request: RequestTabType }) => {
         types={request.status}
         onClick={() => getDetail()}
       >
-        <UI.StLeftBlock>
-          <UI.StNameDateBlock>
-            <UI.StNameDateDiv>
-              <UI.StNameSpan>
-                <Person colors={request.status === 'submit' ? 'black' : 'gray'} />
-                &nbsp; |&nbsp;
-                {request.userName}
-              </UI.StNameSpan>
-              <UI.StDateSpan className="date">{request.enrollDay}</UI.StDateSpan>
-            </UI.StNameDateDiv>
-          </UI.StNameDateBlock>
-          <UI.StContentSpan>
-            <CalendarIcon
-              usage={request.status === 'submit' ? 'insideTrue' : 'insideFalse'}
-            />
+        <UI.StNameDateDiv>
+          <UI.StNameSpan>
+            <Person colors={request.status === 'submit' ? 'black' : 'gray'} />
             &nbsp; |&nbsp;
-            {request.status === 'deny' ? (
-              <UI.StRejectedSpan>{request.title}</UI.StRejectedSpan>
-            ) : (
-              request.title
-            )}
-          </UI.StContentSpan>
-        </UI.StLeftBlock>
+            {request.userName}
+          </UI.StNameSpan>
+          <UI.StDateSpan className="date">{request.enrollDay}</UI.StDateSpan>
+        </UI.StNameDateDiv>
+        <UI.StContentSpan>
+          <CalendarIcon
+            usage={request.status === 'submit' ? 'insideTrue' : 'insideFalse'}
+          />
+          &nbsp; |&nbsp;
+          <UI.StRejectedSpan types={request.status}>{request.title}</UI.StRejectedSpan>
+        </UI.StContentSpan>
       </UI.StRequestedListBlock>
       {modalOpen && (
         <Modal closeModal={closeModal}>
-          <RequestDetail data={data} isLoading={isLoading} />
+          <RequestDetail
+            data={data}
+            isLoading={isLoading}
+            closeModal={closeModal}
+            type={type}
+          />
         </Modal>
       )}
     </>

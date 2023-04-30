@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import useGetTeamInfo from '../../../../../api/hooks/Main/useGetTeamInfo';
 import * as styles from './styles';
 import TagIcon from '../../../../../assets/Icons/TagIcon';
+import { nanoid } from 'nanoid';
 
 interface HashTagProps {
   mention?: string[];
@@ -25,7 +26,6 @@ const HashTag = (props: HashTagProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const mouseDownHandler = () => {
     setMouseClick(!mouseClick);
-    console.log('test');
   };
 
   useEffect(() => {
@@ -33,10 +33,19 @@ const HashTag = (props: HashTagProps) => {
     if (current !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      setInputPosition({ top: absoluteTop, left, height, width });
-      console.log({ top, left, height, width });
+      if (data !== undefined) {
+        if (
+          absoluteTop + data.length * 20 >
+          screen.height - (document.body.clientHeight - absoluteTop) / 2
+        ) {
+          const newTop = absoluteTop - (data.length * 39 - height);
+          setInputPosition({ top: newTop, left, height, width });
+        } else {
+          setInputPosition({ top: absoluteTop, left, height, width });
+        }
+      }
     }
-  }, [tagList]);
+  }, [data]);
 
   useEffect(() => {
     props.mention && setTagList(props.mention);
@@ -47,23 +56,23 @@ const HashTag = (props: HashTagProps) => {
 
     if (props.disable === false) {
       const isValue = tagList.find(tag => tag === name);
-      console.log('isValue', isValue);
+
       if (isValue !== undefined) {
         alert('언급된 이름이 있습니다.');
         setMouseClick(!mouseClick);
       } else {
-        const newTtagList = [...tagList];
-        name && newTtagList.push(name);
-        setTagList(newTtagList);
+        const newTagList = [...tagList];
+        name && newTagList.push(name);
+        setTagList(newTagList);
         setMouseClick(!mouseClick);
-        props.mentionHandler(newTtagList);
+        props.mentionHandler(newTagList);
       }
     }
   };
 
   const onInputKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const isValue = data.find(name => name === inputValue);
+      const isValue = data.find(name => name.userName === inputValue);
       const istags = tagList.find(tag => tag === inputValue);
       const newTtagList = [...tagList];
 
@@ -84,6 +93,16 @@ const HashTag = (props: HashTagProps) => {
     }
   };
 
+  const deleteClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const clickedElement = event.target as HTMLDivElement;
+    const clickedElementId = clickedElement.id;
+
+    const newTagList = tagList.filter(item => item !== clickedElementId);
+    setTagList(newTagList);
+    props.mentionHandler(newTagList);
+  };
+
   return (
     <styles.StContainer>
       <styles.StIconBlock>
@@ -97,7 +116,11 @@ const HashTag = (props: HashTagProps) => {
                 <styles.StImageBlock />
                 {item}
               </styles.StProfileBlock>
-              {props.disable === false && <styles.StDeleteBlock>x</styles.StDeleteBlock>}
+              {props.disable === false && (
+                <styles.StDeleteBlock id={item} onClick={deleteClickHandler}>
+                  x
+                </styles.StDeleteBlock>
+              )}
             </styles.StTagBlock>
           );
         })}
@@ -116,9 +139,8 @@ const HashTag = (props: HashTagProps) => {
             <styles.StTeamMark>Team A :</styles.StTeamMark>
             {data?.map(item => {
               return (
-                <styles.StLiBlock onClick={onLiClickHandler}>
-                  {/* <styles.StImageBlock /> */}
-                  {item}
+                <styles.StLiBlock key={nanoid()} onClick={onLiClickHandler}>
+                  {item.userName}-{item.userId}
                 </styles.StLiBlock>
               );
             })}
