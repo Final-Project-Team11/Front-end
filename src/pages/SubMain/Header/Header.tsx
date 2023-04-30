@@ -100,27 +100,31 @@ function Header(props: HeaderProps) {
             );
           })}
           <styles.StTeamBlock>
-            <Dropdown
-              size="small"
-              items={reports}
-              onChange={value => {
-                setOpen(true);
-                currentTab.current = value;
-              }}
-              style={{
-                width: '110px',
-                height: '30px',
-                boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-                fontSize: '11px',
-                border: 'none',
-                padding: '10px',
-                fontWeight: 'bold',
-                color: '#484240',
-                background: '#EAEAEA',
-              }}
-            >
-              보고서
-            </Dropdown>
+            {tab === false ? (
+              <Dropdown
+                size="small"
+                items={reports}
+                onChange={value => {
+                  setOpen(true);
+                  currentTab.current = value;
+                }}
+                style={{
+                  width: '110px',
+                  height: '30px',
+                  boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+                  fontSize: '11px',
+                  border: 'none',
+                  padding: '10px',
+                  fontWeight: 'bold',
+                  color: '#484240',
+                  background: '#EAEAEA',
+                }}
+              >
+                보고서
+              </Dropdown>
+            ) : (
+              <styles.StNoneBlock />
+            )}
           </styles.StTeamBlock>
         </styles.StColorList>
       </styles.StContainer>
@@ -133,4 +137,4 @@ function Header(props: HeaderProps) {
   );
 }
 
-export default Header;
+export default React.memo(Header);
