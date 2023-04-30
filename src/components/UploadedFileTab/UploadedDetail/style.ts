@@ -71,6 +71,8 @@ export const Footer = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+
   position: relative;
 `;
 
@@ -93,6 +95,21 @@ export const FooterSpanBlock = styled.div`
 
   padding: 0 15px;
   box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 13px;
+`;
+export const FooterFileA = styled.a`
+  background-color: gray;
+
+  color: white;
+  height: 26px;
+
+  padding: 0 15px;
+  box-sizing: border-box;
+  cursor: pointer;
 
   display: flex;
   align-items: center;

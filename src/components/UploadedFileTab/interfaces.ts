@@ -10,8 +10,7 @@ export interface File {
 export interface UploadedFileList {
   Id: number;
   calenderId: number;
-  start: string;
-  end: string;
+  enroll: string;
   userName: string;
   userId?: number;
   title: string;

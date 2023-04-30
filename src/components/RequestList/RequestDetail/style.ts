@@ -112,6 +112,7 @@ export const FooterFileA = styled.a`
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   border-radius: 13px;
 `;
