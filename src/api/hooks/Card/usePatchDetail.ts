@@ -8,7 +8,6 @@ export const usePatchDetail = () => {
   const { mutate } = useMutation({
     mutationFn: async (payload: FormData) => {
       const response = await apis.patch('/usersInfo/profile', payload);
-      console.log(response);
       return response.data;
     },
     onSuccess: () => {
