@@ -17,8 +17,11 @@ const CustomLabel = ({ style, children, name }: LabelProps) => {
 export default CustomLabel;
 
 const StLabel = styled.label<LabelProps>`
-  margin-bottom: 15px;
   font-size: 15px;
   font-weight: bolder;
   color: #484240;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;

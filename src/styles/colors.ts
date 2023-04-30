@@ -21,4 +21,11 @@ export const COLOR = {
   PAGE_BLUE: '#8AB2E0',
   PAGE_LIGHTBLUE: '#BADAFF',
   PAGE_WHITE: '#FBF8F8',
+
+  //Figma 기준
+  FONT_COLOR: '#1F1F1F',
+  FONT_3: '#484240',
+  POINT_C: '#E64042',
+  SUB: '#BADAFF',
+  SUB1: '#8AB2E0',
 };

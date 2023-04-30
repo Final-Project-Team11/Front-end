@@ -7,15 +7,20 @@ export interface InputProps {
   name?: string;
   type?: string;
   value?: string | number;
-  inputType: 'login' | 'signup' | 'title' | 'author' | 'cardInfo';
+  inputType: 'login' | 'signup' | 'title' | 'author' | 'cardInfo' | 'half';
   placeholder?: string;
+  maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ style, name, type, value, inputType, placeholder, onChange }: InputProps, ref) => {
+  (
+    { style, name, type, value, inputType, placeholder, onChange, maxLength }: InputProps,
+    ref
+  ) => {
     return (
       <StInput
+        maxLength={maxLength}
         ref={ref}
         inputType={inputType}
         type={type}
