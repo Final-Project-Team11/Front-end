@@ -26,7 +26,6 @@ const HashTag = (props: HashTagProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const mouseDownHandler = () => {
     setMouseClick(!mouseClick);
-    console.log('test');
   };
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const HashTag = (props: HashTagProps) => {
           screen.height - (document.body.clientHeight - absoluteTop) / 2
         ) {
           const newTop = absoluteTop - (data.length * 39 - height);
-          console.log({ newTop, left, height, width });
           setInputPosition({ top: newTop, left, height, width });
         } else {
           setInputPosition({ top: absoluteTop, left, height, width });
@@ -58,7 +56,7 @@ const HashTag = (props: HashTagProps) => {
 
     if (props.disable === false) {
       const isValue = tagList.find(tag => tag === name);
-      console.log('isValue', isValue);
+
       if (isValue !== undefined) {
         alert('언급된 이름이 있습니다.');
         setMouseClick(!mouseClick);

@@ -30,10 +30,6 @@ const usePostReport = () => {
       const data = await apis.post('./report', formData);
       return data.data;
     },
-
-    onSuccess: config => {
-      console.log('sucess', config);
-    },
   });
 
   return mutation;

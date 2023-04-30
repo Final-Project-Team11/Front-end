@@ -16,6 +16,7 @@ import { getScheduleColor } from '../../../pages/SubMain/utils';
 
 interface CalendarProps {
   width: string;
+  onClick: () => void;
 }
 
 const CustomCalendar = (props: CalendarProps) => {
@@ -30,7 +31,6 @@ const CustomCalendar = (props: CalendarProps) => {
 
   const { data, isLoading } = useGetWeeklyInfo();
 
-  console.log('data', data);
   const widthPercent = (100 / 7).toString() + '%';
 
   const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
@@ -121,19 +121,10 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  interface Position {
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-  }
-  console.log(events);
-
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
     const resultArr = [];
 
-    console.log('events', events);
     for (let i = 0; i < events.length; i++) {
       const value = events[i].end.getDate() - events[i].start.getDate();
       const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
@@ -173,7 +164,7 @@ const CustomCalendar = (props: CalendarProps) => {
   }, [selectedYear, selectedMonth, events]);
 
   return (
-    <StContainer width={width}>
+    <StContainer width={width} onClick={props.onClick}>
       <StWeekBlock>{returnWeek()}</StWeekBlock>
       <StLine />
       <div style={{ position: 'relative' }}>
