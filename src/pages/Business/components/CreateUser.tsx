@@ -1,55 +1,52 @@
 import React from 'react';
-import { UserSignupInfo } from '../interfaces';
 import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
-import ReactDatePicker from 'react-datepicker';
-import { ko } from 'date-fns/locale';
 import { useUserIdValidation } from '../hooks/useUserIdValidation';
-import { useSignup } from '../hooks/useSignup';
-import 'react-datepicker/dist/react-datepicker.css';
 import CustomLabel from '../../../components/Atoms/Label/CustomLabel';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
+import { useForm } from 'react-hook-form';
+import Wrapper_Row from '../../../components/Atoms/Wrapper_Row/Wrapper_Row';
+import Swal from 'sweetalert2';
+import { useSignup } from '../hooks/useSignup';
+
+type UserSignupInfoPlus = {
+  userName: string;
+  team: string;
+  rank: string;
+  job: string;
+  salaryDay: number;
+  joinDay: string;
+  authLevel: number | string;
+  userId: string;
+};
 
 const CreateUser = () => {
-  // 유저생성 상태변수
-  const [userInfo, setUserInfo] = React.useState<UserSignupInfo>({
-    userName: '',
-    team: '',
-    rank: '',
-    job: '',
-    userId: '',
-    joinDay: new Date(),
-    salaryDay: '',
-    authLevel: 0,
-  });
-  // 유저생성 인풋 체인지 핸들러
-  const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const updateUserInfo = name === 'salaryDay' ? Number(value) : value;
-    setUserInfo({ ...userInfo, [name]: updateUserInfo });
-  };
-  // datepicker handler
-  const changeDateHandler = (date: Date) => {
-    setUserInfo({ ...userInfo, joinDay: date });
-  };
-  // 아이디 유호성 검사, 중복확인 핸들러
-  const checkUserIdHandler = (item: string) => {
-    if (validUserId(item)) {
-      checkUserId.mutate(item);
+  // <------------------------------React-Hook-Form------------------------------>
+  const { register, handleSubmit, getValues, reset } = useForm<UserSignupInfoPlus>();
+
+  // <-------------------------아이디 유호성 검사, 중복확인------------------------->
+  const { validUserId, checkUserId, userIdValidation } = useUserIdValidation();
+
+  const checkUserIdHandler = () => {
+    const { userId } = getValues();
+    validUserId(userId);
+    if (userIdValidation) {
+      checkUserId.mutate(userId);
     } else {
-      setUserIdValidation(false);
-      alert('아이디 양식을 재확인 해주세요');
+      Swal.fire({
+        icon: 'error',
+        title: '유효하지 않은 아이디 입니다.',
+        text: '아이디 양식을 다시 재확인 해주세요.',
+      });
     }
   };
-  // 아이디 유효성 검사, 중복확인 콜백함수
-  const { validUserId, checkUserId, userIdValidation, setUserIdValidation } =
-    useUserIdValidation();
-
-  const { signup } = useSignup();
-
-  // 유저생성 권한 드롭 다운 체인지 핸들러
-  const selecteAuthorityHandler = (value: number | string) => {
-    setUserInfo({ ...userInfo, authLevel: Number(value) });
+  // <------------------------------권한------------------------------>
+  type Auth = {
+    auth: number | string;
+  };
+  const [auth, setAuth] = React.useState<Auth>({ auth: '' });
+  const selecteAuthHandler = (value: number | string) => {
+    setAuth({ auth: value });
   };
 
   // 권한 드롭 다운 배열
@@ -58,10 +55,23 @@ const CreateUser = () => {
     { name: '직원', value: 3 },
   ];
 
-  const submitSignInfoHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // <------------------------------유저 생성------------------------------>
+  const { signup } = useSignup();
+  const submitSignInfoHandler = (data: UserSignupInfoPlus) => {
+    const joinDay = new Date(data.joinDay);
+    const newData = {
+      userName: data.userName,
+      team: data.team,
+      rank: data.rank,
+      job: data.job,
+      salaryDay: data.salaryDay,
+      joinDay: joinDay,
+      authLevel: auth.auth,
+      userId: data.userId,
+    };
     if (userIdValidation) {
-      signup.mutate(userInfo);
+      signup.mutate(newData);
+      reset();
     } else {
       alert('가입에 실패하였습니다 입력한 내용을 확인해주세요');
     }
@@ -69,13 +79,13 @@ const CreateUser = () => {
 
   return (
     <form
-      onSubmit={submitSignInfoHandler}
+      onSubmit={handleSubmit(submitSignInfoHandler)}
       style={{
         width: '500px',
         margin: '50px 210px 50px 210px',
-
         display: 'flex',
         flexDirection: 'column',
+        gap: '30px',
       }}
     >
       <h1
@@ -91,73 +101,88 @@ const CreateUser = () => {
       >
         유저 생성
       </h1>
-
+      {/* <------------------------이름------------------------> */}
       <CustomLabel>
         이름
         <CustomInput
-          inputType="signup"
-          type="text"
-          value={userInfo.userName}
-          name="userName"
-          onChange={changeInputHandler}
+          inputType="cUser"
+          placeholder="직원의 이름을 입력해주세요"
+          {...register('userName', {
+            required: true,
+          })}
         />
       </CustomLabel>
-      <CustomLabel>
-        부서
-        <CustomInput
-          inputType="signup"
-          type="text"
-          value={userInfo.team}
-          name="team"
-          onChange={changeInputHandler}
-        />
-      </CustomLabel>
+      {/* <------------------------부서&팀------------------------> */}
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+        <CustomLabel>
+          부서
+          <CustomInput inputType="cUserHalf" placeholder="준비 중인 입력칸입니다." />
+        </CustomLabel>
+        <CustomLabel>
+          팀
+          <CustomInput
+            inputType="cUserHalf"
+            placeholder="직원의 팀을 입력해주세요"
+            {...register('team', {
+              required: true,
+            })}
+          />
+        </CustomLabel>
+      </div>
+      {/* <------------------------직급&직무------------------------> */}
       <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
         <CustomLabel>
           직급
           <CustomInput
-            inputType="signup"
-            type="text"
-            value={userInfo.rank}
-            name="rank"
-            onChange={changeInputHandler}
+            inputType="cUserHalf"
+            placeholder="직원의 직급을 입력해주세요"
+            {...register('rank', {
+              required: true,
+            })}
           />
         </CustomLabel>
         <CustomLabel>
           직무
           <CustomInput
-            inputType="signup"
-            type="text"
-            value={userInfo.job}
-            name="job"
-            onChange={changeInputHandler}
+            inputType="cUserHalf"
+            placeholder="직원의 직무를 입력해주세요"
+            {...register('job', {
+              required: true,
+            })}
           />
         </CustomLabel>
       </div>
+      {/* <------------------------월급일&입사일------------------------> */}
       <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-        입사일
-        <ReactDatePicker
-          selected={userInfo.joinDay}
-          onChange={changeDateHandler}
-          locale={ko}
-          dateFormat="yyyy년 MM월 dd일"
-        />
         <CustomLabel>
           월급일
           <CustomInput
-            inputType="signup"
-            type="text"
-            value={userInfo.salaryDay}
-            name="salaryDay"
-            onChange={changeInputHandler}
+            inputType="cUserHalf"
+            placeholder="직원의 월급일을 입력해주세요"
+            maxLength={2}
+            {...register('salaryDay', {
+              required: true,
+            })}
+          />
+        </CustomLabel>
+        <CustomLabel>
+          입사일
+          <CustomInput
+            inputType="cUserHalf"
+            type="date"
+            placeholder="직원의 입사일을 입력해주세요"
+            {...register('joinDay', {
+              required: true,
+            })}
           />
         </CustomLabel>
       </div>
+      {/* <------------------------권한------------------------> */}
       <Dropdown
         size="small"
         items={authority}
-        value={userInfo.authLevel}
-        onChange={selecteAuthorityHandler}
+        value={auth.auth}
+        onChange={selecteAuthHandler}
         style={{
           width: '500px',
           height: '50px',
@@ -167,40 +192,35 @@ const CreateUser = () => {
           padding: '15px',
           fontWeight: 'bold',
           color: '#484240',
+          marginBottom: '-30px',
         }}
       >
         권한
       </Dropdown>
-      <CustomLabel>
-        아이디
-        <CustomInput
-          inputType="signup"
-          type="text"
-          value={userInfo.userId}
-          name="userId"
-          onChange={changeInputHandler}
-        />
+      {/* <-----------------------------아이디-----------------------------> */}
+      <Wrapper_Row style={{ alignItems: 'center', gap: '20px' }}>
+        <CustomLabel>
+          아이디
+          <CustomInput
+            inputType="cUserId"
+            placeholder="영 대, 소문자, 숫자 5자 이상 입력해주세요."
+            {...register('userId', {
+              required: true,
+            })}
+          />
+        </CustomLabel>
         <CustomButton
-          buttonType="signup"
-          onClick={() => checkUserIdHandler(userInfo.userId)}
+          buttonType="cUser"
+          type="button"
+          style={{ margin: '30px 0 0 15px' }}
+          onClick={checkUserIdHandler}
         >
-          중복 검사
+          중복 확인
         </CustomButton>
-      </CustomLabel>
-      <CustomButton
-        buttonType="login"
-        style={{
-          width: '500px',
-          boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-          background: '#E64042',
-          color: '#fff',
-          borderRadius: '7px',
-          fontSize: '15px',
-          fontWeight: 'bold',
-        }}
-      >
-        유저 생성
-      </CustomButton>
+      </Wrapper_Row>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '68px' }}>
+        <CustomButton buttonType="cUserSubmit">유저 생성</CustomButton>
+      </div>
     </form>
   );
 };
