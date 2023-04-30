@@ -3,12 +3,12 @@ import { postFormat } from '../../../../pages/SubMain/utils';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
 import useTextarea from '../../../../hooks/common/useTextarea';
-import { MdZoomInMap } from 'react-icons/md';
+import { MdZoomIn } from '@react-icons/all-files/md/MdZoomIn';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import { RiArrowLeftSLine } from 'react-icons/ri';
-import { TbBorderCorners } from 'react-icons/tb';
+import { RiArrowLeftSLine } from '@react-icons/all-files/ri/RiArrowLeftSLine';
+import { MdZoomOut } from '@react-icons/all-files/md/MdZoomOut';
 import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
@@ -16,6 +16,7 @@ import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 import CustomButton from '../../../Atoms/Button/CustomButton';
+import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
 
 const VacationFormat = ({
   props,
@@ -26,6 +27,7 @@ const VacationFormat = ({
   const mutation = usePostVacation();
   const [FormFiles, SetFormFile] = useState<File[]>();
   const [tab] = useContext(ChangeTabContext);
+  const { element, onMoveToElement } = useMoveScroll();
 
   const SaveClickHandler = () => {
     if (disable === false) {
@@ -91,6 +93,7 @@ const VacationFormat = ({
   const [userName, userNameHandler, setUserNameInputValue] = useInput();
   const [title, titleHandler, setTitleHanlderValue] = useInput();
   const [content, contentHandler, setContentValue] = useTextarea();
+  const [location, locationHandler, setlocationHanlder] = useInput();
   const [zoomClick, setZoomClick] = useState(false);
 
   useEffect(() => {
@@ -98,6 +101,8 @@ const VacationFormat = ({
     props.userName !== undefined && setUserNameInputValue(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body !== undefined && setContentValue(props.body);
+    props.location !== undefined && setlocationHanlder(props.location);
+    onMoveToElement();
   }, [props]);
 
   console.log('disable', disable);
@@ -152,7 +157,16 @@ const VacationFormat = ({
         </styles.StButtonBlock>
       </styles.StTitleBlock>
       <styles.StContentBlock>
-        <styles.StTextAreaBlock zoomClick={zoomClick}>
+        <styles.StMarkNameBlcok>
+          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
+          <styles.StTitleInput
+            placeholder="장소 입력란"
+            value={location}
+            onChange={locationHandler}
+            disabled={disable}
+          />
+        </styles.StMarkNameBlcok>
+        <styles.StTextAreaBlock zoomClick={zoomClick} ref={element}>
           <styles.StTextArea
             placeholder="내용을 입력해주세요"
             value={content}
@@ -164,12 +178,12 @@ const VacationFormat = ({
           <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
             {zoomClick === false ? (
               <>
-                <TbBorderCorners />
+                <MdZoomIn />
                 <span>전체화면</span>
               </>
             ) : (
               <>
-                <MdZoomInMap />
+                <MdZoomOut />
                 <span>축소</span>
               </>
             )}
