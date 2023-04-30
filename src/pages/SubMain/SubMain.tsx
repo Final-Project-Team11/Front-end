@@ -126,14 +126,8 @@ export default function SubMain({ view }: { view: ViewType }) {
   }, [selectedView, updateRenderRangeText]);
 
   const onAfterRenderEvent: ExternalEventTypes['afterRenderEvent'] = res => {
-    console.group('onAfterRenderEvent');
-    console.log('Event Info : ', res);
-
-    console.groupEnd();
-
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
-    console.log('decoded', decoded);
     const userId = decoded ? decoded.userId : '';
 
     const newData = {
@@ -158,12 +152,7 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = res => {
-    console.group('onBeforeDeleteEvent');
-    console.log('Event Info : ', res.title);
-    console.groupEnd();
-
     const { id, calendarId } = res;
-
     getCalInstance().deleteEvent(id, calendarId);
   };
 
@@ -172,9 +161,7 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   const onClickDayName: ExternalEventTypes['clickDayName'] = res => {
-    console.group('onClickDayName');
-    console.log('Date : ', res.date);
-    console.groupEnd();
+    //
   };
 
   const onClickNavi = (ev: MouseEvent<HTMLButtonElement>) => {
@@ -190,13 +177,6 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   const onClickEvent: ExternalEventTypes['clickEvent'] = res => {
-    console.group('onClickEvent');
-    console.log('MouseEvent : ', res);
-    console.log('MouseEvent : ', res.nativeEvent);
-    console.log('Event Info : ', res.event);
-    console.groupEnd();
-
-    console.log(schedules);
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].id === res.event.id) {
         setClickData(schedules[i]);
@@ -212,10 +192,6 @@ export default function SubMain({ view }: { view: ViewType }) {
 
   const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
     timezoneCollapsed => {
-      console.group('onClickTimezonesCollapseBtn');
-      console.log('Is Timezone Collapsed?: ', timezoneCollapsed);
-      console.groupEnd();
-
       const newTheme = {
         'week.daygridLeft.width': '100px',
         'week.timegridLeft.width': '100px',
@@ -225,14 +201,8 @@ export default function SubMain({ view }: { view: ViewType }) {
     };
 
   const onBeforeUpdateEvent: ExternalEventTypes['beforeUpdateEvent'] = updateData => {
-    console.group('onBeforeUpdateEvent');
-    console.log(updateData);
-    console.groupEnd();
-
     const targetEvent = updateData.event;
     const changes = { ...updateData.changes };
-
-    console.log('changes', changes);
     getCalInstance().updateEvent(targetEvent.id, targetEvent.calendarId, changes);
   };
 

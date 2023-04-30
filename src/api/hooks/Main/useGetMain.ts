@@ -31,9 +31,6 @@ const useGetMain = ({ type, year, month }: GetMainProps) => {
         return data.data.main.vacation;
       }
     },
-    onSuccess: () => {
-      console.log('success');
-    },
   });
   return { data, isLoading };
 };

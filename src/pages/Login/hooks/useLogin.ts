@@ -16,7 +16,6 @@ export const useLogin = (reset: () => void, loginUri: string) => {
   const login = useMutation<LoginResponse, Error, AdminLoginInfo | UserLoginInfo>({
     mutationFn: async (item: AdminLoginInfo | UserLoginInfo) => {
       const data = await apis.post<LoginResponse>(loginUri, item);
-      console.log(data);
       return data.data;
     },
     onSuccess: data => {

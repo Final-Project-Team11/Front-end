@@ -26,7 +26,6 @@ const Business = () => {
   };
 
   const { data, isLoading } = useGetUser();
-  console.log('데이터', data);
   const [selectedUser, setSelectedUser] = React.useState<Users>({
     userId: '',
     userName: '',
@@ -45,7 +44,6 @@ const Business = () => {
   const handleUserClick = (user: Users) => {
     setSelectedUser(user);
     setShowModal(true);
-    console.log('선택된', user);
   };
 
   if (!data && isLoading) {
