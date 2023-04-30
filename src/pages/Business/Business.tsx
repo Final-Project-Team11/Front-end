@@ -10,7 +10,7 @@ import { Users, useGetUser } from './hooks/useGetUser';
 import { useDeleteUser } from './hooks/useDeletUser';
 import { usePatchUser } from './hooks/usePatchUser';
 import { Wrapper, ViewUser, VuHeader, Vubody, StSpan, UserInfo } from './styles';
-import CreateUser from './CreateUser';
+import CreateUser from './components/CreateUser';
 import Swal from 'sweetalert2';
 import CustomModal from '../../components/Atoms/Modal/CustomModal';
 import CustomLabel from '../../components/Atoms/Label/CustomLabel';

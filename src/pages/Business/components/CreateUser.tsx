@@ -1,14 +1,14 @@
 import React from 'react';
-import { UserSignupInfo } from './interfaces';
-import Dropdown from '../../components/Atoms/Dropdown/Dropdown';
+import { UserSignupInfo } from '../interfaces';
+import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
-import { useUserIdValidation } from './hooks/useUserIdValidation';
-import { useSignup } from './hooks/useSignup';
+import { useUserIdValidation } from '../hooks/useUserIdValidation';
+import { useSignup } from '../hooks/useSignup';
 import 'react-datepicker/dist/react-datepicker.css';
-import CustomLabel from '../../components/Atoms/Label/CustomLabel';
-import CustomInput from '../../components/Atoms/Input/CustomInput';
-import CustomButton from '../../components/Atoms/Button/CustomButton';
+import CustomLabel from '../../../components/Atoms/Label/CustomLabel';
+import CustomInput from '../../../components/Atoms/Input/CustomInput';
+import CustomButton from '../../../components/Atoms/Button/CustomButton';
 
 const CreateUser = () => {
   // 유저생성 상태변수
