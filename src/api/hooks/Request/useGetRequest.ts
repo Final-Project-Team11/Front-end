@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { RequestTabType } from '../../../components/RequestList/interfaces';
 
 // PageData 타입은 schedule, other 둘 중 하나와 pageNum을 갖는다
-type PageData = {
+export type PageData = {
   pageNum: number;
 } & (
   | {
@@ -43,5 +43,6 @@ export const useGetRequest = (type: Payload) => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage, isLoading };
+  // hasNextPage: hasNextPage || false 이 부분은 useInfiniteQuery의 리턴값인 hasNextPage의 타입인 boolean | undefined 를 boolean 형식으로 바꿔준다.
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false, isLoading };
 };

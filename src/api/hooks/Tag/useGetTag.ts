@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { Mention } from '../../../components/Tag/interfaces';
 
-interface PageData {
+export interface PageData {
   mention: Mention[];
   pageNum: number;
 }
@@ -31,5 +31,5 @@ export const useMentionedSchedules = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };
