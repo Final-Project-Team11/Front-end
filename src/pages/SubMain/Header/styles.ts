@@ -80,6 +80,15 @@ const StColorNameBlock = styled.div`
   font-weight: 600;
 `;
 
+const StNoneBlock = styled.div`
+  width: 110px;
+  height: 30px;
+  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
+  font-size: 11px;
+  border: none;
+  background: #eaeaea;
+`;
+
 const StTeamBlock = styled.div`
   margin-left: 43px;
 `;
@@ -134,4 +143,5 @@ export {
   StTeamBlock,
   StButton,
   StTabBlock,
+  StNoneBlock,
 };
