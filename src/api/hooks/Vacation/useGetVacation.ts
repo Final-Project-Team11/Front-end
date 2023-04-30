@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { VacationList } from '../../../components/VacationTab/interfaces';
 
-interface PageData {
+export interface PageData {
   vacation: VacationList[];
   pageNum: number;
 }
@@ -30,5 +30,5 @@ export const useGetVacation = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };

@@ -1,40 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
-import { useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
+import { PageData, useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
 import Board from '../Board/Board';
 import UploadedOne from './UploadedOne/UploadedOne';
 import FolderIcon from '../../assets/Icons/FolderIcon';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
+import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   const { data, fetchNextPage, hasNextPage } = useGetFile(type);
+
+  // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
-  // 스크롤이벤트 동작 시 GET 요청
-  const handleScroll = () => {
-    const container = targetDiv.current;
+  // 무한스크롤 커스텀훅
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
-    if (container) {
-      const scrollHeight = container.scrollHeight;
-      const scrollTop = container.scrollTop;
-      const clientHeight = container.clientHeight;
-
-      if (scrollTop + clientHeight + 1 >= scrollHeight && hasNextPage) {
-        fetchNextPage();
-      }
-    }
-  };
-
-  // div에 스크롤 이벤트 추가.
-  useEffect(() => {
-    const container = targetDiv.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [handleScroll]);
-
+  // data.pages를 풀어서 하나의 배열로 -> useInfiniteQuery 에서 return 하는 data 형식 참고.
   const files = data ? data.pages.flatMap(page => page[type] as UploadedFileList[]) : [];
 
   // 받아오는 type 에 따라 보드 타이틀, icon 변경

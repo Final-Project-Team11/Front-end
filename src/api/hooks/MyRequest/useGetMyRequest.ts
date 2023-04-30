@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { MyListProps } from '../../../components/MyRequest/interfaces';
 
-interface PageData {
+export interface PageData {
   schedule: MyListProps[];
   pageNum: number;
 }
@@ -29,5 +29,9 @@ export const useGetMyRequest = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return {
+    data,
+    fetchNextPage: () => fetchNextPage(),
+    hasNextPage: hasNextPage || false,
+  };
 };

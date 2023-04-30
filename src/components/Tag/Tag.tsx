@@ -1,46 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Tags from './Tags/Tags';
-import { useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
+import { PageData, useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
 import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board/Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
+import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
   const { data, fetchNextPage, hasNextPage } = useMentionedSchedules();
 
-  // div 의 스크롤을 감지하기 위해 추가한 useRef
+  // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
 
-  // 스크롤 이벤트 - 무한스크롤 기본 코드
-  const handleScroll = () => {
-    const container = targetDiv.current;
+  // 무한스크롤 커스텀훅
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
 
-    if (container) {
-      const scrollHeight = container.scrollHeight;
-      const scrollTop = container.scrollTop;
-      const clientHeight = container.clientHeight;
-
-      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
-        fetchNextPage();
-      }
-    }
-  };
-
-  // div에 스크롤 이벤트 추가.
-  useEffect(() => {
-    const container = targetDiv.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [handleScroll]);
-
-  // data 존재 시
+  // data.pages를 풀어서 하나의 배열로 -> useInfiniteQuery 에서 return 하는 data 형식 참고.
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
 
-  // props로 줄 icon
+  // Board title에 들어갈 icon
   const icon = <CalendarIcon usage="title" />;
 
   return (
