@@ -6,7 +6,6 @@ interface StatusProps {
 }
 
 export const StFileBlock = styled.div<StatusProps>`
-  /* background-color: yellow; */
   width: 100%;
   height: fit-content;
   line-height: 22px;
@@ -35,11 +34,19 @@ export const StSpanBlock = styled.div`
 export const StNameDateBlock = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
   gap: 10px;
 `;
 
 export const StFileSpan = styled.span``;
+
+export const StDateSpan = styled.span`
+  font-size: 9px;
+
+  opacity: 0;
+
+  transition: opacity 0.4s ease;
+  color: #ababab;
+`;
 
 export const StStatusBlock = styled.div<StatusProps>`
   font-size: 21px;
@@ -51,15 +58,6 @@ export const StStatusBlock = styled.div<StatusProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const StDateSpan = styled.span`
-  font-size: 9px;
-
-  opacity: 0;
-
-  transition: opacity 0.4s ease;
-  color: #ababab;
 `;
 
 export const StRejectedSpan = styled.span`
