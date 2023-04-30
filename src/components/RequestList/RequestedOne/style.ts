@@ -10,7 +10,7 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
   height: fit-content;
   line-height: 22px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
   font-size: 12px;
   color: ${({ types }) => (types === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
@@ -23,25 +23,11 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
   }
 `;
 
-export const StLeftBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const StNameDateBlock = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-`;
-
 export const StNameDateDiv = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
 `;
 
 export const StNameSpan = styled.span`
@@ -64,6 +50,7 @@ export const StContentSpan = styled.span`
   max-width: 100%;
 `;
 
-export const StRejectedSpan = styled.span`
-  text-decoration: line-through;
+// request.status가 deny 면 취소선 생기게
+export const StRejectedSpan = styled.span<RequestStatus>`
+  text-decoration: ${({ types }) => (types === 'deny' ? 'line-through' : null)};
 `;

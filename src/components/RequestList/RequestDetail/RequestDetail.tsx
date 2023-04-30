@@ -72,16 +72,16 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
           <UI.TitleSpan>{data.userName}</UI.TitleSpan>
           <UI.TitleSpan>{data.title}</UI.TitleSpan>
           <UI.DecideButton
-            types="accept"
-            onClick={() => acceptBtnClickHandler(acceptParam)}
-          >
-            수락
-          </UI.DecideButton>
-          <UI.DecideButton
             types="decline"
             onClick={() => acceptBtnClickHandler(declineParam)}
           >
-            닫기
+            거절
+          </UI.DecideButton>
+          <UI.DecideButton
+            types="accept"
+            onClick={() => acceptBtnClickHandler(acceptParam)}
+          >
+            승인
           </UI.DecideButton>
           <UI.Devider positions="Header" />
         </UI.Header>
@@ -93,10 +93,9 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
             {data.files.map((file, idx) => {
               if (file.fileName && file.fileLocation) {
                 return (
-                  <React.Fragment key={idx}>
-                    <UI.FooterSpanBlock>{file.fileName}</UI.FooterSpanBlock>
-                    <a href={file.fileLocation}>{file.fileName}</a>
-                  </React.Fragment>
+                  <UI.FooterFileA key={idx} href={file.fileLocation}>
+                    {file.fileName}
+                  </UI.FooterFileA>
                 );
               }
               return null;
