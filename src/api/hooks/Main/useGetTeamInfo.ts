@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import api from '../../axios/api';
 
 interface TeamInfo {
-  data: string[];
+  data: [{ userName: string; userId: string }];
   isLoading: boolean;
 }
 

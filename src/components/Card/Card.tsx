@@ -52,4 +52,4 @@ const Card = ({ tab }: CardProps) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);

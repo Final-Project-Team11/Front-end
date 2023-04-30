@@ -1,6 +1,8 @@
 import React from 'react';
 import * as UI from './style';
-import { BsCheckCircle, BsXCircle, BsCircle } from 'react-icons/bs';
+import { BsCheckCircle } from '@react-icons/all-files/bs/BsCheckCircle';
+import { BsXCircle } from '@react-icons/all-files/bs/BsXCircle';
+import { BsCircle } from '@react-icons/all-files/bs/BsCircle';
 import { FileProps } from '../interfaces';
 import Person from '../../../assets/Icons/Person';
 import CalendarIcon from '../../../assets/Icons/CalendarIcon';

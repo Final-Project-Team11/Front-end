@@ -1,5 +1,5 @@
-import React, { useEffect, createContext, useState, useContext } from 'react';
-import { SubMain } from '../SubMain/SubMain';
+import React, { useEffect, createContext, useState, useContext, lazy } from 'react';
+import SubMain from '../SubMain/SubMain';
 import useGetMain from '../../api/hooks/Main/useGetMain';
 import { CalendarProps, ScheduleProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
@@ -73,8 +73,7 @@ const Main = () => {
   return (
     <CalendarContext.Provider value={filterData}>
       <StWrap>
-        <StButtonBlcok></StButtonBlcok>
-        {tab === false ? <SubMain view={'month'} /> : <SubMain view={'month'} />}
+        <SubMain view={'month'} />
       </StWrap>
     </CalendarContext.Provider>
   );

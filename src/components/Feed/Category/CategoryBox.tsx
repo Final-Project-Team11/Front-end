@@ -5,7 +5,7 @@ import TodoBox from '../Todo/TodoBox';
 import { Category } from '../interfaces';
 import useInput from '../../../hooks/common/useInput';
 
-import { BsX } from 'react-icons/bs';
+import { BsX } from '@react-icons/all-files/bs/BsX';
 import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';

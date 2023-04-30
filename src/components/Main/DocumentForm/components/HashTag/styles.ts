@@ -11,6 +11,7 @@ const StLiBlock = styled.li`
   padding: 5px 0 5px 5px;
   display: flex;
   gap: 10px;
+  font-size: 15px;
 
   &:hover {
     background-color: #3595f6;

@@ -8,7 +8,7 @@ import useInput from '../../../hooks/common/useInput';
 import useTextarea from '../../../hooks/common/useTextarea';
 import usePostschedule from '../../../api/hooks/Main/usePostschedule';
 import { postFormat } from '../utils';
-import { MdFolder } from 'react-icons/md';
+import { MdFolder } from '@react-icons/all-files/md/MdFolder';
 import { ChangeTabContext } from '../../../api/hooks/Main/useTabContext';
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
 

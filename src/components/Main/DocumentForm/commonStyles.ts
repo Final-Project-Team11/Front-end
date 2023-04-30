@@ -173,6 +173,7 @@ const StOpenButton = styled.div`
   display: flex;
   gap: 10px;
   opacity: 1;
+  font-size: 16px;
   cursor: pointer;
   &:hover {
     opacity: 0.5;

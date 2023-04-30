@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DropdownProps } from './interfaces';
 import { StBlock, StLi, StUlBlock } from './styles';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp';
+
 import { createPortal } from 'react-dom';
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -50,10 +52,13 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   }, [isOpen]);
 
+  const clickHandler = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <>
       <StBlock
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={clickHandler}
         size={size}
         color={color}
         background={background}
