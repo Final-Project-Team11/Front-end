@@ -31,6 +31,26 @@ const buttonTypes: ButtonType = {
     color: 'black',
     borderRadius: '5px',
   },
+  valid: {
+    width: '145px',
+    height: '50px',
+    fontSize: '15px',
+    padding: '15px',
+    color: '#8AB2E0',
+    fontWeight: 'bolder',
+    borderRadius: '7px',
+    backgroundColor: '#fff',
+    border: '1px solid #BADAFF',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+  },
+  submit: {
+    width: '175px',
+    height: '50px',
+    fontSize: '15px',
+    fontWeight: 'bolder',
+    borderRadius: '7px',
+    padding: '15px',
+  },
 };
 
 export const StButton = styled.button.attrs<ButtonProps>(props => ({
