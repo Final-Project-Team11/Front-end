@@ -31,6 +31,9 @@ const buttonTypes: ButtonType = {
     height: '40px',
     color: 'black',
     borderRadius: '5px',
+    border: 'none',
+
+    cursor: 'pointer',
   },
   ModalButton: {
     backgroundColor: 'transparent',
