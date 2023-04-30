@@ -19,6 +19,8 @@ export const StListBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: 11px;
 `;
 
 export const StSpanBlock = styled.div<SpanProps>`
@@ -83,28 +85,12 @@ export const StDecideBlock = styled.div`
   }
 `;
 
-// 선택 블럭 호버 시 나오는 요소 블럭 안의 승인
+// 선택 블럭 호버 시 나오는 요소 블럭 내부 승인, 거절
 export const StDecAcceptBlock = styled.div<RequestStatusProps>`
   background-color: white;
   color: ${({ status }) => (status ? COLOR.PAGE_BLUE : COLOR.VACATION_RED)};
 
   font-size: 21px;
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-
-  transition: 0.3s;
-`;
-
-// 선택 블럭 호버 시 나오는 요소 블럭 안의 반려
-export const StDecDenyBlock = styled.div`
-  background-color: white;
-  color: red;
-
-  font-size: 20px;
   border-radius: 50%;
 
   display: flex;

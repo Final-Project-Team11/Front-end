@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import Tags from './Tags/Tags';
+import { useRef } from 'react';
+import Tags from './Tags';
 import { PageData, useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
 import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
-import Board from '../Board/Board';
+import Board from '../Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 

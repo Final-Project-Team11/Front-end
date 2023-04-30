@@ -18,7 +18,7 @@ export const StTabBlock = styled.div<HeightProps>`
   gap: 14px;
 `;
 
-export const StIconBlock = styled.div`
+export const StTitleIconBlock = styled.div`
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -32,7 +32,6 @@ export const StIconBlock = styled.div`
 
 export const StTitleSpan = styled.span`
   color: ${COLOR.PAGE_DONE};
-  font-size: 13px;
 `;
 
 export const StInsideBlock = styled.div`

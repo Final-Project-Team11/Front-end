@@ -18,7 +18,6 @@ export const useGetVacation = () => {
     queryKey: [keys.GET_VACATION_LIST], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
       const response = await apis.get(`/vacation?size=8&page=${pageParam}`);
-      console.log(response.data);
       return { ...response.data, pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {

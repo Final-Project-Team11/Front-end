@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
 import { PageData, useGetFile } from '../../api/hooks/UploadedFile/useGetFile';
-import Board from '../Board/Board';
-import UploadedOne from './UploadedOne/UploadedOne';
+import Board from '../Board';
+import UploadedOne from './UploadedOne';
 import FolderIcon from '../../assets/Icons/FolderIcon';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';

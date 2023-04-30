@@ -7,7 +7,6 @@ import WaitingVacation from '../../assets/Meerkat/WaitingVacation';
 
 const VacationStatus = () => {
   const { data } = useGetVacationStatus();
-  console.log(data);
 
   let svgFile;
   if (data) {

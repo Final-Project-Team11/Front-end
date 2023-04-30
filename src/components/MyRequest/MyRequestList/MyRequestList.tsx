@@ -1,4 +1,3 @@
-import React from 'react';
 import * as UI from './style';
 import { BsCheckCircle } from '@react-icons/all-files/bs/BsCheckCircle';
 import { BsXCircle } from '@react-icons/all-files/bs/BsXCircle';
@@ -17,9 +16,7 @@ const MyRequestList = ({ file }: FileProps) => {
             &nbsp; |&nbsp;
             {file.userName}
           </UI.StFileSpan>
-          <UI.StDateSpan className="date">
-            {file.start === file.end ? file.start : `${file.start} ~ ${file.end}`}
-          </UI.StDateSpan>
+          <UI.StDateSpan className="date">{file.enroll}</UI.StDateSpan>
         </UI.StNameDateBlock>
         <UI.StFileSpan>
           <CalendarIcon usage={file.status === 'submit' ? 'insideTrue' : 'insideFalse'} />
@@ -31,6 +28,8 @@ const MyRequestList = ({ file }: FileProps) => {
           )}
         </UI.StFileSpan>
       </UI.StSpanBlock>
+
+      {/* status 에 따라 다르게 보일 체크, X, 빈 원 표시 */}
       <UI.StStatusBlock status={file.status}>
         {file.status === 'submit' ? (
           <BsCircle />

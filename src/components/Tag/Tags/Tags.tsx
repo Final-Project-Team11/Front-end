@@ -1,4 +1,3 @@
-import React from 'react';
 import { TagsProps } from '../interfaces';
 
 import * as UI from './style';
@@ -18,7 +17,8 @@ const Tags = ({ tag, types }: TagsProps) => {
         types={types}
         onClick={() => !tag.isChecked && clickTagHandler(tag.mentionId)}
       >
-        @ / {tag.title} {tag.userName}
+        @ / <UI.StTitleSpan>{tag.title}</UI.StTitleSpan>&nbsp;
+        <UI.StTitleSpan>{tag.userName}</UI.StTitleSpan>
       </UI.StContentSpan>
     </UI.StTagsBlock>
   );

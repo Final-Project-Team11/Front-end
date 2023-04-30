@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as UI from './style';
 import { Props } from '../interfaces';
 import Modal from '../../Atoms/Modal/CustomModal';
@@ -17,6 +17,7 @@ const UploadedOne = ({ file, type }: Props) => {
 
   const { data, refetch, isLoading } = useGetUploadedDetail(payload);
 
+  // 모달 오픈하며 디테일데이터 요청, 모달로 전달
   const modalOpenHandler = () => {
     refetch();
     setModalOpen(true);
@@ -32,7 +33,7 @@ const UploadedOne = ({ file, type }: Props) => {
           <UI.StContentSpan>
             <Person colors="gray" /> | {file.userName}
           </UI.StContentSpan>
-          <UI.StDateSpan className="date"> {file.start}</UI.StDateSpan>
+          <UI.StDateSpan className="date"> {file.enroll}</UI.StDateSpan>
         </UI.StNameDateBlock>
         <UI.StContentSpan>
           <File colors="gray" /> | {file.files[0].fileName}

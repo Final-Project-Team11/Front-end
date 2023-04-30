@@ -18,7 +18,6 @@ export const Modal = styled.div`
 `;
 
 export const Header = styled.div`
-  /* background-color: yellow; */
   width: 100%;
   height: 73px;
 
@@ -73,6 +72,8 @@ export const Footer = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  position: relative;
 `;
 
 export const FooterHalf = styled.div`
@@ -100,17 +101,32 @@ export const FooterSpanBlock = styled.div`
 
   border-radius: 13px;
 `;
+export const FooterFileA = styled.a`
+  background-color: gray;
+
+  color: white;
+  height: 26px;
+
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 13px;
+`;
 
 export const DecideButton = styled.button<ButtonProps>`
-  background-color: transparent;
+  background-color: ${({ types }) => (types === 'decline' ? 'white' : 'black')};
   width: 70px;
   height: 26px;
 
   font-size: 10px;
-  color: ${COLOR.PAGE_BLUE};
+  color: ${({ types }) => (types === 'decline' ? 'black' : 'white')};
   cursor: pointer;
 
-  border: 1px solid ${COLOR.PAGE_BLUE};
+  border: 1px solid black;
   border-radius: 19px;
-  margin-left: ${({ types }) => (types === 'accept' ? 'auto' : '0')};
+  margin-left: ${({ types }) => (types === 'decline' ? 'auto' : '0')};
 `;

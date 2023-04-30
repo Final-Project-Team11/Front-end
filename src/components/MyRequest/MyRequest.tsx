@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import MyRequestList from './MyRequestList';
 import { PageData, useGetMyRequest } from '../../api/hooks/MyRequest/useGetMyRequest';
-import Board from '../Board/Board';
+import Board from '../Board';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';

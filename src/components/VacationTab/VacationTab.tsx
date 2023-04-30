@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import Vacation from './Vacation/Vacation';
+import { useRef } from 'react';
+import Vacation from './Vacation';
 import { PageData, useGetVacation } from '../../api/hooks/Vacation/useGetVacation';
 import { VacationList } from './interfaces';
-import Board from '../Board/Board';
+import Board from '../Board';
 import CalendarIcon from '../../assets/Icons/CalendarIcon';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 

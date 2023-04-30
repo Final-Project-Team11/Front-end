@@ -8,8 +8,7 @@ export interface MyListProps {
   userName: string;
   title: string;
   files?: File[];
-  start: string;
-  end: string;
+  enroll: string;
   status: 'submit' | 'accept' | 'deny';
 }
 
