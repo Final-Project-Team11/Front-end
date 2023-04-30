@@ -7,7 +7,7 @@ export const useCheckTodo = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (todoId: number) => {
-      const data = await apis.patch(`/feed/todo/${todoId}`);
+      const data = await apis.patch(`/feed/todo/check/${todoId}`);
       return data.data;
     },
     onSuccess: () => {
