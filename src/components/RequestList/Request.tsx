@@ -1,12 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { useGetRequest } from '../../api/hooks/Request/useGetRequest';
-import Board from '../Board/Board';
-import RequestedOne from './RequestedOne/RequestedOne';
-import { RequestTabType, RequestType } from './interfaces';
+import React, { useRef } from 'react';
+import { PageData, useGetRequest } from '../../api/hooks/Request/useGetRequest';
+import Board from '../Board';
+import RequestedOne from './RequestedOne';
+import { RequestType } from './interfaces';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
+import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const Request = ({ type }: RequestType) => {
+  const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest(type);
+
+  // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
+  const targetDiv = useRef<HTMLDivElement | null>(null);
+
+  //무한스크롤 커스텀훅
+  useInfiniteQueryHook<PageData>({ targetDiv, fetchNextPage, hasNextPage });
+
+  // type 따라 Board 상단의 title 변경
   let title: '출장관련' | '결재요청';
   if (type === 'schedule') {
     title = '출장관련';
@@ -14,54 +24,20 @@ const Request = ({ type }: RequestType) => {
     title = '결재요청';
   }
 
-  const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest(type);
-  const targetDiv = useRef<HTMLDivElement | null>(null);
-
-  // 스크롤이벤트 동작 시 GET 요청
-  const handleScroll = () => {
-    const container = targetDiv.current;
-
-    if (container) {
-      const scrollHeight = container.scrollHeight;
-      const scrollTop = container.scrollTop;
-      const clientHeight = container.clientHeight;
-
-      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
-        fetchNextPage();
-      }
-    }
-  };
-
-  // div에 스크롤 이벤트 추가.
-  useEffect(() => {
-    const container = targetDiv.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [handleScroll, fetchNextPage, hasNextPage]);
-
-  // title에 들어갈 icon
+  // Board title에 들어갈 icon
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
   if (isLoading) {
     return (
-      <Board icon={icon} title="RequestedList" targetDiv={targetDiv}>
+      <Board icon={icon} title={title} targetDiv={targetDiv}>
         ...loading
       </Board>
     );
   }
 
+  // data.pages를 풀어서 하나의 배열로 -> useInfiniteQuery 에서 return 하는 data 형식 참고.
   const requests = data
-    ? data.pages.reduce<RequestTabType[]>(
-        (acc, page) =>
-          'schedule' in page
-            ? [...acc, ...page.schedule]
-            : 'other' in page
-            ? [...acc, ...page.other]
-            : acc,
-        []
-      )
+    ? data.pages.flatMap(page => ('schedule' in page ? page.schedule : page.other))
     : [];
 
   return (

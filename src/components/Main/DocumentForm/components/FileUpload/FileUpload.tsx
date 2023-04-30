@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import FolderIcon from '../../../../../assets/Icons/FolderIcon';
-import { HiOutlinePlusSm } from 'react-icons/hi';
+import { HiOutlinePlus } from '@react-icons/all-files/hi/HiOutlinePlus';
 import * as styles from './styles';
 import { nanoid } from 'nanoid';
 
@@ -41,7 +41,7 @@ const FileUpload = (props: FileUploadProps) => {
       setFileList(newFileName);
     }
   };
-  console.log('fileList', fileList);
+
   useEffect(() => {
     if (props.files !== undefined) {
       setFileList(props.files);
@@ -52,24 +52,26 @@ const FileUpload = (props: FileUploadProps) => {
 
   return (
     <styles.StContainer>
-      <FolderIcon />
-      {fileList?.map(item => {
-        if (item.fileLocation !== '') {
-          return (
-            <styles.StTagBlock key={nanoid()}>
-              <a href={item.fileLocation}>{item.fileName}</a>
-            </styles.StTagBlock>
-          );
-        } else {
-          console.log('asdas');
-          return <styles.StTagBlock key={nanoid()}>{item.fileName}</styles.StTagBlock>;
-        }
-      })}
-
+      <styles.StIconBlock>
+        <FolderIcon />
+      </styles.StIconBlock>
+      <styles.StFileListBlock>
+        {fileList?.map(item => {
+          if (item.fileLocation !== '') {
+            return (
+              <styles.StTagBlock key={nanoid()}>
+                <a href={item.fileLocation}>{item.fileName}</a>
+              </styles.StTagBlock>
+            );
+          } else {
+            return <styles.StTagBlock key={nanoid()}>{item.fileName}</styles.StTagBlock>;
+          }
+        })}
+      </styles.StFileListBlock>
       {props.disable === false && (
         <>
           <styles.StPlusLabel htmlFor="FileInput">
-            <HiOutlinePlusSm size="25px" />
+            <HiOutlinePlus size="25px" />
           </styles.StPlusLabel>
           <styles.StInput type="file" id="FileInput" multiple onChange={ChangeHandler} />
         </>

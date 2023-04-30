@@ -1,19 +1,14 @@
 /* eslint-disable no-console */
 //외부
-import { useTransition, animated, AnimatedProps, useSpringRef } from '@react-spring/web';
 import type { EventObject, ExternalEventTypes, Options } from '@toast-ui/calendar';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
-import { CalendarProps, ScheduleProps } from './interfaces';
+import { CalendarProps } from './interfaces';
 import { TZDate } from '@toast-ui/calendar';
 import type { ChangeEvent, MouseEvent } from 'react';
-import { TfiBackLeft } from 'react-icons/tfi';
-import { switchCase } from '@babel/types';
-import cheerio from 'cheerio';
 
 //내부
-
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { CalendarContext } from '../Main/Main';
 import Feed from '../../components/Feed/Feed';
@@ -27,9 +22,11 @@ import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
 import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
-import { GetCardInfo } from '../../api/hooks/Card/GetCardInfo';
-import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
 import React from 'react';
+import { recoilTabState } from '../../states/recoilTabState';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { recoilClickEventState } from '../../states/recoilClickEventState';
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -48,9 +45,9 @@ const viewModeOptions = [
   },
 ];
 
-export function SubMain({ view }: { view: ViewType }) {
+export default function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
-  const user = GetCardInfo();
+  const user = useGetCardInfo();
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
@@ -59,7 +56,8 @@ export function SubMain({ view }: { view: ViewType }) {
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [clickDetail, setClickDetail] = useState<boolean>(false);
   const detailRef = useRef<HTMLDivElement>(null);
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
+  const [event, setEvent] = useRecoilState(recoilClickEventState);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -180,7 +178,6 @@ export function SubMain({ view }: { view: ViewType }) {
   };
 
   const onClickNavi = (ev: MouseEvent<HTMLButtonElement>) => {
-    console.log('test', (ev.target as HTMLButtonElement).tagName);
     if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
       const button = ev.target as HTMLButtonElement;
       const actionName = (button.getAttribute('data-action') ?? 'month').replace(
@@ -189,12 +186,12 @@ export function SubMain({ view }: { view: ViewType }) {
       );
       getCalInstance()[actionName]();
       updateRenderRangeText();
-      console.log('test');
     }
   };
 
   const onClickEvent: ExternalEventTypes['clickEvent'] = res => {
     console.group('onClickEvent');
+    console.log('MouseEvent : ', res);
     console.log('MouseEvent : ', res.nativeEvent);
     console.log('Event Info : ', res.event);
     console.groupEnd();
@@ -204,9 +201,11 @@ export function SubMain({ view }: { view: ViewType }) {
       if (schedules[i].id === res.event.id) {
         setClickData(schedules[i]);
         setClickDetail(true);
+        setEvent(schedules[i]);
         break;
       }
     }
+
     setClickDetail(true);
     setClickEvent(res.event);
   };

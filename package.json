@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/inter": "^4.5.15",
+    "@react-icons/all-files": "^4.1.0",
     "@react-spring/web": "^9.7.2",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.29.1",
@@ -39,10 +40,10 @@
     "react-devtools": "^4.27.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
-    "react-icons": "^4.8.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.2",
+    "recoil": "^0.7.7",
     "styled-components": "^5.3.9",
     "styled-reset": "^4.4.6",
     "sweetalert2": "^11.7.3",
@@ -52,7 +53,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "yarn run build && aws s3 sync build/ s3://meercatlendar.store"

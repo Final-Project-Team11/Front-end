@@ -29,6 +29,8 @@ const CustomCalendar = (props: CalendarProps) => {
   const width = props.width.split('px')[0];
 
   const { data, isLoading } = useGetWeeklyInfo();
+
+  console.log('data', data);
   const widthPercent = (100 / 7).toString() + '%';
 
   const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
@@ -37,8 +39,18 @@ const CustomCalendar = (props: CalendarProps) => {
 
     return { ...item, start: start, end: end };
   });
-  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => item);
-  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => item);
+  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
+  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+
+    return { ...item, start: start, end: end };
+  });
   const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
     const start = new Date(item.start);
     const end = new Date(item.end);
@@ -82,19 +94,25 @@ const CustomCalendar = (props: CalendarProps) => {
   }, []);
 
   const returnDay = useCallback(() => {
-    //선택된 달의 날짜들 반환 함수
+    // 선택된 달의 날짜들 반환 함수
     const dayArr = [];
-    //나중에 컴포넌트로 빼야겠다.
+    // 나중에 컴포넌트로 빼야겠다.
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
       if (week[day] == nowDay) {
         for (let i = 0; i < 7; i++) {
+          const dateValue =
+            today.date + i > dateTotalCount
+              ? today.date + i - dateTotalCount
+              : today.date + i;
           if (today.date + i > dateTotalCount) {
             dayArr.push(
-              <Weekday id={today.date + i - dateTotalCount} width={widthPercent} />
+              <Weekday key={`weekday-${dateValue}`} id={dateValue} width={widthPercent} />
             );
           } else {
-            dayArr.push(<Weekday id={today.date + i} width={widthPercent} />);
+            dayArr.push(
+              <Weekday key={`weekday-${dateValue}`} id={dateValue} width={widthPercent} />
+            );
           }
         }
       }
@@ -103,21 +121,19 @@ const CustomCalendar = (props: CalendarProps) => {
     return dayArr;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  const ArrRef = useRef(Array.from({ length: 32 }, () => [false, false, false]));
-
   interface Position {
     top: number;
     left: number;
     width: number;
     height: number;
   }
+  console.log(events);
 
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
-    const positions: Position[] = [];
-
     const resultArr = [];
 
+    console.log('events', events);
     for (let i = 0; i < events.length; i++) {
       const value = events[i].end.getDate() - events[i].start.getDate();
       const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
@@ -139,6 +155,7 @@ const CustomCalendar = (props: CalendarProps) => {
 
           resultArr.push(
             <StEventBlock
+              key={`eventblock-${i}`}
               top={top}
               width={widthPercent}
               left={leftPercent}

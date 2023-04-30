@@ -4,7 +4,7 @@ import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
 import { UploadedFileList } from '../../../components/UploadedFileTab/interfaces';
 
-interface PageData {
+export interface PageData {
   [x: string]: UploadedFileList[] | number;
 }
 
@@ -17,7 +17,6 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
     queryKey: [keys.GET_REPORT_FILE, type], // 쿼리 키
     queryFn: async ({ pageParam = 1 }) => {
       const response = await apis.get(`/${type}?pageSize=6&pageNum=${pageParam}`);
-      console.log(response.data);
       return { [type]: response.data[type], pageNum: pageParam };
     }, // API 호출 함수
     getNextPageParam: lastPage => {
@@ -33,5 +32,5 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
     },
   });
 
-  return { data, fetchNextPage, hasNextPage };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
 };

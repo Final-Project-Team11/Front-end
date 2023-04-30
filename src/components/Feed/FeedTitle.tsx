@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FeedTitleProps } from './interfaces';
 import * as UI from './style';
-import { ChangeTabContext } from '../../api/hooks/Main/useTabContext';
+import { recoilTabState } from '../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
 
 const FeedTitle = ({ clickFn }: FeedTitleProps) => {
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
   return (
     <UI.StFeedTitleBlock>
       <UI.StFeedTitleH1 tab={tab}>todo</UI.StFeedTitleH1>

@@ -6,10 +6,8 @@ import Card from '../../components/Card';
 import Request from '../../components/RequestList/Request';
 import VacationTab from '../../components/VacationTab/VacationTab';
 import * as UI from '../MyPage/styles';
-import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
-import WaitVacation from '../../assets/Meerkat/WaitVacation';
-import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
 import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
+import VacationStatus from '../../components/VacationStatus/VacationStatus';
 
 const Manager = () => {
   return (
@@ -22,9 +20,7 @@ const Manager = () => {
         <UI.MainArea>
           <UI.FeedArea>
             <Feed />
-            {/* <VacationMeerkat /> */}
-            {/* <WaitVacation /> */}
-            <WorkingMeerkat />
+            <VacationStatus />
           </UI.FeedArea>
           <UI.TabArea>
             <UI.MiddleArea>

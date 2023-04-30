@@ -1,4 +1,3 @@
-import React from 'react';
 import * as UI from './style';
 import { DetailProps } from '../interfaces';
 
@@ -38,8 +37,15 @@ const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
       </UI.ContentArea>
       <UI.Footer>
         <UI.FooterHalf>
-          {files.files.map(file => {
-            return <UI.FooterSpanBlock>{file.fileName}</UI.FooterSpanBlock>;
+          {files.files.map((file, idx) => {
+            if (file.fileName && file.fileLocation) {
+              return (
+                <UI.FooterFileA key={idx} href={file.fileLocation}>
+                  {file.fileName}
+                </UI.FooterFileA>
+              );
+            }
+            return null;
           })}
         </UI.FooterHalf>
         <UI.Devider positions="Footer" />

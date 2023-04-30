@@ -4,15 +4,15 @@ import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
 import useTextarea from '../../../../hooks/common/useTextarea';
-import { MdZoomInMap } from 'react-icons/md';
+import { MdZoomIn } from '@react-icons/all-files/md/MdZoomIn';
 import Period from '../components/Period/Period';
 import { getCookie } from '../../../../api/auth/CookieUtils';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import useGetTeamInfo from '../../../../api/hooks/Main/useGetTeamInfo';
 import HashTag from '../components/HashTag/HashTag';
-import { RiArrowLeftSLine } from 'react-icons/ri';
+import { RiArrowLeftSLine } from '@react-icons/all-files/ri/RiArrowLeftSLine';
 import FileUpload from '../components/FileUpload/FileUpload';
-import { TbBorderCorners } from 'react-icons/tb';
+import { MdZoomOut } from '@react-icons/all-files/md/MdZoomOut';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AxiosError } from 'axios';
@@ -20,6 +20,7 @@ import { ErrorData, ScheduleProps } from '../commonInterface';
 import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 import CustomButton from '../../../Atoms/Button/CustomButton';
+import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
 
 const ScheduleFormat = ({
   props,
@@ -37,18 +38,22 @@ const ScheduleFormat = ({
   const userId = decoded ? decoded.userId : '';
 
   const [disable, setDisable] = useState(false);
-  const [userName, userNameHandler, setUserNameInputValue] = useInput();
-  const [title, titleHandler, setTitleHanlderValue] = useInput();
+  const [userName, userNameHandler, setUserNameInput] = useInput();
+  const [title, titleHandler, setTitleHanlder] = useInput();
+  const [location, locationHandler, setlocationHanlder] = useInput();
   const [mention, mentionHandler] = useState<string[]>();
   const [content, contentHandler, setContentValue] = useTextarea();
 
+  const { element, onMoveToElement } = useMoveScroll();
+
   useEffect(() => {
-    console.log('props', props);
-    props.title !== undefined && setTitleHanlderValue(props.title?.split('-')[0]);
-    props.userName !== undefined && setUserNameInputValue(props.userName);
+    props.title !== undefined && setTitleHanlder(props.title?.split('-')[0]);
+    props.userName !== undefined && setUserNameInput(props.userName);
     props.isReadOnly !== undefined && setDisable(props.isReadOnly);
     props.body !== undefined && setContentValue(props.body);
-  }, [props]);
+    props.location !== undefined && setlocationHanlder(props.location);
+    onMoveToElement();
+  }, [props.id]);
 
   const SaveClickHandler = () => {
     if (disable === false) {
@@ -69,6 +74,7 @@ const ScheduleFormat = ({
             body: content,
             title: title,
             username: userName,
+            location: location,
           };
           const newData = postFormat(tab, newProps);
           mutation.mutate(newData, {
@@ -154,11 +160,18 @@ const ScheduleFormat = ({
           {props.calendarId !== 'Reports' ? (
             <>
               <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-              <span>{props.location}</span>
+              <div>
+                <styles.StTitleInput
+                  placeholder="장소 입력란"
+                  value={location}
+                  onChange={locationHandler}
+                  disabled={disable}
+                />
+              </div>
             </>
           ) : null}
         </styles.StMarkNameBlcok>
-        <styles.StTextAreaBlock zoomClick={zoomClick}>
+        <styles.StTextAreaBlock zoomClick={zoomClick} ref={element}>
           <styles.StTextArea
             placeholder="내용을 입력해주세요"
             value={content}
@@ -170,12 +183,12 @@ const ScheduleFormat = ({
           <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
             {zoomClick === false ? (
               <>
-                <TbBorderCorners />
+                <MdZoomIn />
                 <span>전체화면</span>
               </>
             ) : (
               <>
-                <MdZoomInMap />
+                <MdZoomOut />
                 <span>축소</span>
               </>
             )}

@@ -1,6 +1,7 @@
 export interface ScheduleProps {
   props: {
     Id?: string | number;
+    id?: string | number;
     calendarId?: string;
     title?: string;
     body?: string;
