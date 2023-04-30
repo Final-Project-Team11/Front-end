@@ -2,14 +2,22 @@ import React from 'react';
 import { StButton } from './style';
 
 export interface ButtonProps {
-  buttonType: 'login' | 'signup' | 'Detail' | 'ModalButton' | 'valid' | 'submit';
+  buttonType:
+    | 'login'
+    | 'signup'
+    | 'Detail'
+    | 'ModalButton'
+    | 'valid'
+    | 'submit'
+    | 'cUser'
+    | 'cUserSubmit';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
   children: React.ReactNode;
   style?: React.CSSProperties;
 
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | (() => void);
 }
 
 const CustomButton = ({
