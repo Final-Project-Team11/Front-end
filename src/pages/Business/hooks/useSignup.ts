@@ -1,6 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
-import { UserSignupInfo } from '../interfaces';
 import apis from '../../../api/axios/api';
+
+type UserSignupInfo = {
+  userName: string;
+  team: string;
+  rank: string;
+  job: string;
+  salaryDay: number;
+  joinDay: Date;
+  authLevel: number | string;
+  userId: string;
+};
 
 export const useSignup = () => {
   const signup = useMutation(

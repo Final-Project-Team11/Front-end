@@ -66,6 +66,26 @@ const buttonTypes: ButtonType = {
     borderRadius: '7px',
     padding: '15px',
   },
+  cUser: {
+    width: '144px',
+    height: '50px',
+    fontSize: '15px',
+    fontWeight: 'bolder',
+    borderRadius: '7px',
+    padding: '15px',
+    border: '1px solid black',
+    background: 'none',
+  },
+  cUserSubmit: {
+    width: '215px',
+    height: '50px',
+    fontSize: '15px',
+    color: '#fff',
+    fontWeight: 'bolder',
+    borderRadius: '7px',
+    padding: '15px',
+    background: `${COLOR.FONT_COLOR}`,
+  },
 };
 
 export const StButton = styled.button.attrs<ButtonProps>(props => ({
