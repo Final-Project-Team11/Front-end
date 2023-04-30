@@ -21,6 +21,16 @@ const inputTypes: InputTypes = {
     fontSize: '15px',
     border: 'none',
     padding: '15px',
+    borderRadius: '4px',
+  },
+  half: {
+    width: '290px',
+    height: '50px',
+    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
+    fontSize: '15px',
+    border: 'none',
+    padding: '15px',
+    borderRadius: '4px',
   },
 };
 
