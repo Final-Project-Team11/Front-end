@@ -7,7 +7,7 @@ export interface InputProps {
   name?: string;
   type?: string;
   value?: string | number;
-  inputType: 'login' | 'signup' | 'title' | 'author'| 'cardInfo';
+  inputType: 'login' | 'signup' | 'title' | 'author' | 'cardInfo';
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
