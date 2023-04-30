@@ -1,5 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import CustomLabel from '../../../components/Atoms/Label/CustomLabel';
+import CustomInput from '../../../components/Atoms/Input/CustomInput';
+import Wrapper_Row from '../../../components/Atoms/Wrapper_Row/Wrapper_Row';
+import CustomButton from '../../../components/Atoms/Button/CustomButton';
+import Wrapper_Column from '../../../components/Atoms/Wrapper_Column/Wrapper_Column';
 
 interface DaumAddressAPIProps {
   selectedAddressHandler: (postcode: string, roadAddress: string) => void;
@@ -50,71 +54,31 @@ const DaumAddressAPI: React.FC<DaumAddressAPIProps> = ({ selectedAddressHandler 
             guideTextBox.style.display = 'none';
           }
         }
-
         selectedAddressHandler(data.zonecode, roadAddr);
       },
     }).open();
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        marginBottom: '25px',
-      }}
-    >
-      <div>
-        <label style={{ display: 'flex', flexDirection: 'column' }}>
-          <StSpan>회사 주소</StSpan>
-          <StInput ref={postcodeRef} placeholder="우편번호" style={{}} />
-        </label>
-      </div>
-      <StInput ref={roadAddressRef} placeholder="도로명주소" />
-      <StButton type="button" onClick={searchAddressHandler}>
-        주소 검색
-      </StButton>
+    <Wrapper_Column>
+      <Wrapper_Row style={{ alignItems: 'flex-end', gap: '15px' }}>
+        <CustomLabel>
+          회사 주소
+          <CustomInput
+            inputType="half"
+            style={{ width: '290px' }}
+            placeholder="우편번호"
+            ref={postcodeRef}
+          />
+        </CustomLabel>
+        <CustomInput inputType="half" ref={roadAddressRef} placeholder="도로명주소" />
+        <CustomButton buttonType="valid" type="button" onClick={searchAddressHandler}>
+          주소 검색
+        </CustomButton>
+      </Wrapper_Row>
       <span ref={guideRef} style={{ color: '#ff0000', display: 'none' }}></span>
-    </div>
+    </Wrapper_Column>
   );
 };
 
 export default DaumAddressAPI;
-
-export const StInput = styled.input`
-  width: 290px;
-  height: 50px;
-  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
-  font-size: 15px;
-  border: none;
-  padding: 15px;
-  box-sizing: border-box;
-
-  margin-right: 15px;
-`;
-
-export const StButton = styled.button`
-  width: 145px;
-  height: 50px;
-  margin-top: 15px;
-
-  border: 1px solid #badaff;
-  border-radius: 7px;
-  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
-  box-sizing: border-box;
-
-  background-color: #fff;
-  text-align: center;
-  font-size: 15px;
-  color: #badaff;
-  font-weight: bold;
-`;
-
-export const StSpan = styled.span`
-  font-size: 16px;
-  font-weight: bolder;
-  color: #484240;
-
-  margin-bottom: 15px;
-`;
