@@ -7,10 +7,10 @@ export interface Users {
   userName: string;
   team: string;
   rank: string;
-  joinDay: Date | null;
+  joinDay: Date;
   job: string;
   salaryDay: number;
-  authLevel: string;
+  authLevel: number;
 }
 
 interface Test {
