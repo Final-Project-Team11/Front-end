@@ -1,11 +1,16 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import apis from '../../../api/axios/api';
+import Swal from 'sweetalert2';
 
 export const useUserIdValidation = () => {
   const [userIdValidation, setUserIdValidation] = React.useState<boolean>(false);
-  const validUserId = (userId: string): boolean => /^[a-zA-Z0-9]{5,}$/.test(userId);
+
   // 알파벳 소, 대문자,숫자로 이루어진 5자 이상
+  const validUserId = (userId: string) => {
+    const isValid = /^[a-zA-Z0-9]{5,}$/.test(userId);
+    setUserIdValidation(isValid);
+  };
 
   const checkUserId = useMutation(
     async (item: string) => {
@@ -16,11 +21,17 @@ export const useUserIdValidation = () => {
     },
     {
       onSuccess() {
-        alert('사용가능한 아이디 입니다.');
-        setUserIdValidation(true);
+        Swal.fire({
+          icon: 'success',
+          title: '사용 가능한 아이디 입니다',
+        });
       },
       onError() {
-        alert('중복된 아이디 입니다. 다른 아이디를 입력해주세요');
+        Swal.fire({
+          icon: 'question',
+          title: '중복된 아이디 입니다',
+          text: '다른 아이디를 입력해주세요',
+        });
         setUserIdValidation(false);
       },
     }

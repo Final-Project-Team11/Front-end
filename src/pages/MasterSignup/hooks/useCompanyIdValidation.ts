@@ -8,8 +8,8 @@ export const useCompanyIdValidation = () => {
 
   // 알파벳 소, 대문자,숫자로 이루어진 5자 이상
   const validcompanyId = (item: string) => {
-    const validId = /^[a-zA-Z0-9]{5,}$/.test(item);
-    setCompanyIdValidation(validId);
+    const isValid = /^[a-zA-Z0-9]{5,}$/.test(item);
+    setCompanyIdValidation(isValid);
   };
 
   const checkCompanyId = useMutation(

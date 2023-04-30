@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
 `;
 
-export const ViewUser = styled.div`
+export const ViewUserArea = styled.div`
   width: 1000px;
   height: 100vh;
 
@@ -24,18 +24,6 @@ export const CreateUser = styled.form`
   box-sizing: border-box;
 `;
 
-export const VuHeader = styled.div`
-  width: 730px;
-  display: flex;
-  flex-direction: row;
-
-  margin-bottom: 60px;
-`;
-
-export const Vubody = styled.div`
-  width: 730px;
-`;
-
 export const StSpan = styled.span`
   font-size: 15px;
   font-weight: bold;
@@ -46,14 +34,34 @@ export const StSpan = styled.span`
   border-bottom: 1px solid black;
 `;
 
-export const UserInfo = styled.span`
-  width: 90px;
-  height: 50px;
-  color: #484240;
-  font-size: 12px;
+export const UserHead = styled.span`
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  font-size: 12px;
+  font-weight: bolder;
+
+  box-sizing: border-box;
+`;
+
+export const UserInfo = styled.div`
+  width: 80px;
+  height: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 
-  padding: 15px;
+  padding-bottom: 15px;
+
+  font-size: 12px;
   box-sizing: border-box;
+`;
+
+export const Wrapper_Space = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
