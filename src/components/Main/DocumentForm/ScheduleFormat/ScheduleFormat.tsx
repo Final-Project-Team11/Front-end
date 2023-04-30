@@ -94,7 +94,6 @@ const ScheduleFormat = ({
             onError: error => {
               const errorData: AxiosError = error as AxiosError;
               const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-              console.log('errorData', errorData);
               toast.error(`❌ ${errorOjbect.errorMessage}`, {
                 position: 'top-right',
                 autoClose: 2000,

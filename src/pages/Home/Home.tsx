@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/home/logo.png';
 import main1 from '../../assets/images/home/main1.jpg';
 import main2 from '../../assets/images/home/main2.jpg';
 import main3 from '../../assets/images/home/main3.jpg';
 import main4 from '../../assets/images/home/main4.jpg';
+import main5 from '../../assets/images/home/main5.jpg';
+import main6 from '../../assets/images/home/main6.jpg';
 import styled from 'styled-components';
 import React from 'react';
 import { getCookie } from '../../api/auth/CookieUtils';
+import HeaderLogo from '../../assets/Icons/HeaderLogo';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +24,8 @@ const Home = () => {
   return (
     <StBlock>
       <Header style={{ background: 'white' }}>
-        <img src={logo} />
+        <HeaderLogo />
+
         <StButton onClick={() => navigate(`/login`)}>시작하기</StButton>
       </Header>
 
@@ -30,6 +33,8 @@ const Home = () => {
       <StImg src={main2} />
       <StImg src={main3} />
       <StImg src={main4} />
+      <StImg src={main5} />
+      <StImg src={main6} />
     </StBlock>
   );
 };
@@ -49,20 +54,17 @@ const StImg = styled.img`
 `;
 
 const Header = styled.div`
-  width: 100%;
-  height: 120px;
+  height: fit-content;
   display: flex;
-  justify-content: space-between;
-
+  gap: 33px;
+  position: fixed;
+  right: 0;
+  top: 0;
   padding: 20px;
   box-sizing: border-box;
   align-items: center;
-
-  position: fixed;
-  top: 0;
+  background: transparent;
   z-index: 100;
-
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const StButton = styled.button`

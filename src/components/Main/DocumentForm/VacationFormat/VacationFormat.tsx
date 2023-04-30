@@ -59,7 +59,6 @@ const VacationFormat = ({
             onError: error => {
               const errorData: AxiosError = error as AxiosError;
               const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-              console.log('errorData', errorData);
               toast.error(`❌ ${errorOjbect.errorMessage}`, {
                 position: 'top-right',
                 autoClose: 2000,
@@ -105,7 +104,6 @@ const VacationFormat = ({
     onMoveToElement();
   }, [props]);
 
-  console.log('disable', disable);
   return (
     <styles.StContainer ref={propsRef}>
       <ToastContainer />

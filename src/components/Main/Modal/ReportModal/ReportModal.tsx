@@ -97,7 +97,6 @@ const ReportModal = (value: ReportModalProps) => {
         const currentTab = value.value as number;
         switch (currentTab) {
           case 0:
-            console.log('test');
             reportMutation.mutate(payload, {
               onSuccess: () => {
                 successHandler();

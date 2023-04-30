@@ -1,10 +1,10 @@
-import React, { useEffect, createContext, useState, useContext, lazy } from 'react';
+import React, { useEffect, createContext, useState } from 'react';
 import SubMain from '../SubMain/SubMain';
 import useGetMain from '../../api/hooks/Main/useGetMain';
-import { CalendarProps, ScheduleProps } from '../SubMain/interfaces';
+import { CalendarProps } from '../SubMain/interfaces';
 import { settingSchedule, settingVacation } from '../SubMain/utils';
 import { EventObject } from '@toast-ui/calendar/types/types/events';
-import { StWrap, StTabButton, StButtonBlcok } from './styles';
+import { StWrap } from './styles';
 import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 import { recoilCalendarState } from '../../states/recoilCalendarState';

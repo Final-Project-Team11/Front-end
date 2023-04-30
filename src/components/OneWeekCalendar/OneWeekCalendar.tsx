@@ -1,8 +1,14 @@
 import React from 'react';
 import CustomCalendar from '../Main/CustomCalendar/CustomCalendar';
+import { useNavigate } from 'react-router-dom';
 
 const OneWeekCalendar = () => {
-  return <CustomCalendar width="813px" />;
+  const navigate = useNavigate();
+  const moveMainHandler = () => {
+    navigate('/main');
+  };
+
+  return <CustomCalendar width="813px" onClick={moveMainHandler} />;
 };
 
 export default OneWeekCalendar;

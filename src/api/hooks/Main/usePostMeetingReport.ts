@@ -33,9 +33,6 @@ const usePostMeetingReport = () => {
       const data = await apis.post(`meeting/${payload.id}`, formData);
       return data.data;
     },
-    onSuccess: config => {
-      console.log('config', config);
-    },
   });
   return mutation;
 };

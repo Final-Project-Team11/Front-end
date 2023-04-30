@@ -19,6 +19,7 @@ const StWeek = styled.div<CalendarProps>`
 const StContainer = styled.div<CalendarProps>`
   width: ${({ width }) => (width ? width + 'px' : '813px')};
   height: 116px;
+  cursor: pointer;
 `;
 
 const StWeekBlock = styled.div`

@@ -24,22 +24,17 @@ const usePostschedule = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: Paylaod) => {
-      console.log('payload', payload);
-
       const formData = getFormData(payload);
       const data = await api.post(`/${payload.url}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('data', data);
+
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_MAIN, false]);
-    },
-    onError: () => {
-      console.log('test');
     },
   });
 

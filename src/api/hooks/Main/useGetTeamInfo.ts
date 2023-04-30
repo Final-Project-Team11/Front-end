@@ -15,9 +15,6 @@ const useGetTeamInfo = (): TeamInfo => {
       const data = await api.get('teamUsers');
       return data.data;
     },
-    onSuccess: () => {
-      console.log('success');
-    },
   });
 
   return { data, isLoading };
