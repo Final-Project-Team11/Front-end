@@ -34,7 +34,8 @@ const usePostschedule = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([keys.GET_MAIN, false]);
+      const today = new Date();
+      queryClient.invalidateQueries([keys.GET_MAIN, false, today.getMonth() + 1]);
     },
   });
 
