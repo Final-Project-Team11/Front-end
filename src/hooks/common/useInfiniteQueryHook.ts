@@ -19,7 +19,7 @@ export const useInfiniteQueryHook = <T>({
       const scrollTop = container.scrollTop;
       const clientHeight = container.clientHeight;
 
-      if (scrollTop + clientHeight >= scrollHeight && hasNextPage) {
+      if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasNextPage) {
         fetchNextPage();
       }
     }
