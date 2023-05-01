@@ -34,8 +34,7 @@ const usePostschedule = () => {
       return data;
     },
     onSuccess: () => {
-      const today = new Date();
-      queryClient.invalidateQueries([keys.GET_MAIN, false, today.getMonth() + 1]);
+      queryClient.invalidateQueries([keys.GET_MAIN]);
     },
   });
 
@@ -50,7 +49,7 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
   const formData = new FormData();
   switch (payload.url) {
     case 'meeting': {
-      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      payload.postInfo?.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
@@ -70,7 +69,7 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );
-      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      payload.postInfo?.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       return formData;
     }
@@ -83,7 +82,7 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );
-      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      payload.postInfo?.fileList?.map(item => formData.append('file', item));
       return formData;
     }
 
@@ -96,7 +95,7 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );
-      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      payload.postInfo?.fileList?.map(item => formData.append('file', item));
       return formData;
     }
 

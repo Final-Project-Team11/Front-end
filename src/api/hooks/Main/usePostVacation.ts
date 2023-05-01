@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
+import { useSetRecoilState } from 'recoil';
+import { recoilIdState } from '../../../states/recoilIdState';
 
 interface Paylaod {
   postInfo?: {
@@ -27,8 +29,7 @@ const usePostVacation = () => {
       return data;
     },
     onSuccess: () => {
-      const today = new Date();
-      queryClient.invalidateQueries([keys.GET_MAIN, true, today.getMonth() + 1]);
+      queryClient.invalidateQueries([keys.GET_MAIN]);
     },
   });
 
