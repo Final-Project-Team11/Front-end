@@ -77,13 +77,15 @@ export const StInfoTitleSpan = styled.span<FontStyle>`
 `;
 
 export const StInfo = styled.div`
-  background-color: yellow;
   width: 130px;
   height: 32px;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+
+  padding-left: 5px;
+  box-sizing: border-box;
 
   font-size: 10px;
 `;
@@ -179,28 +181,11 @@ export const StImgEditButton = styled.div`
   bottom: -5px;
 `;
 
-export const StModifyInput = styled.input`
-  width: 200px;
-`;
-
-export const StInputLabel = styled.label`
-  width: 130px;
-  font-size: 10px;
-  color: ${COLOR.PAGE_DONE};
-`;
-
-export const StCloseBlock = styled.div`
-  width: fit-content;
-  height: fit-content;
-  font-size: 30px;
-  cursor: pointer;
-`;
-
 export const AlertDiv = styled.div`
   .swal-custom-title {
     font-size: 18px;
   }
   .swal-custom-text {
-    font-size: 15px;
+    font-size: 10px;
   }
 `;

@@ -3,12 +3,12 @@ import * as UI from './style';
 import useInput from '../../../hooks/common/useInput';
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
-import { FaPen } from '@react-icons/all-files/fa/FaPen';
+import { HiOutlinePencil } from '@react-icons/all-files/hi/HiOutlinePencil';
+import { BsPencilSquare } from '@react-icons/all-files/bs/BsPencilSquare';
 import CustomInput from '../../Atoms/Input/CustomInput';
 import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 import { CardDetailProps } from '../interfaces';
-import { BsXSquareFill } from '@react-icons/all-files/bs/BsXSquareFill';
 import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
 import CustomButton from '../../Atoms/Button/CustomButton';
@@ -139,6 +139,17 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
           title: 'swal-custom-title',
         },
       });
+    } else if (!birthDayIsValid && !phoneNumIsValid) {
+      Swal.fire({
+        icon: 'error',
+        title: '올바른 형식의 생년월일과 핸드폰번호를 입력해주세요.',
+        html: '<p class="swal-custom-text">생일은 yyyy/mm/dd 형식, 010-0000-0000 형식으로 입력해주세요.</p>',
+        target: sweetAlertDiv,
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-custom-title',
+        },
+      });
     }
   };
 
@@ -197,7 +208,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
                   onChange={imgPreviewHandler}
                 />
                 <UI.StImgEditButton onClick={handleButtonClick}>
-                  <FaPen />
+                  <HiOutlinePencil />
                 </UI.StImgEditButton>
               </>
             )}
@@ -208,13 +219,13 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
             </UI.StInfoTitleSpan>
             {/* 직급 | 이름 */}
             <UI.StInfoBlock>
-              <UI.StInfoTitleSpan>{position} |</UI.StInfoTitleSpan>
+              <UI.StInfoTitleSpan>{position}&nbsp; |</UI.StInfoTitleSpan>
               <UI.StInfo>{data.userName}</UI.StInfo>
             </UI.StInfoBlock>
 
             {/* 생일 - 수정모드, 기본, 없을때 */}
             <UI.StInfoBlock>
-              <UI.StInfoTitleSpan>생일 | </UI.StInfoTitleSpan>
+              <UI.StInfoTitleSpan>생일 &nbsp; | </UI.StInfoTitleSpan>
               {isEditMode ? (
                 <CustomInput
                   inputType="cardInfo"
@@ -231,7 +242,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
 
             {/* 연락처 - 수정모드, 기본, 없을 때. */}
             <UI.StInfoBlock>
-              <UI.StInfoTitleSpan>연락처 | </UI.StInfoTitleSpan>
+              <UI.StInfoTitleSpan>연락처&nbsp; | </UI.StInfoTitleSpan>
               {isEditMode ? (
                 <CustomInput
                   inputType="cardInfo"
@@ -251,7 +262,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
         <UI.BottomBlock>
           {/* 입사일 */}
           <UI.StInfoTitleSpan left="0" color="gray">
-            입사일 | {data.joinDay}
+            입사일 &nbsp;| &nbsp;{data.joinDay}
           </UI.StInfoTitleSpan>
 
           {/* 버튼 - 수정모드, 일반모드 */}
@@ -264,7 +275,8 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
                 inputSubmitHandler();
               }}
             >
-              수정완료
+              {/* 수정완료 */}
+              <BsPencilSquare />
             </CustomButton>
           ) : (
             <CustomButton
@@ -272,7 +284,8 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
               type="button"
               onClick={() => setIsEditMode(true)}
             >
-              수정하기
+              {/* 수정하기 */}
+              <BsPencilSquare />
             </CustomButton>
           )}
           {/* 버튼 끝 */}
