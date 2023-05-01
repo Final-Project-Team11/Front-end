@@ -36,7 +36,7 @@ interface Detail {
 export interface DetailProps {
   data: {
     meetingfile: Detail;
-    myfile: Detail;
+    detail: Detail;
     reportfile: Detail;
   };
   isLoading: boolean;
