@@ -14,11 +14,15 @@ import { recoilReportState } from '../../../states/recoilReportState';
 import ReportModal from '../../../components/Main/Modal/ReportModal/ReportModal';
 import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
 import Modal from '../../../components/Atoms/Modal/CustomModal';
+import { recoilSelectedDateState } from '../../../states/recoilSelectedDateState';
+import Swal from 'sweetalert2';
+import { removeCookie } from '../../../api/auth/CookieUtils';
 
 function Header(props: HeaderProps) {
   const navigate = useNavigate();
   const [tab, setTab] = useRecoilState(recoilTabState);
   const [open, setOpen] = useRecoilState(recoilReportState);
+  const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
 
   const CardClickHandler = () => {
@@ -46,6 +50,32 @@ function Header(props: HeaderProps) {
     { name: '결재 요청서', value: 2 },
   ];
 
+  const token = getCookie('token');
+
+  const logOutClickHandler = () => {
+    Swal.fire({
+      title: '로그아웃 하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네,로그아웃할게요',
+      cancelButtonText: '아니요, 좀더 구경할게요!',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        navigate('/login');
+        removeCookie('token');
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: '취소되었습니다.',
+          icon: 'error',
+        });
+      }
+    });
+  };
+
   return (
     <styles.StWrap>
       <styles.StCardBlock onClick={CardClickHandler}>
@@ -54,7 +84,7 @@ function Header(props: HeaderProps) {
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
           <styles.StYearBlock>
-            <span>{props.selectedDateRangeText.toString().split('-').splice(0, 1)}</span>
+            <span>{selectedDate.toString().split('-').splice(0, 1)}</span>
           </styles.StYearBlock>
           <styles.StMonthBlock>
             <styles.StButton
@@ -66,12 +96,7 @@ function Header(props: HeaderProps) {
               {'<'}
             </styles.StButton>
 
-            {props.selectedDateRangeText
-              .toString()
-              .split('-')
-              .splice(1, 2)
-              .join('')
-              .padStart(2, '0')}
+            {selectedDate.toString().split('-').splice(1, 2).join('').padStart(2, '0')}
             <styles.StButton
               type="button"
               data-action="move-next"
@@ -100,6 +125,10 @@ function Header(props: HeaderProps) {
             );
           })}
           <styles.StTeamBlock>
+            {token && (
+              <styles.StLogout onClick={logOutClickHandler}>logout</styles.StLogout>
+            )}
+
             {tab === false ? (
               <Dropdown
                 size="small"
