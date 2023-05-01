@@ -101,10 +101,10 @@ export function settingSchedule(schedule: CalendarProps): CalendarProps {
 }
 
 export function settingVacation(vacation: CalendarProps) {
-  const VACATION = '휴가';
-  const HALF_DAY_OFF = '반차';
-  const MONTHLY_VACTION = '월차';
-  const SICK_DAY = '병가';
+  const VACATION = '0';
+  const HALF_DAY_OFF = '1';
+  const MONTHLY_VACTION = '2';
+  const SICK_DAY = '3';
 
   const title = vacation?.userName
     ? vacation?.typeDetail + '-' + vacation?.userName

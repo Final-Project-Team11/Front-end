@@ -27,8 +27,7 @@ const usePostVacation = () => {
       return data;
     },
     onSuccess: () => {
-      const today = new Date();
-      queryClient.invalidateQueries([keys.GET_MAIN, true, today.getMonth() + 1]);
+      queryClient.invalidateQueries([keys.GET_MAIN]);
     },
   });
 
