@@ -140,8 +140,7 @@ const HashTag = (props: HashTagProps) => {
             {data?.map(item => {
               return (
                 <styles.StLiBlock key={nanoid()} onClick={onLiClickHandler}>
-                  {/* {item.userName}-{item.userId} */}
-                  {item.userName}
+                  {item.userName}-{item.userId}
                 </styles.StLiBlock>
               );
             })}
