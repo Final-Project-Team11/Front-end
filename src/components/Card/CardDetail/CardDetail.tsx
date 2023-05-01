@@ -5,16 +5,15 @@ import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
 import { FaPen } from '@react-icons/all-files/fa/FaPen';
 import CustomInput from '../../Atoms/Input/CustomInput';
-import profileImg from '../../../assets/images/profile-default.jpg';
 import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
-import { CloseModal } from '../interfaces';
+import { CardDetailProps } from '../interfaces';
 import { BsXSquareFill } from '@react-icons/all-files/bs/BsXSquareFill';
 import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
 import CustomButton from '../../Atoms/Button/CustomButton';
 
-const CardDetail = ({ closeModal }: CloseModal) => {
+const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
   const { data } = useGetCardDetail();
 
   // 수정모드 동작 상태
@@ -147,6 +146,8 @@ const CardDetail = ({ closeModal }: CloseModal) => {
                 <img src={img.result as string} alt="" />
               ) : data.profileImg ? (
                 <img src={data.profileImg} alt="" />
+              ) : authLevel === 3 ? (
+                <ProfileEmployee page="detail" />
               ) : (
                 <ProfileManager page="detail" />
               )}

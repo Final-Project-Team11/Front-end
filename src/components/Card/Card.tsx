@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import * as UI from './style';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
-import { CardProps } from './interfaces';
+import { CardProps, DecodedToken } from './interfaces';
 import CardDetail from './CardDetail/CardDetail';
 import CustomModal from '../Atoms/Modal/CustomModal';
 import ProfileEmployee from '../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../assets/Meerkat/ProfileManager';
+import { getCookie } from '../../api/auth/CookieUtils';
+import jwtDecode from 'jwt-decode';
 
 const Card = ({ tab }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
 
   const [openModal, setOpenModal] = useState(false);
+
+  const token = getCookie('token');
+  const decodedToken: DecodedToken = jwtDecode(token);
 
   if (infoIsLoading || !userInfo) {
     return <h1>...loading</h1>;
@@ -38,14 +43,19 @@ const Card = ({ tab }: CardProps) => {
         <UI.StProfileImg>
           {userInfo.profileImg ? (
             <img src={userInfo.profileImg} alt="" />
-          ) : (
+          ) : decodedToken?.authLevel === 3 ? (
             <ProfileEmployee page="page" />
+          ) : (
+            <ProfileManager page="page" />
           )}
         </UI.StProfileImg>
       </UI.StCardBlock>
       {openModal && (
         <CustomModal closeModal={() => setOpenModal(false)}>
-          <CardDetail closeModal={() => setOpenModal(false)} />
+          <CardDetail
+            closeModal={() => setOpenModal(false)}
+            authLevel={decodedToken?.authLevel as number}
+          />
         </CustomModal>
       )}
     </>
