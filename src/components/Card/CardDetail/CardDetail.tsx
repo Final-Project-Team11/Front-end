@@ -214,7 +214,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
             )}
           </UI.StProfileImg>
           <UI.StInfoArea>
-            <UI.StInfoTitleSpan left="50px" weight="bolder">
+            <UI.StInfoTitleSpan left="15px" weight="bolder">
               {decodedToken.teamName}
             </UI.StInfoTitleSpan>
             {/* 직급 | 이름 */}
@@ -227,12 +227,15 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
             <UI.StInfoBlock>
               <UI.StInfoTitleSpan>생일 &nbsp; | </UI.StInfoTitleSpan>
               {isEditMode ? (
-                <CustomInput
-                  inputType="cardInfo"
-                  value={birthDay}
-                  onChange={birthDayHandler}
-                  placeholder="yyyy/mm/dd"
-                />
+                <UI.InputBlock>
+                  <CustomInput
+                    inputType="cardInfo"
+                    value={birthDay}
+                    onChange={birthDayHandler}
+                    placeholder="yyyy/mm/dd"
+                  />
+                  <UI.BirthDot validation={birthDayIsValid as boolean} />
+                </UI.InputBlock>
               ) : data.birthDay ? (
                 <UI.StInfo>{data.birthDay}</UI.StInfo>
               ) : (
@@ -244,12 +247,15 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
             <UI.StInfoBlock>
               <UI.StInfoTitleSpan>연락처&nbsp; | </UI.StInfoTitleSpan>
               {isEditMode ? (
-                <CustomInput
-                  inputType="cardInfo"
-                  value={phoneNum}
-                  onChange={phoneNumHandler}
-                  placeholder="010-0000-0000"
-                />
+                <UI.InputBlock>
+                  <CustomInput
+                    inputType="cardInfo"
+                    value={phoneNum}
+                    onChange={phoneNumHandler}
+                    placeholder="010-0000-0000"
+                  />
+                  <UI.PhoneNumhDot validation={phoneNumIsValid as boolean} />
+                </UI.InputBlock>
               ) : data.phoneNum ? (
                 <UI.StInfo>{data.phoneNum}</UI.StInfo>
               ) : (

@@ -8,6 +8,10 @@ interface FontStyle {
   left?: string;
 }
 
+interface DotProps {
+  validation: boolean;
+}
+
 export const StCardDetailBlock = styled.div`
   width: 450px;
   height: 330px;
@@ -38,16 +42,6 @@ export const BottomBlock = styled.div`
   align-items: center;
 `;
 
-export const InfoBlock = styled.div`
-  background-color: beige;
-  width: 180px;
-  height: 130px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
 export const StProfileImg = styled.div`
   width: 130px;
   height: 130px;
@@ -57,8 +51,6 @@ export const StProfileImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* overflow: hidden; */
 
   position: relative;
   img {
@@ -106,60 +98,10 @@ export const StInfoBlock = styled.div`
   align-items: center;
 `;
 
-///////////////////////////
-
-export const StTopBlock = styled.div`
-  width: 100%;
-  height: 35%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const StTopRightBlock = styled.div`
-  width: 45%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-export const StTopLeftBlock = styled.div`
-  width: 45%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-`;
-
 export const StProfileModifyInput = styled.input`
   width: 150px;
   height: 30px;
   display: none;
-`;
-
-export const StMiddleBlock = styled.div`
-  width: 100%;
-  height: 40%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-`;
-
-export const StBottomBlock = styled.div`
-  width: 100%;
-  height: 25%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 `;
 
 export const StImgEditButton = styled.div`
@@ -188,4 +130,30 @@ export const AlertDiv = styled.div`
   .swal-custom-text {
     font-size: 10px;
   }
+`;
+
+export const InputBlock = styled.div`
+  position: relative;
+`;
+
+export const BirthDot = styled.div<DotProps>`
+  background-color: ${({ validation }) => (validation ? 'green' : 'red')};
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  position: absolute;
+  right: 7px;
+  top: 12px;
+`;
+
+export const PhoneNumhDot = styled.div<DotProps>`
+  background-color: ${({ validation }) => (validation ? 'green' : 'red')};
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  position: absolute;
+  right: 7px;
+  top: 12px;
 `;
