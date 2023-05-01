@@ -38,7 +38,7 @@ const HashTag = (props: HashTagProps) => {
           absoluteTop + data.length * 20 >
           screen.height - (document.body.clientHeight - absoluteTop) / 2
         ) {
-          const newTop = absoluteTop - (data.length * 39 - height);
+          const newTop = absoluteTop - (data.length * 49 - height);
           setInputPosition({ top: newTop, left, height, width });
         } else {
           setInputPosition({ top: absoluteTop, left, height, width });
@@ -140,7 +140,8 @@ const HashTag = (props: HashTagProps) => {
             {data?.map(item => {
               return (
                 <styles.StLiBlock key={nanoid()} onClick={onLiClickHandler}>
-                  {item.userName}-{item.userId}
+                  {/* {item.userName}-{item.userId} */}
+                  {item.userName}
                 </styles.StLiBlock>
               );
             })}
