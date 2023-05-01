@@ -60,7 +60,9 @@ const FileUpload = (props: FileUploadProps) => {
           if (item.fileLocation !== '') {
             return (
               <styles.StTagBlock key={nanoid()}>
-                <a href={item.fileLocation}>{item.fileName}</a>
+                <a href={item.fileLocation} target="_blank">
+                  {item.fileName}
+                </a>
               </styles.StTagBlock>
             );
           } else {
