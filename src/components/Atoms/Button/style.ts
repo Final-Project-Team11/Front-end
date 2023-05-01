@@ -87,6 +87,13 @@ const buttonTypes: ButtonType = {
     padding: '15px',
     background: `${COLOR.FONT_COLOR}`,
   },
+  cardDetail: {
+    width: '80px',
+    height: '25px',
+    background: `${COLOR.DETAIL_GRAY}`,
+    fontSize: '11px',
+    border: 'none',
+  },
 };
 
 export const StButton = styled.button.attrs<ButtonProps>(props => ({
