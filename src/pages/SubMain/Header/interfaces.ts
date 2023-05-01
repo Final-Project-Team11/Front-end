@@ -1,5 +1,4 @@
 export interface HeaderProps {
-  selectedDateRangeText: string;
   initialCalendars: InitialCalendar[];
   onClickNavi?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
