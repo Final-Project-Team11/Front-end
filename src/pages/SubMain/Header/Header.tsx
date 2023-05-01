@@ -96,7 +96,9 @@ function Header(props: HeaderProps) {
               {'<'}
             </styles.StButton>
 
-            {selectedDate.toString().split('-').splice(1, 2).join('').padStart(2, '0')}
+            <styles.StMonth>
+              {selectedDate.toString().split('-').splice(1, 2).join('').padStart(2, '0')}
+            </styles.StMonth>
             <styles.StButton
               type="button"
               data-action="move-next"

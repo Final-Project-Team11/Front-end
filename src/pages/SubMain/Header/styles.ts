@@ -31,6 +31,7 @@ const StDateBlock = styled.div<StyleProps>`
   font-size: 66px;
   font-weight: 900;
   display: flex;
+  align-items: center;
   color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
   padding-bottom: 23px;
   margin-left: 50px;
@@ -39,13 +40,22 @@ const StDateBlock = styled.div<StyleProps>`
 
 const StYearBlock = styled.div`
   line-height: 56px;
+  width: 180px;
 `;
 
 const StMonthBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 56px;
   gap: 27.5px;
+  width: 200px;
+`;
+
+const StMonth = styled.div`
+  width: 100px;
+  display: 'flex';
+  justify-content: ceneter;
 `;
 
 const StColorList = styled.div`
@@ -119,14 +129,14 @@ const StButton = styled.button<StyleProps>`
   border: none;
   background-color: white;
   font-size: 20px;
-
   color: ${({ tab }) => (tab === false ? COLOR.SCHEDULE_BLUE : COLOR.VACATION_RED)};
-
   cursor: pointer;
   opacity: 1;
   &:hover {
     opacity: 0.5;
   }
+
+  width: 20px;
 `;
 
 const StLogout = styled.div`
@@ -164,4 +174,5 @@ export {
   StTabBlock,
   StNoneBlock,
   StLogout,
+  StMonth,
 };
