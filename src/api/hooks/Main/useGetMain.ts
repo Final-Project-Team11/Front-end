@@ -13,7 +13,7 @@ interface GetMainProps {
 
 const useGetMain = ({ type, year, month }: GetMainProps) => {
   const { data, isLoading } = useQuery({
-    queryKey: [keys.GET_MAIN, type],
+    queryKey: [keys.GET_MAIN, type, month],
     queryFn: async () => {
       const token = getCookie('token');
       const decoded = token && jwtDecode<JwtPayload>(token);

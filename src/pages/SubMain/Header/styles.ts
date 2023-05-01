@@ -129,6 +129,25 @@ const StButton = styled.button<StyleProps>`
   }
 `;
 
+const StLogout = styled.div`
+  width: 110px;
+  height: 30px;
+  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
+  font-size: 12px;
+  border: none;
+  background: #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(242, 61, 61, 0.5);
+  }
+`;
+
 export {
   StWrap,
   StCardBlock,
@@ -144,4 +163,5 @@ export {
   StButton,
   StTabBlock,
   StNoneBlock,
+  StLogout,
 };

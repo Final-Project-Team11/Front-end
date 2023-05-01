@@ -27,6 +27,7 @@ import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { recoilClickEventState } from '../../states/recoilClickEventState';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
+import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -48,7 +49,9 @@ const viewModeOptions = [
 export default function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
   const user = useGetCardInfo();
-  const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
+  const [selectedDateRangeText, setSelectedDateRangeText] = useRecoilState(
+    recoilSelectedDateState
+  );
   const [selectedView, setSelectedView] = useState(view);
   const [clickData, setClickData] = useState<CalendarProps>();
   const [clickEvent, setClickEvent] = useState<CalendarProps>();
@@ -231,11 +234,7 @@ export default function SubMain({ view }: { view: ViewType }) {
 
   return (
     <div style={{ width: '100%' }}>
-      <Header
-        selectedDateRangeText={selectedDateRangeText}
-        initialCalendars={initialCalendars}
-        onClickNavi={onClickNavi}
-      />
+      <Header initialCalendars={initialCalendars} onClickNavi={onClickNavi} />
       <div className="bodyContainer">
         <div style={{ marginTop: '30px', marginRight: '30px' }}>
           <Feed />
