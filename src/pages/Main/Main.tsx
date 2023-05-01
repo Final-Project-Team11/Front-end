@@ -9,18 +9,22 @@ import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 import { recoilCalendarState } from '../../states/recoilCalendarState';
 import { useSetRecoilState } from 'recoil';
+import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
   const tab = useRecoilValue(recoilTabState);
   const setCalendarState = useSetRecoilState(recoilCalendarState);
-  const today = new Date();
+  const selectedDate = useRecoilValue(recoilSelectedDateState);
+
+  const today = selectedDate === '' ? new Date() : new Date(selectedDate);
   const { data, isLoading } = useGetMain({
     type: tab,
     year: today.getFullYear().toString(),
     month: (today.getMonth() + 1).toString(),
   });
+
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
   useEffect(() => {
