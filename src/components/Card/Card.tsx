@@ -54,7 +54,7 @@ const Card = ({ tab }: CardProps) => {
         <CustomModal closeModal={() => setOpenModal(false)}>
           <CardDetail
             closeModal={() => setOpenModal(false)}
-            authLevel={decodedToken?.authLevel as number}
+            decodedToken={decodedToken}
           />
         </CustomModal>
       )}

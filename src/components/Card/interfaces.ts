@@ -11,11 +11,6 @@ export interface CardInfoType {
   joinDay: string;
 }
 
-export interface CardDetailProps {
-  closeModal: () => void;
-  authLevel: number;
-}
-
 export interface DecodedToken {
   authLevel: number;
   companyId: string;
@@ -24,4 +19,9 @@ export interface DecodedToken {
   teamName: string;
   userId: string;
   userName: string;
+}
+
+export interface CardDetailProps {
+  closeModal: () => void;
+  decodedToken: DecodedToken;
 }

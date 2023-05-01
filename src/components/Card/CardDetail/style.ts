@@ -1,16 +1,110 @@
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 
+interface FontStyle {
+  color?: 'gray';
+  weight?: 'bolder';
+  size?: string;
+  left?: string;
+}
+
 export const StCardDetailBlock = styled.div`
-  width: 500px;
-  height: 600px;
+  width: 450px;
+  height: 330px;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
-  padding: 20px;
+  padding: 50px 40px;
   box-sizing: border-box;
+
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 `;
+
+export const TopBlock = styled.div`
+  width: 100%;
+  height: 70%;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const BottomBlock = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InfoBlock = styled.div`
+  background-color: beige;
+  width: 180px;
+  height: 130px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const StProfileImg = styled.div`
+  width: 130px;
+  height: 130px;
+
+  border: 1px solid ${COLOR.PAGE_BLUE};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* overflow: hidden; */
+
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const StInfoTitleSpan = styled.span<FontStyle>`
+  font-size: ${({ size }) => (size ? size : '11px')};
+  font-weight: ${({ weight }) => (weight ? weight : null)};
+  color: ${({ color }) => (color ? 'gray' : null)};
+
+  margin-left: ${({ left }) => (left ? left : 'auto')};
+`;
+
+export const StInfo = styled.div`
+  background-color: yellow;
+  width: 130px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 10px;
+`;
+
+export const StInfoArea = styled.div`
+  width: 180px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const StInfoBlock = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+///////////////////////////
 
 export const StTopBlock = styled.div`
   width: 100%;
@@ -42,26 +136,6 @@ export const StTopLeftBlock = styled.div`
   position: relative;
 `;
 
-export const StProfileImg = styled.div`
-  width: 150px;
-  height: 150px;
-
-  border: 2px solid ${COLOR.PAGE_BLUE};
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 export const StProfileModifyInput = styled.input`
   width: 150px;
   height: 30px;
@@ -77,30 +151,6 @@ export const StMiddleBlock = styled.div`
   justify-content: space-evenly;
 `;
 
-export const StInfoBlock = styled.div`
-  width: 100%;
-  height: 30%;
-
-  font-size: 30px;
-  font-weight: bolder;
-
-  padding: 0 30px;
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const StInfoType = styled.div`
-  width: 40%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  font-size: 30px;
-  font-weight: bolder;
-`;
-
 export const StBottomBlock = styled.div`
   width: 100%;
   height: 25%;
@@ -108,11 +158,6 @@ export const StBottomBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-`;
-
-export const StInfoSpan = styled.span`
-  font-size: 30px;
-  font-weight: bolder;
 `;
 
 export const StImgEditButton = styled.div`
@@ -130,8 +175,8 @@ export const StImgEditButton = styled.div`
   cursor: pointer;
 
   position: absolute;
-  right: 32px;
-  bottom: 30px;
+  right: -5px;
+  bottom: -5px;
 `;
 
 export const StModifyInput = styled.input`
@@ -139,7 +184,7 @@ export const StModifyInput = styled.input`
 `;
 
 export const StInputLabel = styled.label`
-  width: 200px;
+  width: 130px;
   font-size: 10px;
   color: ${COLOR.PAGE_DONE};
 `;
@@ -149,4 +194,13 @@ export const StCloseBlock = styled.div`
   height: fit-content;
   font-size: 30px;
   cursor: pointer;
+`;
+
+export const AlertDiv = styled.div`
+  .swal-custom-title {
+    font-size: 18px;
+  }
+  .swal-custom-text {
+    font-size: 15px;
+  }
 `;

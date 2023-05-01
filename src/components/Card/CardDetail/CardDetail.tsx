@@ -13,7 +13,7 @@ import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
 import CustomButton from '../../Atoms/Button/CustomButton';
 
-const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
+const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
   const { data } = useGetCardDetail();
 
   // 수정모드 동작 상태
@@ -59,6 +59,10 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
 
   const { mutate } = usePatchDetail();
 
+  // 기존 생일, 폰번호랑 input값이랑 다른지 체크
+  const birthIsDiffer = birthDay !== data?.birthDay;
+  const phoneNumIsDiffer = phoneNum !== data?.phoneNum;
+
   // 업데이트에 보낼 formData 세팅
   const file = imgInputRef.current?.files?.[0];
   const formData = new FormData();
@@ -74,8 +78,8 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
     const sweetAlertDiv = document.getElementById('cardSweetAlertDiv');
     if (!sweetAlertDiv) return;
 
-    // 유효성 통과하면 sweetAlert로 더블체크
-    if (birthDayIsValid && phoneNumIsValid) {
+    // 유효성 통과하고, 기존값들이랑 다르면 sweetAlert로 더블체크
+    if (birthDayIsValid && phoneNumIsValid && (birthIsDiffer || phoneNumIsDiffer)) {
       Swal.fire({
         title: '변경사항을 저장하시겠습니까?',
         icon: 'question',
@@ -86,12 +90,13 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
         cancelButtonText: '취소',
         target: sweetAlertDiv,
         customClass: {
+          title: 'swal-custom-title',
           popup: 'swal-custom-z-index', //customClass로 z-index 높이기.
         },
         didOpen: () => {
           const popup = document.querySelector('.swal-custom-z-index');
           if (popup) {
-            (popup as HTMLElement).style.zIndex = '2500';
+            (popup as HTMLElement).style.zIndex = '20000';
           }
         },
       }).then(result => {
@@ -115,14 +120,24 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
     } else if (birthDayIsValid && !phoneNumIsValid) {
       Swal.fire({
         icon: 'error',
-        title: '올바른 형식의 핸드폰 번호를 입력해주세요',
+        title: '올바른 형식의 핸드폰 번호를 입력해주세요.',
+        html: '<p class="swal-custom-text">010-0000-0000 형식으로 입력해주세요.</p>',
         target: sweetAlertDiv,
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-custom-title',
+        },
       });
     } else if (!birthDayIsValid && phoneNumIsValid) {
       Swal.fire({
         icon: 'error',
         title: '올바른 형식의 생년월일을 입력해주세요',
+        html: '<p class="swal-custom-text">yyyy/mm/dd 형식으로 입력해주세요.</p>',
         target: sweetAlertDiv,
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-custom-title',
+        },
       });
     }
   };
@@ -136,85 +151,113 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
     return <div>loading...</div>;
   }
 
-  return (
-    <>
-      <UI.StCardDetailBlock>
-        <UI.StTopBlock>
-          <UI.StTopLeftBlock>
-            <UI.StProfileImg>
-              {img ? (
-                <img src={img.result as string} alt="" />
-              ) : data.profileImg ? (
-                <img src={data.profileImg} alt="" />
-              ) : authLevel === 3 ? (
-                <ProfileEmployee page="detail" />
-              ) : (
-                <ProfileManager page="detail" />
-              )}
+  // 직책
+  let position;
+  switch (decodedToken.authLevel) {
+    case 3: {
+      position = '사원';
+      break;
+    }
+    case 2: {
+      position = '팀장';
+      break;
+    }
+    case 1: {
+      position = 'CEO';
+      break;
+    }
+    default: {
+      position = '알수없음';
+      break;
+    }
+  }
 
-              {isEditMode && (
-                <>
-                  <UI.StProfileModifyInput
-                    type="file"
-                    ref={imgInputRef}
-                    accept="image/*"
-                    onChange={imgPreviewHandler}
-                  />
-                  <UI.StImgEditButton onClick={handleButtonClick}>
-                    <FaPen />
-                  </UI.StImgEditButton>
-                </>
-              )}
-            </UI.StProfileImg>
-          </UI.StTopLeftBlock>
-          <UI.StTopRightBlock>
-            <UI.StCloseBlock>
-              <BsXSquareFill onClick={() => closeModal()} />
-            </UI.StCloseBlock>
-          </UI.StTopRightBlock>
-        </UI.StTopBlock>
-        <UI.StMiddleBlock>
-          <UI.StInfoBlock>
-            <UI.StInfoType>생일 : </UI.StInfoType>
-            {isEditMode ? (
-              <UI.StInputLabel htmlFor="">
-                {birthDayIsValid
-                  ? '수정 가능합니다.'
-                  : '올바른 형식이 아닙니다. yyyy/mm/dd 형식으로 입력해주세요'}
+  return (
+    <div>
+      <UI.StCardDetailBlock>
+        <UI.TopBlock>
+          {/* 프로필이미지 - 설정중 임시 이미지, 설정된 이미지, 기본이미지 */}
+          <UI.StProfileImg>
+            {img ? (
+              <img src={img.result as string} alt="" />
+            ) : data.profileImg ? (
+              <img src={data.profileImg} alt="" />
+            ) : decodedToken.authLevel === 3 ? (
+              <ProfileEmployee page="detail" />
+            ) : (
+              <ProfileManager page="detail" />
+            )}
+            {/* 프로필 설정인풋 */}
+            {isEditMode && (
+              <>
+                <UI.StProfileModifyInput
+                  type="file"
+                  ref={imgInputRef}
+                  accept="image/*"
+                  onChange={imgPreviewHandler}
+                />
+                <UI.StImgEditButton onClick={handleButtonClick}>
+                  <FaPen />
+                </UI.StImgEditButton>
+              </>
+            )}
+          </UI.StProfileImg>
+          <UI.StInfoArea>
+            <UI.StInfoTitleSpan left="50px" weight="bolder">
+              {decodedToken.teamName}
+            </UI.StInfoTitleSpan>
+            {/* 직급 | 이름 */}
+            <UI.StInfoBlock>
+              <UI.StInfoTitleSpan>{position} |</UI.StInfoTitleSpan>
+              <UI.StInfo>{data.userName}</UI.StInfo>
+            </UI.StInfoBlock>
+
+            {/* 생일 - 수정모드, 기본, 없을때 */}
+            <UI.StInfoBlock>
+              <UI.StInfoTitleSpan>생일 | </UI.StInfoTitleSpan>
+              {isEditMode ? (
                 <CustomInput
                   inputType="cardInfo"
                   value={birthDay}
                   onChange={birthDayHandler}
+                  placeholder="yyyy/mm/dd"
                 />
-              </UI.StInputLabel>
-            ) : (
-              <UI.StInfoSpan>{data.birthDay}</UI.StInfoSpan>
-            )}
-          </UI.StInfoBlock>
-          <UI.StInfoBlock>
-            <UI.StInfoType>핸드폰 번호 : </UI.StInfoType>
-            {isEditMode ? (
-              <UI.StInputLabel htmlFor="">
-                {phoneNumIsValid
-                  ? '수정 가능합니다.'
-                  : '올바른 형식이 아닙니다. 010-1234-5678 형식으로 입력해주세요'}
+              ) : data.birthDay ? (
+                <UI.StInfo>{data.birthDay}</UI.StInfo>
+              ) : (
+                <UI.StInfo>'생일이 설정되지 않았습니다.'</UI.StInfo>
+              )}
+            </UI.StInfoBlock>
+
+            {/* 연락처 - 수정모드, 기본, 없을 때. */}
+            <UI.StInfoBlock>
+              <UI.StInfoTitleSpan>연락처 | </UI.StInfoTitleSpan>
+              {isEditMode ? (
                 <CustomInput
                   inputType="cardInfo"
                   value={phoneNum}
                   onChange={phoneNumHandler}
+                  placeholder="010-0000-0000"
                 />
-              </UI.StInputLabel>
-            ) : (
-              <UI.StInfoSpan>{data.phoneNum}</UI.StInfoSpan>
-            )}
-          </UI.StInfoBlock>
-        </UI.StMiddleBlock>
-        <UI.StBottomBlock>
-          <UI.StInfoType>입사일{data.joinDay}</UI.StInfoType>
-          {/* 수정모드 진입 버튼 */}
+              ) : data.phoneNum ? (
+                <UI.StInfo>{data.phoneNum}</UI.StInfo>
+              ) : (
+                <UI.StInfo>'연락처가 설정되지 않았습니다.'</UI.StInfo>
+              )}
+            </UI.StInfoBlock>
+            {/* 연락처 끝 */}
+          </UI.StInfoArea>
+        </UI.TopBlock>
+        <UI.BottomBlock>
+          {/* 입사일 */}
+          <UI.StInfoTitleSpan left="0" color="gray">
+            입사일 | {data.joinDay}
+          </UI.StInfoTitleSpan>
+
+          {/* 버튼 - 수정모드, 일반모드 */}
           {isEditMode ? (
             <CustomButton
-              buttonType="Detail"
+              buttonType="cardDetail"
               type="button"
               onClick={() => {
                 setIsEditMode(false);
@@ -225,17 +268,18 @@ const CardDetail = ({ closeModal, authLevel }: CardDetailProps) => {
             </CustomButton>
           ) : (
             <CustomButton
-              buttonType="Detail"
+              buttonType="cardDetail"
               type="button"
               onClick={() => setIsEditMode(true)}
             >
               수정하기
             </CustomButton>
           )}
-        </UI.StBottomBlock>
+          {/* 버튼 끝 */}
+        </UI.BottomBlock>
       </UI.StCardDetailBlock>
-      <div id="cardSweetAlertDiv" />
-    </>
+      <UI.AlertDiv id="cardSweetAlertDiv" />
+    </div>
   );
 };
 
