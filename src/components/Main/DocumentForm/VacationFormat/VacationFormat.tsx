@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { postFormat } from '../../../../pages/SubMain/utils';
 import * as styles from '../commonStyles';
 import useInput from '../../../../hooks/common/useInput';
@@ -13,10 +13,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
 import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 import CustomButton from '../../../Atoms/Button/CustomButton';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
+import { recoilTabState } from '../../../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
 
 const VacationFormat = ({
   props,
@@ -25,8 +26,7 @@ const VacationFormat = ({
   propsRef,
 }: ScheduleProps) => {
   const mutation = usePostVacation();
-  const [FormFiles, SetFormFile] = useState<File[]>();
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
   const { element, onMoveToElement } = useMoveScroll();
 
   const SaveClickHandler = () => {
@@ -41,7 +41,15 @@ const VacationFormat = ({
         reverseButtons: true,
       }).then(result => {
         if (result.isConfirmed) {
-          const newData = postFormat(tab, props);
+          const newProps = {
+            ...props,
+            body: content,
+            title: title,
+            username: userName,
+            location: location,
+          };
+
+          const newData = postFormat(tab, newProps);
           mutation.mutate(newData, {
             onSuccess: () => {
               setDisable(!disable);
@@ -83,10 +91,6 @@ const VacationFormat = ({
       });
     }
   };
-
-  const token = getCookie('token');
-  const decoded = token && jwtDecode<JwtPayload>(token);
-  const userId = decoded ? decoded.userId : '';
 
   const [disable, setDisable] = useState(false);
   const [userName, userNameHandler, setUserNameInputValue] = useInput();
