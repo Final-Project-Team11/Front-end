@@ -13,7 +13,7 @@ const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
       break;
     }
     case 'myfiles': {
-      files = data.myfile;
+      files = data.detail;
       break;
     }
     case 'reportfiles': {
