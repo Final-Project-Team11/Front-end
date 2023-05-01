@@ -17,6 +17,7 @@ const buttonTypes: ButtonType = {
     borderRadius: '7px',
     backgroundColor: '#F6F6F6',
     border: 'none',
+    cursor: 'pointer',
   },
   signup: {
     width: '595px',
