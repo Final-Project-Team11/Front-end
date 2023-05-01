@@ -47,8 +47,6 @@ const ScheduleFormat = ({
   const [content, contentHandler, setContentValue] = useTextarea();
 
   const { element, onMoveToElement } = useMoveScroll();
-
-  console.log('tab', tab);
   useEffect(() => {
     props.title !== undefined && setTitleHanlder(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInput(props.userName);
