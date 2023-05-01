@@ -21,6 +21,8 @@ import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
 import Swal from 'sweetalert2';
 import CustomButton from '../../../Atoms/Button/CustomButton';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
+import { useRecoilValue } from 'recoil';
+import { recoilTabState } from '../../../../states/recoilTabState';
 
 const ScheduleFormat = ({
   props,
@@ -30,7 +32,7 @@ const ScheduleFormat = ({
 }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [zoomClick, setZoomClick] = useState(false);
-  const [tab] = useContext(ChangeTabContext);
+  const tab = useRecoilValue(recoilTabState);
   const [FormFiles, SetFormFile] = useState<File[]>();
 
   const token = getCookie('token');
@@ -46,6 +48,7 @@ const ScheduleFormat = ({
 
   const { element, onMoveToElement } = useMoveScroll();
 
+  console.log('tab', tab);
   useEffect(() => {
     props.title !== undefined && setTitleHanlder(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInput(props.userName);

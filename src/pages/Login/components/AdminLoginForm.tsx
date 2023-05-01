@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
 // 👆 Atom-component
-import { TextWrapper, SubmitForm, StSpan } from '../styles';
+import { TextWrapper, SubmitForm, StSpan, StSignupSpan } from '../styles';
 import { useLogin } from '../hooks/useLogin';
 
 export type AdminLoginInfo = {
@@ -48,14 +48,14 @@ const AdminLoginForm = () => {
       <TextWrapper>
         <StSpan>
           미어캣린더가 처음이라면!&nbsp;
-          <StSpan
+          <StSignupSpan
             onClick={() => navigate('/masterSignup')}
             style={{ fontWeight: 'bold' }}
           >
             회원가입
-          </StSpan>
+          </StSignupSpan>
         </StSpan>
-        <StSpan onClick={Waiting}>아이디 / 비밀번호 찾기</StSpan>
+        <StSignupSpan onClick={Waiting}>아이디 / 비밀번호 찾기</StSignupSpan>
       </TextWrapper>
       <CustomButton buttonType="login">로그인</CustomButton>
     </SubmitForm>

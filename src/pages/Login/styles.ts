@@ -12,6 +12,11 @@ export const StSpan = styled.span`
   font-size: 12px;
 `;
 
+export const StSignupSpan = styled.span`
+  cursor: pointer;
+  font-size: 12px;
+`;
+
 export const SubmitForm = styled.form`
   width: 430px;
   height: 310px;

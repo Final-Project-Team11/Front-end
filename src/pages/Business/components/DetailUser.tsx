@@ -51,7 +51,6 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
   //   const [showModal, setShowModal] = React.useState<boolean>(false);
 
   const closeModal = () => {
-    console.log('hi');
     setShowModal(false);
   };
 
