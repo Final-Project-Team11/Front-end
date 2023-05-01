@@ -17,7 +17,7 @@ const ViewUser = () => {
   const { data, isLoading } = useGetUser();
 
   const waiting = () => {
-    console.log('test');
+    //
   };
 
   return (

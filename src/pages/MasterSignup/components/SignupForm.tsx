@@ -26,6 +26,7 @@ export type AdminSignupInfoPlus = AdminLoginInfo & {
   // 필요없는
   confirmPassword: string;
   detailAddress: string;
+  companyEmail: string;
 };
 
 const SignupForm = () => {
@@ -196,8 +197,9 @@ const SignupForm = () => {
           이메일
           <CustomInput
             inputType="signup"
+            type="email"
             placeholder="전체 이메일을 입력해주세요"
-            {...register('companyId', {
+            {...register('companyEmail', {
               required: true,
             })}
           />
