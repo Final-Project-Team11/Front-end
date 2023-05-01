@@ -2,8 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
-import { useSetRecoilState } from 'recoil';
-import { recoilIdState } from '../../../states/recoilIdState';
 
 interface Paylaod {
   postInfo?: {
