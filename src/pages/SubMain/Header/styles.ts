@@ -12,7 +12,6 @@ const StWrap = styled.div`
 
 const StCardBlock = styled.div<StyleProps>`
   opacity: 1;
-  cursor: pointer;
   &:hover {
     opacity: 0.8;
   }
