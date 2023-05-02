@@ -10,10 +10,18 @@ import { useRecoilValue } from 'recoil';
 import { recoilCalendarState } from '../../states/recoilCalendarState';
 import { useSetRecoilState } from 'recoil';
 import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
+import { getCookie } from '../../api/auth/CookieUtils';
+import { useNavigate } from 'react-router-dom';
 
 export const CalendarContext = createContext<Partial<EventObject>[]>([]);
 
 const Main = () => {
+  const token = getCookie('token');
+  const navigate = useNavigate();
+  if (token === undefined) {
+    navigate('/login');
+  }
+
   const tab = useRecoilValue(recoilTabState);
   const setCalendarState = useSetRecoilState(recoilCalendarState);
   const selectedDate = useRecoilValue(recoilSelectedDateState);
