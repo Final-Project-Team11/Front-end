@@ -26,17 +26,17 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   switch (type) {
     case 'meetingfiles' || 'reportfiles': {
       title = '회의록';
-      icon = <FolderIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+      icon = <FolderIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
       break;
     }
     case 'reportfiles': {
       title = '보고서';
-      icon = <FolderIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+      icon = <FolderIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
       break;
     }
     case 'myfiles': {
       title = '내가 올린 파일';
-      icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+      icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
       break;
     }
   }

@@ -25,7 +25,7 @@ const Request = ({ type }: RequestType) => {
   }
 
   // Board title에 들어갈 icon
-  const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
+  const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
 
   if (isLoading) {
     return (

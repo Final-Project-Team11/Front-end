@@ -145,7 +145,7 @@ export default function SubMain({ view }: { view: ViewType }) {
       isReadOnly: res.isReadOnly,
       backgroundColor: getScheduleColor(tab, res.calendarId),
       location: res.location,
-      userName: user.userInfo.userName,
+      userName: user.userInfo?.userName,
       files: undefined,
     };
 

@@ -38,3 +38,11 @@ export interface SentTodo {
     content: string;
   };
 }
+
+export interface PatchFeedPayload {
+  feed: 'category' | 'todo';
+  id: number;
+  content: {
+    [key: string]: string;
+  };
+}

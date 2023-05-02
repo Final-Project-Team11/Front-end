@@ -34,12 +34,11 @@ interface Detail {
 }
 
 export interface DetailProps {
-  data: {
-    meetingfile: Detail;
-    detail: Detail;
-    reportfile: Detail;
-  };
-  isLoading: boolean;
-  type: 'myfiles' | 'meetingfiles' | 'reportfiles';
+  eventId: number;
+  types: 'myfiles' | 'meetingfiles' | 'reportfiles';
   closeModal: () => void;
+}
+
+export interface DetailType {
+  [key: string]: Detail;
 }
