@@ -116,6 +116,8 @@ export const StImgEditButton = styled.div`
   justify-content: center;
   align-items: center;
 
+  font-size: 17px;
+
   cursor: pointer;
 
   position: absolute;
