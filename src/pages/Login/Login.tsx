@@ -1,13 +1,15 @@
 import React from 'react';
-import { StBlock, TabButton, TabButtonWrapper } from './styles';
+import { StBlock, StH1, StSpan, TabButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../../api/auth/CookieUtils';
 // component
+import ManagerHead from '../../assets/Meerkat/ManagerHead';
+import UserHead from '../../assets/Meerkat/UserHead';
+// svg 파일
 import UserLoginForm from './components/UserLoginForm';
 import AdminLoginForm from './components/AdminLoginForm';
-// svg 파일
-import MeerkatHead4 from '../../assets/Meerkat/MeerkatHead4';
-import ManagerHead from '../../assets/Meerkat/ManagerHead';
+import Wrapper_Column from '../../components/Atoms/Wrapper_Column/Wrapper_Column';
+import Wrapper_Row from '../../components/Atoms/Wrapper_Row/Wrapper_Row';
 
 enum Tabs {
   Admin = 'Tab1',
@@ -32,22 +34,34 @@ const Login = () => {
 
   return (
     <StBlock>
-      <TabButtonWrapper>
-        <TabButton
-          onClick={() => ClickTabHandler(Tabs.Admin)}
-          isSelected={currentTab === Tabs.Admin}
-        >
-          <span style={{ marginBottom: '30px' }}>대표</span>
-          <ManagerHead colors={currentTab === Tabs.Admin ? 'red' : 'blue'} />
-        </TabButton>
-        <TabButton
-          onClick={() => ClickTabHandler(Tabs.User)}
-          isSelected={currentTab === Tabs.User}
-        >
-          <span style={{ marginBottom: '30px' }}>팀원</span>
-          <MeerkatHead4 colors={currentTab === Tabs.User ? 'red' : 'blue'} />
-        </TabButton>
-      </TabButtonWrapper>
+      <StH1>Meer : 캣린더</StH1>
+      <StSpan>업무와 휴가를 분리하여 더욱 효율적으로</StSpan>
+      <Wrapper_Row
+        style={{
+          margin: '110px 0 30px',
+          gap: '15px',
+          alignItems: 'flex-end',
+        }}
+      >
+        <Wrapper_Column>
+          <ManagerHead isSelected={currentTab === Tabs.Admin} />
+          <TabButton
+            onClick={() => ClickTabHandler(Tabs.Admin)}
+            isSelected={currentTab === Tabs.Admin}
+          >
+            대표
+          </TabButton>
+        </Wrapper_Column>
+        <Wrapper_Column>
+          <UserHead isSelected={currentTab === Tabs.User} />
+          <TabButton
+            onClick={() => ClickTabHandler(Tabs.User)}
+            isSelected={currentTab === Tabs.User}
+          >
+            팀원
+          </TabButton>
+        </Wrapper_Column>
+      </Wrapper_Row>
       {currentTab === Tabs.Admin && <AdminLoginForm />}
       {currentTab === Tabs.User && <UserLoginForm />}
     </StBlock>
