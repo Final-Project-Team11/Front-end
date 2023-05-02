@@ -25,6 +25,7 @@ function Header(props: HeaderProps) {
   const [open, setOpen] = useRecoilState(recoilReportState);
   const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
+
   const CardClickHandler = () => {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
@@ -39,6 +40,7 @@ function Header(props: HeaderProps) {
       navigate('/mypage');
     }
   };
+
 
   const closeModal = () => {
     setOpen(false);
@@ -88,9 +90,7 @@ function Header(props: HeaderProps) {
 
   return (
     <styles.StWrap>
-      <styles.StCardBlock onClick={CardClickHandler}>
-        <Card tab={tab} />
-      </styles.StCardBlock>
+      <Card tab={tab} location="main" />
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
           <styles.StYearBlock>

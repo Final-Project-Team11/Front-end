@@ -1,19 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
-import { Todo } from '../../../components/Feed/interfaces';
+import { Category } from '../../../components/Feed/interfaces';
 
-interface Feed {
-  feed: {
-    categoryId: number;
-    categoryName: string;
-    todos: Todo[] | [];
-  }[];
-  feedIsLoading: boolean;
-}
-
-export const useGetFeed = (): Feed => {
-  const { data, isLoading } = useQuery({
+export const useGetFeed = () => {
+  const { data, isLoading } = useQuery<Category[]>({
     queryKey: [keys.GET_POSTS], //posts get요청 key
     queryFn: async () => {
       const { data } = await apis.get('/feed');

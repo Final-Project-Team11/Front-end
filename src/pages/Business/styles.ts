@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from '../../styles/colors';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -64,4 +65,41 @@ export const UserInfo = styled.div`
 export const Wrapper_Space = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const StFrom = styled.form`
+  width: 500px;
+  margin: 50px 210px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+export const StH1 = styled.h1`
+  width: 710px;
+  font-size: 18px;
+  font-weight: bolder;
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+`;
+
+export const SearchWrapper = styled.div`
+  position: relative;
+
+  .searchIcon {
+    font-size: 20px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+  }
+`;
+
+export const VaildP = styled.p`
+  font-size: 13px;
+  color: ${COLOR.POINT_C};
+  margin: -15px 0;
+  font-weight: bold;
 `;

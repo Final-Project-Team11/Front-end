@@ -11,6 +11,7 @@ const inputTypes: InputTypes = {
     height: '50px',
     boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
     fontSize: '15px',
+    borderRadius: '4px',
     border: 'none',
     padding: '15px',
     outline: 'none',
@@ -25,13 +26,17 @@ const inputTypes: InputTypes = {
     outline: 'none',
   },
   cardInfo: {
-    width: '200px',
-    height: '50px',
+    width: '120px',
+    height: '32px',
+    marginLeft: '10px',
     boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-    fontSize: '15px',
+    fontSize: '10px',
     border: 'none',
-    padding: '15px',
+    padding: '16px 13px',
+    boxSizing: 'border-box',
     outline: 'none',
+    borderRadius: '4px',
+    textAlign: 'center',
   },
   title: {
     width: '400px',
@@ -57,37 +62,10 @@ const inputTypes: InputTypes = {
     padding: '15px',
     borderRadius: '4px',
   },
-  cUser: {
-    width: '500px',
-    height: '50px',
-    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-    fontSize: '15px',
-    border: 'none',
-    padding: '15px',
-    borderRadius: '4px',
-  },
-  cUserHalf: {
-    width: '240px',
-    height: '50px',
-    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-    fontSize: '15px',
-    border: 'none',
-    padding: '15px',
-    borderRadius: '4px',
-  },
-  cUserId: {
-    width: '336px',
-    height: '50px',
-    boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
-    fontSize: '15px',
-    border: 'none',
-    padding: '15px',
-    borderRadius: '4px',
-  },
 };
 
 export const StInput = styled.input.attrs<InputProps>(props => ({
-  style: inputTypes[props.inputType],
+  style: { ...inputTypes[props.inputType], ...props.style },
 }))<InputProps>`
   box-sizing: border-box;
 `;

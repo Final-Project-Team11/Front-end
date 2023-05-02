@@ -1,8 +1,9 @@
 export interface CardProps {
   tab?: boolean;
+  location: 'main' | 'mypage';
 }
 
-export interface CardInfoType {
+export interface CardDetailInfo {
   userId: string;
   userName: string;
   profileImg: string;
@@ -11,6 +12,27 @@ export interface CardInfoType {
   joinDay: string;
 }
 
-export interface CloseModal {
-  closeModal: () => void;
+export interface CardInfo {
+  userName: string;
+  team: string;
+  salaryDay: number;
+  remainDay: number;
+  profileImg: string;
 }
+
+export interface DecodedToken {
+  authLevel: number;
+  companyId: string;
+  iat: number;
+  teamId: number;
+  teamName: string;
+  userId: string;
+  userName: string;
+}
+
+export interface CardDetailProps {
+  closeModal: () => void;
+  decodedToken: DecodedToken;
+}
+
+export type NavButton = (event: React.MouseEvent) => void;

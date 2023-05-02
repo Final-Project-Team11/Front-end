@@ -68,6 +68,8 @@ export const StCategoryTitleBlock = styled.div<CategoryStyle>`
   justify-content: space-between;
   align-items: center;
 
+  cursor: pointer;
+
   gap: 5px;
 `;
 
