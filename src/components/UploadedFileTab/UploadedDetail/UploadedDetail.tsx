@@ -1,13 +1,20 @@
 import * as UI from './style';
 import { DetailProps } from '../interfaces';
+import { useGetUploadedDetail } from '../../../api/hooks/UploadedFile/useGetUploadedDetail';
 
-const UploadedDetail = ({ data, isLoading, type, closeModal }: DetailProps) => {
+const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
+  const payload = {
+    eventId,
+    types,
+  };
+
+  const { data, isLoading } = useGetUploadedDetail(payload);
   if (isLoading || !data) {
     return <div>Loading....</div>;
   }
 
   let files;
-  switch (type) {
+  switch (types) {
     case 'meetingfiles': {
       files = data.meetingfile;
       break;

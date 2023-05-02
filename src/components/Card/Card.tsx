@@ -9,6 +9,7 @@ import ProfileManager from '../../assets/Meerkat/ProfileManager';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { BsPencilSquare } from '@react-icons/all-files/bs/BsPencilSquare';
 
 const Card = ({ tab, location }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
@@ -34,16 +35,23 @@ const Card = ({ tab, location }: CardProps) => {
   let navigateButton: NavButton;
   switch (location) {
     case 'main': {
-      buttonText = `my page >`;
       if (decodedToken.authLevel === 3) {
+        buttonText = `mypage >`;
         navigateButton = e => {
           e.stopPropagation();
           navigate('/mypage');
         };
-      } else {
+      } else if (decodedToken.authLevel === 2) {
+        buttonText = `mypage >`;
         navigateButton = e => {
           e.stopPropagation();
           navigate('/manager');
+        };
+      } else {
+        buttonText = `유저 생성 >`;
+        navigateButton = e => {
+          e.stopPropagation();
+          navigate('/business');
         };
       }
       break;
@@ -60,10 +68,13 @@ const Card = ({ tab, location }: CardProps) => {
 
   return (
     <>
-      <UI.StCardBlock tab={tab} onClick={onClickCardHandler}>
+      <UI.StCardBlock tab={tab}>
         <UI.StInfoBlock>
-          <UI.StInfoSpan bolder="bolder">
-            {userInfo.team} : {userInfo.userName}
+          <UI.StInfoSpan bolder="bolder" reviseSpan={true}>
+            <span>
+              {userInfo.team} : {userInfo.userName}
+            </span>
+            <BsPencilSquare className="reviseBtn" onClick={onClickCardHandler} />
           </UI.StInfoSpan>
           {userInfo.team !== 'CEO' ? (
             <UI.StDateBlock>

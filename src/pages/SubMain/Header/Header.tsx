@@ -25,21 +25,6 @@ function Header(props: HeaderProps) {
   const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
 
-  const CardClickHandler = () => {
-    const token = getCookie('token');
-    const decoded = token && jwtDecode<JwtPayload>(token);
-    const authLevel = decoded ? decoded.authLevel : '';
-    if (authLevel === 1) {
-      navigate('/business');
-    } else if (authLevel === 2) {
-      navigate('/manager');
-    } else if (authLevel === 3) {
-      navigate('/mypage');
-    } else {
-      navigate('/mypage');
-    }
-  };
-
   const closeModal = () => {
     setOpen(false);
   };
@@ -78,9 +63,7 @@ function Header(props: HeaderProps) {
 
   return (
     <styles.StWrap>
-      <styles.StCardBlock onClick={CardClickHandler}>
-        <Card tab={tab} location="main" />
-      </styles.StCardBlock>
+      <Card tab={tab} location="main" />
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
           <styles.StYearBlock>

@@ -29,6 +29,7 @@ export const StTodoAreaBlock = styled.div`
 
 export const StTodoSpan = styled.span`
   color: ${COLOR.PAGE_SPAN};
+  cursor: pointer;
 `;
 
 export const StTodoInput = styled.input`
