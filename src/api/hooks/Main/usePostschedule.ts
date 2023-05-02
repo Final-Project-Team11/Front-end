@@ -30,10 +30,10 @@ const usePostschedule = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       return data;
     },
     onSuccess: () => {
+      console.log('success');
       queryClient.invalidateQueries([keys.GET_MAIN]);
     },
   });
@@ -49,16 +49,22 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
   const formData = new FormData();
   switch (payload.url) {
     case 'meeting': {
+      console.log('meeting');
       payload.postInfo?.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
       formData.append('body', payload.postInfo?.body || '');
+
+      if (payload.postInfo?.location !== undefined && payload.postInfo?.location !== '') {
+        formData.append('location', payload.postInfo?.location || '');
+      }
+
       formData.append('calendarId', payload.postInfo?.calendarId || '');
-      formData.append('location', payload.postInfo?.location || '');
-      payload.postInfo?.attendees?.map((item, index) =>
-        formData.append(`attendees[${index}]`, item)
-      );
+      payload.postInfo?.attendees?.map((item, index) => {
+        console.log('attendees');
+        return formData.append(`attendees[${index}]`, item);
+      });
 
       return formData;
     }
@@ -79,6 +85,7 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
       formData.append('body', payload.postInfo?.body || '');
+
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );
@@ -90,8 +97,11 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
       formData.append('start', start || '');
       formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
-      formData.append('location', payload.postInfo?.location || '');
       formData.append('body', payload.postInfo?.body || '');
+
+      if (payload.postInfo?.location !== undefined && payload.postInfo?.location !== '') {
+        formData.append('location', payload.postInfo?.location || '');
+      }
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );

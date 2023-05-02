@@ -6,9 +6,9 @@ interface StyleProps {
 }
 
 const StWrap = styled.div`
-  margin: 50px 360px 0;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: 50px;
 `;
 
 const StTabButton = styled.button<StyleProps>`

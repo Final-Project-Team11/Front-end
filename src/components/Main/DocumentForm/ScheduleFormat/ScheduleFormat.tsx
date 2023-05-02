@@ -42,6 +42,10 @@ const ScheduleFormat = ({
   const [disable, setDisable] = useState(false);
   const [userName, userNameHandler, setUserNameInput] = useInput();
   const [title, titleHandler, setTitleHanlder] = useInput();
+
+  const [isValidTitle, setIsValidTitle] = useState(true);
+  const [isValidBody, setIsValidBody] = useState(true);
+
   const [location, locationHandler, setlocationHanlder] = useInput();
   const [mention, mentionHandler] = useState<string[]>();
   const [content, contentHandler, setContentValue] = useTextarea();
@@ -57,6 +61,14 @@ const ScheduleFormat = ({
   }, [props.id]);
 
   const SaveClickHandler = () => {
+    if (title === '') {
+      setIsValidTitle(false);
+      return;
+    } else if (content === '') {
+      setIsValidBody(false);
+      return;
+    }
+
     if (disable === false) {
       Swal.fire({
         title: '일정을 추가하시겠습니까?',
@@ -132,10 +144,12 @@ const ScheduleFormat = ({
           </div>
           <div>
             <styles.StTitleInput
-              placeholder="제목 입력란"
+              placeholder="제목*"
               value={title}
               onChange={titleHandler}
               disabled={disable}
+              maxLength={25}
+              isValid={isValidTitle}
             />
           </div>
         </styles.StTitleContentBlock>
@@ -160,42 +174,45 @@ const ScheduleFormat = ({
           {props.calendarId !== 'Reports' ? (
             <>
               <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-              <div>
-                <styles.StTitleInput
-                  placeholder="장소 입력란"
-                  value={location}
-                  onChange={locationHandler}
-                  disabled={disable}
-                />
-              </div>
+              <styles.StTitleInput
+                placeholder="장소 입력란"
+                value={location}
+                onChange={locationHandler}
+                disabled={disable}
+                maxLength={20}
+              />
             </>
           ) : null}
         </styles.StMarkNameBlcok>
         <styles.StTextAreaBlock zoomClick={zoomClick} ref={element}>
           <styles.StTextArea
-            placeholder="내용을 입력해주세요"
+            placeholder="내용*"
             value={content}
             onChange={contentHandler}
             disabled={disable}
+            isValid={isValidTitle}
           />
         </styles.StTextAreaBlock>
         <styles.StOpenBlock>
           <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
             {zoomClick === false ? (
-              <>
-                <MdZoomIn />
-                <span>전체화면</span>
-              </>
+              <div style={{ width: '100%' }}>
+                <span>크게보기</span>
+              </div>
             ) : (
               <>
-                <MdZoomOut />
-                <span>축소</span>
+                <span>작게보기</span>
               </>
             )}
           </styles.StOpenButton>
         </styles.StOpenBlock>
         <styles.StFileBlock>
-          <FileUpload onFileHandler={SetFormFile} disable={disable} files={props.files} />
+          <FileUpload
+            onFileHandler={SetFormFile}
+            disable={disable}
+            files={props.files}
+            id={props.id}
+          />
         </styles.StFileBlock>
       </styles.StContentBlock>
 
