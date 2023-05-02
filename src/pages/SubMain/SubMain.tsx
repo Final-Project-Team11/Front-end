@@ -28,6 +28,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { recoilClickEventState } from '../../states/recoilClickEventState';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
+import Swal from 'sweetalert2';
 
 type ViewType = 'month' | 'week' | 'day';
 const today = new TZDate();
@@ -228,87 +229,107 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   const onDeleteEvent = () => {
-    clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
-    setClickDetail(false);
+    Swal.fire({
+      title: '일정을 취소하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네,취소하겠습니다!',
+      cancelButtonText: '아니요, 작성할게요!',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+        clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
+        setClickDetail(false);
+      }
+    });
   };
 
   return (
     <div style={{ width: '100%' }}>
-      <Header initialCalendars={initialCalendars} onClickNavi={onClickNavi} />
-      <div className="bodyContainer">
-        <div style={{ marginTop: '30px', marginRight: '30px' }}>
-          <Feed />
-        </div>
-        <div style={{ flex: 1 }}>
-          <Calendar
-            height="750px"
-            calendars={initialCalendars}
-            month={{ startDayOfWeek: 7, visibleEventCount: 3 }}
-            events={initialEvents}
-            template={{
-              milestone(event: any) {
-                return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
-              },
-              allday(event: any) {
-                return `[All day] ${event.title}`;
-              },
-            }}
-            theme={theme}
-            timezone={{
-              zones: [
-                {
-                  timezoneName: 'Asia/Seoul',
-                  displayLabel: 'Seoul',
-                  tooltip: 'UTC+09:00',
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Header initialCalendars={initialCalendars} onClickNavi={onClickNavi} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="bodyContainer" style={{ width: '1200px' }}>
+          <div style={{ marginTop: '30px', marginRight: '30px' }}>
+            <Feed />
+          </div>
+          <div style={{ flex: 1 }}>
+            <Calendar
+              height="750px"
+              calendars={initialCalendars}
+              month={{ startDayOfWeek: 7, visibleEventCount: 3 }}
+              events={initialEvents}
+              template={{
+                milestone(event: any) {
+                  return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
                 },
-                {
-                  timezoneName: 'Pacific/Guam',
-                  displayLabel: 'Guam',
-                  tooltip: 'UTC+10:00',
+                allday(event: any) {
+                  return `[All day] ${event.title}`;
                 },
-              ],
-            }}
-            useDetailPopup={false}
-            useFormPopup={true}
-            view={selectedView}
-            week={{
-              showTimezoneCollapseButton: true,
-              timezonesCollapsed: false,
-              eventView: true,
-              taskView: true,
-            }}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            ref={calendarRef}
-            onAfterRenderEvent={onAfterRenderEvent}
-            onBeforeDeleteEvent={onBeforeDeleteEvent}
-            onClickDayname={onClickDayName}
-            onClickEvent={onClickEvent}
-            clickMoreEventsBtn={true}
-            onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
-            onBeforeUpdateEvent={onBeforeUpdateEvent}
-            onBeforeCreateEvent={onBeforeCreateEvent}
-          />
+              }}
+              theme={theme}
+              timezone={{
+                zones: [
+                  {
+                    timezoneName: 'Asia/Seoul',
+                    displayLabel: 'Seoul',
+                    tooltip: 'UTC+09:00',
+                  },
+                  {
+                    timezoneName: 'Pacific/Guam',
+                    displayLabel: 'Guam',
+                    tooltip: 'UTC+10:00',
+                  },
+                ],
+              }}
+              useDetailPopup={false}
+              useFormPopup={true}
+              view={selectedView}
+              week={{
+                showTimezoneCollapseButton: true,
+                timezonesCollapsed: false,
+                eventView: true,
+                taskView: true,
+              }}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              ref={calendarRef}
+              onAfterRenderEvent={onAfterRenderEvent}
+              onBeforeDeleteEvent={onBeforeDeleteEvent}
+              onClickDayname={onClickDayName}
+              onClickEvent={onClickEvent}
+              clickMoreEventsBtn={true}
+              onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
+              onBeforeUpdateEvent={onBeforeUpdateEvent}
+              onBeforeCreateEvent={onBeforeCreateEvent}
+            />
+          </div>
         </div>
       </div>
 
-      {clickDetail === false ? (
-        <TodaySchedules todayData={todayData} />
-      ) : tab === false ? (
-        <ScheduleFormat
-          props={{ ...clickData }}
-          propsRef={detailRef}
-          onReturnHandler={setClickDetail}
-          onCancelHandler={onDeleteEvent}
-        />
-      ) : (
-        <VacationFormat
-          props={{ ...clickData }}
-          propsRef={detailRef}
-          onReturnHandler={setClickDetail}
-          onCancelHandler={onDeleteEvent}
-        />
-      )}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '1200px' }}>
+          {clickDetail === false ? (
+            <TodaySchedules todayData={todayData} />
+          ) : tab === false ? (
+            <ScheduleFormat
+              props={{ ...clickData }}
+              propsRef={detailRef}
+              onReturnHandler={setClickDetail}
+              onCancelHandler={onDeleteEvent}
+            />
+          ) : (
+            <VacationFormat
+              props={{ ...clickData }}
+              propsRef={detailRef}
+              onReturnHandler={setClickDetail}
+              onCancelHandler={onDeleteEvent}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
