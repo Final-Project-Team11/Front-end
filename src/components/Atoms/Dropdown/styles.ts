@@ -31,6 +31,7 @@ export const StBlock = styled.div<interfaces.CssProps>`
   align-items: center;
   justify-content: center;
   gap: 5px;
+  cursor: pointer;
 `;
 
 export const StLi = styled.li<interfaces.CssProps>`
@@ -60,6 +61,7 @@ export const StUlBlock = styled.ul<UlStyleProps>`
   z-index: 100;
   background-color: white;
   /* border: 1px solid black; */
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   border-top: none;
   ${({ pos }) =>
