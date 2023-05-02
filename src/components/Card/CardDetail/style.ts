@@ -1,15 +1,17 @@
 import styled from 'styled-components';
-import { COLOR } from '../../../styles/colors';
 
 interface FontStyle {
   color?: 'gray';
   weight?: 'bolder';
   size?: string;
-  left?: string;
 }
 
 interface DotProps {
   validation: boolean;
+}
+
+interface PhoneNum {
+  types?: 'phoneNum';
 }
 
 export const StCardDetailBlock = styled.div`
@@ -34,19 +36,10 @@ export const TopBlock = styled.div`
   justify-content: space-between;
 `;
 
-export const BottomBlock = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 export const StProfileImg = styled.div`
-  width: 130px;
-  height: 130px;
-
-  border: 1px solid ${COLOR.PAGE_BLUE};
+  background-color: #f6f6f6;
+  width: 150px;
+  height: 150px;
 
   display: flex;
   justify-content: center;
@@ -64,8 +57,12 @@ export const StInfoTitleSpan = styled.span<FontStyle>`
   font-size: ${({ size }) => (size ? size : '11px')};
   font-weight: ${({ weight }) => (weight ? weight : null)};
   color: ${({ color }) => (color ? 'gray' : null)};
+`;
 
-  margin-left: ${({ left }) => (left ? left : 'auto')};
+export const JoinDate = styled.span`
+  color: gray;
+  font-size: 11px;
+  margin-bottom: 15px;
 `;
 
 export const StInfo = styled.div`
@@ -82,20 +79,43 @@ export const StInfo = styled.div`
   font-size: 10px;
 `;
 
-export const StInfoArea = styled.div`
-  width: 180px;
-  height: 130px;
+export const LeftBlock = styled.div`
+  height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export const StInfoBlock = styled.div`
+export const StInfoArea = styled.div`
+  width: 210px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+  box-sizing: border-box;
+`;
+
+export const NameBirthArea = styled.div`
+  width: 100%;
+  height: 80px;
+
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 15px 0;
+`;
+
+export const StInfoBlock = styled.div<PhoneNum>`
   width: 100%;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: ${({ types }) => (types ? '19px' : '28px')};
 `;
 
 export const StProfileModifyInput = styled.input`
@@ -104,25 +124,19 @@ export const StProfileModifyInput = styled.input`
   display: none;
 `;
 
-export const StImgEditButton = styled.div`
-  background-color: white;
-  width: 25px;
+export const StImgEditButton = styled.button`
+  background-color: #d9d9d9;
+  width: 150px;
   height: 25px;
 
-  border: 2px solid black;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 17px;
+  border: none;
+  font-size: 11px;
+  color: #484240;
 
   cursor: pointer;
 
   position: absolute;
-  right: -5px;
-  bottom: -5px;
+  bottom: 0;
 `;
 
 export const AlertDiv = styled.div`
