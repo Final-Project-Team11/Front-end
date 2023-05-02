@@ -10,7 +10,7 @@ export interface ButtonProps {
     | 'valid'
     | 'submit'
     | 'cUser'
-    | 'cUserSubmit';
+    | 'blackBackground';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
