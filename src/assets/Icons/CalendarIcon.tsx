@@ -16,7 +16,7 @@ const CalendarIcon = ({ usage }: Props) => {
       <g
         fill={
           usage === 'title'
-            ? COLOR.PAGE_BLUE
+            ? COLOR.PAGE_LIGHTBLUE
             : usage === 'insideTrue'
             ? 'black'
             : COLOR.PAGE_DONE
