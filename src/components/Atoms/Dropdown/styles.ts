@@ -57,9 +57,8 @@ export const StLi = styled.li<interfaces.CssProps>`
 
 export const StUlBlock = styled.ul<UlStyleProps>`
   position: absolute;
-  z-index: 100;
+  z-index: 2000;
   background-color: white;
-  /* border: 1px solid black; */
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   border-top: none;
   ${({ pos }) =>
