@@ -14,19 +14,7 @@ const TodoBox = ({ todo }: { todo: Todo }) => {
 
   // 삭제버튼 클릭 시 더블체크
   const deleteBtnHandler = (): void => {
-    Swal.fire({
-      title: 'todo를 삭제하시겠어요?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: COLOR.VACATION_RED,
-      cancelButtonColor: COLOR.PAGE_BLUE,
-      confirmButtonText: '삭제할래요!',
-      cancelButtonText: '아니요, 삭제 안할래요!',
-    }).then(result => {
-      if (result.isConfirmed) {
-        deleteFeed({ type: 'todo', id: todo.todoId });
-      }
-    });
+    deleteFeed({ type: 'todo', id: todo.todoId });
   };
 
   const { checkTodo } = useCheckTodo();
@@ -45,7 +33,8 @@ const TodoBox = ({ todo }: { todo: Todo }) => {
       confirmButtonColor: COLOR.PAGE_BLUE,
       cancelButtonColor: COLOR.VACATION_RED,
       confirmButtonText: '입력한 내용으로 바꿀래요.',
-      cancelButtonText: '아니요, 안바꿀래요.',
+      cancelButtonText: '아니요.',
+      reverseButtons: true,
     });
 
     if (inputValue) {

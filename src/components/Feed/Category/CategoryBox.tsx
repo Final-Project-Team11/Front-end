@@ -53,13 +53,27 @@ const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const deleteBtnHandler = () => {
     Swal.fire({
       title: '카테고리를 삭제하시겠어요?',
-      text: '하위 카테고리도 삭제됩니다.',
+      text: '하위 todo도 삭제됩니다.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: COLOR.VACATION_RED,
-      cancelButtonColor: COLOR.PAGE_BLUE,
-      confirmButtonText: '삭제할래요!',
-      cancelButtonText: '아니요, 삭제 안할래요!',
+      confirmButtonColor: 'black',
+      cancelButtonColor: 'gray',
+      confirmButtonText: '네.',
+      cancelButtonText: '아니요.',
+      reverseButtons: true,
+      customClass: {
+        title: 'sweet-alert-title',
+        htmlContainer: 'sweet-alert-html-container',
+      },
+      didOpen: () => {
+        const titleSpan = document.querySelector('.sweet-alert-title');
+        const textSpan = document.querySelector('.sweet-alert-html-container');
+        if (titleSpan && textSpan) {
+          (titleSpan as HTMLElement).style.fontSize = '18px';
+          (titleSpan as HTMLElement).style.fontWeight = 'bold';
+          (textSpan as HTMLElement).style.color = 'gray';
+        }
+      },
     }).then(result => {
       if (result.isConfirmed) {
         deleteFeed({ type: 'category', id: categoryId });
