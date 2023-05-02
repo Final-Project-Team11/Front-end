@@ -41,7 +41,6 @@ function Header(props: HeaderProps) {
     }
   };
 
-
   const closeModal = () => {
     setOpen(false);
   };

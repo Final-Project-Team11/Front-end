@@ -101,5 +101,5 @@ export const StButton = styled.button.attrs<ButtonProps>(props => ({
   style: { ...buttonTypes[props.buttonType], ...props.style },
 }))<ButtonProps>`
   box-sizing: border-box;
-  cursor: 'pointer';
+  cursor: pointer;
 `;
