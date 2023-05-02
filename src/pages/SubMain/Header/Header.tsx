@@ -17,6 +17,7 @@ import Modal from '../../../components/Atoms/Modal/CustomModal';
 import { recoilSelectedDateState } from '../../../states/recoilSelectedDateState';
 import Swal from 'sweetalert2';
 import { removeCookie } from '../../../api/auth/CookieUtils';
+import TodayMoveIcon from '../../../assets/Icons/TodayMoveIcon';
 
 function Header(props: HeaderProps) {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ function Header(props: HeaderProps) {
   const [open, setOpen] = useRecoilState(recoilReportState);
   const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
-
   const CardClickHandler = () => {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
@@ -76,6 +76,16 @@ function Header(props: HeaderProps) {
     });
   };
 
+  const today = new Date();
+  const selectedMonth = selectedDate
+    .toString()
+    .split('-')
+    .splice(1, 2)
+    .join('')
+    .padStart(2, '0');
+
+  const selectedYear = selectedDate.toString().split('-').splice(0, 1);
+
   return (
     <styles.StWrap>
       <styles.StCardBlock onClick={CardClickHandler}>
@@ -84,7 +94,7 @@ function Header(props: HeaderProps) {
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
           <styles.StYearBlock>
-            <span>{selectedDate.toString().split('-').splice(0, 1)}</span>
+            <span>{selectedYear}</span>
           </styles.StYearBlock>
           <styles.StMonthBlock>
             <styles.StButton
@@ -95,10 +105,7 @@ function Header(props: HeaderProps) {
             >
               {'<'}
             </styles.StButton>
-
-            <styles.StMonth>
-              {selectedDate.toString().split('-').splice(1, 2).join('').padStart(2, '0')}
-            </styles.StMonth>
+            <styles.StMonth>{selectedMonth}</styles.StMonth>
             <styles.StButton
               type="button"
               data-action="move-next"
@@ -108,30 +115,25 @@ function Header(props: HeaderProps) {
               {'>'}
             </styles.StButton>
           </styles.StMonthBlock>
+          {today.getMonth() + 1 !== Number(selectedMonth) && (
+            <styles.StButtonIconBlock>
+              <styles.StTodayButton
+                type="button"
+                data-action="move-today"
+                onClick={props.onClickNavi}
+              ></styles.StTodayButton>
+              <TodayMoveIcon tab={tab} />
+            </styles.StButtonIconBlock>
+          )}
         </styles.StDateBlock>
-
-        <styles.StColorList>
-          <styles.StTabBlock
-            onClick={() => {
-              setTab(!tab);
-            }}
-          >
-            {tab === false ? <ChangeSchedule /> : <ChangeVacation />}
-          </styles.StTabBlock>
-          {props?.initialCalendars?.map(item => {
-            return (
-              <styles.StColorContainer key={nanoid()}>
-                <styles.StColorNameBlock>{item.name}</styles.StColorNameBlock>
-                <styles.StColorBlock backgroundColor={item.backgroundColor} />
-              </styles.StColorContainer>
-            );
-          })}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+          }}
+        >
           <styles.StTeamBlock>
-            {token && (
-              <styles.StLogout onClick={logOutClickHandler}>logout</styles.StLogout>
-            )}
-
-            {tab === false ? (
+            {tab === false && (
               <Dropdown
                 size="small"
                 items={reports}
@@ -140,7 +142,7 @@ function Header(props: HeaderProps) {
                   currentTab.current = value;
                 }}
                 style={{
-                  width: '110px',
+                  width: '90px',
                   height: '30px',
                   boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
                   fontSize: '11px',
@@ -153,11 +155,31 @@ function Header(props: HeaderProps) {
               >
                 보고서
               </Dropdown>
-            ) : (
-              <styles.StNoneBlock />
             )}
           </styles.StTeamBlock>
-        </styles.StColorList>
+          <styles.StColorList>
+            {props?.initialCalendars?.map(item => {
+              return (
+                <styles.StColorContainer key={nanoid()}>
+                  <styles.StColorNameBlock>{item.name}</styles.StColorNameBlock>
+                  <styles.StColorBlock backgroundColor={item.backgroundColor} />
+                </styles.StColorContainer>
+              );
+            })}
+          </styles.StColorList>
+          <div style={{ position: 'relative' }}>
+            <styles.StTabBlock
+              onClick={() => {
+                setTab(!tab);
+              }}
+            >
+              {tab === false ? <ChangeVacation /> : <ChangeSchedule />}
+            </styles.StTabBlock>
+            {token && (
+              <styles.StLogout onClick={logOutClickHandler}>로그아웃</styles.StLogout>
+            )}
+          </div>
+        </div>
       </styles.StContainer>
       {open && (
         <Modal closeModal={closeModal}>
@@ -168,4 +190,8 @@ function Header(props: HeaderProps) {
   );
 }
 
-export default React.memo(Header);
+export default Header;
+
+// {token && (
+//   <styles.StLogout onClick={logOutClickHandler}>logout</styles.StLogout>
+// )}
