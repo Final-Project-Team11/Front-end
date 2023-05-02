@@ -28,4 +28,7 @@ export const COLOR = {
   POINT_C: '#E64042',
   SUB: '#BADAFF',
   SUB1: '#8AB2E0',
+  GRAY1: '#DDDDDD',
+  GRAY2: '#A1A1A1',
+  LIGHTGRAY: '#F6F6F6',
 };
