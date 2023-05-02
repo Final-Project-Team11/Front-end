@@ -5,6 +5,10 @@ interface CardStyleProps {
   tab?: boolean;
 }
 
+interface TextStyle {
+  bolder?: 'bolder';
+}
+
 export const StCardBlock = styled.div<CardStyleProps>`
   ${({ tab }) =>
     tab === false
@@ -45,27 +49,29 @@ export const StInfoBlock = styled.div`
   gap: 18px;
 `;
 
-export const StTeamNameH1 = styled.h1`
-  font-size: 15px;
-  font-weight: bold;
-`;
-
 export const StDateBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
 `;
 
-export const StInfoSpan = styled.span`
+export const StInfoSpan = styled.span<TextStyle>`
   font-size: 15px;
+  font-weight: ${({ bolder }) => (bolder ? bolder : null)};
+`;
+
+export const RightBlock = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 export const StProfileImg = styled.div`
   background-color: white;
   width: 55px;
   height: 55px;
-
-  margin-bottom: 20px;
 
   overflow: hidden;
 
@@ -80,4 +86,15 @@ export const StProfileImg = styled.div`
     height: 100%;
     object-fit: cover;
   }
+`;
+
+export const NavButton = styled.button`
+  width: 65px;
+  height: 16px;
+  background: white;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0px 4px 4px 0 rgba(152, 185, 223, 1);
+  font-size: 10px;
+  color: #335985;
 `;

@@ -1,5 +1,6 @@
 export interface CardProps {
   tab?: boolean;
+  location: 'main' | 'mypage';
 }
 
 export interface CardInfoType {
@@ -25,3 +26,5 @@ export interface CardDetailProps {
   closeModal: () => void;
   decodedToken: DecodedToken;
 }
+
+export type NavButton = (event: React.MouseEvent) => void;
