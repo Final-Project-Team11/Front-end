@@ -79,7 +79,7 @@ function Header(props: HeaderProps) {
   return (
     <styles.StWrap>
       <styles.StCardBlock onClick={CardClickHandler}>
-        <Card tab={tab} />
+        <Card tab={tab} location="main" />
       </styles.StCardBlock>
       <styles.StContainer tab={tab}>
         <styles.StDateBlock tab={tab}>
