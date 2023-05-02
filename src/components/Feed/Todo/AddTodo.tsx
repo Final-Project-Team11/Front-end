@@ -3,6 +3,8 @@ import * as UI from './style';
 import { StCircleBlock } from './style';
 import { AddTodoProps, SentTodo } from '../interfaces';
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
+import Swal from 'sweetalert2';
+import { COLOR } from '../../../styles/colors';
 
 const AddTodo = ({
   value,
@@ -40,8 +42,29 @@ const AddTodo = ({
   };
   // 인풋에서 포커스 사라지면 input 닫힘
   const blurHandler = () => {
-    setValue('');
-    inputHandler(false);
+    if (value) {
+      Swal.fire({
+        title: '투두 작성을 취소하시겠어요?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: COLOR.VACATION_RED,
+        cancelButtonColor: COLOR.PAGE_BLUE,
+        confirmButtonText: '취소할래요!',
+        cancelButtonText: '아니요, 저장할 거에요!',
+      }).then(result => {
+        if (result.isConfirmed) {
+          setValue('');
+          inputHandler(false);
+        } else {
+          postTodo(todo);
+          setValue('');
+          inputHandler(false);
+        }
+      });
+    } else {
+      setValue('');
+      inputHandler(false);
+    }
   };
 
   return (

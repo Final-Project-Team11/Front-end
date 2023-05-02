@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import * as UI from './style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
@@ -9,6 +9,8 @@ import { BsX } from '@react-icons/all-files/bs/BsX';
 import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
+import Swal from 'sweetalert2';
+import { COLOR } from '../../../styles/colors';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
@@ -45,8 +47,22 @@ const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
 
   const { deleteFeed } = useDeleteFeed();
 
+  // 삭제버튼 클릭 시 더블체크
   const deleteBtnHandler = () => {
-    deleteFeed({ type: 'category', id: categoryId });
+    Swal.fire({
+      title: '카테고리를 삭제하시겠어요?',
+      text: '하위 카테고리도 삭제됩니다.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: COLOR.VACATION_RED,
+      cancelButtonColor: COLOR.PAGE_BLUE,
+      confirmButtonText: '삭제할래요!',
+      cancelButtonText: '아니요, 삭제 안할래요!',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteFeed({ type: 'category', id: categoryId });
+      }
+    });
   };
 
   return (
