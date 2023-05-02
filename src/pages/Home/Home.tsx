@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { getCookie } from '../../api/auth/CookieUtils';
 import HeaderLogo from '../../assets/Icons/HeaderLogo';
+import Wrapper_Column from '../../components/Atoms/Wrapper_Column/Wrapper_Column';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,12 +24,13 @@ const Home = () => {
 
   return (
     <StBlock>
-      <Header style={{ background: 'white' }}>
-        <HeaderLogo />
-
+      <Header>
+        <Wrapper_Column>
+          <HeaderLogo />
+          <StSpan>Meer : 캣린더</StSpan>
+        </Wrapper_Column>
         <StButton onClick={() => navigate(`/login`)}>시작하기</StButton>
       </Header>
-
       <StImg src={main1} />
       <StImg src={main2} />
       <StImg src={main3} />
@@ -47,6 +49,8 @@ const StBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  padding-bottom: 80px;
 `;
 
 const StImg = styled.img`
@@ -54,26 +58,39 @@ const StImg = styled.img`
 `;
 
 const Header = styled.div`
-  height: fit-content;
+  width: 100%;
+  height: 100px;
   display: flex;
-  gap: 33px;
+  flex-direction: row;
+  justify-content: flex-end;
+
   position: fixed;
   right: 0;
   top: 0;
   padding: 20px;
+  gap: 30px;
+
   box-sizing: border-box;
   align-items: center;
   background: transparent;
+
   z-index: 100;
 `;
 
 const StButton = styled.button`
   width: 120px;
-  height: 60px;
+  height: 50px;
   border-radius: 45px;
   background-color: #e64042;
   border: none;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   color: white;
+`;
+
+const StSpan = styled.span`
+  color: #5982b2;
+  font-size: 8px;
+  font-weight: bold;
+  margin-top: -2px;
 `;

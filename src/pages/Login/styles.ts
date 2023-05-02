@@ -1,15 +1,13 @@
 import styled from 'styled-components';
+import { COLOR } from '../../styles/colors';
 
 export const StBlock = styled.div`
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-`;
-
-export const StSpan = styled.span`
-  font-size: 12px;
 `;
 
 export const StSignupSpan = styled.span`
@@ -38,25 +36,33 @@ export const TextWrapper = styled.div`
   margin: 45px 0 13px 0;
 `;
 
-export const TabButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  margin-bottom: 50px;
-  gap: 80px;
-`;
-
 interface TapButtonProps {
   isSelected: boolean;
 }
 
 export const TabButton = styled.div<TapButtonProps>`
-  font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};
-  font-size: 20px;
+  width: 200px;
+  height: 43px;
+  background: ${({ isSelected }) =>
+    isSelected ? `${COLOR.POINT_C}` : `${COLOR.LIGHTGRAY}`};
+  font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'lighter')};
+  font-size: ${({ isSelected }) => (isSelected ? '18px' : '15px')};
+  color: ${({ isSelected }) => (isSelected ? '#fff' : `${COLOR.GRAY1}`)};
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const StH1 = styled.h1`
+  font-size: 30px;
+  font-weight: bolder;
+  color: ${COLOR.POINT_C};
+  margin-bottom: 15px;
+`;
+
+export const StSpan = styled.span`
+  font-size: 15px;
+  color: ${COLOR.GRAY2};
 `;
