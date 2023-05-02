@@ -3,13 +3,21 @@ export interface CardProps {
   location: 'main' | 'mypage';
 }
 
-export interface CardInfoType {
+export interface CardDetailInfo {
   userId: string;
   userName: string;
   profileImg: string;
   birthDay: string;
   phoneNum: string;
   joinDay: string;
+}
+
+export interface CardInfo {
+  userName: string;
+  team: string;
+  salaryDay: number;
+  remainDay: number;
+  profileImg: string;
 }
 
 export interface DecodedToken {

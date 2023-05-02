@@ -40,8 +40,14 @@ const AddTodo = ({
   };
   // 인풋에서 포커스 사라지면 input 닫힘
   const blurHandler = () => {
-    setValue('');
-    inputHandler(false);
+    if (value) {
+      postTodo(todo);
+      setValue('');
+      inputHandler(false);
+    } else {
+      setValue('');
+      inputHandler(false);
+    }
   };
 
   return (

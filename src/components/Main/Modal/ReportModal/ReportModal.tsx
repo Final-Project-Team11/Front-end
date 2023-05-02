@@ -75,9 +75,14 @@ const ReportModal = (value: ReportModalProps) => {
   };
 
   const submitHandler = (item: ReportInfo) => {
+    const currentTab = value.value as number;
+
+    const titleName =
+      currentTab === 0 ? '보고서' : currentTab === 1 ? '회의록' : '결제요청서';
+
     Swal.fire({
-      title: '일정을 추가하시겠습니까?',
-      text: '일정을 다시한번 확인해 주세요.',
+      title: `${titleName}을 추가하시겠습니까?`,
+      text: `${titleName}을 다시한번 확인해 주세요.`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: '네,추가하겠습니다!',
@@ -94,7 +99,6 @@ const ReportModal = (value: ReportModalProps) => {
           fileList: FormFiles,
         };
 
-        const currentTab = value.value as number;
         switch (currentTab) {
           case 0:
             reportMutation.mutate(payload, {

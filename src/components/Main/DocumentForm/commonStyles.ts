@@ -43,7 +43,11 @@ const StButtonBlock = styled.div`
   gap: 30px;
 `;
 
-const StTextArea = styled.textarea`
+interface BodyProps {
+  isValid?: boolean;
+}
+
+const StTextArea = styled.textarea<BodyProps>`
   width: 100%;
   border: none;
   height: 100%;
@@ -54,6 +58,14 @@ const StTextArea = styled.textarea`
   &:disabled {
     background: none;
   }
+
+  ${({ isValid }) =>
+    isValid === false &&
+    css`
+      &::placeholder {
+        color: red;
+      }
+    `}
 `;
 
 const StInput = styled.input`
@@ -72,7 +84,10 @@ const StUserName = styled.div`
   width: 71px;
 `;
 
-const StTitleInput = styled.input`
+interface TitleProps {
+  isValid?: boolean;
+}
+const StTitleInput = styled.input<TitleProps>`
   border: none;
   font-size: 20px;
   width: 300px;
@@ -81,6 +96,14 @@ const StTitleInput = styled.input`
   &:disabled {
     background: none;
   }
+
+  ${({ isValid }) =>
+    isValid === false &&
+    css`
+      &::placeholder {
+        color: red;
+      }
+    `}
 `;
 
 interface CalendarTypeProps {
@@ -100,7 +123,7 @@ const StMarkNameBlcok = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const StPeriodBlock = styled.div`
@@ -122,7 +145,7 @@ const StTextAreaBlock = styled.div<ZoomClickProps>`
           overflow: hidden scroll;
         `
       : css`
-          height: 170px;
+          height: 200px;
           overflow: hidden;
         `}
 `;
@@ -131,7 +154,7 @@ const StFileBlock = styled.div`
   display: flex;
   margin-left: 8px;
   align-items: center;
-  padding: 27px 0;
+  padding: 10px 0;
   gap: 10px;
   margin-left: 18px;
 `;
@@ -162,11 +185,13 @@ const StReturnBlcok = styled.div`
 const StOpenBlock = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   border-top: 1px solid rgba(237, 237, 237, 0.7);
   border-bottom: 1px solid rgba(237, 237, 237, 0.7);
   margin-left: 18px;
-  padding: 10px 0;
+  padding: 5px 0;
+  color: #a1a1a1;
 `;
 
 const StOpenButton = styled.div`

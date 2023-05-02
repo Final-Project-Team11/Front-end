@@ -4,7 +4,7 @@ import { PageData, useMentionedSchedules } from '../../api/hooks/Tag/useGetTag';
 import { Mention } from './interfaces';
 import { TagBlockCssProps } from './interfaces';
 import Board from '../Board';
-import CalendarIcon from '../../assets/Icons/CalendarIcon';
+import TagIconTitle from '../../assets/Icons/TagIconTitle';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
 
 const Tag = ({ types }: TagBlockCssProps) => {
@@ -21,7 +21,7 @@ const Tag = ({ types }: TagBlockCssProps) => {
   const tags = data ? data.pages.flatMap(page => page.mention) : [];
 
   // Board title에 들어갈 icon
-  const icon = <CalendarIcon usage="title" />;
+  const icon = <TagIconTitle />;
 
   return (
     <Board icon={icon} title="tag" types={types} targetDiv={targetDiv}>

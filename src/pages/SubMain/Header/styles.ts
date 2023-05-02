@@ -8,15 +8,16 @@ interface StyleProps {
 
 const StWrap = styled.div`
   display: flex;
+  width: 1200px;
 `;
 
 const StCardBlock = styled.div<StyleProps>`
   opacity: 1;
-  cursor: pointer;
   &:hover {
     opacity: 0.8;
   }
 `;
+
 const StContainer = styled.div<StyleProps>`
   width: 100%;
   border-bottom: 2px solid
@@ -53,16 +54,16 @@ const StMonthBlock = styled.div`
 `;
 
 const StMonth = styled.div`
+  text-align: center;
   width: 100px;
-  display: 'flex';
-  justify-content: ceneter;
 `;
 
 const StColorList = styled.div`
   display: flex;
   align-items: flex-end;
-  gap: 28px;
-  padding-bottom: 17px;
+  margin-bottom: 17px;
+  margin-right: 12px;
+  gap: 10px;
 `;
 
 const StColorContainer = styled.div`
@@ -71,6 +72,7 @@ const StColorContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+  width: 28px;
 `;
 
 interface ColorBlockProps {
@@ -86,7 +88,7 @@ const StColorBlock = styled.div<ColorBlockProps>`
 `;
 
 const StColorNameBlock = styled.div`
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
 `;
 
@@ -100,29 +102,40 @@ const StNoneBlock = styled.div`
 `;
 
 const StTeamBlock = styled.div`
-  margin-left: 43px;
-`;
-
-const jump = keyframes`
-0% {
-    transform: translateY(0);
-}
-50%{
-  transform: translateY(-20px) scale(2);
-
-}
-100%{
-  transform: translateY(0);
-}
+  width: 130px;
+  height: 30px;
+  margin-bottom: 17px;
+  display: flex;
+  justify-content: center;
 `;
 
 const StTabBlock = styled.div`
   margin-bottom: -10px;
   animation: slide 2s ease-out;
+
   cursor: pointer;
-  &:hover {
-    animation: ${jump} 1s ease-out infinite;
-  }
+`;
+
+const StTodayButton = styled.button`
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  width: 30px;
+  height: 40px;
+  margin-bottom: -15px;
+  position: absolute;
+  z-index: 200;
+`;
+
+const StButtonIconBlock = styled.div`
+  position: relative;
+  width: 30px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -10px;
 `;
 
 const StButton = styled.button<StyleProps>`
@@ -137,25 +150,26 @@ const StButton = styled.button<StyleProps>`
   }
 
   width: 20px;
-`;
-
-const StLogout = styled.div`
-  width: 110px;
-  height: 30px;
-  box-shadow: 0 4px 4px rgba(201, 201, 201, 0.25);
-  font-size: 12px;
-  border: none;
-  background: #eaeaea;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+`;
 
+const StLogout = styled.div`
+  font-size: 12px;
+  border: none;
+  background: transparent;
+  text-align: center;
   cursor: pointer;
+  width: 50px;
+  color: #dddddd;
 
   &:hover {
-    background-color: rgba(242, 61, 61, 0.5);
+    color: #b3b3b3;
   }
+  position: absolute;
+  top: -40px;
+  left: 1px;
 `;
 
 export {
@@ -175,4 +189,6 @@ export {
   StNoneBlock,
   StLogout,
   StMonth,
+  StTodayButton,
+  StButtonIconBlock,
 };
