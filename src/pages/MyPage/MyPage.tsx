@@ -13,7 +13,7 @@ const MyPage = () => {
     <UI.Frame>
       <UI.Wrapper>
         <UI.Header>
-          <Card />
+          <Card location="mypage" />
           <OneWeekCalendar />
         </UI.Header>
         <UI.MainArea>

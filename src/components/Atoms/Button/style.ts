@@ -33,7 +33,6 @@ const buttonTypes: ButtonType = {
     color: 'black',
     borderRadius: '5px',
     border: 'none',
-
     cursor: 'pointer',
   },
   ModalButton: {
@@ -86,6 +85,14 @@ const buttonTypes: ButtonType = {
     borderRadius: '7px',
     padding: '15px',
     background: `${COLOR.FONT_COLOR}`,
+  },
+  cardDetail: {
+    width: 'fit-content',
+    height: 'fit-content',
+    background: 'transparent',
+    fontSize: '25px',
+    border: 'none',
+    color: 'gray',
   },
 };
 

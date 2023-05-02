@@ -1,60 +1,58 @@
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 
+interface FontStyle {
+  color?: 'gray';
+  weight?: 'bolder';
+  size?: string;
+  left?: string;
+}
+
+interface DotProps {
+  validation: boolean;
+}
+
 export const StCardDetailBlock = styled.div`
-  width: 500px;
-  height: 600px;
+  width: 450px;
+  height: 330px;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
-  padding: 20px;
+  padding: 50px 40px;
   box-sizing: border-box;
+
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 `;
 
-export const StTopBlock = styled.div`
+export const TopBlock = styled.div`
   width: 100%;
-  height: 35%;
+  height: 70%;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const BottomBlock = styled.div`
+  width: 100%;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const StTopRightBlock = styled.div`
-  width: 45%;
-  height: 100%;
+export const StProfileImg = styled.div`
+  width: 130px;
+  height: 130px;
+
+  border: 1px solid ${COLOR.PAGE_BLUE};
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-export const StTopLeftBlock = styled.div`
-  width: 45%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   position: relative;
-`;
-
-export const StProfileImg = styled.div`
-  width: 150px;
-  height: 150px;
-
-  border: 2px solid ${COLOR.PAGE_BLUE};
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
-
   img {
     width: 100%;
     height: 100%;
@@ -62,57 +60,48 @@ export const StProfileImg = styled.div`
   }
 `;
 
-export const StProfileModifyInput = styled.input`
-  width: 150px;
-  height: 30px;
-  display: none;
+export const StInfoTitleSpan = styled.span<FontStyle>`
+  font-size: ${({ size }) => (size ? size : '11px')};
+  font-weight: ${({ weight }) => (weight ? weight : null)};
+  color: ${({ color }) => (color ? 'gray' : null)};
+
+  margin-left: ${({ left }) => (left ? left : 'auto')};
 `;
 
-export const StMiddleBlock = styled.div`
-  width: 100%;
-  height: 40%;
+export const StInfo = styled.div`
+  width: 130px;
+  height: 32px;
 
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-left: 5px;
+  box-sizing: border-box;
+
+  font-size: 10px;
+`;
+
+export const StInfoArea = styled.div`
+  width: 180px;
+  height: 130px;
+  display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
 `;
 
 export const StInfoBlock = styled.div`
   width: 100%;
-  height: 30%;
-
-  font-size: 30px;
-  font-weight: bolder;
-
-  padding: 0 30px;
-  box-sizing: border-box;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const StInfoType = styled.div`
-  width: 40%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  font-size: 30px;
-  font-weight: bolder;
-`;
-
-export const StBottomBlock = styled.div`
-  width: 100%;
-  height: 25%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-export const StInfoSpan = styled.span`
-  font-size: 30px;
-  font-weight: bolder;
+export const StProfileModifyInput = styled.input`
+  width: 150px;
+  height: 30px;
+  display: none;
 `;
 
 export const StImgEditButton = styled.div`
@@ -127,26 +116,46 @@ export const StImgEditButton = styled.div`
   justify-content: center;
   align-items: center;
 
+  font-size: 17px;
+
   cursor: pointer;
 
   position: absolute;
-  right: 32px;
-  bottom: 30px;
+  right: -5px;
+  bottom: -5px;
 `;
 
-export const StModifyInput = styled.input`
-  width: 200px;
+export const AlertDiv = styled.div`
+  .swal-custom-title {
+    font-size: 18px;
+  }
+  .swal-custom-text {
+    font-size: 10px;
+  }
 `;
 
-export const StInputLabel = styled.label`
-  width: 200px;
-  font-size: 10px;
-  color: ${COLOR.PAGE_DONE};
+export const InputBlock = styled.div`
+  position: relative;
 `;
 
-export const StCloseBlock = styled.div`
-  width: fit-content;
-  height: fit-content;
-  font-size: 30px;
-  cursor: pointer;
+export const BirthDot = styled.div<DotProps>`
+  background-color: ${({ validation }) => (validation ? 'green' : 'red')};
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  position: absolute;
+  right: 7px;
+  top: 12px;
+`;
+
+export const PhoneNumhDot = styled.div<DotProps>`
+  background-color: ${({ validation }) => (validation ? 'green' : 'red')};
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  position: absolute;
+  right: 7px;
+  top: 12px;
 `;

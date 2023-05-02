@@ -10,7 +10,8 @@ export interface ButtonProps {
     | 'valid'
     | 'submit'
     | 'cUser'
-    | 'cUserSubmit';
+    | 'cUserSubmit'
+    | 'cardDetail';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
