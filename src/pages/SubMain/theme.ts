@@ -20,7 +20,7 @@ export const theme: Options['theme'] = {
       borderLeft: 'none',
       backgroundColor: 'inherit',
     },
-    holidayExceptThisMonth: { color: '#f3acac' },
+    holidayExceptThisMonth: { color: '#bbb' },
     dayExceptThisMonth: { color: '#bbb' },
     // weekend: { backgroundColor: '#fafafa' },
     weekend: { backgroundColor: 'inherit' },

@@ -3,7 +3,7 @@ import React from 'react';
 const HeaderLogo = () => {
   return (
     <svg width="59" height="51" viewBox="0 0 59 51" fill="none">
-      <g clip-path="url(#clip0_1217_832)">
+      <g clipPath="url(#clip0_1217_832)">
         <path
           d="M5.67677 20.5676L5.61914 20.7981L5.67677 20.7477C5.69838 20.6901 5.71279 20.546 5.67677 20.5676Z"
           fill="#8AB2E0"

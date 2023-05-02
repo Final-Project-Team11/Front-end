@@ -13,6 +13,8 @@ interface FileUploadProps {
       fileName?: string;
     }
   ];
+
+  id?: number | string;
 }
 
 interface fileType {
@@ -48,7 +50,7 @@ const FileUpload = (props: FileUploadProps) => {
     } else {
       setFileList([]);
     }
-  }, [props.files]);
+  }, [props.id]);
 
   return (
     <styles.StContainer>

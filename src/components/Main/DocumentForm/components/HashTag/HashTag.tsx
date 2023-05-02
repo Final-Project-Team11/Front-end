@@ -24,12 +24,15 @@ const HashTag = (props: HashTagProps) => {
     width: 0,
   });
   const inputRef = useRef<HTMLInputElement>(null);
+  const ulRef = useRef<HTMLUListElement>(null);
   const mouseDownHandler = () => {
     setMouseClick(!mouseClick);
   };
 
   useEffect(() => {
     const { current } = inputRef;
+    const ulCurrent = ulRef.current;
+
     if (current !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
@@ -38,8 +41,14 @@ const HashTag = (props: HashTagProps) => {
           absoluteTop + data.length * 20 >
           screen.height - (document.body.clientHeight - absoluteTop) / 2
         ) {
-          const newTop = absoluteTop - (data.length * 49 - height);
-          setInputPosition({ top: newTop, left, height, width });
+          if (ulCurrent !== null) {
+            const ulHeight = ulCurrent.getBoundingClientRect().height;
+            const newTop = absoluteTop - ((data.length + 1) * ulHeight - height);
+            setInputPosition({ top: newTop, left, height, width });
+          } else {
+            const newTop = absoluteTop - ((data.length + 1) * 50 - height);
+            setInputPosition({ top: newTop, left, height, width });
+          }
         } else {
           setInputPosition({ top: absoluteTop, left, height, width });
         }
@@ -135,7 +144,7 @@ const HashTag = (props: HashTagProps) => {
       {props.disable === false &&
         mouseClick &&
         createPortal(
-          <styles.StUlBlock pos={inputPosition}>
+          <styles.StUlBlock ref={ulRef} pos={inputPosition}>
             <styles.StTeamMark>Team A :</styles.StTeamMark>
             {data?.map(item => {
               return (

@@ -158,40 +158,6 @@ const VacationFormat = ({
           </styles.StReturnBlcok>
         </styles.StButtonBlock>
       </styles.StTitleBlock>
-      <styles.StContentBlock>
-        <styles.StMarkNameBlcok>
-          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-          <styles.StTitleInput
-            placeholder="장소 입력란"
-            value={location}
-            onChange={locationHandler}
-            disabled={disable}
-          />
-        </styles.StMarkNameBlcok>
-        <styles.StTextAreaBlock zoomClick={zoomClick} ref={element}>
-          <styles.StTextArea
-            placeholder="내용을 입력해주세요"
-            value={content}
-            onChange={contentHandler}
-            disabled={disable}
-          />
-        </styles.StTextAreaBlock>
-        <styles.StOpenBlock>
-          <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
-            {zoomClick === false ? (
-              <>
-                <MdZoomIn />
-                <span>전체화면</span>
-              </>
-            ) : (
-              <>
-                <MdZoomOut />
-                <span>축소</span>
-              </>
-            )}
-          </styles.StOpenButton>
-        </styles.StOpenBlock>
-      </styles.StContentBlock>
     </styles.StContainer>
   );
 };
