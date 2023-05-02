@@ -17,7 +17,6 @@ const buttonTypes: ButtonType = {
     borderRadius: '7px',
     backgroundColor: '#F6F6F6',
     border: 'none',
-    cursor: 'pointer',
   },
   signup: {
     width: '595px',
@@ -33,7 +32,6 @@ const buttonTypes: ButtonType = {
     color: 'black',
     borderRadius: '5px',
     border: 'none',
-    cursor: 'pointer',
   },
   ModalButton: {
     backgroundColor: 'transparent',
@@ -76,15 +74,17 @@ const buttonTypes: ButtonType = {
     border: '1px solid black',
     background: 'none',
   },
-  cUserSubmit: {
+  blackBackground: {
     width: '215px',
     height: '50px',
+    padding: '15px',
+
     fontSize: '15px',
     color: '#fff',
     fontWeight: 'bolder',
-    borderRadius: '7px',
-    padding: '15px',
+
     background: `${COLOR.FONT_COLOR}`,
+    borderRadius: '7px',
   },
   cardDetail: {
     width: 'fit-content',
@@ -97,7 +97,8 @@ const buttonTypes: ButtonType = {
 };
 
 export const StButton = styled.button.attrs<ButtonProps>(props => ({
-  style: buttonTypes[props.buttonType],
+  style: { ...buttonTypes[props.buttonType], ...props.style },
 }))<ButtonProps>`
   box-sizing: border-box;
+  cursor: 'pointer';
 `;

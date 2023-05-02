@@ -6,10 +6,13 @@ import Swal from 'sweetalert2';
 export const useUserIdValidation = () => {
   const [userIdValidation, setUserIdValidation] = React.useState<boolean>(false);
 
-  // 알파벳 소, 대문자,숫자로 이루어진 5자 이상
+  // 영문과 숫자의 조합으로 5자 이상
   const validUserId = (userId: string) => {
-    const isValid = /^[a-zA-Z0-9]{5,}$/.test(userId);
-    setUserIdValidation(isValid);
+    return new Promise(resolve => {
+      const isValid = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,}$/.test(userId);
+      setUserIdValidation(isValid);
+      resolve(isValid);
+    });
   };
 
   const checkUserId = useMutation(

@@ -13,13 +13,7 @@ export interface Users {
   authLevel: number;
 }
 
-interface Test {
-  //   data: AxiosResponse | undefined;
-  data: Users[];
-  isLoading: boolean;
-}
-
-export const useGetUser = (): Test => {
+export const useGetUser = () => {
   const { data, isLoading } = useQuery({
     queryKey: [keys.GET_USER_LIST],
     queryFn: async () => {

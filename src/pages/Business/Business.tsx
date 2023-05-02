@@ -42,40 +42,12 @@ const Business = () => {
     job: '',
   });
 
-  const { patchUser } = usePatchUser();
-
-  // const patchUserHandler = () => {
-  //   closeModal();
-
-  //   Swal.fire({
-  //     title: '유저 정보를 수정 하시겠습니까?',
-  //     text: '수정된 정보는 되돌릴 수 없습니다.',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: '수정',
-  //   }).then(result => {
-  //     if (result.isConfirmed) {
-  //       Swal.fire({ title: '정상적으로 수정 되었습니다.', icon: 'success' });
-  //       patchUser(selectedUser.userId, patchUserInfo);
-  //     } else {
-  //       setShowModal(true);
-  //     }
-  //   });
-  // };
-
   // 권한 드롭 다운 배열
 
   return (
     <Wrapper>
       {/* <------------------------------유저 조회------------------------------> */}
       <ViewUserArea>
-        <Wrapper_Row style={{ width: '730px', marginBottom: '60px' }}>
-          <StSpan>유저 조회</StSpan>
-          <StSpan style={{ margin: '0 91px 0 60px' }}>부서별 보기</StSpan>
-          <input type="search" />
-        </Wrapper_Row>
         <ViewUser />
       </ViewUserArea>
       <CreateUser />

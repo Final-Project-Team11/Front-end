@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import apis from '../../../api/axios/api';
+import Swal from 'sweetalert2';
 
 type UserSignupInfo = {
   userName: string;
@@ -20,10 +21,17 @@ export const useSignup = () => {
     },
     {
       onSuccess() {
-        alert('가입이 완료되었습니다.');
+        Swal.fire({
+          icon: 'success',
+          title: '가입이 완료 되었습니다',
+        });
       },
       onError() {
-        alert('가입에 실패하였습니다.');
+        Swal.fire({
+          icon: 'error',
+          title: '가입에 실패하였습니다.',
+          text: '입력 정보를 확인해주세요',
+        });
       },
     }
   );
