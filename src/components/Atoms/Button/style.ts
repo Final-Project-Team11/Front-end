@@ -87,12 +87,13 @@ const buttonTypes: ButtonType = {
     background: `${COLOR.FONT_COLOR}`,
   },
   cardDetail: {
-    width: 'fit-content',
-    height: 'fit-content',
-    background: 'transparent',
-    fontSize: '25px',
+    width: '90px',
+    height: '30px',
+    background: '#D9D9D9',
+    fontSize: '11px',
     border: 'none',
-    color: 'gray',
+    color: '#484240',
+    margin: 'auto 0 0 auto',
   },
 };
 

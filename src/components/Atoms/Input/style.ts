@@ -27,7 +27,6 @@ const inputTypes: InputTypes = {
   cardInfo: {
     width: '120px',
     height: '32px',
-    marginLeft: '10px',
     boxShadow: '0 4px 4px rgba(201, 201, 201, 0.25)',
     fontSize: '10px',
     border: 'none',
@@ -35,7 +34,6 @@ const inputTypes: InputTypes = {
     boxSizing: 'border-box',
     outline: 'none',
     borderRadius: '4px',
-    textAlign: 'center',
   },
   title: {
     width: '400px',
