@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as UI from './style';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
-import { Category } from '../interfaces';
+import { Category, PatchFeedPayload } from '../interfaces';
 import useInput from '../../../hooks/common/useInput';
 
 import { BsX } from '@react-icons/all-files/bs/BsX';
@@ -11,11 +11,13 @@ import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
+import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
   const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
   const tab = useRecoilValue(recoilTabState);
+  const { mutate } = usePatchFeed();
 
   // category 내부의 + 버튼 눌렀을 때의 function
   const TodoPlusHandler = () => {
@@ -65,10 +67,34 @@ const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
     });
   };
 
+  // 카테고리 수정기능
+  const ModifyCategory = async () => {
+    const { value: inputValue } = await Swal.fire({
+      title: '카테고리를 수정하시겠어요?',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonColor: COLOR.PAGE_BLUE,
+      cancelButtonColor: COLOR.VACATION_RED,
+      confirmButtonText: '입력한 내용으로 바꿀래요.',
+      cancelButtonText: '아니요, 안바꿀래요.',
+    });
+
+    if (inputValue) {
+      const payload: PatchFeedPayload = {
+        feed: 'category',
+        id: categoryId,
+        content: {
+          category: inputValue,
+        },
+      };
+      mutate(payload);
+    }
+  };
+
   return (
     <>
       <UI.StCategoryWrapper>
-        <UI.StCategoryTitleBlock tab={tab}>
+        <UI.StCategoryTitleBlock tab={tab} onClick={ModifyCategory}>
           <UI.StCircleBlock />
           <UI.StCategoryH3>{categoryName}</UI.StCategoryH3>
         </UI.StCategoryTitleBlock>
