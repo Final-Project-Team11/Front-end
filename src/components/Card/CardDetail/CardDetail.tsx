@@ -247,7 +247,9 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
                 </>
               )}
             </UI.StProfileImg>
-            <UI.JoinDate color="gray">입사일 &nbsp;| &nbsp;{data.joinDay}</UI.JoinDate>
+            {decodedToken.authLevel === 1 ? null : (
+              <UI.JoinDate color="gray">입사일 &nbsp;| &nbsp;{data.joinDay}</UI.JoinDate>
+            )}
           </UI.LeftBlock>
           <UI.StInfoArea>
             <UI.StInfoTitleSpan weight="bolder">

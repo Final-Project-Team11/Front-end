@@ -72,7 +72,7 @@ const Card = ({ tab, location }: CardProps) => {
         <UI.StInfoBlock>
           <UI.StInfoSpan bolder="bolder" reviseSpan={true}>
             <span>
-              {userInfo.team} : {userInfo.userName}
+              {userInfo.team} &nbsp;|&nbsp; {userInfo.userName}
             </span>
             <BsPencilSquare className="reviseBtn" onClick={onClickCardHandler} />
           </UI.StInfoSpan>
