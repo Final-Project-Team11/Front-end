@@ -4,6 +4,7 @@ import useGetTeamInfo from '../../../../../api/hooks/Main/useGetTeamInfo';
 import * as styles from './styles';
 import TagIcon from '../../../../../assets/Icons/TagIcon';
 import { nanoid } from 'nanoid';
+import useDropDown from '../../../../../hooks/common/useDropDown';
 
 interface HashTagProps {
   mention?: string[];
@@ -12,44 +13,15 @@ interface HashTagProps {
 }
 
 const HashTag = (props: HashTagProps) => {
-  const [mouseClick, setMouseClick] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const { data, isLoading } = useGetTeamInfo();
 
-  const [inputPosition, setInputPosition] = useState({
-    top: 0,
-    left: 0,
-    height: 0,
-    width: 0,
-  });
-  const inputRef = useRef<HTMLInputElement>(null);
-  const ulRef = useRef<HTMLUListElement>(null);
   const mouseDownHandler = () => {
-    setMouseClick(!mouseClick);
+    setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const { current } = inputRef;
-    const ulCurrent = ulRef.current;
-
-    if (current !== null) {
-      const { top, left, height, width } = current.getBoundingClientRect();
-      const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      if (ulCurrent !== null) {
-        if (
-          top + height + ulCurrent.getBoundingClientRect().height >
-          window.innerHeight
-        ) {
-          const ulHeight = ulCurrent.getBoundingClientRect().height;
-          const newTop = absoluteTop - height - ulHeight;
-          setInputPosition({ top: newTop, left, height, width });
-        } else {
-          setInputPosition({ top: absoluteTop, left, height, width });
-        }
-      }
-    }
-  }, [mouseClick]);
+  const [divRef, ulRef, setIsOpen, isOpen, inputPosition] = useDropDown();
 
   useEffect(() => {
     props.mention && setTagList(props.mention);
@@ -63,12 +35,12 @@ const HashTag = (props: HashTagProps) => {
 
       if (isValue !== undefined) {
         alert('언급된 이름이 있습니다.');
-        setMouseClick(!mouseClick);
+        setIsOpen(!isOpen);
       } else {
         const newTagList = [...tagList];
         name && newTagList.push(name);
         setTagList(newTagList);
-        setMouseClick(!mouseClick);
+        setIsOpen(!isOpen);
         props.mentionHandler(newTagList);
       }
     }
@@ -112,7 +84,7 @@ const HashTag = (props: HashTagProps) => {
       <styles.StIconBlock>
         <TagIcon />
       </styles.StIconBlock>
-      <styles.StInputBlock ref={inputRef}>
+      <styles.StInputBlock ref={divRef}>
         {tagList?.map(item => {
           return (
             <styles.StTagBlock key={item}>
@@ -137,7 +109,7 @@ const HashTag = (props: HashTagProps) => {
         />
       </styles.StInputBlock>
       {props.disable === false &&
-        mouseClick &&
+        isOpen &&
         createPortal(
           <styles.StUlBlock ref={ulRef} pos={inputPosition}>
             <styles.StTeamMark>Team A :</styles.StTeamMark>
