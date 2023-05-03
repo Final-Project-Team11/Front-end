@@ -7,7 +7,7 @@ import { BsCheck } from '@react-icons/all-files/bs/BsCheck';
 import { BsX } from '@react-icons/all-files/bs/BsX';
 
 import { usePutDecision } from '../../../api/hooks/Vacation/usePutDecision';
-import { VacationList } from '../interfaces';
+import { VacationList, VacationPayload } from '../interfaces';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 const Vacation = ({ vacation }: { vacation: VacationList }) => {
@@ -64,17 +64,17 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
   }
 
   // PATCH 요청용 payload
-  interface Payload {
-    status: 'submit' | 'accept' | 'deny';
-    Id: number;
-  }
-  const accept: Payload = {
+  const accept: VacationPayload = {
     status: 'accept',
     Id: vacation.Id,
+    message: '수락',
+    userName: vacation.userName,
   };
-  const deny: Payload = {
+  const deny: VacationPayload = {
     status: 'deny',
     Id: vacation.Id,
+    message: '거절',
+    userName: vacation.userName,
   };
 
   const { mutate } = usePutDecision();
@@ -82,7 +82,7 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
   const decideButton = (decision: string) => {
     let message: string;
     let icon: SweetAlertIcon;
-    let decideOpt: Payload;
+    let decideOpt: VacationPayload;
     decision === 'accept'
       ? ((message = '수락'), (icon = 'success'), (decideOpt = accept))
       : ((message = '거절'), (icon = 'error'), (decideOpt = deny));
@@ -100,13 +100,6 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
     }).then(result => {
       if (result.isConfirmed) {
         mutate(decideOpt);
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `${message}되었습니다.`,
-          showConfirmButton: false,
-          timer: 1000,
-        });
       }
     });
   };
