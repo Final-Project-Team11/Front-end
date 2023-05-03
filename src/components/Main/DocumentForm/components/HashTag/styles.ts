@@ -110,7 +110,7 @@ const StUlBlock = styled.ul<UlStyleProps>`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   border-top: none;
   ${({ pos }) =>
-    `top : ${pos.top + pos.height + 2}px; left :${pos.left}px; width:${pos.width - 1}px;`}
+    `top : ${pos.top + pos.height}px; left :${pos.left}px; width:${pos.width}px;`}
 `;
 
 const StIconBlock = styled.div`
