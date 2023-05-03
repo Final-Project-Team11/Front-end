@@ -18,7 +18,7 @@ export const StTodoBlock = styled.div`
 
 export const StTodoAreaBlock = styled.div`
   width: fit-content;
-  max-width: 140px;
+  max-width: 180px;
 
   display: flex;
   align-items: center;
@@ -28,13 +28,13 @@ export const StTodoAreaBlock = styled.div`
 `;
 
 export const StTodoSpan = styled.span`
+  width: 150px;
   color: ${COLOR.PAGE_SPAN};
   cursor: pointer;
 `;
 
 export const StTodoInput = styled.input`
-  width: 60%;
-  margin-right: 25%;
+  width: 150px;
   border: none;
   border-radius: 5px;
   font-size: 12px;
