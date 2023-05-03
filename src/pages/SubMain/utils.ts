@@ -1,5 +1,5 @@
 import { Options, TZDate } from '@toast-ui/calendar';
-import { CalendarProps, InitialCalendar, ServerProps, VacationProps } from './interfaces';
+import { CalendarProps, InitialCalendar } from './interfaces';
 import { COLOR } from '../../styles/colors';
 
 export function clone(date: TZDate): TZDate {
@@ -107,7 +107,7 @@ export function settingVacation(vacation: CalendarProps) {
   const SICK_DAY = '3';
 
   const title = vacation?.userName
-    ? vacation?.typeDetail + '-' + vacation?.userName
+    ? getCanlendarName(true, vacation?.typeDetail) + '-' + vacation?.userName
     : vacation?.typeDetail;
 
   const newData = {
