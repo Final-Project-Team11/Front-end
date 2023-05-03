@@ -50,11 +50,15 @@ export const StCircleBlock = styled.div<TodoBoxStProps>`
   height: 12px;
   border-radius: 50%;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(186, 218, 255, 1) 0 0 7px;
+  }
 `;
 
 export const StTestDeleteBlock = styled.div`
   opacity: 0;
-  font-size: 12px;
+  font-size: 15px;
   color: ${COLOR.PAGE_DONE};
   transition: opacity 0.3s ease;
   &:hover {
