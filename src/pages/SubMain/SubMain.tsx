@@ -1,67 +1,46 @@
 /* eslint-disable no-console */
-//외부
+
+import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
+import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
 import type { EventObject, ExternalEventTypes, Options } from '@toast-ui/calendar';
+import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { recoilClickEventState } from '../../states/recoilClickEventState';
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
+import { recoilTabState } from '../../states/recoilTabState';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
+import Calendar from '../../components/ToastCalendar/Calendar';
+import { getScheduleColor, initCalendar } from './utils';
+import { getCookie } from '../../api/auth/CookieUtils';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
-import { CalendarProps } from './interfaces';
-import { TZDate } from '@toast-ui/calendar';
-import type { ChangeEvent, MouseEvent } from 'react';
-
-//내부
-import Calendar from '../../components/ToastCalendar/Calendar';
 import { CalendarContext } from '../Main/Main';
+import TodaySchedules from './TodaySchedules';
 import Feed from '../../components/Feed/Feed';
-import { getScheduleColor, initCalendar } from './utils';
+import { CalendarProps } from './interfaces';
+import type { MouseEvent } from 'react';
 import { theme } from './theme';
+import Swal from 'sweetalert2';
+import * as UI from './styles';
 import Header from './Header';
 import './subMain.css';
 
-import TodaySchedules from './TodayScheduels';
-import { getCookie } from '../../api/auth/CookieUtils';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import ScheduleFormat from '../../components/Main/DocumentForm/ScheduleFormat/ScheduleFormat';
-import VacationFormat from '../../components/Main/DocumentForm/VacationFormat/VacationFormat';
-import React from 'react';
-import { recoilTabState } from '../../states/recoilTabState';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { recoilClickEventState } from '../../states/recoilClickEventState';
-import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
-import { recoilSelectedDateState } from '../../states/recoilSelectedDateState';
-import Swal from 'sweetalert2';
-
 type ViewType = 'month' | 'week' | 'day';
-const today = new TZDate();
-const viewModeOptions = [
-  {
-    title: 'Monthly',
-    value: 'month',
-  },
-  {
-    title: 'Weekly',
-    value: 'week',
-  },
-  {
-    title: 'Daily',
-    value: 'day',
-  },
-];
 
 export default function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
-  const user = useGetCardInfo();
-  const [selectedDateRangeText, setSelectedDateRangeText] = useRecoilState(
-    recoilSelectedDateState
-  );
-  const [selectedView, setSelectedView] = useState(view);
-  const [clickData, setClickData] = useState<CalendarProps>();
-  const [clickEvent, setClickEvent] = useState<CalendarProps>();
-  const [todayData, setTodayData] = useState<number>(0);
-  const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
-  const [clickDetail, setClickDetail] = useState<boolean>(false);
   const detailRef = useRef<HTMLDivElement>(null);
   const tab = useRecoilValue(recoilTabState);
+  const user = useGetCardInfo();
+
+  const setSelectedDateRangeText = useSetRecoilState(recoilSelectedDateState);
+  const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [event, setEvent] = useRecoilState(recoilClickEventState);
+  const [clickDetail, setClickDetail] = useState<boolean>(false);
+  const [clickEvent, setClickEvent] = useState<CalendarProps>();
+  const [clickData, setClickData] = useState<CalendarProps>();
+  const [selectedView, setSelectedView] = useState(view);
 
   const initialCalendars: Options['calendars'] = initCalendar(tab);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -72,6 +51,8 @@ export default function SubMain({ view }: { view: ViewType }) {
   useEffect(() => {
     setInitialEvents(schedules);
   }, [schedules]);
+
+  // <-------------------------이전 달 / 다음 달 이동 시에 필요한 날짜 계산------------------------->
 
   const updateRenderRangeText = useCallback(() => {
     const calInstance = getCalInstance();
@@ -129,6 +110,8 @@ export default function SubMain({ view }: { view: ViewType }) {
     updateRenderRangeText();
   }, [selectedView, updateRenderRangeText]);
 
+  // <-------------------------일정 / 휴가 생성 후 호출되는 Event------------------------->
+
   const onAfterRenderEvent: ExternalEventTypes['afterRenderEvent'] = res => {
     const token = getCookie('token');
     const decoded = token && jwtDecode<JwtPayload>(token);
@@ -155,18 +138,7 @@ export default function SubMain({ view }: { view: ViewType }) {
     setClickEvent(res);
   };
 
-  const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = res => {
-    const { id, calendarId } = res;
-    getCalInstance().deleteEvent(id, calendarId);
-  };
-
-  const onChangeSelect = (ev: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedView(ev.target.value as ViewType);
-  };
-
-  const onClickDayName: ExternalEventTypes['clickDayName'] = res => {
-    //
-  };
+  // <-------------------------다음 달/ 이전 달 이동 시 사용되는 Event------------------------->
 
   const onClickNavi = (ev: MouseEvent<HTMLButtonElement>) => {
     if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
@@ -180,6 +152,7 @@ export default function SubMain({ view }: { view: ViewType }) {
     }
   };
 
+  // <-------------------------일정 / 휴가 클릭 했을때 호출되는 Event------------------------->
   const onClickEvent: ExternalEventTypes['clickEvent'] = res => {
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].id === res.event.id) {
@@ -194,22 +167,7 @@ export default function SubMain({ view }: { view: ViewType }) {
     setClickEvent(res.event);
   };
 
-  const onClickTimezonesCollapseBtn: ExternalEventTypes['clickTimezonesCollapseBtn'] =
-    timezoneCollapsed => {
-      const newTheme = {
-        'week.daygridLeft.width': '100px',
-        'week.timegridLeft.width': '100px',
-      };
-
-      getCalInstance().setTheme(newTheme);
-    };
-
-  const onBeforeUpdateEvent: ExternalEventTypes['beforeUpdateEvent'] = updateData => {
-    const targetEvent = updateData.event;
-    const changes = { ...updateData.changes };
-    getCalInstance().updateEvent(targetEvent.id, targetEvent.calendarId, changes);
-  };
-
+  // <-------------------------일정 / 휴가 생성전에 호출되는 Event------------------------->
   const onBeforeCreateEvent: ExternalEventTypes['beforeCreateEvent'] = eventData => {
     const event = {
       calendarId: eventData.calendarId || '',
@@ -228,6 +186,7 @@ export default function SubMain({ view }: { view: ViewType }) {
     getCalInstance().createEvents([event]);
   };
 
+  // <-------------------------일정 / 휴가 취소 버튼 클릭 시 호출되는 Event------------------------->
   const onDeleteEvent = () => {
     Swal.fire({
       title: '일정을 취소하시겠습니까?',
@@ -246,16 +205,16 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   return (
-    <div style={{ width: '100%' }}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <UI.Wrap>
+      <UI.HeaderBlock>
         <Header initialCalendars={initialCalendars} onClickNavi={onClickNavi} />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className="bodyContainer" style={{ width: '1200px' }}>
-          <div style={{ marginTop: '30px', marginRight: '30px' }}>
+      </UI.HeaderBlock>
+      <UI.BodyWrap>
+        <UI.BodyContainer className="bodyContainer">
+          <UI.FeedContainer>
             <Feed />
-          </div>
-          <div style={{ flex: 1 }}>
+          </UI.FeedContainer>
+          <UI.CalendarContainer>
             <Calendar
               height="750px"
               calendars={initialCalendars}
@@ -297,22 +256,17 @@ export default function SubMain({ view }: { view: ViewType }) {
               // @ts-ignore
               ref={calendarRef}
               onAfterRenderEvent={onAfterRenderEvent}
-              onBeforeDeleteEvent={onBeforeDeleteEvent}
-              onClickDayname={onClickDayName}
               onClickEvent={onClickEvent}
               clickMoreEventsBtn={true}
-              onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
-              onBeforeUpdateEvent={onBeforeUpdateEvent}
               onBeforeCreateEvent={onBeforeCreateEvent}
             />
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '1200px' }}>
+          </UI.CalendarContainer>
+        </UI.BodyContainer>
+      </UI.BodyWrap>
+      <UI.Footer>
+        <UI.FooterContainer>
           {clickDetail === false ? (
-            <TodaySchedules todayData={todayData} />
+            <TodaySchedules />
           ) : tab === false ? (
             <ScheduleFormat
               props={{ ...clickData }}
@@ -328,8 +282,8 @@ export default function SubMain({ view }: { view: ViewType }) {
               onCancelHandler={onDeleteEvent}
             />
           )}
-        </div>
-      </div>
-    </div>
+        </UI.FooterContainer>
+      </UI.Footer>
+    </UI.Wrap>
   );
 }
