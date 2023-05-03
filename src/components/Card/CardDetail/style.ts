@@ -173,3 +173,11 @@ export const PhoneNumhDot = styled.div<DotProps>`
   right: 7px;
   top: 12px;
 `;
+
+export const ButtonBlock = styled.div`
+  width: 100%;
+
+  margin-top: auto;
+
+  display: flex;
+`;

@@ -78,8 +78,9 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
 
     // 유효성 통과하고, 기존값들이랑 다르면 sweetAlert로 더블체크
     if (
-      (birthDayIsValid && phoneNumIsValid && (birthIsDiffer || phoneNumIsDiffer)) ||
-      file
+      birthDayIsValid &&
+      phoneNumIsValid &&
+      (birthIsDiffer || phoneNumIsDiffer || file)
     ) {
       Swal.fire({
         title: '변경사항을 저장하시겠습니까?',
@@ -116,39 +117,72 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
         }
       });
       //유효성 탈락 시 메세지
-    } else if (birthDayIsValid && !phoneNumIsValid) {
+    } else if (
+      (birthDayIsValid && !phoneNumIsValid) ||
+      (!birthDayIsValid && phoneNumIsValid) ||
+      (!birthDayIsValid && !phoneNumIsValid)
+    ) {
+      let titleMessage: string;
+      let html;
+      if (birthDayIsValid && !phoneNumIsValid) {
+        titleMessage = '올바른 형식의 핸드폰 번호를 입력해주세요.';
+        html = '<p class="swal-custom-text">010-0000-0000 형식으로 입력해주세요.</p>';
+      } else if (!birthDayIsValid && phoneNumIsValid) {
+        titleMessage = '올바른 형식의 생년월일을 입력해주세요';
+        html = '<p class="swal-custom-text">yyyy/mm/dd 형식으로 입력해주세요.</p>';
+      } else {
+        titleMessage = '올바른 형식의 생년월일과 핸드폰번호를 입력해주세요.';
+        html =
+          '<p class="swal-custom-text">생일은 yyyy/mm/dd 형식, 010-0000-0000 형식으로 입력해주세요.</p>';
+      }
       Swal.fire({
         icon: 'error',
-        title: '올바른 형식의 핸드폰 번호를 입력해주세요.',
-        html: '<p class="swal-custom-text">010-0000-0000 형식으로 입력해주세요.</p>',
+        title: titleMessage,
+        html: html,
         target: sweetAlertDiv,
         customClass: {
           popup: 'swal-popup',
           title: 'swal-custom-title',
         },
       });
-    } else if (!birthDayIsValid && phoneNumIsValid) {
+      setIsEditMode(true);
+    }
+  };
+
+  const closeBtnHandler = () => {
+    // sweetAlert Modal보다 상단에 띄우기 위한 타겟
+    const sweetAlertDiv = document.getElementById('cardSweetAlertDiv');
+    if (!sweetAlertDiv) return;
+
+    if (birthIsDiffer || phoneNumIsDiffer || file) {
       Swal.fire({
-        icon: 'error',
-        title: '올바른 형식의 생년월일을 입력해주세요',
-        html: '<p class="swal-custom-text">yyyy/mm/dd 형식으로 입력해주세요.</p>',
+        title: '변경사항이 사라집니다. 나가시겠습니까?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'black',
+        cancelButtonColor: 'gray',
+        confirmButtonText: '닫기',
+        cancelButtonText: '계속 작성',
         target: sweetAlertDiv,
+        reverseButtons: true,
         customClass: {
-          popup: 'swal-popup',
           title: 'swal-custom-title',
+          popup: 'swal-custom-z-index', //customClass로 z-index 높이기.
         },
-      });
-    } else if (!birthDayIsValid && !phoneNumIsValid) {
-      Swal.fire({
-        icon: 'error',
-        title: '올바른 형식의 생년월일과 핸드폰번호를 입력해주세요.',
-        html: '<p class="swal-custom-text">생일은 yyyy/mm/dd 형식, 010-0000-0000 형식으로 입력해주세요.</p>',
-        target: sweetAlertDiv,
-        customClass: {
-          popup: 'swal-popup',
-          title: 'swal-custom-title',
+        didOpen: () => {
+          const popup = document.querySelector('.swal-custom-z-index');
+          if (popup) {
+            (popup as HTMLElement).style.zIndex = '20000';
+          }
         },
+      }).then(result => {
+        // 더블체크 완료 후 formData 전송, 확인메세지, 모달 닫기
+        if (result.isConfirmed) {
+          closeModal();
+        }
       });
+    } else {
+      closeModal();
     }
   };
 
@@ -268,26 +302,35 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
             </UI.StInfoBlock>
             {/* 연락처 끝 */}
             {/* 버튼 - 수정모드, 일반모드 */}
-            {isEditMode ? (
+            <UI.ButtonBlock>
               <CustomButton
                 buttonType="cardDetail"
                 type="button"
-                onClick={() => {
-                  setIsEditMode(false);
-                  inputSubmitHandler();
-                }}
+                onClick={() => closeBtnHandler()}
               >
-                수정완료
+                닫기
               </CustomButton>
-            ) : (
-              <CustomButton
-                buttonType="cardDetail"
-                type="button"
-                onClick={() => setIsEditMode(true)}
-              >
-                수정하기
-              </CustomButton>
-            )}
+              {isEditMode ? (
+                <CustomButton
+                  buttonType="cardDetail"
+                  type="button"
+                  onClick={() => {
+                    setIsEditMode(false);
+                    inputSubmitHandler();
+                  }}
+                >
+                  수정완료
+                </CustomButton>
+              ) : (
+                <CustomButton
+                  buttonType="cardDetail"
+                  type="button"
+                  onClick={() => setIsEditMode(true)}
+                >
+                  수정하기
+                </CustomButton>
+              )}
+            </UI.ButtonBlock>
             {/* 버튼 끝 */}
           </UI.StInfoArea>
         </UI.TopBlock>
