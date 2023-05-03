@@ -8,8 +8,9 @@ import main6 from '../../assets/images/home/main6.jpg';
 import styled from 'styled-components';
 import React from 'react';
 import { getCookie } from '../../api/auth/CookieUtils';
-import HeaderLogo from '../../assets/Icons/HeaderLogo';
 import Wrapper_Column from '../../components/Atoms/Wrapper_Column/Wrapper_Column';
+import HomeLogo from '../../assets/Icons/HomeLogo';
+import CustomButton from '../../components/Atoms/Button/CustomButton';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,10 +27,12 @@ const Home = () => {
     <StBlock>
       <Header>
         <Wrapper_Column>
-          <HeaderLogo />
+          <HomeLogo />
           <StSpan>Meer : 캣린더</StSpan>
         </Wrapper_Column>
-        <StButton onClick={() => navigate(`/login`)}>시작하기</StButton>
+        <CustomButton buttonType="home" onClick={() => navigate(`/login`)}>
+          시작하기
+        </CustomButton>
       </Header>
       <StImg src={main1} />
       <StImg src={main2} />
@@ -75,17 +78,6 @@ const Header = styled.div`
   background: transparent;
 
   z-index: 100;
-`;
-
-const StButton = styled.button`
-  width: 120px;
-  height: 50px;
-  border-radius: 45px;
-  background-color: #e64042;
-  border: none;
-  font-weight: bold;
-  font-size: 15px;
-  color: white;
 `;
 
 const StSpan = styled.span`
