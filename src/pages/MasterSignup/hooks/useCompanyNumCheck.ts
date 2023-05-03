@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import Swal from 'sweetalert2';
 
@@ -6,19 +5,18 @@ export const useCompanyNumCheck = () => {
   const [isValid, setIsValid] = React.useState<boolean>(false);
 
   // 숫자 10자리 유효성 체크
-  const checkCompanyNum = (num: string) => {
-    const validNum = num.length === 10 && /^\d+$/.test(num);
-
+  const checkCompanyNum = async (num: string) => {
+    const validNum = /^[0-9]{10}$/.test(num);
     setIsValid(validNum);
 
-    if (isValid) {
-      Swal.fire({
+    if (validNum) {
+      await Swal.fire({
         icon: 'success',
         title: '인증되었습니다',
         text: '현재는 숫자 10자리로 인증 가능한 상태 입니다!',
       });
     } else {
-      Swal.fire({
+      await Swal.fire({
         icon: 'error',
         title: '유효하지 않은 번호 입니다',
         text: '현재는 숫자 10자리로 인증 가능한 상태 입니다!',
@@ -26,7 +24,7 @@ export const useCompanyNumCheck = () => {
     }
   };
 
-  return { isValid, checkCompanyNum };
+  return { isValid, setIsValid, checkCompanyNum };
 };
 
 // 사업자 등록번호 조회 api

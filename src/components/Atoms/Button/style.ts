@@ -95,6 +95,16 @@ const buttonTypes: ButtonType = {
     color: '#484240',
     margin: 'auto 0 0 auto',
   },
+  home: {
+    width: '120px',
+    height: '50px',
+    borderRadius: '45px',
+    backgroundColor: '#e64042',
+    border: 'none',
+    fontWeight: 'bold',
+    fontSize: '15px',
+    color: 'white',
+  },
 };
 
 export const StButton = styled.button.attrs<ButtonProps>(props => ({

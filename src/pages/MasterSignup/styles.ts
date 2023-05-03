@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from '../../styles/colors';
 
 export const BackGround = styled.div`
   background-color: #f6f6f6;
@@ -35,4 +36,13 @@ export const StForm = styled.form`
 
 export const Svg = styled.div`
   display: flex;
+`;
+
+export const ErrorP = styled.p`
+  display: flex;
+  justify-content: flex-start;
+  font-size: 12px;
+  font-weight: bold;
+  color: ${COLOR.POINT_C};
+  margin: -15px 0;
 `;

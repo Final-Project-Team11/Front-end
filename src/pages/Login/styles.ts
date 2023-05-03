@@ -22,7 +22,6 @@ export const SubmitForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 
   gap: 30px;
 `;
@@ -53,6 +52,8 @@ export const TabButton = styled.div<TapButtonProps>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 export const StH1 = styled.h1`
