@@ -1,47 +1,3 @@
-export interface ScheduleProps {
-  eventId?: number;
-  eventType?: string;
-  title?: string;
-  userName?: string;
-  startDay?: Date;
-  endDay?: Date;
-  enrollDay?: Date;
-  content?: string;
-  mentions?: string[];
-  location?: string;
-  ref?: string[];
-  file?: string | File;
-  fileLocation?: string;
-  fileName?: string;
-  userId?: string;
-  backgroundColor?: string;
-  startTime?: string;
-}
-
-export interface VacationProps {
-  eventId?: number;
-  eventType?: string;
-  userName?: string;
-  startDay?: Date;
-  endDay?: Date;
-  typeDetail?: string;
-  userId?: string;
-}
-
-export interface ServerProps {
-  eventId?: number;
-  eventType?: string;
-  title?: string;
-  userName?: string;
-  startDay?: string;
-  endDay?: string;
-  content?: string;
-  mention?: string[];
-  location?: string;
-  ref?: string[];
-  file?: File | string;
-  startTime?: string;
-}
 export interface InitialCalendar {
   id: string;
   name: string;
@@ -77,4 +33,16 @@ export interface CalendarProps {
   dragBackgroundColor?: string;
   borderColor?: string;
   isReadOnly?: boolean;
+}
+
+export interface CalendarInfo {
+  event?: CalendarProps[];
+  issue?: CalendarProps[];
+  meeting?: CalendarProps[];
+  schedule?: CalendarProps[];
+  report?: CalendarProps[];
+  other?: CalendarProps[];
+  meetingReport?: CalendarProps[];
+  vacation?: CalendarProps[];
+  teamName?: string;
 }

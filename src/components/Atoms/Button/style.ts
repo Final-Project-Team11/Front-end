@@ -26,13 +26,25 @@ const buttonTypes: ButtonType = {
     border: 'none',
     padding: '15px',
   },
-  Detail: {
-    width: '100px',
+  DetailCancel: {
+    width: '68px',
     height: '40px',
     color: 'black',
-    borderRadius: '5px',
+    fontSize: '10px',
+    borderRadius: '19px',
+    backgroundColor: 'white',
+    border: '1px solid black',
+  },
+  DetailRegistration: {
+    width: '68px',
+    height: '40px',
+    fontSize: '10px',
+    borderRadius: '19px',
+    backgroundColor: 'black',
+    color: 'white',
     border: 'none',
   },
+
   ModalButton: {
     backgroundColor: 'transparent',
     width: '70px',
@@ -78,11 +90,9 @@ const buttonTypes: ButtonType = {
     width: '215px',
     height: '50px',
     padding: '15px',
-
     fontSize: '15px',
     color: '#fff',
     fontWeight: 'bolder',
-
     background: `${COLOR.FONT_COLOR}`,
     borderRadius: '7px',
   },

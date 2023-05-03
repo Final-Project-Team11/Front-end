@@ -111,7 +111,7 @@ const VacationFormat = ({
   return (
     <styles.StContainer ref={propsRef}>
       <ToastContainer />
-      <styles.StTitleBlock>
+      <styles.StTitleBlock ref={element}>
         <styles.StTitleContentBlock>
           <styles.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period start={props.start} end={props.end} />
@@ -136,20 +136,20 @@ const VacationFormat = ({
           {disable === false && (
             <>
               <CustomButton
-                buttonType="Detail"
+                buttonType="DetailCancel"
                 onClick={onCancelHandler}
                 style={{
                   borderRadius: '19px',
                 }}
               >
-                취소하기
+                취소
               </CustomButton>
               <CustomButton
-                buttonType="Detail"
+                buttonType="DetailRegistration"
                 style={{ borderRadius: '19px' }}
                 onClick={SaveClickHandler}
               >
-                등록하기
+                등록
               </CustomButton>
             </>
           )}

@@ -19,6 +19,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState('');
   const divRef = useRef<HTMLDivElement>(null);
+  const ulRef = useRef<HTMLUListElement>(null);
   const clickItemHandler = (
     event: React.MouseEvent<HTMLLIElement>,
     item: { name: string; value: number | string }
@@ -45,10 +46,24 @@ const Dropdown: React.FC<DropdownProps> = ({
   // 절대 좌표를 얻기 위해서는 window.pageYOffset을 더해주어야 한다.
   useEffect(() => {
     const { current } = divRef;
+    const ulCurrent = ulRef.current;
+
     if (current !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      setInputPosition({ top: absoluteTop, left, height, width });
+      const absoluteLeft = window.pageXOffset + current.getBoundingClientRect().left;
+      if (ulCurrent !== null) {
+        if (
+          top + height + ulCurrent.getBoundingClientRect().height >
+          window.innerHeight
+        ) {
+          const ulHeight = ulCurrent.getBoundingClientRect().height;
+          const newTop = absoluteTop - height - ulHeight;
+          setInputPosition({ top: newTop, left, height, width });
+        } else {
+          setInputPosition({ top: absoluteTop, left: absoluteLeft, height, width });
+        }
+      }
     }
   }, [isOpen]);
 
@@ -73,7 +88,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       <ul>
         {isOpen &&
           createPortal(
-            <StUlBlock pos={inputPosition}>
+            <StUlBlock pos={inputPosition} ref={ulRef}>
               {items.map((item: { name: string; value: number | string }) => {
                 return (
                   <StLi
