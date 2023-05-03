@@ -71,7 +71,6 @@ const SignupForm = () => {
   };
 
   const address = watch('address');
-  console.log('주소', address);
   // <-------------------------아이디 유효성&중복체크------------------------->
   const { validcompanyId, companyIdValidation, setCompanyIdValidation } =
     useCompanyIdValidation();
@@ -81,8 +80,6 @@ const SignupForm = () => {
   const checkCompanyIdHandler = async () => {
     validcompanyId(companyId);
   };
-
-  console.log(companyIdValidation);
 
   useEffect(() => {
     setCompanyIdValidation(false);
