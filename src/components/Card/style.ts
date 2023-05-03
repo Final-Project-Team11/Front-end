@@ -107,4 +107,5 @@ export const NavButton = styled.button`
   box-shadow: 0px 4px 4px 0 rgba(152, 185, 223, 1);
   font-size: 10px;
   color: #335985;
+  cursor: pointer;
 `;

@@ -8,6 +8,7 @@ import { BsX } from '@react-icons/all-files/bs/BsX';
 
 import { usePutDecision } from '../../../api/hooks/Vacation/usePutDecision';
 import { VacationList } from '../interfaces';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 const Vacation = ({ vacation }: { vacation: VacationList }) => {
   // 선택창 등장, 퇴장을 위한 state
@@ -78,6 +79,38 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
 
   const { mutate } = usePutDecision();
 
+  const decideButton = (decision: string) => {
+    let message: string;
+    let icon: SweetAlertIcon;
+    let decideOpt: Payload;
+    decision === 'accept'
+      ? ((message = '수락'), (icon = 'success'), (decideOpt = accept))
+      : ((message = '거절'), (icon = 'error'), (decideOpt = deny));
+
+    // alert 창
+    Swal.fire({
+      title: `${message}하시겠습니까?`,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: 'black',
+      cancelButtonColor: 'gray',
+      confirmButtonText: message,
+      cancelButtonText: '닫기',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        mutate(decideOpt);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `${message}되었습니다.`,
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    });
+  };
+
   return (
     <UI.StListBlock onMouseLeave={() => setHover(false)}>
       <UI.StSpanBlock status={vacation.status}>
@@ -91,14 +124,14 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
           <UI.StDecAcceptBlock
             className="decision"
             status={true}
-            onClick={() => mutate(deny)}
+            onClick={() => decideButton('deny')}
           >
             <BsX />
           </UI.StDecAcceptBlock>
           <UI.StDecAcceptBlock
             className="decision"
             status={false}
-            onClick={() => mutate(accept)}
+            onClick={() => decideButton('accept')}
           >
             <BsCheck />
           </UI.StDecAcceptBlock>

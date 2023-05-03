@@ -14,16 +14,16 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
   const { decideRequest } = useDecideRequest();
   const acceptBtnClickHandler = (params: DecideParams) => {
     let message: string;
-    params.types === 'accept' ? (message = '수락') : (message = '거절');
     let icon: SweetAlertIcon;
-    params.types === 'accept' ? (icon = 'success') : (icon = 'error');
+    params.types === 'accept'
+      ? ((message = '수락'), (icon = 'success'))
+      : ((message = '거절'), (icon = 'error'));
     const sweetAlertDiv = document.getElementById('sweetAlertDiv');
     if (!sweetAlertDiv) return;
 
     // alert 창
     Swal.fire({
       title: `${message}하시겠습니까?`,
-      text: "You won't be able to revert this!",
       icon: icon,
       showCancelButton: true,
       confirmButtonColor: 'black',
