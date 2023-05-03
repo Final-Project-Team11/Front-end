@@ -26,11 +26,12 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
       text: "You won't be able to revert this!",
       icon: icon,
       showCancelButton: true,
-      confirmButtonColor: COLOR.PAGE_BLUE,
-      cancelButtonColor: COLOR.VACATION_RED,
+      confirmButtonColor: 'black',
+      cancelButtonColor: 'gray',
       confirmButtonText: message,
       cancelButtonText: '닫기',
       target: sweetAlertDiv, // 여기에 target 속성을 추가
+      reverseButtons: true,
       customClass: {
         popup: 'swal-custom-z-index',
       },
@@ -44,7 +45,13 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
       if (result.isConfirmed) {
         closeModal();
         decideRequest(params);
-        Swal.fire(`${message}되었습니다.`, 'success');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `${message}되었습니다.`,
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     });
   };
