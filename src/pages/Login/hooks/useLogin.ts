@@ -4,13 +4,14 @@ import { setCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
 import { AdminLoginInfo } from '../components/AdminLoginForm';
 import { UserLoginInfo } from '../components/UserLoginForm';
+import Swal from 'sweetalert2';
 
 export type LoginResponse = {
   token: string;
   message: string;
 };
 // hook에 uri와 콜백함수를 인수로 전달
-export const useLogin = (reset: () => void, loginUri: string) => {
+export const useLogin = (loginUri: string) => {
   const navigate = useNavigate();
 
   const login = useMutation<LoginResponse, Error, AdminLoginInfo | UserLoginInfo>({
@@ -24,8 +25,10 @@ export const useLogin = (reset: () => void, loginUri: string) => {
       navigate('/main');
     },
     onError() {
-      alert('아이디 혹은 비밀번호를 확인해주세요');
-      reset();
+      Swal.fire({
+        icon: 'error',
+        title: '입력 정보를 확인해주세요',
+      });
     },
   });
   const loginHandler = (data: AdminLoginInfo | UserLoginInfo) => {
