@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CustomLabel from '../../../components/Atoms/Label/CustomLabel';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
 import Wrapper_Row from '../../../components/Atoms/Wrapper_Row/Wrapper_Row';
@@ -63,7 +63,9 @@ const DaumAddressAPI: React.FC<DaumAddressAPIProps> = ({ selectedAddressHandler 
     <Wrapper_Column>
       <Wrapper_Row style={{ alignItems: 'flex-end', gap: '15px' }}>
         <CustomLabel>
-          회사 주소
+          <Wrapper_Row>
+            회사 주소&nbsp;<span style={{ color: 'red' }}>*</span>
+          </Wrapper_Row>
           <CustomInput
             inputType="half"
             style={{ width: '290px' }}
