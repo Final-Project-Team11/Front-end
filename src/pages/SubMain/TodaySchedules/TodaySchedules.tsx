@@ -1,27 +1,25 @@
 import React, { useCallback, useContext } from 'react';
 
 import { nanoid } from 'nanoid';
-import { TodaysProps } from './interfaces';
 import * as styles from './styles';
 import FolderIcon from '../../../assets/Icons/FolderIcon';
 import TagIcon from '../../../assets/Icons/TagIcon';
 import { CalendarProps } from '../interfaces';
 import { CalendarContext } from '../../Main/Main';
 
-const TodaySchedules = (props: TodaysProps) => {
+const TodaySchedules = () => {
   const schedules = useContext<CalendarProps[]>(CalendarContext);
-  const today = props.todayData ? props.todayData : new Date().getDate();
-  const filterSchedules = useCallback(
-    () =>
-      schedules?.filter(item => {
-        const startDay = item.start && new Date(item.start);
-        const endDay = item.end && new Date(item.end);
+  const today = new Date().getDate();
 
-        if (startDay !== undefined && endDay !== undefined)
-          return startDay.getDate() <= today && endDay.getDate() >= today;
-      }),
-    [today]
-  );
+  // <-------------------------오늘에 해당되는 날짜만 Filter------------------------->
+  const filterSchedules = () =>
+    schedules?.filter(item => {
+      const startDay = item.start && new Date(item.start);
+      const endDay = item.end && new Date(item.end);
+
+      if (startDay !== undefined && endDay !== undefined)
+        return startDay.getDate() <= today && endDay.getDate() >= today;
+    });
 
   return (
     <styles.StWrap>

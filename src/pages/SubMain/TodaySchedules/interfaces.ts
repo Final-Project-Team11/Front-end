@@ -3,6 +3,3 @@ export interface StylesProps {
   borderColor?: string;
   color?: string;
 }
-export interface TodaysProps {
-  todayData?: number;
-}
