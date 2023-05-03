@@ -26,21 +26,6 @@ function Header(props: HeaderProps) {
   const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
 
-  const CardClickHandler = () => {
-    const token = getCookie('token');
-    const decoded = token && jwtDecode<JwtPayload>(token);
-    const authLevel = decoded ? decoded.authLevel : '';
-    if (authLevel === 1) {
-      navigate('/business');
-    } else if (authLevel === 2) {
-      navigate('/manager');
-    } else if (authLevel === 3) {
-      navigate('/mypage');
-    } else {
-      navigate('/mypage');
-    }
-  };
-
   const closeModal = () => {
     setOpen(false);
   };
@@ -147,9 +132,8 @@ function Header(props: HeaderProps) {
                   fontSize: '11px',
                   border: 'none',
                   padding: '10px',
-                  fontWeight: 'bold',
                   color: '#484240',
-                  background: '#EAEAEA',
+                  background: 'white',
                 }}
               >
                 보고서
@@ -190,7 +174,3 @@ function Header(props: HeaderProps) {
 }
 
 export default Header;
-
-// {token && (
-//   <styles.StLogout onClick={logOutClickHandler}>logout</styles.StLogout>
-// )}

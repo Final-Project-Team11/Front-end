@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 
-const StContainer = styled.div``;
+const StContainer = styled.div`
+  margin-bottom: 300px;
+`;
 
 const StTitleContentBlock = styled.div`
   display: flex;

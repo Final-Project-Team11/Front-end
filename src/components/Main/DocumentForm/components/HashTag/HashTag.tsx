@@ -36,25 +36,20 @@ const HashTag = (props: HashTagProps) => {
     if (current !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      if (data !== undefined) {
+      if (ulCurrent !== null) {
         if (
-          absoluteTop + data.length * 20 >
-          screen.height - (document.body.clientHeight - absoluteTop) / 2
+          top + height + ulCurrent.getBoundingClientRect().height >
+          window.innerHeight
         ) {
-          if (ulCurrent !== null) {
-            const ulHeight = ulCurrent.getBoundingClientRect().height;
-            const newTop = absoluteTop - ((data.length + 1) * ulHeight - height);
-            setInputPosition({ top: newTop, left, height, width });
-          } else {
-            const newTop = absoluteTop - ((data.length + 1) * 50 - height);
-            setInputPosition({ top: newTop, left, height, width });
-          }
+          const ulHeight = ulCurrent.getBoundingClientRect().height;
+          const newTop = absoluteTop - height - ulHeight;
+          setInputPosition({ top: newTop, left, height, width });
         } else {
           setInputPosition({ top: absoluteTop, left, height, width });
         }
       }
     }
-  }, [data]);
+  }, [mouseClick]);
 
   useEffect(() => {
     props.mention && setTagList(props.mention);

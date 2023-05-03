@@ -64,7 +64,8 @@ const ScheduleFormat = ({
     if (title === '') {
       setIsValidTitle(false);
       return;
-    } else if (content === '') {
+    }
+    if (content === '') {
       setIsValidBody(false);
       return;
     }
@@ -93,7 +94,7 @@ const ScheduleFormat = ({
           mutation.mutate(newData, {
             onSuccess: () => {
               setDisable(!disable);
-              toast.success('🦄 서버 업로드 성공!', {
+              toast.success('🦄 일정 등록 성공!', {
                 position: 'top-right',
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -156,11 +157,11 @@ const ScheduleFormat = ({
         <styles.StButtonBlock>
           {disable === false && userId === props.userId && (
             <>
-              <CustomButton buttonType="Detail" onClick={onCancelHandler}>
-                취소하기
+              <CustomButton buttonType="DetailCancel" onClick={onCancelHandler}>
+                취소
               </CustomButton>
-              <CustomButton buttonType="Detail" onClick={SaveClickHandler}>
-                등록하기
+              <CustomButton buttonType="DetailRegistration" onClick={SaveClickHandler}>
+                등록
               </CustomButton>
             </>
           )}

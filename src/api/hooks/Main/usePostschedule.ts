@@ -33,7 +33,6 @@ const usePostschedule = () => {
       return data;
     },
     onSuccess: () => {
-      console.log('success');
       queryClient.invalidateQueries([keys.GET_MAIN]);
     },
   });
@@ -49,7 +48,6 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
   const formData = new FormData();
   switch (payload.url) {
     case 'meeting': {
-      console.log('meeting');
       payload.postInfo?.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       formData.append('end', end || '');
@@ -62,7 +60,6 @@ const getFormData = (payload: Paylaod): FormData | undefined => {
 
       formData.append('calendarId', payload.postInfo?.calendarId || '');
       payload.postInfo?.attendees?.map((item, index) => {
-        console.log('attendees');
         return formData.append(`attendees[${index}]`, item);
       });
 

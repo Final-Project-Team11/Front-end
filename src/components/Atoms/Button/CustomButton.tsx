@@ -5,14 +5,15 @@ export interface ButtonProps {
   buttonType:
     | 'login'
     | 'signup'
-    | 'Detail'
     | 'ModalButton'
     | 'valid'
     | 'submit'
     | 'cUser'
     | 'blackBackground'
     | 'cardDetail'
-    | 'home';
+    | 'home'
+    | 'DetailCancel'
+    | 'DetailRegistration';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
