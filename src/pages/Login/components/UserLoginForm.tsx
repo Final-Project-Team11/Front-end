@@ -6,6 +6,7 @@ import CustomInput from '../../../components/Atoms/Input/CustomInput';
 import { SubmitForm } from '../styles';
 import { AdminLoginInfo } from './AdminLoginForm';
 import { useLogin } from '../hooks/useLogin';
+import { ErrorP } from '../../MasterSignup/styles';
 
 export type UserLoginInfo = AdminLoginInfo & {
   userId: string;
@@ -13,9 +14,13 @@ export type UserLoginInfo = AdminLoginInfo & {
 
 const UserLoginForm = () => {
   // react-hook-form의 객체를 생성
-  const { register, handleSubmit, reset } = useForm<UserLoginInfo>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserLoginInfo>();
   // hook에 제출 함수를 가져옴
-  const { loginHandler } = useLogin(reset, 'auth/user');
+  const { loginHandler } = useLogin('auth/user');
 
   return (
     <SubmitForm onSubmit={handleSubmit(loginHandler)}>
@@ -23,28 +28,31 @@ const UserLoginForm = () => {
         inputType="login"
         placeholder="대표자 아이디를 입력해주세요"
         {...register('companyId', {
-          required: true,
+          required: '대표자 아이디를 입력해주세요',
         })}
       />
+      {errors.companyId && <ErrorP>{errors.companyId.message}</ErrorP>}
       <CustomInput
         inputType="login"
         placeholder="직원 아이디를 입력해주세요"
         {...register('userId', {
-          required: true,
+          required: '아이디를 입력해주세요',
         })}
       />
+      {errors.userId && <ErrorP>{errors.userId.message}</ErrorP>}
       <CustomInput
         inputType="login"
         type="password"
         placeholder="비밀번호를 입력해주세요"
         {...register('password', {
-          required: true,
+          required: '비밀번호를 입력해주세요',
         })}
       />
+      {errors.password && <ErrorP>{errors.password.message}</ErrorP>}
       <CustomButton
         buttonType="login"
         style={{
-          marginTop: '20px',
+          marginTop: '24px',
         }}
       >
         로그인
