@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import apis from '../../../api/axios/api';
 import Swal from 'sweetalert2';
 
 export const useCompanyIdValidation = () => {
+  const [companyId, setCompanyId] = React.useState<string>('');
   const [companyIdValidation, setCompanyIdValidation] = React.useState<boolean>(false);
 
-  // 알파벳 소, 대문자,숫자로 이루어진 5자 이상
+  useEffect(() => {
+    if (companyIdValidation) {
+      checkCompanyId.mutate(companyId);
+    }
+  }, [companyIdValidation, companyId]);
+
   const validcompanyId = (item: string) => {
     const isValid = /^[a-zA-Z0-9]{5,}$/.test(item);
     setCompanyIdValidation(isValid);
+
+    if (!isValid) {
+      Swal.fire({
+        icon: 'error',
+        title: '유효하지 않은 아이디 입니다.',
+        text: '아이디 양식을 다시 재확인 해주세요.',
+      });
+    } else {
+      setCompanyId(item);
+    }
   };
 
   const checkCompanyId = useMutation(
@@ -36,5 +52,5 @@ export const useCompanyIdValidation = () => {
       },
     }
   );
-  return { validcompanyId, checkCompanyId, companyIdValidation };
+  return { validcompanyId, companyIdValidation, setCompanyIdValidation };
 };

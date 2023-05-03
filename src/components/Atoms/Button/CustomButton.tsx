@@ -11,7 +11,8 @@ export interface ButtonProps {
     | 'submit'
     | 'cUser'
     | 'blackBackground'
-    | 'cardDetail';
+    | 'cardDetail'
+    | 'home';
   type?: 'submit' | 'button';
   id?: string;
   name?: string;
