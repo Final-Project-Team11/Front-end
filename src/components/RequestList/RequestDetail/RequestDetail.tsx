@@ -6,12 +6,13 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 
 const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
+  const { decideRequest } = useDecideRequest();
+
   if (isLoading || !data) {
     return <div>Loading....</div>;
   }
 
   // 수락 거절 버튼 핸들러
-  const { decideRequest } = useDecideRequest();
   const acceptBtnClickHandler = (params: DecideParams) => {
     let message: string;
     params.types === 'accept' ? (message = '수락') : (message = '거절');
