@@ -23,7 +23,7 @@ export interface ScheduleProps {
   };
   propsRef?: React.RefObject<HTMLDivElement>;
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
-  onCancelHandler?: () => void;
+  onCancelHandler: (id?: number | string, calendarId?: number | string) => void;
 }
 
 export interface ErrorData {

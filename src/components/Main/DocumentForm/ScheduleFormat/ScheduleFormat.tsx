@@ -1,28 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { postFormat } from '../../../../pages/SubMain/utils';
-import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
-import * as styles from '../commonStyles';
-import useInput from '../../../../hooks/common/useInput';
-import useTextarea from '../../../../hooks/common/useTextarea';
-import { MdZoomIn } from '@react-icons/all-files/md/MdZoomIn';
-import Period from '../components/Period/Period';
-import { getCookie } from '../../../../api/auth/CookieUtils';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import useGetTeamInfo from '../../../../api/hooks/Main/useGetTeamInfo';
-import HashTag from '../components/HashTag/HashTag';
 import { RiArrowLeftSLine } from '@react-icons/all-files/ri/RiArrowLeftSLine';
-import FileUpload from '../components/FileUpload/FileUpload';
-import { MdZoomOut } from '@react-icons/all-files/md/MdZoomOut';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AxiosError } from 'axios';
-import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
-import Swal from 'sweetalert2';
-import CustomButton from '../../../Atoms/Button/CustomButton';
+import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
-import { useRecoilValue } from 'recoil';
 import { recoilTabState } from '../../../../states/recoilTabState';
+import useTextarea from '../../../../hooks/common/useTextarea';
+import { ErrorData, ScheduleProps } from '../commonInterface';
+import CustomButton from '../../../Atoms/Button/CustomButton';
+import { getCookie } from '../../../../api/auth/CookieUtils';
+import FileUpload from '../components/FileUpload/FileUpload';
+import useInput from '../../../../hooks/common/useInput';
+import { ToastContainer, toast } from 'react-toastify';
+import HashTag from '../components/HashTag/HashTag';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import Period from '../components/Period/Period';
+import 'react-toastify/dist/ReactToastify.css';
+import * as styles from '../commonStyles';
+import { useRecoilValue } from 'recoil';
+import { AxiosError } from 'axios';
+import Swal from 'sweetalert2';
 
 const ScheduleFormat = ({
   props,
@@ -38,19 +34,16 @@ const ScheduleFormat = ({
   const token = getCookie('token');
   const decoded = token && jwtDecode<JwtPayload>(token);
   const userId = decoded ? decoded.userId : '';
-
   const [disable, setDisable] = useState(false);
   const [userName, userNameHandler, setUserNameInput] = useInput();
   const [title, titleHandler, setTitleHanlder] = useInput();
-
   const [isValidTitle, setIsValidTitle] = useState(true);
   const [isValidBody, setIsValidBody] = useState(true);
-
   const [location, locationHandler, setlocationHanlder] = useInput();
   const [mention, mentionHandler] = useState<string[]>();
   const [content, contentHandler, setContentValue] = useTextarea();
-
   const { element, onMoveToElement } = useMoveScroll();
+
   useEffect(() => {
     props.title !== undefined && setTitleHanlder(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInput(props.userName);
@@ -133,8 +126,52 @@ const ScheduleFormat = ({
     }
   };
 
+  useEffect(() => {
+    const outsideClickHandler = (event: MouseEvent) => {
+      if ((event.target as HTMLElement).closest('#schedule') !== null) return;
+      if ((event.target as HTMLElement).closest('.swal2-styled') !== null) return;
+      if ((event.target as HTMLElement).closest('.swal2-popup') !== null) return;
+
+      Swal.fire({
+        title: '작성중인 일정이 있습니다.\n취소하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '네,취소하겠습니다!',
+        cancelButtonText: '아니요, 작성할게요!',
+        reverseButtons: true,
+      }).then(result => {
+        if (result.isConfirmed) {
+          Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+          onCancelHandler(props.id, props.calendarId);
+        }
+      });
+    };
+
+    document.addEventListener('click', outsideClickHandler);
+
+    return () => {
+      console.log('test return');
+      document.removeEventListener('click', outsideClickHandler);
+    };
+  }, []);
+
+  const cancelConfirmHandler = () => {
+    Swal.fire({
+      title: '일정을 취소하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네,취소하겠습니다!',
+      cancelButtonText: '아니요, 작성할게요!',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+        onCancelHandler(props.id, props.calendarId);
+      }
+    });
+  };
   return (
-    <styles.StContainer ref={propsRef}>
+    <styles.StContainer id="schedule" ref={propsRef}>
       <ToastContainer />
       <styles.StTitleBlock>
         <styles.StTitleContentBlock>
@@ -157,7 +194,7 @@ const ScheduleFormat = ({
         <styles.StButtonBlock>
           {disable === false && userId === props.userId && (
             <>
-              <CustomButton buttonType="DetailCancel" onClick={onCancelHandler}>
+              <CustomButton buttonType="DetailCancel" onClick={cancelConfirmHandler}>
                 취소
               </CustomButton>
               <CustomButton buttonType="DetailRegistration" onClick={SaveClickHandler}>

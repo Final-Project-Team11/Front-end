@@ -38,7 +38,6 @@ export default function SubMain({ view }: { view: ViewType }) {
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [event, setEvent] = useRecoilState(recoilClickEventState);
   const [clickDetail, setClickDetail] = useState<boolean>(false);
-  const [clickEvent, setClickEvent] = useState<CalendarProps>();
   const [clickData, setClickData] = useState<CalendarProps>();
   const [selectedView, setSelectedView] = useState(view);
 
@@ -135,7 +134,6 @@ export default function SubMain({ view }: { view: ViewType }) {
 
     setClickData(newData);
     setClickDetail(true);
-    setClickEvent(res);
   };
 
   // <-------------------------다음 달/ 이전 달 이동 시 사용되는 Event------------------------->
@@ -164,7 +162,6 @@ export default function SubMain({ view }: { view: ViewType }) {
     }
 
     setClickDetail(true);
-    setClickEvent(res.event);
   };
 
   // <-------------------------일정 / 휴가 생성전에 호출되는 Event------------------------->
@@ -187,21 +184,9 @@ export default function SubMain({ view }: { view: ViewType }) {
   };
 
   // <-------------------------일정 / 휴가 취소 버튼 클릭 시 호출되는 Event------------------------->
-  const onDeleteEvent = () => {
-    Swal.fire({
-      title: '일정을 취소하시겠습니까?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: '네,취소하겠습니다!',
-      cancelButtonText: '아니요, 작성할게요!',
-      reverseButtons: true,
-    }).then(result => {
-      if (result.isConfirmed) {
-        Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
-        clickEvent && getCalInstance().deleteEvent(clickEvent.id, clickEvent?.calendarId);
-        setClickDetail(false);
-      }
-    });
+  const onDeleteEvent = (id?: number | string, calenarId?: number | string) => {
+    getCalInstance().deleteEvent(id, calenarId);
+    setClickDetail(false);
   };
 
   return (
