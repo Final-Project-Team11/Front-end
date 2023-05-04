@@ -8,7 +8,7 @@ const OneWeekCalendar = () => {
     navigate('/main');
   };
 
-  return <CustomCalendar width="813px" onClick={moveMainHandler} />;
+  return <CustomCalendar width="910px" onClick={moveMainHandler} />;
 };
 
 export default OneWeekCalendar;
