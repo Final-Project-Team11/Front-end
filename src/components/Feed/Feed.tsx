@@ -6,6 +6,7 @@ import FeedTitle from './FeedTitle';
 import { useGetFeed } from '../../api/hooks/Feed/useGetFeed';
 import { Category } from './interfaces';
 import useInput from '../../hooks/common/useInput';
+import Loading from '../Loading/Loading';
 
 const Feed = () => {
   const [openCategoryInput, setOpenCategoryInput] = useState<boolean>(false);
@@ -30,7 +31,11 @@ const Feed = () => {
   const { feed, feedIsLoading } = useGetFeed();
 
   if (feedIsLoading && !feed) {
-    return <div>Loading...</div>;
+    return (
+      <UI.LoadingBlock>
+        <Loading />
+      </UI.LoadingBlock>
+    );
   }
 
   return (

@@ -22,6 +22,15 @@ export const StTagsBlock = styled.div<BlockProps>`
   font-weight: ${({ isChecked }) => (isChecked ? 'lighter' : 'bold')};
 `;
 
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StContentSpan = styled.span<SpanProps>`
   font-size: ${({ types }) => (types === 'MyPage' ? '15px' : '14px')};
 
