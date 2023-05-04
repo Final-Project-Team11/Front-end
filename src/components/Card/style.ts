@@ -58,7 +58,7 @@ export const StInfoSpan = styled.span<TextStyle>`
   ${({ reviseSpan }) =>
     reviseSpan &&
     css`
-      width: 100%;
+      width: 110%;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -107,6 +107,7 @@ export const NavButton = styled.button<CardStyleProps>`
           box-shadow: rgba(152, 185, 223, 1) 0px 4px 4px 0;
           color: #335985;
         `}
+  width: 70px;
   height: 16px;
   background: white;
   border-radius: 3px;
