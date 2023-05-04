@@ -60,4 +60,4 @@ const Feed = () => {
   );
 };
 
-export default React.memo(Feed);
+export default Feed;

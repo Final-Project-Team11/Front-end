@@ -15,23 +15,24 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
   // 수락 거절 버튼 핸들러
   const acceptBtnClickHandler = (params: DecideParams) => {
     let message: string;
-    params.types === 'accept' ? (message = '수락') : (message = '거절');
     let icon: SweetAlertIcon;
-    params.types === 'accept' ? (icon = 'success') : (icon = 'error');
+    params.types === 'accept'
+      ? ((message = '수락'), (icon = 'success'))
+      : ((message = '거절'), (icon = 'error'));
     const sweetAlertDiv = document.getElementById('sweetAlertDiv');
     if (!sweetAlertDiv) return;
 
     // alert 창
     Swal.fire({
       title: `${message}하시겠습니까?`,
-      text: "You won't be able to revert this!",
       icon: icon,
       showCancelButton: true,
-      confirmButtonColor: COLOR.PAGE_BLUE,
-      cancelButtonColor: COLOR.VACATION_RED,
+      confirmButtonColor: 'black',
+      cancelButtonColor: 'gray',
       confirmButtonText: message,
       cancelButtonText: '닫기',
       target: sweetAlertDiv, // 여기에 target 속성을 추가
+      reverseButtons: true,
       customClass: {
         popup: 'swal-custom-z-index',
       },
@@ -45,7 +46,13 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
       if (result.isConfirmed) {
         closeModal();
         decideRequest(params);
-        Swal.fire(`${message}되었습니다.`, 'success');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `${message}되었습니다.`,
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     });
   };

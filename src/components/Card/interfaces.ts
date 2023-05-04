@@ -1,5 +1,4 @@
 export interface CardProps {
-  tab?: boolean;
   location: 'main' | 'mypage';
 }
 
