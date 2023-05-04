@@ -67,13 +67,11 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
   const accept: VacationPayload = {
     status: 'accept',
     Id: vacation.Id,
-    message: '수락',
     userName: vacation.userName,
   };
   const deny: VacationPayload = {
     status: 'deny',
     Id: vacation.Id,
-    message: '거절',
     userName: vacation.userName,
   };
 

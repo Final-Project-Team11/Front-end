@@ -10,6 +10,5 @@ export interface VacationList {
 export interface VacationPayload {
   status: 'submit' | 'accept' | 'deny';
   Id: number;
-  message: '수락' | '거절';
   userName: string;
 }
