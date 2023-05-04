@@ -28,7 +28,6 @@ export const usePutDecision = () => {
       // 승인, 거절 메세지 세팅
       let titleMessage;
       let icon;
-      console.log(payload);
       if (payload.status === 'accept') {
         titleMessage = `${payload.userName} 님의 휴가가 등록되었습니다.`;
         icon = 'success';

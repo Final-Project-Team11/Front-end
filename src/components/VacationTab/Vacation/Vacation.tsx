@@ -81,9 +81,16 @@ const Vacation = ({ vacation }: { vacation: VacationList }) => {
     let message: string;
     let icon: SweetAlertIcon;
     let decideOpt: VacationPayload;
-    decision === 'accept'
-      ? ((message = '수락'), (icon = 'success'), (decideOpt = accept))
-      : ((message = '거절'), (icon = 'error'), (decideOpt = deny));
+
+    if (decision === 'accept') {
+      message = '수락';
+      icon = 'success';
+      decideOpt = accept;
+    } else {
+      message = '거절';
+      icon = 'error';
+      decideOpt = deny;
+    }
 
     // alert 창
     Swal.fire({

@@ -3,7 +3,6 @@ import * as UI from './style';
 import { DecideParams, DetailProps } from '../interfaces';
 import { useDecideRequest } from '../../../api/hooks/Request/useDecideRequest';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { COLOR } from '../../../styles/colors';
 
 const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
   const { decideRequest } = useDecideRequest();
@@ -16,9 +15,13 @@ const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
   const acceptBtnClickHandler = (params: DecideParams) => {
     let message: string;
     let icon: SweetAlertIcon;
-    params.types === 'accept'
-      ? ((message = '수락'), (icon = 'success'))
-      : ((message = '거절'), (icon = 'error'));
+    if (params.types === 'accept') {
+      message = '수락';
+      icon = 'success';
+    } else {
+      message = '거절';
+      icon = 'error';
+    }
     const sweetAlertDiv = document.getElementById('sweetAlertDiv');
     if (!sweetAlertDiv) return;
 
