@@ -15,7 +15,7 @@ import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
-  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
+  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(20);
   const tab = useRecoilValue(recoilTabState);
   const { mutate } = usePatchFeed();
 

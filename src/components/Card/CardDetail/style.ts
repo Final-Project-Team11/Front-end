@@ -57,6 +57,8 @@ export const StInfoTitleSpan = styled.span<FontStyle>`
   font-size: ${({ size }) => (size ? size : '11px')};
   font-weight: ${({ weight }) => (weight ? weight : null)};
   color: ${({ color }) => (color ? 'gray' : null)};
+  width: fit-content;
+  white-space: nowrap;
 `;
 
 export const JoinDate = styled.span`
@@ -172,4 +174,12 @@ export const PhoneNumhDot = styled.div<DotProps>`
   position: absolute;
   right: 7px;
   top: 12px;
+`;
+
+export const ButtonBlock = styled.div`
+  width: 100%;
+
+  margin-top: auto;
+
+  display: flex;
 `;
