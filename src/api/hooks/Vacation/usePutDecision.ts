@@ -29,11 +29,13 @@ export const usePutDecision = () => {
       let titleMessage;
       let icon;
       console.log(payload);
-      payload.status === 'accept'
-        ? ((titleMessage = `${payload.userName} 님의 휴가가 등록되었습니다.`),
-          (icon = 'success'))
-        : ((titleMessage = `${payload.userName} 님의 휴가가 반려되었습니다.`),
-          (icon = 'error'));
+      if (payload.status === 'accept') {
+        titleMessage = `${payload.userName} 님의 휴가가 등록되었습니다.`;
+        icon = 'success';
+      } else {
+        titleMessage = `${payload.userName} 님의 휴가가 반려되었습니다.`;
+        icon = 'error';
+      }
 
       // 승인, 거절 알럿
       Swal.fire({
