@@ -108,4 +108,4 @@ const Card = ({ tab, location }: CardProps) => {
   );
 };
 
-export default React.memo(Card);
+export default Card;
