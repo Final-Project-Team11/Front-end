@@ -7,8 +7,11 @@ import { PatchFeedPayload, Todo } from '../interfaces';
 import { COLOR } from '../../../styles/colors';
 import Swal from 'sweetalert2';
 import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
+import { useRecoilValue } from 'recoil';
+import { recoilTabState } from '../../../states/recoilTabState';
 
 const TodoBox = ({ todo }: { todo: Todo }) => {
+  const tab = useRecoilValue(recoilTabState);
   const { deleteFeed } = useDeleteFeed();
   const { mutate } = usePatchFeed();
 
@@ -52,12 +55,12 @@ const TodoBox = ({ todo }: { todo: Todo }) => {
   return (
     <UI.StTodoBlock>
       <UI.StTodoAreaBlock>
-        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
+        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} tab={tab} />
         <UI.StTodoSpan onClick={ModifyCategory}>{todo.todo}</UI.StTodoSpan>
       </UI.StTodoAreaBlock>
-      <UI.StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+      <UI.StTodoDeleteButton className="deleteBlock" onClick={deleteBtnHandler}>
         <BsX />
-      </UI.StTestDeleteBlock>
+      </UI.StTodoDeleteButton>
     </UI.StTodoBlock>
   );
 };

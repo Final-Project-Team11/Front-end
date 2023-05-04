@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 interface TodoBoxStProps {
   isDone?: boolean;
+  tab?: boolean;
 }
 
 export const StTodoBlock = styled.div`
@@ -42,9 +43,10 @@ export const StTodoInput = styled.input`
 `;
 
 export const StCircleBlock = styled.div<TodoBoxStProps>`
-  background-color: ${({ isDone }) => (isDone ? COLOR.PAGE_BLUE : 'white')};
+  background-color: ${({ isDone, tab }) =>
+    isDone ? (tab ? COLOR.VACATION_RED : COLOR.PAGE_BLUE) : 'white'};
 
-  border: 1px solid ${({ isDone }) => (isDone ? COLOR.PAGE_BLUE : COLOR.PAGE_LIGHTBLUE)};
+  border: 1px solid ${({ tab }) => (tab ? COLOR.VACATION_RED : COLOR.PAGE_BLUE)};
 
   width: 12px;
   height: 12px;
@@ -56,7 +58,7 @@ export const StCircleBlock = styled.div<TodoBoxStProps>`
   }
 `;
 
-export const StTestDeleteBlock = styled.div`
+export const StTodoDeleteButton = styled.div`
   opacity: 0;
   font-size: 15px;
   color: ${COLOR.PAGE_DONE};

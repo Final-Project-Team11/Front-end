@@ -10,9 +10,13 @@ import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { BsPencilSquare } from '@react-icons/all-files/bs/BsPencilSquare';
+import { recoilTabState } from '../../states/recoilTabState';
+import { useRecoilValue } from 'recoil';
 
-const Card = ({ tab, location }: CardProps) => {
+const Card = ({ location }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
+  const tab = useRecoilValue(recoilTabState);
+
   const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
@@ -93,7 +97,9 @@ const Card = ({ tab, location }: CardProps) => {
               <ProfileManager page="page" />
             )}
           </UI.StProfileImg>
-          <UI.NavButton onClick={navigateButton}>{buttonText}</UI.NavButton>
+          <UI.NavButton onClick={navigateButton} tab={tab}>
+            {buttonText}
+          </UI.NavButton>
         </UI.RightBlock>
       </UI.StCardBlock>
       {openModal && (
