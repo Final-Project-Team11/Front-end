@@ -77,9 +77,6 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
       authLevel: authLevel(),
     };
 
-    console.log('기존 정보', oldUser);
-    console.log('수정 정보', patchUserData);
-
     const comparisonUser = (old: DetailUser, patch: DetailUser): boolean => {
       const oldUser = Object.keys(old);
       const patchUserData = Object.keys(patch);
@@ -130,8 +127,6 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
   const [auth, setAuth] = React.useState<Auth>({ auth: user.authLevel });
 
   const selecteAuthHandler = (value: number | string) => {
-    console.log('기존', user.authLevel);
-    console.log('선택된', value);
     setAuth({ auth: value });
   };
 
