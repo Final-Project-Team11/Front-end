@@ -18,7 +18,7 @@ const Router = () => {
       <Suspense
         fallback={
           <Wrapper>
-            <Loading />
+            <Loading sizes="big" />
           </Wrapper>
         }
       >
