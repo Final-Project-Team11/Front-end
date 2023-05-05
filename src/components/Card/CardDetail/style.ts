@@ -28,6 +28,14 @@ export const StCardDetailBlock = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 `;
 
+export const LoadingBlock = styled.div`
+  width: 450px;
+  height: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TopBlock = styled.div`
   width: 100%;
   height: 70%;
