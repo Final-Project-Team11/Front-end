@@ -10,6 +10,7 @@ import { CardDetailProps } from '../interfaces';
 import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
 import CustomButton from '../../Atoms/Button/CustomButton';
+import Loading from '../../Loading/Loading';
 
 const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
   const { data } = useGetCardDetail();
@@ -192,7 +193,11 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
   };
 
   if (!data) {
-    return <div>loading...</div>;
+    return (
+      <UI.LoadingBlock>
+        <Loading />
+      </UI.LoadingBlock>
+    );
   }
 
   // 직책

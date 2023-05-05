@@ -7,7 +7,6 @@ export const Frame = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 48px;
-  /* margin-top: 50px; */
 `;
 
 export const Wrapper = styled.div`
