@@ -74,9 +74,10 @@ export const StFeedTitleH1 = styled.h1<TitleProps>`
 `;
 
 export const LoadingBlock = styled.div`
-  width: 250px;
-  height: 635px;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
