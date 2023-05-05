@@ -10,7 +10,7 @@ interface Payload {
 
 export const useGetUploadedDetail = ({ eventId, types }: Payload) => {
   const { data, isLoading } = useQuery<DetailType>({
-    queryKey: [keys.GET_UPLOADED_DETAIL, eventId],
+    queryKey: [keys.GET_UPLOADED_DETAIL, eventId, types],
     queryFn: async () => {
       const response = await apis.get(`/${types}/${eventId}`);
       return response.data;
