@@ -16,6 +16,7 @@ export const StFileBlock = styled.div<StatusProps>`
   margin-bottom: 18px;
 
   font-size: 12px;
+  cursor: pointer;
 
   color: ${({ status }) => (status === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
 

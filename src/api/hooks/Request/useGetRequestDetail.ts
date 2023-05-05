@@ -3,7 +3,7 @@ import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
 import { RequestInfo } from '../../../components/RequestList/interfaces';
 
-interface Payload {
+export interface Payload {
   type: 'schedule' | 'other';
   id: number;
 }

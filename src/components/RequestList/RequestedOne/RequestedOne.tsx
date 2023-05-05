@@ -7,14 +7,8 @@ import CalendarIcon from '../../../assets/Icons/CalendarIcon';
 import { RequestedOneProps } from '../interfaces';
 
 const RequestedOne = ({ request, type }: RequestedOneProps) => {
-  // GETdetail payload
-
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 모달을 띄우고, GETdetail 요청을 보내서 모달에 전달.
-  const getDetail = () => {
-    setModalOpen(true);
-  };
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -24,7 +18,7 @@ const RequestedOne = ({ request, type }: RequestedOneProps) => {
       <UI.StRequestedListBlock
         key={request.Id}
         types={request.status}
-        onClick={() => getDetail()}
+        onClick={() => setModalOpen(true)}
       >
         <UI.StNameDateDiv>
           <UI.StNameSpan>
