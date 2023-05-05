@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import apis from '../../../api/axios/api';
-import { AdminLoginInfo } from '../../Login/components/AdminLoginForm';
 
-type AdminSignupInfo = AdminLoginInfo & {
+type AdminSignupInfo = {
+  companyId: string;
+  password: string;
   companyName: string;
   address: string;
   ceoName: string;
