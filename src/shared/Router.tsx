@@ -17,15 +17,13 @@ const Router = () => {
     <BrowserRouter>
       <Suspense
         fallback={
-          <Frame>
-            <Wrapper>
-              <Loading />
-            </Wrapper>
-          </Frame>
+          <Wrapper>
+            <Loading />
+          </Wrapper>
         }
       >
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/masterSignup" element={<MasterSignup />} />
           <Route path="/main" element={<Main />} />
@@ -39,24 +37,13 @@ const Router = () => {
   );
 };
 
-export const Frame = styled.div`
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  margin-top: 48px;
-`;
-
 export const Wrapper = styled.div`
-  width: 1200px;
-  height: 100%;
+  width: 100%;
+  height: 100vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  gap: 31px;
 `;
 
 export default Router;
