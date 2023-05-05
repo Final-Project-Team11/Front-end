@@ -9,18 +9,16 @@ interface Payload {
 }
 
 export const useGetRequestDetail = (payload: Payload) => {
-  const { data, refetch, isLoading } = useQuery<RequestInfo>({
+  const { data, isLoading } = useQuery<RequestInfo>({
     queryKey: [keys.GET_REQUEST_DETAIL, payload.id],
     queryFn: async () => {
       const response = await apis.get(`/${payload.type}/${payload.id}`);
       return response.data;
     },
-    enabled: false,
   });
 
   return {
     data,
-    refetch,
     isLoading,
   };
 };

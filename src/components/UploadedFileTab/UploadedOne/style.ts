@@ -21,6 +21,14 @@ export const StUploadedFileBlock = styled.div`
   }
 `;
 
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StNameDateBlock = styled.div`
   width: 100%;
   display: flex;

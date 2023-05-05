@@ -116,3 +116,12 @@ export const NavButton = styled.button<CardStyleProps>`
 
   cursor: pointer;
 `;
+
+export const LoadingBlock = styled.div`
+  width: 250px;
+  height: 116px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

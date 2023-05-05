@@ -6,6 +6,8 @@ import { RequestType } from './interfaces';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
+import { LoadingBlock } from './RequestedOne/style';
+import Loading from '../Loading/Loading';
 
 const Request = ({ type }: RequestType) => {
   const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest(type);
@@ -27,24 +29,29 @@ const Request = ({ type }: RequestType) => {
   // Board title에 들어갈 icon
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
 
-  if (isLoading) {
-    return (
-      <Board icon={icon} title={title} targetDiv={targetDiv}>
-        ...loading
-      </Board>
-    );
-  }
-
   // data.pages를 풀어서 하나의 배열로 -> useInfiniteQuery 에서 return 하는 data 형식 참고.
   const requests = data
     ? data.pages.flatMap(page => ('schedule' in page ? page.schedule : page.other))
     : [];
 
+  const NoData = requests.length === 0;
+
+  let NoDataMessage;
+  type === 'schedule' ? (NoDataMessage = '출장이') : (NoDataMessage = '결재가');
+
   return (
     <Board icon={icon} title={title} targetDiv={targetDiv}>
-      {requests.map(request => {
-        return <RequestedOne key={request.Id} request={request} type={type} />;
-      })}
+      {isLoading ? (
+        <LoadingBlock>
+          <Loading />
+        </LoadingBlock>
+      ) : NoData ? (
+        <LoadingBlock>{`요청된 ${NoDataMessage} 없습니다.`}</LoadingBlock>
+      ) : (
+        requests.map(request => {
+          return <RequestedOne key={request.Id} request={request} type={type} />;
+        })
+      )}
     </Board>
   );
 };

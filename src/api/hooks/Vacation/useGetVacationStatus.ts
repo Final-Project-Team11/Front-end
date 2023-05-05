@@ -7,7 +7,7 @@ interface VacationStatus {
 }
 
 export const useGetVacationStatus = () => {
-  const { data } = useQuery<VacationStatus>({
+  const { data, isLoading } = useQuery<VacationStatus>({
     queryKey: [keys.GET_VACATION_STATUS],
     queryFn: async () => {
       const response = await apis.get('/vacationProgress');
@@ -16,5 +16,6 @@ export const useGetVacationStatus = () => {
   });
   return {
     data,
+    isLoading,
   };
 };
