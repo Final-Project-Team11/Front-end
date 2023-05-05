@@ -57,7 +57,7 @@ const Card = ({ location }: CardProps) => {
           navigate('/manager');
         };
       } else {
-        buttonText = `유저 생성 >`;
+        buttonText = `유저 관리 >`;
         navigateButton = e => {
           e.stopPropagation();
           navigate('/business');
