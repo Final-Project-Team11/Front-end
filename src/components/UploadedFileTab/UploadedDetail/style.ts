@@ -15,6 +15,14 @@ export const Modal = styled.div`
   box-shadow: rgba(15, 19, 24, 0.27) 0 4px 30px 8px;
 `;
 
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Header = styled.div`
   /* background-color: yellow; */
   width: 100%;

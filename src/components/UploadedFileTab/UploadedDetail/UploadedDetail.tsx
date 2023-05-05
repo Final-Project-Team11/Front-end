@@ -1,6 +1,7 @@
 import * as UI from './style';
 import { DetailProps } from '../interfaces';
 import { useGetUploadedDetail } from '../../../api/hooks/UploadedFile/useGetUploadedDetail';
+import Loading from '../../Loading/Loading';
 
 const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
   const payload = {
@@ -10,7 +11,13 @@ const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
 
   const { data, isLoading } = useGetUploadedDetail(payload);
   if (isLoading || !data) {
-    return <div>Loading....</div>;
+    return (
+      <UI.Modal>
+        <UI.LoadingBlock>
+          <Loading />
+        </UI.LoadingBlock>
+      </UI.Modal>
+    );
   }
 
   let files;

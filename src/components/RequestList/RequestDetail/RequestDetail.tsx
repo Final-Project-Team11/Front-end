@@ -3,12 +3,27 @@ import * as UI from './style';
 import { DecideParams, DetailProps } from '../interfaces';
 import { useDecideRequest } from '../../../api/hooks/Request/useDecideRequest';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { useGetRequestDetail } from '../../../api/hooks/Request/useGetRequestDetail';
+import Loading from '../../Loading/Loading';
 
-const RequestDetail = ({ data, isLoading, closeModal, type }: DetailProps) => {
+const RequestDetail = ({ eventId, closeModal, type }: DetailProps) => {
+  const detailPayload = {
+    type: type,
+    id: eventId,
+  };
+
+  const { data, isLoading } = useGetRequestDetail(detailPayload);
+
   const { decideRequest } = useDecideRequest();
 
   if (isLoading || !data) {
-    return <div>Loading....</div>;
+    return (
+      <UI.Modal>
+        <UI.LoadingBlock>
+          <Loading />
+        </UI.LoadingBlock>
+      </UI.Modal>
+    );
   }
 
   // 수락 거절 버튼 핸들러
