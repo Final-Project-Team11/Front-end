@@ -4,6 +4,8 @@ import { COLOR } from '../../styles/colors';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+
+  margin: auto;
 `;
 
 export const ViewUserArea = styled.div`
@@ -54,7 +56,6 @@ export const UserInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 
   padding-bottom: 15px;
 
