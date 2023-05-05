@@ -4,6 +4,7 @@ import {
   StSpan,
   UserHead,
   UserInfo,
+  ViewUserArea,
   Wrapper_Space,
 } from '../styles';
 import { Users, useGetUser } from '../hooks/useGetUser';
@@ -133,7 +134,7 @@ const ViewUser = () => {
   };
 
   return (
-    <>
+    <ViewUserArea>
       <StH1>유저 조회</StH1>
       <Wrapper_Row
         style={{
@@ -215,7 +216,7 @@ const ViewUser = () => {
                 </UserInfo>
                 <Wrapper_Space style={{ gap: '20px', borderBottom: '0.5px solid black' }}>
                   <UserInfo>{user.rank}</UserInfo>
-                  <UserInfo>{user.authLevel}</UserInfo>
+                  <UserInfo>{user.authLevel === 2 ? '관리자' : '직원'}</UserInfo>
                 </Wrapper_Space>
                 <Wrapper_Space style={{ gap: '20px', borderBottom: '0.5px solid black' }}>
                   <UserInfo>{user.job}</UserInfo>
@@ -248,13 +249,13 @@ const ViewUser = () => {
         {showModal && selectedUser && (
           <DetailUser
             user={selectedUser}
-            onClose={() => setShowModal(false)}
+            closeModal={() => setShowModal(false)}
             showModal={showModal}
             setShowModal={setShowModal}
           />
         )}
       </Wrapper_Column>
-    </>
+    </ViewUserArea>
   );
 };
 
