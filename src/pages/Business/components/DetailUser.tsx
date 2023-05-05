@@ -10,12 +10,12 @@ import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 import { useDeleteUser } from '../hooks/useDeletUser';
 import Swal from 'sweetalert2';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { usePatchUser } from '../hooks/usePatchUser';
 
 type UserModalProps = {
   user: Users;
-  onClose: () => void;
+  closeModal: () => void;
   showModal: boolean;
   setShowModal: (value: boolean) => void;
 };
@@ -24,10 +24,10 @@ type DetailUser = {
   team: string;
   rank: string;
   job: string;
-  authLevel: number | string;
+  authLevel: number | undefined;
 };
 
-const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) => {
+const DetailUser = ({ user, closeModal, showModal, setShowModal }: UserModalProps) => {
   const { deleteUser } = useDeleteUser();
 
   const deleteUserHandler = (): void => {
@@ -50,14 +50,6 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
 
   const { patchUser } = usePatchUser();
 
-  const authLevel = () => {
-    if (String(user.authLevel) === '관리자') {
-      return 2;
-    } else {
-      return 3;
-    }
-  };
-
   const patchUserHandler = () => {
     const team = getValues('team');
     const rank = getValues('rank');
@@ -67,14 +59,14 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
       team: user.team,
       rank: user.rank,
       job: user.job,
-      authLevel: authLevel(),
+      authLevel: user.authLevel,
     };
 
     const patchUserData = {
       team: team,
       rank: rank,
       job: job,
-      authLevel: authLevel(),
+      authLevel: auth.auth,
     };
 
     console.log('기존 정보', oldUser);
@@ -119,19 +111,18 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
       });
     }
   };
-
-  const closeModal = () => {
-    setShowModal(false);
+  const userAuth = () => {
+    if (user.authLevel === 2) {
+      return '관리자';
+    }
+    if (user.authLevel === 3) {
+      return '직원';
+    }
   };
 
-  type Auth = {
-    auth: number | string;
-  };
-  const [auth, setAuth] = React.useState<Auth>({ auth: user.authLevel });
+  const [auth, setAuth] = React.useState({ auth: user.authLevel });
 
-  const selecteAuthHandler = (value: number | string) => {
-    console.log('기존', user.authLevel);
-    console.log('선택된', value);
+  const selecteAuthHandler = (value: number) => {
     setAuth({ auth: value });
   };
 
@@ -236,12 +227,12 @@ const DetailUser = ({ user, onClose, showModal, setShowModal }: UserModalProps) 
               marginRight: '20px',
             }}
           >
-            {user.authLevel}
+            {userAuth()}
           </StDiv>
           <Dropdown
             items={authority}
             value={auth.auth}
-            onChange={value => selecteAuthHandler(value)}
+            onChange={value => selecteAuthHandler(Number(value))}
             style={{
               width: '240px',
               height: '50px',
