@@ -6,10 +6,12 @@ import { TagBlockCssProps } from './interfaces';
 import Board from '../Board';
 import TagIconTitle from '../../assets/Icons/TagIconTitle';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
+import Loading from '../Loading/Loading';
+import { LoadingBlock } from './Tags/style';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드
-  const { data, fetchNextPage, hasNextPage } = useMentionedSchedules();
+  const { data, fetchNextPage, hasNextPage, isLoading } = useMentionedSchedules();
 
   // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
@@ -25,9 +27,15 @@ const Tag = ({ types }: TagBlockCssProps) => {
 
   return (
     <Board icon={icon} title="tag" types={types} targetDiv={targetDiv}>
-      {tags.map((tag: Mention) => {
-        return <Tags key={tag.mentionId} tag={tag} types={types} />;
-      })}
+      {isLoading ? (
+        <LoadingBlock>
+          <Loading />
+        </LoadingBlock>
+      ) : (
+        tags.map((tag: Mention) => {
+          return <Tags key={tag.mentionId} tag={tag} types={types} />;
+        })
+      )}
     </Board>
   );
 };

@@ -10,7 +10,7 @@ export interface PageData {
 }
 
 export const useGetMyRequest = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -35,5 +35,6 @@ export const useGetMyRequest = () => {
     data,
     fetchNextPage: () => fetchNextPage(),
     hasNextPage: hasNextPage || false,
+    isLoading,
   };
 };

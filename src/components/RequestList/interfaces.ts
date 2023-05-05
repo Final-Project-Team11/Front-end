@@ -18,8 +18,7 @@ export interface RequestInfo {
   userName: string;
 }
 export interface DetailProps {
-  data: RequestInfo | undefined;
-  isLoading: boolean;
+  eventId: number;
   closeModal: () => void;
   type: 'schedule' | 'other';
 }

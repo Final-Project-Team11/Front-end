@@ -72,3 +72,12 @@ export const StFeedTitleH1 = styled.h1<TitleProps>`
           color: ${COLOR.VACATION_RED};
         `};
 `;
+
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

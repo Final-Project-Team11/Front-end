@@ -10,7 +10,7 @@ export interface PageData {
 }
 
 export const useGetVacation = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -29,5 +29,5 @@ export const useGetVacation = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false, isLoading };
 };

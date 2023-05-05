@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsPencilSquare } from '@react-icons/all-files/bs/BsPencilSquare';
 import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
+import Loading from '../Loading/Loading';
 
 const Card = ({ location }: CardProps) => {
   const { userInfo, infoIsLoading } = useGetCardInfo();
@@ -25,7 +26,11 @@ const Card = ({ location }: CardProps) => {
   const decodedToken: DecodedToken = jwtDecode(token);
 
   if (infoIsLoading || !userInfo) {
-    return <h1>...loading</h1>;
+    return (
+      <UI.LoadingBlock>
+        <Loading />
+      </UI.LoadingBlock>
+    );
   }
 
   // 카드 클릭 시 Detail 요청, Modal open
@@ -52,7 +57,7 @@ const Card = ({ location }: CardProps) => {
           navigate('/manager');
         };
       } else {
-        buttonText = `유저 생성 >`;
+        buttonText = `유저 관리 >`;
         navigateButton = e => {
           e.stopPropagation();
           navigate('/business');

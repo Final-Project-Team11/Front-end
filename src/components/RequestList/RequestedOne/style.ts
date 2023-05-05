@@ -23,6 +23,14 @@ export const StRequestedListBlock = styled.div<RequestStatus>`
   }
 `;
 
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StNameDateDiv = styled.div`
   width: 100%;
   display: flex;
