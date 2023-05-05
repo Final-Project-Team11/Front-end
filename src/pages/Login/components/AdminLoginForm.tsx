@@ -9,19 +9,21 @@ import { TextWrapper, SubmitForm, StSpan, StSignupSpan } from '../styles';
 import { useLogin } from '../hooks/useLogin';
 import { ErrorP } from '../../MasterSignup/styles';
 
-export type AdminLoginInfo = {
+export type LoginInfo = {
   companyId: string;
   password: string;
+  userId: string;
+  changePassword: string;
+  changePasswordCheck: string;
 };
 
 const AdminLoginForm = () => {
-  // react-hook-form의 객체를 생성
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AdminLoginInfo>();
-  // hook에 제출 함수를 가져옴
+  } = useForm<LoginInfo>();
+
   const { loginHandler } = useLogin('auth/admin');
   const navigate = useNavigate();
 
