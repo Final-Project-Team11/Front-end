@@ -39,10 +39,8 @@ export const Svg = styled.div`
 `;
 
 export const ErrorP = styled.p`
-  display: flex;
-  justify-content: flex-start;
   font-size: 12px;
   font-weight: bold;
   color: ${COLOR.POINT_C};
-  margin: -15px 0;
+  margin: -15px auto -15px 0;
 `;
