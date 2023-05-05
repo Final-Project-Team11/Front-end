@@ -10,8 +10,6 @@ export const Modal = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  box-shadow: rgba(15, 19, 24, 0.27) 0 4px 30px 8px;
 `;
 
 export const LoadingBlock = styled.div`
@@ -23,7 +21,6 @@ export const LoadingBlock = styled.div`
 `;
 
 export const Header = styled.div`
-  /* background-color: yellow; */
   width: 100%;
   height: 73px;
 
@@ -50,6 +47,10 @@ export const TitleSpan = styled.span`
   font-weight: bold;
 `;
 
+export const ContentSpan = styled.span`
+  font-size: 15px;
+`;
+
 export const Devider = styled.hr<DeviderProps>`
   width: 95%;
   height: 1px;
@@ -68,17 +69,12 @@ export const ContentArea = styled.div`
   box-sizing: border-box;
 `;
 
-export const ContentSpan = styled.span`
-  font-size: 15px;
-`;
-
 export const Footer = styled.div`
   width: 100%;
   height: 120px;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 
   position: relative;
 `;
@@ -116,15 +112,15 @@ export const FooterFileA = styled.a`
 
   padding: 0 15px;
   box-sizing: border-box;
-  cursor: pointer;
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   border-radius: 13px;
 `;
 
-export const CloseButton = styled.button`
+export const DecideButton = styled.button`
   background-color: black;
   width: 70px;
   height: 26px;
