@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
-import { DetailType } from '../../../components/UploadedFileTab/interfaces';
+import { DetailType } from '../../../components/MyPage/UploadedFileTab/interfaces';
 
 interface Payload {
   eventId: number;

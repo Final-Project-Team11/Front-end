@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import Tag from '../../components/Tag';
+import { useEffect } from 'react';
+import Tag from '../../components/MyPage/Tag';
 import Feed from '../../components/Feed';
-import UploadedFileTab from '../../components/UploadedFileTab';
+import UploadedFileTab from '../../components/MyPage/UploadedFileTab';
 import Card from '../../components/Card';
-import MyRequest from '../../components/MyRequest/MyRequest';
+import MyRequest from '../../components/MyPage/MyRequest/MyRequest';
 import * as UI from './styles';
 import OneWeekCalendar from '../../components/OneWeekCalendar/OneWeekCalendar';
-import VacationStatus from '../../components/VacationStatus/VacationStatus';
+import VacationStatus from '../../components/MyPage/VacationStatus/VacationStatus';
 import { useSetRecoilState } from 'recoil';
 import { recoilTabState } from '../../states/recoilTabState';
 

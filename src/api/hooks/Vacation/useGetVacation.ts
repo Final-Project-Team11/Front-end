@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { VacationList } from '../../../components/VacationTab/interfaces';
+import { VacationList } from '../../../components/MyPage/VacationTab/interfaces';
 
 export interface PageData {
   vacation: VacationList[];
