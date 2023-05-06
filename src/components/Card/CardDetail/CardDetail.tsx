@@ -1,18 +1,24 @@
 import React, { useRef, useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
-import useInput from '../../../hooks/common/useInput';
-import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
-import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
-import CustomInput from '../../Atoms/Input/CustomInput';
-import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
 import { CardDetailProps } from '../interfaces';
+// 서버 요청
+import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
+import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
+// SVG파일
 import ProfileEmployee from '../../../assets/Meerkat/ProfileEmployee';
 import ProfileManager from '../../../assets/Meerkat/ProfileManager';
+// 컴포넌트
+import useInput from '../../../hooks/common/useInput';
+import CustomInput from '../../Atoms/Input/CustomInput';
 import CustomButton from '../../Atoms/Button/CustomButton';
 import Loading from '../../Loading/Loading';
+// 라이브러리
+import Swal from 'sweetalert2';
 
 const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
+  // 카드디테일 정보 가져오기
   const { data } = useGetCardDetail();
 
   // 수정모드 동작 상태
@@ -150,6 +156,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
     }
   };
 
+  // 카드 닫기 버튼 함수
   const closeBtnHandler = () => {
     // sweetAlert Modal보다 상단에 띄우기 위한 타겟
     const sweetAlertDiv = document.getElementById('cardSweetAlertDiv');
@@ -192,6 +199,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
     imgInputRef?.current?.click();
   };
 
+  // 로딩
   if (!data) {
     return (
       <UI.LoadingBlock>

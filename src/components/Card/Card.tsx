@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
-import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { CardProps, DecodedToken, NavButton } from './interfaces';
-import CardDetail from './CardDetail/CardDetail';
-import CustomModal from '../Atoms/Modal/CustomModal';
-import ProfileEmployee from '../../assets/Meerkat/ProfileEmployee';
-import ProfileManager from '../../assets/Meerkat/ProfileManager';
+// 서버 요청
+import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { getCookie } from '../../api/auth/CookieUtils';
 import jwtDecode from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
+// 컴포넌트
+import CardDetail from './CardDetail/CardDetail';
+import CustomModal from '../Atoms/Modal/CustomModal';
+import Loading from '../Loading/Loading';
+// SVG파일
+import ProfileEmployee from '../../assets/Meerkat/ProfileEmployee';
+import ProfileManager from '../../assets/Meerkat/ProfileManager';
+// 라이브러리
 import { BsPencilSquare } from '@react-icons/all-files/bs/BsPencilSquare';
+import { useNavigate } from 'react-router-dom';
 import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
-import Loading from '../Loading/Loading';
 
 const Card = ({ location }: CardProps) => {
+  // 프로필카드 정보 가져오기
   const { userInfo, infoIsLoading } = useGetCardInfo();
+  // 테마 패치용 recoilState
   const tab = useRecoilValue(recoilTabState);
-
+  // 캘린더 <-> 마이페이지 이동
   const navigate = useNavigate();
-
+  // 모달 여닫는용
   const [openModal, setOpenModal] = useState(false);
 
+  // 토큰 디코드해서 권한레벨 얻기
   const token = getCookie('token');
   const decodedToken: DecodedToken = jwtDecode(token);
 
+  // 로딩
   if (infoIsLoading || !userInfo) {
     return (
       <UI.LoadingBlock>
@@ -38,8 +47,7 @@ const Card = ({ location }: CardProps) => {
     setOpenModal(true);
   };
 
-  // 버튼 텍스트
-  // 메인, 마이페이지 이동 함수
+  // 권한 레벨에 따라 이동버튼 텍스트, 페이지 경로 변경
   let buttonText: string;
   let navigateButton: NavButton;
   switch (location) {
