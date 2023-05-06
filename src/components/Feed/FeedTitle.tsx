@@ -5,6 +5,7 @@ import { recoilTabState } from '../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 
 const FeedTitle = ({ clickFn }: FeedTitleProps) => {
+  // 테마 세팅용 recoilState
   const tab = useRecoilValue(recoilTabState);
   return (
     <UI.StFeedTitleBlock>
