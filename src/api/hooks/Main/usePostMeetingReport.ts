@@ -10,6 +10,7 @@ interface Paylaod {
     end?: Date;
     attendees?: string[];
     fileList?: File[] | undefined;
+    calendarId?: string;
   };
   id: string | number | undefined;
 }
@@ -21,11 +22,12 @@ const usePostMeetingReport = () => {
       const start = payload.postInfo?.start?.toString();
       const end = payload.postInfo?.end?.toString();
 
-      payload.postInfo?.fileList?.map((item, index) => formData.append('file', item));
+      payload.postInfo?.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       formData.append('end', end || '');
       formData.append('title', payload.postInfo?.title || '');
       formData.append('body', payload.postInfo?.body || '');
+      formData.append('calendarId', payload.postInfo?.calendarId || '');
       payload.postInfo?.attendees?.map((item, index) =>
         formData.append(`attendees[${index}]`, item)
       );
