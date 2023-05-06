@@ -23,7 +23,6 @@ export const LoadingBlock = styled.div`
 `;
 
 export const Header = styled.div`
-  /* background-color: yellow; */
   width: 100%;
   height: 73px;
 

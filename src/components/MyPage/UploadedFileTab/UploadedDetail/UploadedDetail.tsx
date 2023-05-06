@@ -1,15 +1,20 @@
+// 스타일, 인터페이스
 import * as UI from './style';
 import { DetailProps } from '../interfaces';
+// 서버 요청
 import { useGetUploadedDetail } from '../../../../api/hooks/UploadedFile/useGetUploadedDetail';
+// 컴포넌트
 import Loading from '../../../Loading/Loading';
 
 const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
+  // 데이터 요청, 요청용 payload
   const payload = {
     eventId,
     types,
   };
-
   const { data, isLoading } = useGetUploadedDetail(payload);
+
+  // 로딩
   if (isLoading || !data) {
     return (
       <UI.Modal>
@@ -20,6 +25,7 @@ const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
     );
   }
 
+  // 타입따라 파일 세팅
   let files;
   switch (types) {
     case 'meetingfiles': {

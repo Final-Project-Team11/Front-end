@@ -1,16 +1,21 @@
 import { useRef } from 'react';
+// 스타일, 인터페이스
+import { LoadingBlock } from './UploadedOne/style';
+import { COLOR } from '../../../styles/colors';
 import { UploadedFileTabProps, UploadedFileList } from './interfaces';
+// 서버 요청
 import { PageData, useGetFile } from '../../../api/hooks/UploadedFile/useGetFile';
+import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 컴포넌트
 import Board from '../Board';
 import UploadedOne from './UploadedOne';
+import Loading from '../../Loading/Loading';
+// SVG파일
 import FolderIcon from '../../../assets/Icons/FolderIcon';
 import BusinessIcon from '../../../assets/Icons/BusinessIcon';
-import { COLOR } from '../../../styles/colors';
-import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
-import { LoadingBlock } from './UploadedOne/style';
-import Loading from '../../Loading/Loading';
 
 const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
+  // 데이터 요청
   const { data, fetchNextPage, hasNextPage, isLoading } = useGetFile(type);
 
   // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef

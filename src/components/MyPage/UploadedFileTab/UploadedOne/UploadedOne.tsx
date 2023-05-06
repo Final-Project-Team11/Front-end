@@ -1,12 +1,16 @@
 import { useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
 import { Props } from '../interfaces';
+// 컴포넌트
 import Modal from '../../../Atoms/Modal/CustomModal';
 import UploadedDetail from '../UploadedDetail';
+// SVG파일
 import Person from '../../../../assets/Icons/Person';
 import File from '../../../../assets/Icons/File';
 
 const UploadedOne = ({ file, type }: Props) => {
+  // 디테일 모달 오픈 state
   const [modalOpen, setModalOpen] = useState(false);
 
   // 모달 오픈하며 디테일데이터 요청, 모달로 전달
