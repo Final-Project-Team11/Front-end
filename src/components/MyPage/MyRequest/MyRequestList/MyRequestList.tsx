@@ -1,17 +1,23 @@
 import * as UI from './style';
+// 스타일, 인터페이스
+import { FileProps } from '../interfaces';
+// 컴포넌트
+import Modal from '../../../Atoms/Modal/CustomModal';
+import MyRequestDetail from '../MyRequestDetail/MyRequestDetail';
+// SVG파일
+import Person from '../../../../assets/Icons/Person';
+import CalendarIcon from '../../../../assets/Icons/CalendarIcon';
+// 라이브러리
 import { BsCheckCircle } from '@react-icons/all-files/bs/BsCheckCircle';
 import { BsXCircle } from '@react-icons/all-files/bs/BsXCircle';
 import { BsCircle } from '@react-icons/all-files/bs/BsCircle';
-import { FileProps } from '../interfaces';
-import Person from '../../../../assets/Icons/Person';
-import CalendarIcon from '../../../../assets/Icons/CalendarIcon';
 import { useState } from 'react';
-import Modal from '../../../Atoms/Modal/CustomModal';
-import MyRequestDetail from '../MyRequestDetail/MyRequestDetail';
 
 const MyRequestList = ({ file }: FileProps) => {
+  // 상세정보 모달 오픈상태
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 모달닫기함수
   const closeModal = () => {
     setModalOpen(false);
   };

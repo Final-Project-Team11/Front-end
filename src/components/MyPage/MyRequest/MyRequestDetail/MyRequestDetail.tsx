@@ -1,19 +1,23 @@
-import React from 'react';
 import { DetailProps } from '../interfaces';
+// 스타일, 인터페이스
+import * as UI from './style';
+// 서버 요청
 import {
   Payload,
   useGetRequestDetail,
 } from '../../../../api/hooks/Request/useGetRequestDetail';
-import * as UI from './style';
+// 컴포넌트
 import Loading from '../../../Loading/Loading';
 
 const MyRequestDetail = ({ closeModal, eventId }: DetailProps) => {
+  // 데이터 요청, 요청용 payload
   const detailPayload: Payload = {
     type: 'schedule',
     id: eventId,
   };
   const { data, isLoading } = useGetRequestDetail(detailPayload);
 
+  // 로딩
   if (isLoading || !data) {
     return (
       <UI.Modal>
@@ -23,8 +27,6 @@ const MyRequestDetail = ({ closeModal, eventId }: DetailProps) => {
       </UI.Modal>
     );
   }
-
-  console.log(data);
 
   return (
     <UI.Modal>

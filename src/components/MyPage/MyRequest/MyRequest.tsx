@@ -1,14 +1,19 @@
 import { useRef } from 'react';
-import MyRequestList from './MyRequestList';
-import { PageData, useGetMyRequest } from '../../../api/hooks/MyRequest/useGetMyRequest';
-import Board from '../Board';
-import BusinessIcon from '../../../assets/Icons/BusinessIcon';
+// 스타일, 인터페이스
 import { COLOR } from '../../../styles/colors';
+// 서버 요청
+import { PageData, useGetMyRequest } from '../../../api/hooks/MyRequest/useGetMyRequest';
 import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 컴포넌트
+import MyRequestList from './MyRequestList';
+import Board from '../Board';
 import { LoadingBlock } from './MyRequestList/style';
 import Loading from '../../Loading/Loading';
+// SVG파일
+import BusinessIcon from '../../../assets/Icons/BusinessIcon';
 
 const MyRequest = () => {
+  // 데이터 요청 무한스크롤
   const { data, fetchNextPage, hasNextPage, isLoading } = useGetMyRequest();
 
   // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
@@ -23,6 +28,7 @@ const MyRequest = () => {
   // Board title에 들어갈 icon
   const icon = <BusinessIcon width="21px" height="15px" fill={COLOR.PAGE_BLUE} />;
 
+  // 데이터 없을 시 true 변수
   const NoData = files.length === 0;
 
   return (
