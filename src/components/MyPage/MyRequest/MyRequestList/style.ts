@@ -47,7 +47,14 @@ export const StNameDateBlock = styled.div`
   gap: 10px;
 `;
 
-export const StFileSpan = styled.span``;
+export const StFileSpan = styled.span`
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+`;
 
 export const StDateSpan = styled.span`
   font-size: 9px;
