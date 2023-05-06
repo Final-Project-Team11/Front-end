@@ -1,13 +1,16 @@
 import { useRef } from 'react';
-import Tags from './Tags';
-import { PageData, useMentionedSchedules } from '../../../api/hooks/Tag/useGetTag';
-import { Mention } from './interfaces';
-import { TagBlockCssProps } from './interfaces';
-import Board from '../Board';
-import TagIconTitle from '../../../assets/Icons/TagIconTitle';
-import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
-import Loading from '../../Loading/Loading';
+// 스타일, 인터페이스
+import { Mention, TagBlockCssProps } from './interfaces';
 import { LoadingBlock } from './Tags/style';
+// 서버 요청
+import { PageData, useMentionedSchedules } from '../../../api/hooks/Tag/useGetTag';
+import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 컴포넌트
+import Tags from './Tags';
+import Board from '../Board';
+import Loading from '../../Loading/Loading';
+// SVG파일
+import TagIconTitle from '../../../assets/Icons/TagIconTitle';
 
 const Tag = ({ types }: TagBlockCssProps) => {
   // 무한스크롤 코드

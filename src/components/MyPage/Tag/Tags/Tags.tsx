@@ -1,9 +1,11 @@
-import { TagsProps } from '../interfaces';
-
+// 스타일, 인터페이스
 import * as UI from './style';
+import { TagsProps } from '../interfaces';
+// 서버 요청
 import { usePatchTag } from '../../../../api/hooks/Tag/usePatchTag';
 
 const Tags = ({ tag, types }: TagsProps) => {
+  // 태그 클릭 시 체크 요청
   const { tagCheck } = usePatchTag();
 
   // 멘션 클릭 시 체크
