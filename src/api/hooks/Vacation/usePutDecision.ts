@@ -3,8 +3,8 @@ import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AxiosError } from 'axios';
-import { VacationPayload } from '../../../components/VacationTab/interfaces';
-import { useRef, useState } from 'react';
+import { VacationPayload } from '../../../components/MyPage/VacationTab/interfaces';
+import { useRef } from 'react';
 
 interface ErrorData {
   success: boolean;

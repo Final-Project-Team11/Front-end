@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { keys } from '../../utils/createQueryKey';
 import apis from '../../axios/api';
-import { RequestInfo } from '../../../components/RequestList/interfaces';
+import { RequestInfo } from '../../../components/MyPage/RequestList/interfaces';
 
 export interface Payload {
   type: 'schedule' | 'other';

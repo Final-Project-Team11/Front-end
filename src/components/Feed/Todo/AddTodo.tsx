@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
-import { StCircleBlock } from './style';
 import { AddTodoProps, SentTodo } from '../interfaces';
+// 서버 요청
 import { usePostTodo } from '../../../api/hooks/Feed/usePostTodo';
 
 const AddTodo = ({
@@ -19,8 +20,9 @@ const AddTodo = ({
     }
   }, []);
 
+  // 투두 추가 요청
   const { postTodo } = usePostTodo();
-
+  // 요청 payload
   const todo: SentTodo = {
     categoryId: categoryId,
     content: {
@@ -38,7 +40,7 @@ const AddTodo = ({
       }
     }
   };
-  // 인풋에서 포커스 사라지면 input 닫힘
+  // 인풋에서 포커스 사라지면 input 저장, 닫힘
   const blurHandler = () => {
     if (value) {
       postTodo(todo);
@@ -52,7 +54,7 @@ const AddTodo = ({
 
   return (
     <UI.StTodoAreaBlock>
-      <StCircleBlock />
+      <UI.StCircleBlock />
       <UI.StTodoInput
         ref={inputRef}
         type="text"
