@@ -1,15 +1,20 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+// 스타일, 인터페이스
+import { COLOR } from '../../../styles/colors';
+import { LoadingBlock } from './RequestedOne/style';
+import { RequestType } from './interfaces';
+// 서버 요청
 import { PageData, useGetRequest } from '../../../api/hooks/Request/useGetRequest';
+import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 컴포넌트
 import Board from '../Board';
 import RequestedOne from './RequestedOne';
-import { RequestType } from './interfaces';
-import BusinessIcon from '../../../assets/Icons/BusinessIcon';
-import { COLOR } from '../../../styles/colors';
-import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
-import { LoadingBlock } from './RequestedOne/style';
 import Loading from '../../Loading/Loading';
+// SVG파일
+import BusinessIcon from '../../../assets/Icons/BusinessIcon';
 
 const Request = ({ type }: RequestType) => {
+  // 정보 요청
   const { data, fetchNextPage, hasNextPage, isLoading } = useGetRequest(type);
 
   // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
@@ -34,6 +39,7 @@ const Request = ({ type }: RequestType) => {
     ? data.pages.flatMap(page => ('schedule' in page ? page.schedule : page.other))
     : [];
 
+  // 데이터 없는 경우 true 변수
   const NoData = requests.length === 0;
 
   let NoDataMessage;

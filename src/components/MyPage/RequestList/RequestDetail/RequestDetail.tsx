@@ -1,24 +1,27 @@
-import React from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
 import { DecideParams, DetailProps } from '../interfaces';
+// 서버 요청
 import { useDecideRequest } from '../../../../api/hooks/Request/useDecideRequest';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
 import {
   Payload,
   useGetRequestDetail,
 } from '../../../../api/hooks/Request/useGetRequestDetail';
+// 컴포넌트
 import Loading from '../../../Loading/Loading';
+// 라이브러리
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 const RequestDetail = ({ eventId, closeModal, type }: DetailProps) => {
+  // 서버 요청, 요청용 payload,
   const detailPayload: Payload = {
     type: type,
     id: eventId,
   };
-
   const { data, isLoading } = useGetRequestDetail(detailPayload);
-
   const { decideRequest } = useDecideRequest();
 
+  // 로딩
   if (isLoading || !data) {
     return (
       <UI.Modal>

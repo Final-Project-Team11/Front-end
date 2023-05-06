@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
-import Modal from '../../../Atoms/Modal/CustomModal';
+import { RequestedOneProps } from '../interfaces';
+// 컴포넌트
 import RequestDetail from '../RequestDetail';
+import Modal from '../../../Atoms/Modal/CustomModal';
+// SVG파일
 import Person from '../../../../assets/Icons/Person';
 import CalendarIcon from '../../../../assets/Icons/CalendarIcon';
-import { RequestedOneProps } from '../interfaces';
 
 const RequestedOne = ({ request, type }: RequestedOneProps) => {
+  // 디테일 모달 오픈 state
   const [modalOpen, setModalOpen] = useState(false);
 
   const closeModal = () => {
