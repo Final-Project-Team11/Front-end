@@ -38,6 +38,7 @@ export default function SubMain({ view }: { view: ViewType }) {
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
   const [event, setEvent] = useRecoilState(recoilClickEventState);
   const [clickDetail, setClickDetail] = useState<boolean>(false);
+  const [createSchedule, setCreateShedule] = useState<boolean>(false);
   const [clickData, setClickData] = useState<CalendarProps>();
   const [selectedView, setSelectedView] = useState(view);
 
@@ -134,6 +135,8 @@ export default function SubMain({ view }: { view: ViewType }) {
 
     setClickData(newData);
     setClickDetail(true);
+    console.log('onAfterRenderEvent');
+    setCreateShedule(true);
   };
 
   // <-------------------------다음 달/ 이전 달 이동 시 사용되는 Event------------------------->
@@ -162,6 +165,7 @@ export default function SubMain({ view }: { view: ViewType }) {
     }
 
     setClickDetail(true);
+    setCreateShedule(false);
   };
 
   // <-------------------------일정 / 휴가 생성전에 호출되는 Event------------------------->
@@ -258,6 +262,8 @@ export default function SubMain({ view }: { view: ViewType }) {
               propsRef={detailRef}
               onReturnHandler={setClickDetail}
               onCancelHandler={onDeleteEvent}
+              setCreateShedule={setCreateShedule}
+              createSchedule={createSchedule}
             />
           ) : (
             <VacationFormat
@@ -265,6 +271,8 @@ export default function SubMain({ view }: { view: ViewType }) {
               propsRef={detailRef}
               onReturnHandler={setClickDetail}
               onCancelHandler={onDeleteEvent}
+              setCreateShedule={setCreateShedule}
+              createSchedule={createSchedule}
             />
           )}
         </UI.FooterContainer>
