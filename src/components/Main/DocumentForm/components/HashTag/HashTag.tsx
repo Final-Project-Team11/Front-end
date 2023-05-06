@@ -111,11 +111,15 @@ const HashTag = (props: HashTagProps) => {
       {props.disable === false &&
         isOpen &&
         createPortal(
-          <styles.StUlBlock ref={ulRef} pos={inputPosition}>
-            <styles.StTeamMark>Team A :</styles.StTeamMark>
-            {data?.map(item => {
+          <styles.StUlBlock className="tags" ref={ulRef} pos={inputPosition}>
+            <styles.StTeamMark className="tags">Team A :</styles.StTeamMark>
+            {data?.map((item, index) => {
               return (
-                <styles.StLiBlock key={nanoid()} onClick={onLiClickHandler}>
+                <styles.StLiBlock
+                  className="tags"
+                  key={nanoid()}
+                  onClick={onLiClickHandler}
+                >
                   {item.userName}-{item.userId}
                 </styles.StLiBlock>
               );
