@@ -15,3 +15,8 @@ export interface MyListProps {
 export interface FileProps {
   file: MyListProps;
 }
+
+export interface DetailProps {
+  eventId: number;
+  closeModal: () => void;
+}

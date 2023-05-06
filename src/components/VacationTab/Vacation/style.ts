@@ -23,6 +23,14 @@ export const StListBlock = styled.div`
   margin-bottom: 11px;
 `;
 
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StSpanBlock = styled.div<SpanProps>`
   width: 65%;
   height: 100%;

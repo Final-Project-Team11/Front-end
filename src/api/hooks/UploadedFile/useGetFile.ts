@@ -9,7 +9,7 @@ export interface PageData {
 }
 
 export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -32,5 +32,5 @@ export const useGetFile = (type: 'myfiles' | 'meetingfiles' | 'reportfiles') => 
     },
   });
 
-  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false, isLoading };
 };

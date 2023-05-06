@@ -7,9 +7,11 @@ import FolderIcon from '../../assets/Icons/FolderIcon';
 import BusinessIcon from '../../assets/Icons/BusinessIcon';
 import { COLOR } from '../../styles/colors';
 import { useInfiniteQueryHook } from '../../hooks/common/useInfiniteQueryHook';
+import { LoadingBlock } from './UploadedOne/style';
+import Loading from '../Loading/Loading';
 
 const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
-  const { data, fetchNextPage, hasNextPage } = useGetFile(type);
+  const { data, fetchNextPage, hasNextPage, isLoading } = useGetFile(type);
 
   // 무한스크롤을 적용할 div를 타겟하기 위해 추가한 useRef
   const targetDiv = useRef<HTMLDivElement | null>(null);
@@ -24,7 +26,7 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
   let title;
   let icon;
   switch (type) {
-    case 'meetingfiles' || 'reportfiles': {
+    case 'meetingfiles': {
       title = '회의록';
       icon = <FolderIcon width="21px" height="15px" fill={COLOR.PAGE_LIGHTBLUE} />;
       break;
@@ -41,11 +43,24 @@ const UploadedFileTab = ({ type }: UploadedFileTabProps) => {
     }
   }
 
+  // 받아온 데이터가 없을 시 NoData는 true.
+  const NoData = files.length === 0;
+
   return (
     <Board icon={icon} title={title} targetDiv={targetDiv}>
-      {files.map((file: UploadedFileList) => {
-        return <UploadedOne key={file.Id} file={file} type={type} />;
-      })}
+      {isLoading ? (
+        <LoadingBlock>
+          <Loading />
+        </LoadingBlock>
+      ) : NoData ? (
+        <LoadingBlock>
+          게시된 {type === 'reportfiles' ? `${title}가` : `${title}이`} 없습니다.
+        </LoadingBlock>
+      ) : (
+        files.map((file: UploadedFileList) => {
+          return <UploadedOne key={file.Id} file={file} type={type} />;
+        })
+      )}
     </Board>
   );
 };

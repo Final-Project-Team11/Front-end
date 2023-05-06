@@ -16,12 +16,22 @@ export const StFileBlock = styled.div<StatusProps>`
   margin-bottom: 18px;
 
   font-size: 12px;
+  cursor: pointer;
 
   color: ${({ status }) => (status === 'submit' ? COLOR.PAGE_SPAN : COLOR.PAGE_DONE)};
 
   &:hover .date {
     opacity: 1;
   }
+`;
+
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StSpanBlock = styled.div`

@@ -10,7 +10,7 @@ export interface PageData {
 }
 
 export const useMentionedSchedules = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -31,5 +31,5 @@ export const useMentionedSchedules = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false, isLoading };
 };

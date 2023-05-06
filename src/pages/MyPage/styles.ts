@@ -1,21 +1,17 @@
 import styled from 'styled-components';
 
 export const Frame = styled.div`
-  /* width: 1920px;
-  height: 1080px; */
   width: 100%;
   height: 100%;
 
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  margin-top: 48px;
 `;
 
 export const Wrapper = styled.div`
   width: 1200px;
   height: 100%;
-  padding-top: 40px;
-  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
@@ -29,16 +25,16 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 1100px;
+  width: 1215px;
   height: fit-content;
 `;
 
 export const MainArea = styled.div`
-  width: 1098px;
+  width: 1215px;
   height: 748px;
 
   display: flex;
-  gap: 28px;
+  gap: 43px;
 `;
 
 export const FeedArea = styled.div`
@@ -47,7 +43,8 @@ export const FeedArea = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: flex-end;
+  gap: 16px;
 `;
 
 export const TabArea = styled.div`
@@ -57,7 +54,7 @@ export const TabArea = styled.div`
   margin-top: 14px;
 
   display: flex;
-  gap: 20px;
+  gap: 50px;
 `;
 
 export const MiddleArea = styled.div`

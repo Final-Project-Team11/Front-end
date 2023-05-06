@@ -4,9 +4,18 @@ import { useGetVacationStatus } from '../../api/hooks/Vacation/useGetVacationSta
 import WorkingMeerkat from '../../assets/Meerkat/WorkingMeerkat';
 import VacationMeerkat from '../../assets/Meerkat/VacationMeerkat';
 import WaitingVacation from '../../assets/Meerkat/WaitingVacation';
+import Loading from '../Loading/Loading';
 
 const VacationStatus = () => {
-  const { data } = useGetVacationStatus();
+  const { data, isLoading } = useGetVacationStatus();
+
+  if (isLoading || !data) {
+    return (
+      <UI.LoadingBlock>
+        <Loading />
+      </UI.LoadingBlock>
+    );
+  }
 
   let svgFile;
   if (data) {

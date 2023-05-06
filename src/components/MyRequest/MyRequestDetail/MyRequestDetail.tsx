@@ -1,15 +1,19 @@
-import * as UI from './style';
+import React from 'react';
 import { DetailProps } from '../interfaces';
-import { useGetUploadedDetail } from '../../../api/hooks/UploadedFile/useGetUploadedDetail';
+import {
+  Payload,
+  useGetRequestDetail,
+} from '../../../api/hooks/Request/useGetRequestDetail';
+import * as UI from './style';
 import Loading from '../../Loading/Loading';
 
-const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
-  const payload = {
-    eventId,
-    types,
+const MyRequestDetail = ({ closeModal, eventId }: DetailProps) => {
+  const detailPayload: Payload = {
+    type: 'schedule',
+    id: eventId,
   };
+  const { data, isLoading } = useGetRequestDetail(detailPayload);
 
-  const { data, isLoading } = useGetUploadedDetail(payload);
   if (isLoading || !data) {
     return (
       <UI.Modal>
@@ -20,38 +24,26 @@ const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
     );
   }
 
-  let files;
-  switch (types) {
-    case 'meetingfiles': {
-      files = data.meetingfile;
-      break;
-    }
-    case 'myfiles': {
-      files = data.detail;
-      break;
-    }
-    case 'reportfiles': {
-      files = data.reportfile;
-      break;
-    }
-  }
+  console.log(data);
 
   return (
     <UI.Modal>
       <UI.Header>
         <UI.HeaderIcon />
-        <UI.TitleSpan>{files.start}</UI.TitleSpan>
-        <UI.TitleSpan>{files.userName}</UI.TitleSpan>
-        <UI.TitleSpan>{files.title}</UI.TitleSpan>
-        <UI.CloseButton onClick={closeModal}>닫기</UI.CloseButton>
+        <UI.TitleSpan>
+          {data.start === data.end ? data.start : `${data.start} ~ ${data.end}`}
+        </UI.TitleSpan>
+        <UI.TitleSpan>{data.userName}</UI.TitleSpan>
+        <UI.TitleSpan>{data.title}</UI.TitleSpan>
+        <UI.DecideButton onClick={closeModal}>닫기</UI.DecideButton>
         <UI.Devider positions="Header" />
       </UI.Header>
       <UI.ContentArea>
-        <UI.ContentSpan>{files.body}</UI.ContentSpan>
+        <UI.ContentSpan>{data.body}</UI.ContentSpan>
       </UI.ContentArea>
       <UI.Footer>
         <UI.FooterHalf>
-          {files.files.map((file, idx) => {
+          {data.files.map((file, idx) => {
             if (file.fileName && file.fileLocation) {
               return (
                 <UI.FooterFileA key={idx} href={file.fileLocation}>
@@ -64,7 +56,7 @@ const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
         </UI.FooterHalf>
         <UI.Devider positions="Footer" />
         <UI.FooterHalf>
-          {files.attendees?.map((tag, idx) => {
+          {data.attendees.map((tag, idx) => {
             return <UI.FooterSpanBlock key={idx}>@ {tag}</UI.FooterSpanBlock>;
           })}
         </UI.FooterHalf>
@@ -73,4 +65,4 @@ const UploadedDetail = ({ eventId, types, closeModal }: DetailProps) => {
   );
 };
 
-export default UploadedDetail;
+export default MyRequestDetail;

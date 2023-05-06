@@ -6,3 +6,9 @@ export interface VacationList {
   end: string;
   status: 'submit' | 'accept' | 'deny';
 }
+
+export interface VacationPayload {
+  status: 'submit' | 'accept' | 'deny';
+  Id: number;
+  userName: string;
+}
