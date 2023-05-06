@@ -71,6 +71,7 @@ export const ContentArea = styled.div`
 
 export const TextArea = styled.textarea`
   width: 100%;
+  min-height: 450px;
   border: none;
   height: 100%;
   outline: none;
@@ -108,8 +109,10 @@ export const FileBlock = styled.div`
 export const AttendeesBlock = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 33px;
+  padding: 10px 33px;
   margin-bottom: 10px;
+
+  border-top: 1px solid lightgray;
 `;
 
 export const FooterHalf = styled.div`

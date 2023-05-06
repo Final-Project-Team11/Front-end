@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { DropdownProps } from './interfaces';
 import { StBlock, StLi, StUlBlock } from './styles';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';

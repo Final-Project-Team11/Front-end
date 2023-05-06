@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import debounce from 'lodash/debounce';
 
 interface PositionProps {
   top: number;
@@ -25,15 +26,15 @@ const useDropDown = (): [
   const ulRef = useRef<HTMLUListElement>(null);
   const [width, setWidth] = useState(window.innerWidth);
 
-  const resizeHandler = () => {
+  //화면 확대 / 축소를 감지
+  const resizeHandler = debounce(() => {
     setWidth(window.innerWidth);
-  };
+  }, 300);
 
   useEffect(() => {
     window.addEventListener('resize', resizeHandler);
 
     return () => {
-      //cleanUp
       window.removeEventListener('resize', resizeHandler);
     };
   }, []);
@@ -43,23 +44,25 @@ const useDropDown = (): [
   // getBoundingClientRect은 해당 요소의 상태좌표값을 가져오고,
   // 절대 좌표를 얻기 위해서는 window.pageYOffset을 더해주어야 한다.
   useEffect(() => {
+    //input 태그를 감싸는 div
+
     const { current } = divRef;
+
+    //팀목록을 li를 감싸고 있는 UI
     const ulCurrent = ulRef.current;
 
-    if (current !== null) {
+    if (current !== null && ulCurrent !== null) {
       const { top, left, height, width } = current.getBoundingClientRect();
       const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
-      if (ulCurrent !== null) {
-        if (
-          top + height + ulCurrent.getBoundingClientRect().height >
-          window.innerHeight
-        ) {
-          const ulHeight = ulCurrent.getBoundingClientRect().height;
-          const newTop = absoluteTop - height - ulHeight;
-          setInputPosition({ top: newTop, left, height, width });
-        } else {
-          setInputPosition({ top: absoluteTop, left, height, width });
-        }
+      const absoluteLeft = window.pageXOffset + current.getBoundingClientRect().left;
+
+      //브라우저 전체 높이값보다 input을 감싸고 있는 div 태그 + UI 높이값보다 클때, UL 태그를 위로 올리기
+      if (top + height + ulCurrent.getBoundingClientRect().height > window.innerHeight) {
+        const ulHeight = ulCurrent.getBoundingClientRect().height;
+        const newTop = absoluteTop - height - ulHeight;
+        setInputPosition({ top: newTop, left: absoluteLeft, height, width });
+      } else {
+        setInputPosition({ top: absoluteTop, left: absoluteLeft, height, width });
       }
     }
   }, [isOpen, width]);

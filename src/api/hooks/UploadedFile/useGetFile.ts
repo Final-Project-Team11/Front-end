@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { UploadedFileList } from '../../../components/UploadedFileTab/interfaces';
+import { UploadedFileList } from '../../../components/MyPage/UploadedFileTab/interfaces';
 
 export interface PageData {
   [x: string]: UploadedFileList[] | number;

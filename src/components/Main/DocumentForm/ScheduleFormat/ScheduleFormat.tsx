@@ -1,34 +1,34 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { postFormat } from '../../../../pages/SubMain/utils';
-import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
-import * as styles from '../commonStyles';
-import useInput from '../../../../hooks/common/useInput';
-import useTextarea from '../../../../hooks/common/useTextarea';
-import { MdZoomIn } from '@react-icons/all-files/md/MdZoomIn';
-import Period from '../components/Period/Period';
-import { getCookie } from '../../../../api/auth/CookieUtils';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import useGetTeamInfo from '../../../../api/hooks/Main/useGetTeamInfo';
-import HashTag from '../components/HashTag/HashTag';
 import { RiArrowLeftSLine } from '@react-icons/all-files/ri/RiArrowLeftSLine';
-import FileUpload from '../components/FileUpload/FileUpload';
-import { MdZoomOut } from '@react-icons/all-files/md/MdZoomOut';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AxiosError } from 'axios';
-import { ErrorData, ScheduleProps } from '../commonInterface';
-import { ChangeTabContext } from '../../../../api/hooks/Main/useTabContext';
-import Swal from 'sweetalert2';
-import CustomButton from '../../../Atoms/Button/CustomButton';
+import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
-import { useRecoilValue } from 'recoil';
 import { recoilTabState } from '../../../../states/recoilTabState';
+import useTextarea from '../../../../hooks/common/useTextarea';
+import { ErrorData, ScheduleProps } from '../commonInterface';
+import CustomButton from '../../../Atoms/Button/CustomButton';
+import { getCookie } from '../../../../api/auth/CookieUtils';
+import FileUpload from '../components/FileUpload/FileUpload';
+import useInput from '../../../../hooks/common/useInput';
+import { ToastContainer, toast } from 'react-toastify';
+import HashTag from '../components/HashTag/HashTag';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import Period from '../components/Period/Period';
+import 'react-toastify/dist/ReactToastify.css';
+import * as UI from '../commonStyles';
+import { useRecoilValue } from 'recoil';
+import { AxiosError } from 'axios';
+import Swal from 'sweetalert2';
+import ReportModal from '../../Modal/ReportModal/ReportModal';
+import CustomModal from '../../../Atoms/Modal/CustomModal';
 
 const ScheduleFormat = ({
   props,
   onReturnHandler,
   onCancelHandler,
   propsRef,
+  createSchedule,
+  setCreateShedule,
 }: ScheduleProps) => {
   const mutation = usePostschedule();
   const [zoomClick, setZoomClick] = useState(false);
@@ -38,19 +38,17 @@ const ScheduleFormat = ({
   const token = getCookie('token');
   const decoded = token && jwtDecode<JwtPayload>(token);
   const userId = decoded ? decoded.userId : '';
-
   const [disable, setDisable] = useState(false);
   const [userName, userNameHandler, setUserNameInput] = useInput();
   const [title, titleHandler, setTitleHanlder] = useInput();
-
   const [isValidTitle, setIsValidTitle] = useState(true);
   const [isValidBody, setIsValidBody] = useState(true);
-
   const [location, locationHandler, setlocationHanlder] = useInput();
   const [mention, mentionHandler] = useState<string[]>();
   const [content, contentHandler, setContentValue] = useTextarea();
-
   const { element, onMoveToElement } = useMoveScroll();
+  const [open, setOpen] = useState<boolean>(false);
+
   useEffect(() => {
     props.title !== undefined && setTitleHanlder(props.title?.split('-')[0]);
     props.userName !== undefined && setUserNameInput(props.userName);
@@ -94,6 +92,7 @@ const ScheduleFormat = ({
           mutation.mutate(newData, {
             onSuccess: () => {
               setDisable(!disable);
+              setCreateShedule(false);
               toast.success('🦄 일정 등록 성공!', {
                 position: 'top-right',
                 autoClose: 2000,
@@ -133,31 +132,91 @@ const ScheduleFormat = ({
     }
   };
 
+  useEffect(() => {
+    console.log('createSchedule', createSchedule);
+    if (createSchedule === true) {
+      const outsideClickHandler = (event: MouseEvent) => {
+        if ((event.target as HTMLElement).closest('#schedule') !== null) return;
+        if ((event.target as HTMLElement).closest('.swal2-styled') !== null) return;
+        if ((event.target as HTMLElement).closest('.swal2-popup') !== null) return;
+        if ((event.target as HTMLElement).closest('.tags') !== null) return;
+        if ((event.target as HTMLElement).closest('.zoom') !== null) return;
+
+        Swal.fire({
+          title: '작성중인 일정이 있습니다.\n취소하시겠습니까?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: '네,취소하겠습니다!',
+          cancelButtonText: '아니요, 작성할게요!',
+          reverseButtons: true,
+        }).then(result => {
+          if (result.isConfirmed) {
+            setCreateShedule(false);
+            Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+            onCancelHandler(props.id, props.calendarId);
+          }
+        });
+      };
+
+      document.addEventListener('click', outsideClickHandler);
+
+      return () => {
+        console.log('test return');
+        document.removeEventListener('click', outsideClickHandler);
+      };
+    }
+  }, [createSchedule]);
+
+  const cancelConfirmHandler = () => {
+    Swal.fire({
+      title: '일정을 취소하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네,취소하겠습니다!',
+      cancelButtonText: '아니요, 작성할게요!',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        setCreateShedule(false);
+        Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+        onCancelHandler(props.id, props.calendarId);
+      }
+    });
+  };
+
+  const clickReportHandler = () => {
+    setOpen(true);
+  };
+
+  const cacelModalHandler = () => {
+    setOpen(false);
+    console.log('cacelModalHandler');
+  };
   return (
-    <styles.StContainer ref={propsRef}>
+    <UI.StContainer id="schedule" ref={propsRef}>
       <ToastContainer />
-      <styles.StTitleBlock>
-        <styles.StTitleContentBlock>
-          <styles.StMarkBlock backgroundColor={props.backgroundColor} />
+      <UI.StTitleBlock>
+        <UI.StTitleContentBlock>
+          <UI.StMarkBlock backgroundColor={props.backgroundColor} />
           <Period start={props.start} end={props.end} />
           <div>
-            <styles.StUserName>{userName}</styles.StUserName>
+            <UI.StUserName>{userName}</UI.StUserName>
           </div>
           <div>
-            <styles.StTitleInput
+            <UI.StTitleInput
               placeholder="제목*"
-              value={title}
+              value={title || ''}
               onChange={titleHandler}
               disabled={disable}
               maxLength={25}
               isValid={isValidTitle}
             />
           </div>
-        </styles.StTitleContentBlock>
-        <styles.StButtonBlock>
+        </UI.StTitleContentBlock>
+        <UI.StButtonBlock>
           {disable === false && userId === props.userId && (
             <>
-              <CustomButton buttonType="DetailCancel" onClick={onCancelHandler}>
+              <CustomButton buttonType="DetailCancel" onClick={cancelConfirmHandler}>
                 취소
               </CustomButton>
               <CustomButton buttonType="DetailRegistration" onClick={SaveClickHandler}>
@@ -165,39 +224,39 @@ const ScheduleFormat = ({
               </CustomButton>
             </>
           )}
-          <styles.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
+          <UI.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
             <RiArrowLeftSLine size="20px" />
-          </styles.StReturnBlcok>
-        </styles.StButtonBlock>
-      </styles.StTitleBlock>
-      <styles.StContentBlock>
-        <styles.StMarkNameBlcok>
+          </UI.StReturnBlcok>
+        </UI.StButtonBlock>
+      </UI.StTitleBlock>
+      <UI.StContentBlock>
+        <UI.StMarkNameBlcok>
           {props.calendarId !== 'Reports' ? (
             <>
-              <styles.StMarkBlock backgroundColor={props.backgroundColor} />
-              <styles.StTitleInput
+              <UI.StMarkBlock backgroundColor={props.backgroundColor} />
+              <UI.StTitleInput
                 placeholder="장소 입력란"
-                value={location}
+                value={location || ''}
                 onChange={locationHandler}
                 disabled={disable}
                 maxLength={20}
               />
             </>
           ) : null}
-        </styles.StMarkNameBlcok>
-        <styles.StTextAreaBlock zoomClick={zoomClick} ref={element}>
-          <styles.StTextArea
+        </UI.StMarkNameBlcok>
+        <UI.StTextAreaBlock zoomClick={zoomClick} ref={element}>
+          <UI.StTextArea
             placeholder="내용*"
-            value={content}
+            value={content || ''}
             onChange={contentHandler}
             disabled={disable}
             isValid={isValidTitle}
           />
-        </styles.StTextAreaBlock>
-        <styles.StOpenBlock>
-          <styles.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
+        </UI.StTextAreaBlock>
+        <UI.StOpenBlock>
+          <UI.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
             {zoomClick === false ? (
-              <div style={{ width: '100%' }}>
+              <div className="zoom" style={{ width: '100%' }}>
                 <span>크게보기</span>
               </div>
             ) : (
@@ -205,26 +264,36 @@ const ScheduleFormat = ({
                 <span>작게보기</span>
               </>
             )}
-          </styles.StOpenButton>
-        </styles.StOpenBlock>
-        <styles.StFileBlock>
+          </UI.StOpenButton>
+        </UI.StOpenBlock>
+        <UI.StFileBlock>
           <FileUpload
             onFileHandler={SetFormFile}
             disable={disable}
             files={props.files}
             id={props.id}
           />
-        </styles.StFileBlock>
-      </styles.StContentBlock>
+          {createSchedule === false && props.calendarId == '0' && (
+            <UI.StMeetingReportBlock onClick={clickReportHandler}>
+              보고서 작성
+            </UI.StMeetingReportBlock>
+          )}
+        </UI.StFileBlock>
+      </UI.StContentBlock>
 
-      <styles.StMentionBlock>
+      <UI.StMentionBlock>
         <HashTag
           mention={props.attendees}
           disable={disable}
           mentionHandler={mentionHandler}
         />
-      </styles.StMentionBlock>
-    </styles.StContainer>
+      </UI.StMentionBlock>
+      {open && (
+        <CustomModal closeModal={cacelModalHandler}>
+          <ReportModal setOpen={setOpen} value={1} />
+        </CustomModal>
+      )}
+    </UI.StContainer>
   );
 };
 

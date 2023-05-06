@@ -7,7 +7,6 @@ interface LoadingSpinnerProps {
 const Loading = ({ sizes }: LoadingSpinnerProps) => {
   return (
     <div>
-      {' '}
       <img
         src={LoadingSpinner}
         alt="로딩중입니다.."

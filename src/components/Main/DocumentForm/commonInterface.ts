@@ -23,7 +23,9 @@ export interface ScheduleProps {
   };
   propsRef?: React.RefObject<HTMLDivElement>;
   onReturnHandler?: React.Dispatch<React.SetStateAction<boolean>>;
-  onCancelHandler?: () => void;
+  setCreateShedule: React.Dispatch<React.SetStateAction<boolean>>;
+  onCancelHandler: (id?: number | string, calendarId?: number | string) => void;
+  createSchedule?: boolean;
 }
 
 export interface ErrorData {

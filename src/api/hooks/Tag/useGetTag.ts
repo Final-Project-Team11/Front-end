@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { Mention } from '../../../components/Tag/interfaces';
+import { Mention } from '../../../components/MyPage/Tag/interfaces';
 
 export interface PageData {
   mention: Mention[];

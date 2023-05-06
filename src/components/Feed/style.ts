@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
 import { TitleProps } from './interfaces';
-// 공통
 
 export const StWrapperBlock = styled.div`
   width: 250px;
