@@ -1,12 +1,16 @@
 import { useRef } from 'react';
-import Vacation from './Vacation';
-import { PageData, useGetVacation } from '../../../api/hooks/Vacation/useGetVacation';
-import { VacationList } from './interfaces';
-import Board from '../Board';
-import CalendarIcon from '../../../assets/Icons/CalendarIcon';
-import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 스타일, 인터페이스
 import { LoadingBlock } from './Vacation/style';
+import { VacationList } from './interfaces';
+// 서버 요청
+import { PageData, useGetVacation } from '../../../api/hooks/Vacation/useGetVacation';
+import { useInfiniteQueryHook } from '../../../hooks/common/useInfiniteQueryHook';
+// 컴포넌트
+import Vacation from './Vacation';
+import Board from '../Board';
 import Loading from '../../Loading/Loading';
+// SVG파일
+import CalendarIcon from '../../../assets/Icons/CalendarIcon';
 
 const VacationTab = () => {
   // Vacation 리스트 GET 요청
@@ -24,6 +28,7 @@ const VacationTab = () => {
   // Board title에 들어갈 icon
   const icon = <CalendarIcon usage="title" />;
 
+  // 데이터 없을 시 true 변수
   const NoData = vacations.length === 0;
 
   return (

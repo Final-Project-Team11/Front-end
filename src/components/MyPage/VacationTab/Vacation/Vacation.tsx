@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
+import { VacationList, VacationPayload } from '../interfaces';
+// 서버 요청
+import { usePutDecision } from '../../../../api/hooks/Vacation/usePutDecision';
+// 라이브러리
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { BsCheckCircle } from '@react-icons/all-files/bs/BsCheckCircle';
 import { BsXCircle } from '@react-icons/all-files/bs/BsXCircle';
 import { BsCircle } from '@react-icons/all-files/bs/BsCircle';
 import { BsCheck } from '@react-icons/all-files/bs/BsCheck';
 import { BsX } from '@react-icons/all-files/bs/BsX';
-
-import { usePutDecision } from '../../../../api/hooks/Vacation/usePutDecision';
-import { VacationList, VacationPayload } from '../interfaces';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 const Vacation = ({ vacation }: { vacation: VacationList }) => {
   // 선택창 등장, 퇴장을 위한 state
