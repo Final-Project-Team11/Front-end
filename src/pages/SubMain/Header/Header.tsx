@@ -1,16 +1,14 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { HeaderProps } from './interfaces';
 import * as styles from './styles';
 import { nanoid } from 'nanoid';
 import Card from '../../../components/Card/Card';
 import ChangeVacation from '../../../assets/Meerkat/ChangeVacation';
 import ChangeSchedule from '../../../assets/Meerkat/ChangeSchedule';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { getCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { recoilReportState } from '../../../states/recoilReportState';
 import ReportModal from '../../../components/Main/Modal/ReportModal/ReportModal';
 import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
 import Modal from '../../../components/Atoms/Modal/CustomModal';
@@ -22,7 +20,7 @@ import TodayMoveIcon from '../../../assets/Icons/TodayMoveIcon';
 function Header(props: HeaderProps) {
   const navigate = useNavigate();
   const [tab, setTab] = useRecoilState(recoilTabState);
-  const [open, setOpen] = useRecoilState(recoilReportState);
+  const [open, setOpen] = useState<boolean>(false);
   const selectedDate = useRecoilValue(recoilSelectedDateState);
   const currentTab = useRef<string | number>();
 
@@ -32,8 +30,7 @@ function Header(props: HeaderProps) {
 
   const reports = [
     { name: '보고서(기타)', value: 0 },
-    { name: '회의록', value: 1 },
-    { name: '결재 요청서', value: 2 },
+    { name: '결재 요청서', value: 1 },
   ];
 
   const token = getCookie('token');
@@ -166,7 +163,7 @@ function Header(props: HeaderProps) {
       </styles.StContainer>
       {open && (
         <Modal closeModal={closeModal}>
-          <ReportModal value={currentTab.current} />
+          <ReportModal setOpen={setOpen} value={currentTab.current} />
         </Modal>
       )}
     </styles.StWrap>
