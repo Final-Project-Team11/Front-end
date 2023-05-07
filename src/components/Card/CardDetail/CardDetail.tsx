@@ -29,15 +29,28 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
     /^(19[0-9][0-9]|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
   const phoneNumValid = /^010\d{4}\d{4}$/;
 
-  // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정, 정규식으로 유효성 검사
+  // 수정모드 input initialValue 세팅용 변환
+  let phoneNumInitialValue = '';
+  if (data?.phoneNum) {
+    phoneNumInitialValue =
+      data?.phoneNum?.slice(0, 3) +
+      data?.phoneNum?.slice(4, 8) +
+      data?.phoneNum?.slice(9);
+  }
+  let birthDayInitialValue = '';
+  if (data?.birthDay) {
+    birthDayInitialValue = data?.birthDay.replace(/\//g, '-');
+  }
+
+  // phoneNum, birthDay 가져올 useInput maxLength, initialValue, 정규식으로 유효성 검사
   const [birthDay, birthDayHandler, , birthDayIsValid] = useInput(
     10,
-    data?.birthDay,
+    birthDayInitialValue,
     birthDayValid
   );
   const [phoneNum, phoneNumHandler, , phoneNumIsValid] = useInput(
-    13,
-    data?.phoneNum,
+    11,
+    phoneNumInitialValue,
     phoneNumValid
   );
 

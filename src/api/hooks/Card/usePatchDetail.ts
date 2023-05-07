@@ -9,12 +9,18 @@ export const usePatchDetail = () => {
   const { mutate } = useMutation({
     mutationFn: async (payload: Payload) => {
       // 업데이트에 보낼 formData 세팅
+      const phoneNumChanged =
+        payload.phoneNum.slice(0, 3) +
+        '-' +
+        payload.phoneNum.slice(3, 7) +
+        '-' +
+        payload.phoneNum.slice(7);
       const formData = new FormData();
       if (payload.file) {
         formData.append('file', payload.file);
       }
       formData.append('birthDay', payload.birthDay);
-      formData.append('phoneNum', payload.phoneNum);
+      formData.append('phoneNum', phoneNumChanged);
 
       const response = await apis.patch('/usersInfo/profile', formData);
       return response.data;
