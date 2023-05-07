@@ -135,7 +135,6 @@ export default function SubMain({ view }: { view: ViewType }) {
 
     setClickData(newData);
     setClickDetail(true);
-    console.log('onAfterRenderEvent');
     setCreateShedule(true);
   };
 
