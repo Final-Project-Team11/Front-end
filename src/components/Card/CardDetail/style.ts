@@ -158,8 +158,22 @@ export const AlertDiv = styled.div`
   }
 `;
 
+// type number일 시 기본스타일 화살표 제거
 export const InputBlock = styled.div`
   position: relative;
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number']::-ms-clear,
+  input[type='number']::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 `;
 
 export const BirthDot = styled.div<DotProps>`
