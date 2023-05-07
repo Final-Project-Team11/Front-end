@@ -78,8 +78,11 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
   const { mutate } = usePatchDetail();
 
   // 기존 생일, 폰번호랑 input값이랑 다른지 체크
-  const birthIsDiffer = birthDay !== data?.birthDay;
-  const phoneNumIsDiffer = phoneNum !== data?.phoneNum;
+  const birthDayChanged = birthDay.replace(/-/g, '/');
+  const phoneNumChanged =
+    phoneNum.slice(0, 3) + '-' + phoneNum.slice(3, 7) + '-' + phoneNum.slice(7);
+  const birthIsDiffer = birthDayChanged !== data?.birthDay;
+  const phoneNumIsDiffer = phoneNumChanged !== data?.phoneNum;
 
   // 서버 요청 payload
   const file = imgInputRef.current?.files?.[0];
