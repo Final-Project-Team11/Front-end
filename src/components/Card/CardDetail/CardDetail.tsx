@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 // 스타일, 인터페이스
 import * as UI from './style';
 import { COLOR } from '../../../styles/colors';
-import { CardDetailProps } from '../interfaces';
+import { CardDetailProps, Payload } from '../interfaces';
 // 서버 요청
 import { usePatchDetail } from '../../../api/hooks/Card/usePatchDetail';
 import { useGetCardDetail } from '../../../api/hooks/Card/useGetCardDetail';
@@ -68,14 +68,13 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
   const birthIsDiffer = birthDay !== data?.birthDay;
   const phoneNumIsDiffer = phoneNum !== data?.phoneNum;
 
-  // 업데이트에 보낼 formData 세팅
+  // 서버 요청 payload
   const file = imgInputRef.current?.files?.[0];
-  const formData = new FormData();
-  if (file) {
-    formData.append('file', file);
-  }
-  formData.append('birthDay', birthDay);
-  formData.append('phoneNum', phoneNum);
+  const payload: Payload = {
+    birthDay,
+    phoneNum,
+    file,
+  };
 
   // 수정완료 버튼 핸들러
   const inputSubmitHandler = () => {
@@ -111,7 +110,7 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
       }).then(result => {
         // 더블체크 완료 후 formData 전송, 확인메세지, 모달 닫기
         if (result.isConfirmed) {
-          mutate(formData);
+          mutate(payload);
 
           Swal.fire({
             position: 'center',
