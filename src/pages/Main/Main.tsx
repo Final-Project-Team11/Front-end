@@ -27,8 +27,10 @@ const Main = () => {
     month: (today.getMonth() + 1).toString(),
   });
 
-  const filterData = useFilterData(data, tab);
+  console.log('data', data);
 
+  const filterData = useFilterData(data, tab);
+  console.log('filterData', filterData);
   return (
     <CalendarContext.Provider value={filterData}>
       <StWrap>
