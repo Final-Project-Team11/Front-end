@@ -26,8 +26,8 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
 
   // 인풋 검사 정규식
   const birthDayValid =
-    /^(19[0-9][0-9]|20\d{2})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
-  const phoneNumValid = /^010-\d{4}-\d{4}$/;
+    /^(19[0-9][0-9]|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+  const phoneNumValid = /^010\d{4}\d{4}$/;
 
   // phoneNum, birthDay 가져올 useInput maxLength 없고, initialValue 지정, 정규식으로 유효성 검사
   const [birthDay, birthDayHandler, , birthDayIsValid] = useInput(
@@ -133,14 +133,14 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
       let html;
       if (birthDayIsValid && !phoneNumIsValid) {
         titleMessage = '올바른 형식의 핸드폰 번호를 입력해주세요.';
-        html = '<p class="swal-custom-text">010-0000-0000 형식으로 입력해주세요.</p>';
+        html = '<p class="swal-custom-text">010xxxxyyyy 형식으로 입력해주세요.</p>';
       } else if (!birthDayIsValid && phoneNumIsValid) {
-        titleMessage = '올바른 형식의 생년월일을 입력해주세요';
-        html = '<p class="swal-custom-text">yyyy/mm/dd 형식으로 입력해주세요.</p>';
+        titleMessage = '올바른 형식의 생년월일을 선택해주세요';
+        // html = '<p class="swal-custom-text">yyyy/mm/dd 형식으로 입력해주세요.</p>';
       } else {
         titleMessage = '올바른 형식의 생년월일과 핸드폰번호를 입력해주세요.';
         html =
-          '<p class="swal-custom-text">생일은 yyyy/mm/dd 형식, 010-0000-0000 형식으로 입력해주세요.</p>';
+          '<p class="swal-custom-text">생일은 yyyy-mm-dd 형식, 010xxxxyyyy 형식으로 입력해주세요.</p>';
       }
       Swal.fire({
         icon: 'error',
@@ -282,9 +282,9 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
                   <UI.InputBlock>
                     <CustomInput
                       inputType="cardInfo"
+                      type="date"
                       value={birthDay}
                       onChange={birthDayHandler}
-                      placeholder="yyyy/mm/dd"
                     />
                     <UI.BirthDot validation={birthDayIsValid as boolean} />
                   </UI.InputBlock>
@@ -303,9 +303,10 @@ const CardDetail = ({ closeModal, decodedToken }: CardDetailProps) => {
                 <UI.InputBlock>
                   <CustomInput
                     inputType="cardInfo"
+                    type="number"
                     value={phoneNum}
                     onChange={phoneNumHandler}
-                    placeholder="010-0000-0000"
+                    placeholder="01012341234"
                   />
                   <UI.PhoneNumhDot validation={phoneNumIsValid as boolean} />
                 </UI.InputBlock>
