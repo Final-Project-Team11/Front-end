@@ -133,7 +133,6 @@ const ScheduleFormat = ({
   };
 
   useEffect(() => {
-    console.log('createSchedule', createSchedule);
     if (createSchedule === true) {
       const outsideClickHandler = (event: MouseEvent) => {
         if ((event.target as HTMLElement).closest('#schedule') !== null) return;
@@ -161,7 +160,6 @@ const ScheduleFormat = ({
       document.addEventListener('click', outsideClickHandler);
 
       return () => {
-        console.log('test return');
         document.removeEventListener('click', outsideClickHandler);
       };
     }
@@ -190,7 +188,6 @@ const ScheduleFormat = ({
 
   const cacelModalHandler = () => {
     setOpen(false);
-    console.log('cacelModalHandler');
   };
   return (
     <UI.StContainer id="schedule" ref={propsRef}>

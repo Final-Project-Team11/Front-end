@@ -101,7 +101,6 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
           case 0: {
             reportMutation.mutate(payload, {
               onSuccess: () => {
-                console.log('success');
                 successHandler();
               },
               onError: error => {
