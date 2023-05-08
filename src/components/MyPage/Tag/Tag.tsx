@@ -29,7 +29,7 @@ const Tag = ({ types }: TagBlockCssProps) => {
   const icon = <TagIconTitle />;
 
   return (
-    <Board icon={icon} title="tag" types={types} targetDiv={targetDiv}>
+    <Board icon={icon} title="언급된 일정" types={types} targetDiv={targetDiv}>
       {isLoading ? (
         <LoadingBlock>
           <Loading />
