@@ -19,7 +19,7 @@ const Tags = ({ tag, types }: TagsProps) => {
         types={types}
         onClick={() => !tag.isChecked && clickTagHandler(tag.mentionId)}
       >
-        @ / <UI.StTitleSpan>{tag.title}</UI.StTitleSpan>&nbsp;
+        @ <UI.StTitleSpan>{tag.title}</UI.StTitleSpan>&nbsp;
         <UI.StTitleSpan>{tag.userName}</UI.StTitleSpan>
       </UI.StContentSpan>
     </UI.StTagsBlock>
