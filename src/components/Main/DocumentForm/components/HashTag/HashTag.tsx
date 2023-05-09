@@ -24,7 +24,6 @@ const HashTag = (props: HashTagProps) => {
   const [divRef, ulRef, setIsOpen, isOpen, inputPosition] = useDropDown();
 
   useEffect(() => {
-    props.mention && console.log('props.mention', props.mention);
     props.mention && setTagList(props.mention);
   }, [props.mention]);
 
