@@ -83,7 +83,7 @@ const buttonTypes: ButtonType = {
     fontWeight: 'bolder',
     borderRadius: '7px',
     padding: '15px',
-    border: '1px solid black',
+    border: `1px solid ${COLOR.FONT_COLOR}`,
     background: 'none',
   },
   blackBackground: {
