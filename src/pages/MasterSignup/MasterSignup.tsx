@@ -8,11 +8,15 @@ const MasterSignup = () => {
     <BackGround>
       <StH1>Meer : 캣린더 사업자 등록</StH1>
       <Svg>
-        <div style={{ margin: '1165px 10px 0 0' }}>
+        <div
+          style={{ display: 'flex', alignItems: 'flex-end', margin: '0 40px 150px 0 ' }}
+        >
           <SignupMeerkat />
         </div>
         <SignupForm />
-        <SignupHello />
+        <div style={{ marginTop: '50px' }}>
+          <SignupHello />
+        </div>
       </Svg>
     </BackGround>
   );

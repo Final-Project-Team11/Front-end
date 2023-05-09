@@ -12,7 +12,8 @@ export const StBlock = styled.div`
 
 export const StSignupSpan = styled.span`
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
+  color: ${COLOR.POINT_C};
 `;
 
 export const SubmitForm = styled.form`
@@ -64,6 +65,6 @@ export const StH1 = styled.h1`
 `;
 
 export const StSpan = styled.span`
-  font-size: 15px;
+  font-size: 12px;
   color: ${COLOR.GRAY2};
 `;
