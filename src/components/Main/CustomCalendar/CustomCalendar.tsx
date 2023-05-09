@@ -11,7 +11,6 @@ import {
 } from './styles';
 import Weekday from './Weekday';
 import useGetWeeklyInfo from '../../../api/hooks/Weekly/useGetWeeklyInfo';
-import { is } from 'cheerio/lib/api/traversing';
 import { getScheduleColor } from '../../../pages/SubMain/utils';
 
 interface CalendarProps {
@@ -125,6 +124,7 @@ const CustomCalendar = (props: CalendarProps) => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
     const resultArr = [];
 
+    console.log('events', events);
     for (let i = 0; i < events.length; i++) {
       const value = events[i].end.getDate() - events[i].start.getDate();
       const blockCount = value >= 0 ? value : Number(dateTotalCount + value);

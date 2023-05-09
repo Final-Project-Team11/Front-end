@@ -14,6 +14,7 @@ interface Paylaod {
 const usePostReport = () => {
   const mutation = useMutation({
     mutationFn: async (payload: Paylaod) => {
+      console.log('test', payload);
       const formData = new FormData();
       const start = payload.start?.toString();
       const end = payload.end?.toString();
