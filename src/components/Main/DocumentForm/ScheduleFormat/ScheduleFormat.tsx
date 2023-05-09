@@ -140,7 +140,7 @@ const ScheduleFormat = ({
         if ((event.target as HTMLElement).closest('.swal2-popup') !== null) return;
         if ((event.target as HTMLElement).closest('.tags') !== null) return;
         if ((event.target as HTMLElement).closest('.zoom') !== null) return;
-
+        if ((event.target as HTMLElement).closest('.files') !== null) return;
         Swal.fire({
           title: '작성중인 일정이 있습니다.\n취소하시겠습니까?',
           icon: 'warning',
@@ -186,9 +186,28 @@ const ScheduleFormat = ({
     setOpen(true);
   };
 
-  const cacelModalHandler = () => {
+  const cancelModalHandler = () => {
     setOpen(false);
   };
+
+  const returnHandler = () => {
+    Swal.fire({
+      title: '작성 중인 일정이 있습니다. 취소하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네,취소하겠습니다!',
+      cancelButtonText: '아니요, 작성할게요!',
+      reverseButtons: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        setCreateShedule(false);
+        Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
+        onCancelHandler(props.id, props.calendarId);
+        onReturnHandler && onReturnHandler(false);
+      }
+    });
+  };
+
   return (
     <UI.StContainer id="schedule" ref={propsRef}>
       <ToastContainer />
@@ -221,7 +240,7 @@ const ScheduleFormat = ({
               </CustomButton>
             </>
           )}
-          <UI.StReturnBlcok onClick={() => onReturnHandler && onReturnHandler(false)}>
+          <UI.StReturnBlcok onClick={returnHandler}>
             <RiArrowLeftSLine size="20px" />
           </UI.StReturnBlcok>
         </UI.StButtonBlock>
@@ -247,18 +266,18 @@ const ScheduleFormat = ({
             value={content || ''}
             onChange={contentHandler}
             disabled={disable}
-            isValid={isValidTitle}
+            isValid={isValidBody}
           />
         </UI.StTextAreaBlock>
         <UI.StOpenBlock>
           <UI.StOpenButton onClick={() => setZoomClick(!zoomClick)}>
             {zoomClick === false ? (
               <div className="zoom" style={{ width: '100%' }}>
-                <span>크게보기</span>
+                <span className="zoom">크게보기</span>
               </div>
             ) : (
               <>
-                <span>작게보기</span>
+                <span className="zoom">작게보기</span>
               </>
             )}
           </UI.StOpenButton>
@@ -286,7 +305,7 @@ const ScheduleFormat = ({
         />
       </UI.StMentionBlock>
       {open && (
-        <CustomModal closeModal={cacelModalHandler}>
+        <CustomModal closeModal={cancelModalHandler}>
           <ReportModal setOpen={setOpen} value={1} />
         </CustomModal>
       )}

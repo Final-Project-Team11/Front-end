@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import apis from '../../axios/api';
-import { CalendarProps } from '../../../pages/SubMain/interfaces';
 
 interface Paylaod {
   title?: string;

@@ -28,7 +28,6 @@ const Main = () => {
   });
 
   const filterData = useFilterData(data, tab);
-
   return (
     <CalendarContext.Provider value={filterData}>
       <StWrap>
