@@ -1,30 +1,36 @@
-import React from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
-import { BsX } from '@react-icons/all-files/bs/BsX';
+import { COLOR } from '../../../styles/colors';
+import { PatchFeedPayload, Todo } from '../interfaces';
+// 서버 요청
 import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { useCheckTodo } from '../../../api/hooks/Feed/useCheckTodo';
-import { PatchFeedPayload, Todo } from '../interfaces';
-import { COLOR } from '../../../styles/colors';
-import Swal from 'sweetalert2';
 import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
+// 라이브러리
+import { BsX } from '@react-icons/all-files/bs/BsX';
+import Swal from 'sweetalert2';
+import { useRecoilValue } from 'recoil';
+import { recoilTabState } from '../../../states/recoilTabState';
 
 const TodoBox = ({ todo }: { todo: Todo }) => {
+  // 테마 세팅용 recoilState
+  const tab = useRecoilValue(recoilTabState);
+  // 투두 done체크, 수정, 삭제 요청
   const { deleteFeed } = useDeleteFeed();
   const { mutate } = usePatchFeed();
+  const { checkTodo } = useCheckTodo();
 
   // 삭제버튼 클릭 시 더블체크
   const deleteBtnHandler = (): void => {
     deleteFeed({ type: 'todo', id: todo.todoId });
   };
 
-  const { checkTodo } = useCheckTodo();
-
-  //투두 체크
+  //투두 체크 함수
   const clickCircleHandler = () => {
     checkTodo(todo.todoId);
   };
 
-  // 카테고리 수정기능
+  // 투두 수정기능 - sweetAlert 수정 더블체크
   const ModifyCategory = async () => {
     const { value: inputValue } = await Swal.fire({
       title: '투두를 수정하시겠어요?',
@@ -52,12 +58,12 @@ const TodoBox = ({ todo }: { todo: Todo }) => {
   return (
     <UI.StTodoBlock>
       <UI.StTodoAreaBlock>
-        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} />
+        <UI.StCircleBlock isDone={todo.isDone} onClick={clickCircleHandler} tab={tab} />
         <UI.StTodoSpan onClick={ModifyCategory}>{todo.todo}</UI.StTodoSpan>
       </UI.StTodoAreaBlock>
-      <UI.StTestDeleteBlock className="deleteBlock" onClick={deleteBtnHandler}>
+      <UI.StTodoDeleteButton className="deleteBlock" onClick={deleteBtnHandler}>
         <BsX />
-      </UI.StTestDeleteBlock>
+      </UI.StTodoDeleteButton>
     </UI.StTodoBlock>
   );
 };

@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import styled from 'styled-components';
+import Loading from '../components/Loading/Loading';
 
 const Main = lazy(() => import('../pages/Main/Main'));
 const Home = lazy(() => import('../pages/Home/Home'));
@@ -13,9 +15,15 @@ const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 const Router = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <Wrapper>
+            <Loading sizes="big" />
+          </Wrapper>
+        }
+      >
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/masterSignup" element={<MasterSignup />} />
           <Route path="/main" element={<Main />} />
@@ -28,5 +36,14 @@ const Router = () => {
     </BrowserRouter>
   );
 };
+
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default Router;

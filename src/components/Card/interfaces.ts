@@ -1,5 +1,4 @@
 export interface CardProps {
-  tab?: boolean;
   location: 'main' | 'mypage';
 }
 
@@ -36,3 +35,9 @@ export interface CardDetailProps {
 }
 
 export type NavButton = (event: React.MouseEvent) => void;
+
+export interface Payload {
+  birthDay: string;
+  phoneNum: string;
+  file: File | undefined;
+}

@@ -18,7 +18,7 @@ const usePostReport = () => {
       const formData = new FormData();
       const start = payload.start?.toString();
       const end = payload.end?.toString();
-      payload.fileList?.map((item, index) => formData.append('file', item));
+      payload.fileList?.map(item => formData.append('file', item));
       formData.append('start', start || '');
       formData.append('end', end || '');
       formData.append('title', payload.title || '');

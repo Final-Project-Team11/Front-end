@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
+import { COLOR } from '../../../styles/colors';
+import { Category, PatchFeedPayload } from '../interfaces';
+// 서버 요청
+import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
+import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
+// 컴포넌트
+import useInput from '../../../hooks/common/useInput';
 import AddTodo from '../Todo/AddTodo';
 import TodoBox from '../Todo/TodoBox';
-import { Category, PatchFeedPayload } from '../interfaces';
-import useInput from '../../../hooks/common/useInput';
-
+// 라이브러리
 import { BsX } from '@react-icons/all-files/bs/BsX';
-import { useDeleteFeed } from '../../../api/hooks/Feed/useDeleteFeed';
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 import Swal from 'sweetalert2';
-import { COLOR } from '../../../styles/colors';
-import { usePatchFeed } from '../../../api/hooks/Feed/usePatchFeed';
 
 const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
+  // 투두 추가 input 오픈상태
   const [openTodoInput, setOpenTodoInput] = useState<boolean>(false);
-  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(15);
+  // 투두 useInput maxLength = 20
+  const [AddTodoState, setAddTodoHandler, setAddTodoState] = useInput(20);
+  // 테마 수정용 recoilState
   const tab = useRecoilValue(recoilTabState);
+  // 카테고리 수정 요청
   const { mutate } = usePatchFeed();
 
   // category 내부의 + 버튼 눌렀을 때의 function
@@ -47,6 +54,7 @@ const CategoryBox = ({ categoryId, categoryName, todos }: Category) => {
     });
   }
 
+  // 카테고리 삭제요청
   const { deleteFeed } = useDeleteFeed();
 
   // 삭제버튼 클릭 시 더블체크

@@ -60,7 +60,6 @@ const ViewUser = () => {
 
   // useEffect(() => {
   //   handleSearch();
-  //   console.log('이건 곤란?');
   // }, [searchQuery]);
 
   const useDebouncedEffect = (effect: () => void, delay: number, deps: string[]) => {

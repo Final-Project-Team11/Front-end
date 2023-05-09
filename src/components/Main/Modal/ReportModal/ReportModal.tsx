@@ -3,7 +3,6 @@ import * as UI from './styles';
 import { recoilReportState } from '../../../../states/recoilReportState';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { recoilClickEventState } from '../../../../states/recoilClickEventState';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm } from 'react-hook-form';
 import CustomInput from '../../../Atoms/Input/CustomInput';
@@ -12,7 +11,6 @@ import FileUpload from '../../DocumentForm/components/FileUpload/FileUpload';
 import HashTag from '../../DocumentForm/components/HashTag/HashTag';
 import usePostReport from '../../../../api/hooks/Main/usePostReport';
 import usePostMeetingReport from '../../../../api/hooks/Main/usePostMeetingReport';
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -27,14 +25,13 @@ export type ReportInfo = {
 
 type ReportModalProps = {
   value?: string | number;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ReportModal = (value: ReportModalProps) => {
-  const today = new Date();
+const ReportModal = ({ value, setOpen }: ReportModalProps) => {
   const { register, handleSubmit, reset } = useForm<ReportInfo>();
   const [FormFiles, SetFormFile] = useState<File[]>();
   const [attendees, attendeesHandler] = useState<string[]>();
-  const setOpen = useSetRecoilState(recoilReportState);
   const data = useRecoilValue(recoilClickEventState);
   const [start, setStart] = useState<Date>();
   const [end, setEnd] = useState<Date>();
@@ -76,7 +73,7 @@ const ReportModal = (value: ReportModalProps) => {
   };
 
   const submitHandler = (item: ReportInfo) => {
-    const currentTab = value.value as number;
+    const currentTab = value as number;
 
     const titleName =
       currentTab === 0 ? '보고서' : currentTab === 1 ? '회의록' : '결제요청서';
@@ -101,7 +98,7 @@ const ReportModal = (value: ReportModalProps) => {
         };
 
         switch (currentTab) {
-          case 0:
+          case 0: {
             reportMutation.mutate(payload, {
               onSuccess: () => {
                 successHandler();
@@ -112,10 +109,12 @@ const ReportModal = (value: ReportModalProps) => {
               },
             });
             break;
+          }
+
           case 1:
             {
               const newPayload = {
-                postInfo: payload,
+                postInfo: { ...payload, calendarId: '5' },
                 id: data.id,
               };
               mettingMutation.mutate(newPayload, {
@@ -130,7 +129,7 @@ const ReportModal = (value: ReportModalProps) => {
             }
 
             break;
-          case 2:
+          case 2: {
             reportMutation.mutate(payload, {
               onSuccess: () => {
                 successHandler();
@@ -141,6 +140,7 @@ const ReportModal = (value: ReportModalProps) => {
               },
             });
             break;
+          }
         }
       }
     });
@@ -186,7 +186,7 @@ const ReportModal = (value: ReportModalProps) => {
             <CustomButton type="submit" buttonType="ModalButton">
               저장
             </CustomButton>
-            <CustomButton buttonType="ModalButton" onClick={CloseHandler}>
+            <CustomButton type="button" buttonType="ModalButton" onClick={CloseHandler}>
               닫기
             </CustomButton>
           </UI.ButtonBlock>
@@ -204,7 +204,6 @@ const ReportModal = (value: ReportModalProps) => {
           <UI.FileBlock>
             <FileUpload onFileHandler={SetFormFile} disable={false} files={undefined} />
           </UI.FileBlock>
-          <UI.Devider positions="Footer" />
           <UI.AttendeesBlock>
             <HashTag
               mention={undefined}

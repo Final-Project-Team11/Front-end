@@ -155,10 +155,26 @@ const StTextAreaBlock = styled.div<ZoomClickProps>`
 const StFileBlock = styled.div`
   display: flex;
   margin-left: 8px;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0;
   gap: 10px;
   margin-left: 18px;
+`;
+
+const StMeetingReportBlock = styled.div`
+  width: 100px;
+  height: 30px;
+  border: 1px solid lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    background-color: #ededed;
+  }
 `;
 
 const stTagBlock = styled.div`
@@ -228,4 +244,5 @@ export {
   StOpenButton,
   StTitleInput,
   StUserName,
+  StMeetingReportBlock,
 };

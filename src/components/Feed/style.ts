@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../styles/colors';
 import { TitleProps } from './interfaces';
-// 공통
 
 export const StWrapperBlock = styled.div`
   width: 250px;
@@ -71,4 +70,13 @@ export const StFeedTitleH1 = styled.h1<TitleProps>`
       : css`
           color: ${COLOR.VACATION_RED};
         `};
+`;
+
+export const LoadingBlock = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
