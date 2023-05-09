@@ -4,8 +4,8 @@ export const theme: Options['theme'] = {
   common: {
     border: '1px solid #ddd',
     backgroundColor: 'white',
-    // holiday: { color: '#f54f3d' },
-    holiday: { color: '#878787' },
+    holiday: { color: '#f54f3d' },
+    // holiday: { color: '#878787' },
     saturday: { color: '#878787' },
     // saturday: { color: '#135de6' },
     dayName: { color: '#333' },
