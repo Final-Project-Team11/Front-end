@@ -12,7 +12,7 @@ import HashTag from '../../DocumentForm/components/HashTag/HashTag';
 import usePostReport from '../../../../api/hooks/Main/usePostReport';
 import usePostMeetingReport from '../../../../api/hooks/Main/usePostMeetingReport';
 import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { ErrorData } from '../../DocumentForm/commonInterface';
 import DatePickerComponent from '../../DocumentForm/components/DatePicker/DatePickerComponent';
@@ -36,6 +36,9 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
   const [start, setStart] = useState<Date>();
   const [end, setEnd] = useState<Date>();
 
+  const [isSuccess, setSuccess] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   const reportMutation = usePostReport();
   const mettingMutation = usePostMeetingReport();
 
@@ -45,19 +48,12 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
 
   const errorHandler = (error: AxiosError) => {
     const errorOjbect: ErrorData = error.response?.data as ErrorData;
-    toast.error(`❌ ${errorOjbect.errorMessage}`, {
-      position: 'top-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
+    setErrorMessage(errorOjbect.errorMessage);
+    setSuccess(1);
   };
 
   const successHandler = () => {
+    setSuccess(2);
     toast.success('🦄 서버 업로드 성공!', {
       position: 'top-right',
       autoClose: 2000,
@@ -71,6 +67,32 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
 
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (isSuccess === 2) {
+      toast.success('🦄 서버 업로드 성공!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    } else if (isSuccess === 1) {
+      toast.error(`❌ ${errorMessage}`, {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+  }, [isSuccess]);
 
   const submitHandler = (item: ReportInfo) => {
     const currentTab = value as number;
@@ -101,7 +123,6 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
           case 0: {
             reportMutation.mutate(payload, {
               onSuccess: () => {
-                console.log('success');
                 successHandler();
               },
               onError: error => {
@@ -156,6 +177,7 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
 
   return (
     <UI.Modal>
+      <ToastContainer />
       <UI.Form onSubmit={handleSubmit(submitHandler)}>
         <UI.Header>
           <UI.HeaderIcon />
