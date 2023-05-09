@@ -54,17 +54,6 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
 
   const successHandler = () => {
     setSuccess(2);
-    toast.success('🦄 서버 업로드 성공!', {
-      position: 'top-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-
     setOpen(false);
   };
 
