@@ -1,5 +1,5 @@
 export interface DropdownProps {
-  children: string;
+  children: React.ReactNode;
   items: { name: string; value: number }[];
   size?: 'small' | 'medium';
   color?: string;
