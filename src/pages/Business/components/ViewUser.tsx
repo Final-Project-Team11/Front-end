@@ -63,7 +63,7 @@ const ViewUser = () => {
   //   console.log('이건 곤란?');
   // }, [searchQuery]);
 
-  const useDebouncedEffect = (effect: () => void, delay: number, deps: any[]) => {
+  const useDebouncedEffect = (effect: () => void, delay: number, deps: string[]) => {
     const callback = React.useRef<() => void>();
 
     // 최신 effect를 callback ref에 저장합니다.
@@ -241,9 +241,6 @@ const ViewUser = () => {
             onClick={() => navigate('/main')}
           >
             홈으로
-          </CustomButton>
-          <CustomButton onClick={waiting} buttonType="blackBackground">
-            대표자 정보 등록
           </CustomButton>
         </div>
         {showModal && selectedUser && (

@@ -2,75 +2,95 @@ import { useForm } from 'react-hook-form';
 // 👆 라이브러리
 import CustomButton from '../../../components/Atoms/Button/CustomButton';
 import CustomInput from '../../../components/Atoms/Input/CustomInput';
-// 👆 Atom-component
-import { SubmitForm } from '../styles';
-import { AdminLoginInfo } from './AdminLoginForm';
-import { useLogin } from '../hooks/useLogin';
 import { ErrorP } from '../../MasterSignup/styles';
+import { SubmitForm } from '../styles';
+import ChangePasswordForm from './ChangePasswordForm';
+// 👆 component
+import { useLogin } from '../hooks/useLogin';
+import React from 'react';
+// 👆 hook
 
-export type UserLoginInfo = AdminLoginInfo & {
+export type UserLoginInfo = {
+  companyId: string;
   userId: string;
+  password: string;
+  changePassword: string;
+  changePasswordCheck: string;
 };
 
 const UserLoginForm = () => {
-  // react-hook-form의 객체를 생성
+  // React-Hook_Form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<UserLoginInfo>();
-  // hook에 제출 함수를 가져옴
-  const { loginHandler } = useLogin('auth/user');
+
+  // Hooks
+  const { loginHandler, showModal, setShowModal } = useLogin('auth/user');
+
+  const closeModal = () => {
+    setShowModal(false);
+    setValue('password', '');
+  };
+
+  const [loginDatam, setLoginData] = React.useState<UserLoginInfo>({
+    companyId: '',
+    userId: '',
+    password: '',
+    changePassword: '',
+    changePasswordCheck: '',
+  });
+  const submitHandler = (data: UserLoginInfo) => {
+    const userLoginInfo = {
+      companyId: data.companyId,
+      userId: data.userId,
+      password: data.password,
+    };
+    loginHandler(userLoginInfo);
+    setLoginData(data);
+  };
 
   return (
-    <SubmitForm onSubmit={handleSubmit(loginHandler)}>
-      <CustomInput
-        inputType="login"
-        placeholder="대표자 아이디를 입력해주세요"
-        {...register('companyId', {
-          required: '대표자 아이디를 입력해주세요',
-        })}
-      />
-      {errors.companyId && <ErrorP>{errors.companyId.message}</ErrorP>}
-      <CustomInput
-        inputType="login"
-        placeholder="직원 아이디를 입력해주세요"
-        {...register('userId', {
-          required: '아이디를 입력해주세요',
-        })}
-      />
-      {errors.userId && <ErrorP>{errors.userId.message}</ErrorP>}
-      <CustomInput
-        inputType="login"
-        type="password"
-        placeholder="비밀번호를 입력해주세요"
-        {...register('password', {
-          required: '비밀번호를 입력해주세요',
-        })}
-      />
-      {errors.password && <ErrorP>{errors.password.message}</ErrorP>}
-      <CustomButton
-        buttonType="login"
-        style={{
-          marginTop: '24px',
-        }}
-      >
-        로그인
-      </CustomButton>
-      {/* {showModal && (
-            <Modal closeModal={closeModal}>
-              <MaxInput
-                types="login"
-                type="password"
-                value={password}
-                onChange={changePasswordHandler}
-              >
-                변경할 비밀번호
-              </MaxInput>
-              <button>변경하기</button>
-            </Modal>
-          )} */}
-    </SubmitForm>
+    <>
+      <SubmitForm onSubmit={handleSubmit(submitHandler)}>
+        <CustomInput
+          inputType="login"
+          placeholder="대표자 아이디를 입력해주세요"
+          {...register('companyId', {
+            required: '대표자 아이디를 입력해주세요',
+          })}
+        />
+        {errors.companyId && <ErrorP>{errors.companyId.message}</ErrorP>}
+        <CustomInput
+          inputType="login"
+          placeholder="직원 아이디를 입력해주세요"
+          {...register('userId', {
+            required: '아이디를 입력해주세요',
+          })}
+        />
+        {errors.userId && <ErrorP>{errors.userId.message}</ErrorP>}
+        <CustomInput
+          inputType="login"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          {...register('password', {
+            required: '비밀번호를 입력해주세요',
+          })}
+        />
+        {errors.password && <ErrorP>{errors.password.message}</ErrorP>}
+        <CustomButton
+          buttonType="login"
+          style={{
+            marginTop: '24px',
+          }}
+        >
+          로그인
+        </CustomButton>
+      </SubmitForm>
+      {showModal && <ChangePasswordForm closeModal={closeModal} loginInfo={loginDatam} />}
+    </>
   );
 };
 

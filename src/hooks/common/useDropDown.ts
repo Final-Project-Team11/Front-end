@@ -43,7 +43,6 @@ const useDropDown = (): [
   // getBoundingClientRect은 해당 요소의 상태좌표값을 가져오고,
   // 절대 좌표를 얻기 위해서는 window.pageYOffset을 더해주어야 한다.
   useEffect(() => {
-    console.log('useEffect');
     const { current } = divRef;
     const ulCurrent = ulRef.current;
 

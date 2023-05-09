@@ -69,9 +69,6 @@ const DetailUser = ({ user, closeModal, showModal, setShowModal }: UserModalProp
       authLevel: auth.auth,
     };
 
-    console.log('기존 정보', oldUser);
-    console.log('수정 정보', patchUserData);
-
     const comparisonUser = (old: DetailUser, patch: DetailUser): boolean => {
       const oldUser = Object.keys(old);
       const patchUserData = Object.keys(patch);

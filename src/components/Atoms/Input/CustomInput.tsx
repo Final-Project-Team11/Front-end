@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLInputTypeAttribute } from 'react';
 import { StInput } from './style';
 
 export interface InputProps {

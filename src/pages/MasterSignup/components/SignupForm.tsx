@@ -7,7 +7,6 @@ import DaumAddressAPI from '../hooks/DaumAddressAPI';
 // 👆 components
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AdminLoginInfo } from '../../Login/components/AdminLoginForm';
 import { useCompanyNumCheck } from '../hooks/useCompanyNumCheck';
 import Swal from 'sweetalert2';
 import { COLOR } from '../../../styles/colors';
@@ -15,9 +14,9 @@ import { useCompanyIdValidation } from '../hooks/useCompanyIdValidation';
 import { useNavigate } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup';
 
-export type AdminSignupInfoPlus = AdminLoginInfo & {
-  // companyId: string;
-  // password: string;
+export type AdminSignupInfoPlus = {
+  companyId: string;
+  password: string;
   companyName: string;
   address: string;
   ceoName: string;
@@ -40,6 +39,7 @@ const SignupForm = () => {
     setValue,
     watch,
     formState: { errors },
+    trigger,
   } = useForm<AdminSignupInfoPlus>({ mode: 'onChange' });
 
   const waiting = () => {
@@ -87,6 +87,29 @@ const SignupForm = () => {
 
   // <-------------------------비밀번호, 비밀번호 확인------------------------->
   const password = watch('password');
+
+  const reValidPasswordCheck = () => {
+    trigger('confirmPassword');
+  };
+
+  const useDebouncedEffect = (effect: () => void, delay: number, deps: string[]) => {
+    const callback = React.useRef<() => void>();
+    useEffect(() => {
+      callback.current = effect;
+    }, [effect]);
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        callback.current && callback.current();
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [...deps, delay]);
+  };
+
+  useDebouncedEffect(reValidPasswordCheck, 300, [password]);
   // <-------------------------회원가입------------------------->
   const { signup } = useSignup();
   const submit = (data: AdminSignupInfoPlus) => {
@@ -140,15 +163,24 @@ const SignupForm = () => {
             })}
           />
         </CustomLabel>
-        <CustomButton
-          type="button"
-          buttonType="valid"
-          // 인증이 완료 되었을 때, 버튼을 추가적으로 못 누르게 하는 기능 필요
-          onClick={checkCompanyNumHandler}
-          style={{ margin: '30px 0 0 15px' }}
-        >
-          {isValid ? '✔' : '인증 하기'}
-        </CustomButton>
+        {isValid ? (
+          <CustomButton
+            type="button"
+            buttonType="valid"
+            style={{ margin: '30px 0 0 15px', background: `${COLOR.SUB}`, color: '#fff' }}
+          >
+            ✔
+          </CustomButton>
+        ) : (
+          <CustomButton
+            type="button"
+            buttonType="valid"
+            onClick={checkCompanyNumHandler}
+            style={{ margin: '30px 0 0 15px', background: '#fff' }}
+          >
+            인증 하기
+          </CustomButton>
+        )}
       </Wrapper_Row>
       {errors.companyNum && <ErrorP>{errors.companyNum.message}</ErrorP>}
       {/* <-----------------------사업자등록번호-----------------------> */}
@@ -258,14 +290,24 @@ const SignupForm = () => {
             })}
           />
         </CustomLabel>
-        <CustomButton
-          buttonType="valid"
-          type="button"
-          onClick={checkCompanyIdHandler}
-          style={{ margin: '30px 0 0 15px' }}
-        >
-          {companyIdValidation ? '✔' : '중복 확인'}
-        </CustomButton>
+        {companyIdValidation ? (
+          <CustomButton
+            type="button"
+            buttonType="valid"
+            style={{ margin: '30px 0 0 15px', background: `${COLOR.SUB}`, color: '#fff' }}
+          >
+            ✔
+          </CustomButton>
+        ) : (
+          <CustomButton
+            buttonType="valid"
+            type="button"
+            onClick={checkCompanyIdHandler}
+            style={{ margin: '30px 0 0 15px', background: '#fff' }}
+          >
+            중복 확인
+          </CustomButton>
+        )}
       </Wrapper_Row>
       {errors.companyId && <ErrorP>{errors.companyId.message}</ErrorP>}
       {/* <-----------------------아이디-----------------------> */}
@@ -288,6 +330,7 @@ const SignupForm = () => {
               message: '숫자, 특수문자를 포함하는 8자~15자를 입력해주세요',
             },
           })}
+          // onBlur={passwordBlur}
         />
       </CustomLabel>
       {errors.password && <ErrorP>{errors.password.message}</ErrorP>}

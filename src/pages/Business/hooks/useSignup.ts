@@ -24,6 +24,7 @@ export const useSignup = () => {
         Swal.fire({
           icon: 'success',
           title: '가입이 완료 되었습니다',
+          text: '초기 비밀번호는 아이디와 동일합니다',
         });
       },
       onError() {
