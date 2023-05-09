@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FolderIcon from '../../../../../assets/Icons/FolderIcon';
 import { HiOutlinePlus } from '@react-icons/all-files/hi/HiOutlinePlus';
-import * as styles from './styles';
+import * as UI from './styles';
 import { nanoid } from 'nanoid';
 
 interface FileUploadProps {
@@ -22,22 +22,37 @@ interface fileType {
   fileName?: string;
 }
 
+interface fileProps {
+  fileLocation?: File;
+  fileName?: string;
+}
+
 const FileUpload = (props: FileUploadProps) => {
-  const [files, setFiles] = useState<File[]>();
+  const [files, setFiles] = useState<fileProps[]>();
   const [fileList, setFileList] = useState<fileType[]>([]);
   const ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const uploadFiles = e.target.files;
     if (uploadFiles) {
-      const newFileList = Array.from(files || []); // 기존의 FileList를 배열로 변환
+      const newFileList: File[] = [];
       const fileName = [];
+
+      if (files !== undefined) {
+        for (let i = 0; i < files?.length; i++) {
+          newFileList.push(files[i].fileLocation as File);
+        }
+      }
+
+      const plusFiles = files !== undefined ? [...files] : [];
       for (let i = 0; i < uploadFiles.length; i++) {
         // 새로운 파일들을 배열에 추가
         newFileList.push(uploadFiles[i]);
+        plusFiles.push({ fileName: uploadFiles[i].name, fileLocation: uploadFiles[i] });
         fileName.push({ fileName: uploadFiles[i].name, fileLocation: '' });
       }
+
       props.onFileHandler(newFileList);
-      setFiles(newFileList);
+      setFiles(plusFiles);
 
       const newFileName = [...fileList, ...fileName];
       setFileList(newFileName);
@@ -52,35 +67,66 @@ const FileUpload = (props: FileUploadProps) => {
     }
   }, [props.id]);
 
+  const cancelFileHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    const clickedElement = event.target as HTMLDivElement;
+    const fileName = clickedElement.parentElement?.innerText.split('x')[0].trim();
+
+    const newFileList = files?.filter(item => {
+      return item.fileName !== fileName;
+    });
+
+    const newList = fileList?.filter(item => {
+      return item.fileName !== fileName;
+    });
+    const uplaodFiles: File[] = [];
+
+    if (newFileList !== undefined) {
+      for (let i = 0; i < newFileList?.length; i++) {
+        uplaodFiles.push(newFileList[i].fileLocation as File);
+      }
+    }
+
+    props.onFileHandler(uplaodFiles);
+    setFiles(newFileList);
+    setFileList(newList);
+  };
+
   return (
-    <styles.StContainer>
-      <styles.StIconBlock>
+    <UI.StContainer>
+      <UI.StIconBlock>
         <FolderIcon />
-      </styles.StIconBlock>
-      <styles.StFileListBlock>
+      </UI.StIconBlock>
+      <UI.StFileListBlock>
         {fileList?.map(item => {
           if (item.fileLocation !== '') {
             return (
-              <styles.StTagBlock key={nanoid()}>
+              <UI.StTagBlock key={nanoid()}>
                 <a href={item.fileLocation} target="_blank">
                   {item.fileName}
                 </a>
-              </styles.StTagBlock>
+              </UI.StTagBlock>
             );
           } else {
-            return <styles.StTagBlock key={nanoid()}>{item.fileName}</styles.StTagBlock>;
+            return (
+              <UI.StTagBlock key={nanoid()}>
+                <div>{item.fileName}</div>
+                <UI.StDeleteBlock className="files" onClick={cancelFileHandler}>
+                  x
+                </UI.StDeleteBlock>
+              </UI.StTagBlock>
+            );
           }
         })}
-      </styles.StFileListBlock>
+      </UI.StFileListBlock>
       {props.disable === false && (
         <>
-          <styles.StPlusLabel htmlFor="FileInput">
+          <UI.StPlusLabel htmlFor="FileInput">
             <HiOutlinePlus size="25px" />
-          </styles.StPlusLabel>
-          <styles.StInput type="file" id="FileInput" multiple onChange={ChangeHandler} />
+          </UI.StPlusLabel>
+          <UI.StInput type="file" id="FileInput" multiple onChange={ChangeHandler} />
         </>
       )}
-    </styles.StContainer>
+    </UI.StContainer>
   );
 };
 

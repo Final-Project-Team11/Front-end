@@ -49,8 +49,8 @@ const StTagBlock = styled.div`
 `;
 
 const StDeleteBlock = styled.div`
-  width: 0.9rem;
-  height: 0.9rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;

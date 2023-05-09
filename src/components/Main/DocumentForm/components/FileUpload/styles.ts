@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const StTagBlock = styled.div`
-  font-size: 0.9rem;
   display: flex;
   align-items: center;
   background-color: #f1f1f1;
@@ -9,6 +8,28 @@ const StTagBlock = styled.div`
   border-radius: 5px;
   padding: 0.3em 0.5em;
   font-weight: bold;
+  gap: 10px;
+
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+    background-color: #d3e2e2;
+  }
+`;
+
+const StDeleteBlock = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f17272;
+  }
 `;
 
 const StInput = styled.input`
@@ -38,4 +59,12 @@ const StFileListBlock = styled.div`
 
 const StIconBlock = styled.div``;
 
-export { StTagBlock, StInput, StPlusLabel, StContainer, StFileListBlock, StIconBlock };
+export {
+  StTagBlock,
+  StInput,
+  StPlusLabel,
+  StContainer,
+  StFileListBlock,
+  StIconBlock,
+  StDeleteBlock,
+};
