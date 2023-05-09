@@ -8,24 +8,24 @@ import CustomInput from '../../../components/Atoms/Input/CustomInput';
 import { TextWrapper, SubmitForm, StSpan, StSignupSpan } from '../styles';
 import { useLogin } from '../hooks/useLogin';
 import { ErrorP } from '../../MasterSignup/styles';
+import { COLOR } from '../../../styles/colors';
 
 export type AdminLoginInfo = {
   companyId: string;
+  userId: string;
   password: string;
 };
 
 const AdminLoginForm = () => {
-  // react-hook-form의 객체를 생성
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AdminLoginInfo>();
-  // hook에 제출 함수를 가져옴
+
   const { loginHandler } = useLogin('auth/admin');
   const navigate = useNavigate();
 
-  //아이디/비밀번호 찾기 클릭 시 표출
   const Waiting = () => {
     Swal.fire({
       icon: 'info',
@@ -62,7 +62,12 @@ const AdminLoginForm = () => {
             회원가입
           </StSignupSpan>
         </StSpan>
-        <StSignupSpan onClick={Waiting}>아이디 / 비밀번호 찾기</StSignupSpan>
+        <StSignupSpan
+          onClick={Waiting}
+          style={{ fontSize: '12px', color: `${COLOR.GRAY2}` }}
+        >
+          아이디 / 비밀번호 찾기
+        </StSignupSpan>
       </TextWrapper>
       <CustomButton buttonType="login">로그인</CustomButton>
     </SubmitForm>

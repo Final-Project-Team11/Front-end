@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from '../../../styles/colors';
 interface TodoBoxStProps {
   isDone?: boolean;
+  tab?: boolean;
 }
 
 export const StTodoBlock = styled.div`
@@ -18,7 +19,7 @@ export const StTodoBlock = styled.div`
 
 export const StTodoAreaBlock = styled.div`
   width: fit-content;
-  max-width: 140px;
+  max-width: 180px;
 
   display: flex;
   align-items: center;
@@ -28,13 +29,13 @@ export const StTodoAreaBlock = styled.div`
 `;
 
 export const StTodoSpan = styled.span`
+  width: 150px;
   color: ${COLOR.PAGE_SPAN};
   cursor: pointer;
 `;
 
 export const StTodoInput = styled.input`
-  width: 60%;
-  margin-right: 25%;
+  width: 150px;
   border: none;
   border-radius: 5px;
   font-size: 12px;
@@ -42,19 +43,24 @@ export const StTodoInput = styled.input`
 `;
 
 export const StCircleBlock = styled.div<TodoBoxStProps>`
-  background-color: ${({ isDone }) => (isDone ? COLOR.PAGE_BLUE : 'white')};
+  background-color: ${({ isDone, tab }) =>
+    isDone ? (tab ? COLOR.VACATION_RED : COLOR.PAGE_BLUE) : 'white'};
 
-  border: 1px solid ${({ isDone }) => (isDone ? COLOR.PAGE_BLUE : COLOR.PAGE_LIGHTBLUE)};
+  border: 1px solid ${({ tab }) => (tab ? COLOR.VACATION_RED : COLOR.PAGE_BLUE)};
 
   width: 12px;
   height: 12px;
   border-radius: 50%;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(186, 218, 255, 1) 0 0 7px;
+  }
 `;
 
-export const StTestDeleteBlock = styled.div`
+export const StTodoDeleteButton = styled.div`
   opacity: 0;
-  font-size: 12px;
+  font-size: 15px;
   color: ${COLOR.PAGE_DONE};
   transition: opacity 0.3s ease;
   &:hover {

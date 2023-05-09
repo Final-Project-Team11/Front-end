@@ -10,7 +10,7 @@ export const StCategoryBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 9px;
+  gap: 11px;
   padding-left: 10px;
   box-sizing: border-box;
   margin-bottom: 36px;

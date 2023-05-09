@@ -28,6 +28,14 @@ export const StCardDetailBlock = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 `;
 
+export const LoadingBlock = styled.div`
+  width: 450px;
+  height: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TopBlock = styled.div`
   width: 100%;
   height: 70%;
@@ -57,6 +65,8 @@ export const StInfoTitleSpan = styled.span<FontStyle>`
   font-size: ${({ size }) => (size ? size : '11px')};
   font-weight: ${({ weight }) => (weight ? weight : null)};
   color: ${({ color }) => (color ? 'gray' : null)};
+  width: fit-content;
+  white-space: nowrap;
 `;
 
 export const JoinDate = styled.span`
@@ -148,8 +158,22 @@ export const AlertDiv = styled.div`
   }
 `;
 
+// type number일 시 기본스타일 화살표 제거
 export const InputBlock = styled.div`
   position: relative;
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number']::-ms-clear,
+  input[type='number']::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 `;
 
 export const BirthDot = styled.div<DotProps>`
@@ -172,4 +196,12 @@ export const PhoneNumhDot = styled.div<DotProps>`
   position: absolute;
   right: 7px;
   top: 12px;
+`;
+
+export const ButtonBlock = styled.div`
+  width: 100%;
+
+  margin-top: auto;
+
+  display: flex;
 `;

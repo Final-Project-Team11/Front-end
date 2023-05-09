@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { MyListProps } from '../../../components/MyRequest/interfaces';
+import { MyListProps } from '../../../components/MyPage/MyRequest/interfaces';
 
 export interface PageData {
   schedule: MyListProps[];
@@ -10,7 +10,7 @@ export interface PageData {
 }
 
 export const useGetMyRequest = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -35,5 +35,6 @@ export const useGetMyRequest = () => {
     data,
     fetchNextPage: () => fetchNextPage(),
     hasNextPage: hasNextPage || false,
+    isLoading,
   };
 };

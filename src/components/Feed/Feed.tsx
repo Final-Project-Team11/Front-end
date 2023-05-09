@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// 스타일, 인터페이스
+import * as UI from './style';
+import { Category } from './interfaces';
+// 서버 요청
+import { useGetFeed } from '../../api/hooks/Feed/useGetFeed';
+// 컴포넌트
 import CategoryBox from './Category/CategoryBox';
 import AddCategory from './Category/AddCategory';
-import * as UI from './style';
 import FeedTitle from './FeedTitle';
-import { useGetFeed } from '../../api/hooks/Feed/useGetFeed';
-import { Category } from './interfaces';
 import useInput from '../../hooks/common/useInput';
+import Loading from '../Loading/Loading';
 
 const Feed = () => {
+  // 카테고리 추가 인풋 상태
   const [openCategoryInput, setOpenCategoryInput] = useState<boolean>(false);
+  // 카테고리 useInput - maxLength 10
   const [categoryState, categoryStateHandler, setCategoryState] = useInput(10);
 
+  // 카테고리 추가버튼 클릭함수
   const categoryPlusHandler = () => {
     // input이 닫혀있다면 열림
     if (openCategoryInput === false) {
@@ -27,10 +34,16 @@ const Feed = () => {
     }
   };
 
+  // 피드 정보 요청
   const { feed, feedIsLoading } = useGetFeed();
 
+  // 로딩
   if (feedIsLoading && !feed) {
-    return <div>Loading...</div>;
+    return (
+      <UI.LoadingBlock>
+        <Loading />
+      </UI.LoadingBlock>
+    );
   }
 
   return (
@@ -60,4 +73,4 @@ const Feed = () => {
   );
 };
 
-export default React.memo(Feed);
+export default Feed;

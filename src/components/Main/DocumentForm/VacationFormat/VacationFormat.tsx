@@ -135,7 +135,6 @@ const VacationFormat = ({
       document.addEventListener('click', outsideClickHandler);
 
       return () => {
-        console.log('test return');
         document.removeEventListener('click', outsideClickHandler);
       };
     }

@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { RequestTabType } from '../../../components/RequestList/interfaces';
+import { RequestTabType } from '../../../components/MyPage/RequestList/interfaces';
 
 // PageData 타입은 schedule, other 둘 중 하나와 pageNum을 갖는다
 export type PageData = {

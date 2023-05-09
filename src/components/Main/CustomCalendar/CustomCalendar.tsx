@@ -8,10 +8,12 @@ import {
   StLine,
   StEventBlock,
   StEventContainer,
+  LoadingBlock,
 } from './styles';
 import Weekday from './Weekday';
 import useGetWeeklyInfo from '../../../api/hooks/Weekly/useGetWeeklyInfo';
 import { getScheduleColor } from '../../../pages/SubMain/utils';
+import Loading from '../../Loading/Loading';
 
 interface CalendarProps {
   width: string;
@@ -162,6 +164,14 @@ const CustomCalendar = (props: CalendarProps) => {
 
     return resultArr;
   }, [selectedYear, selectedMonth, events]);
+
+  if (isLoading) {
+    return (
+      <LoadingBlock>
+        <Loading />
+      </LoadingBlock>
+    );
+  }
 
   return (
     <StContainer width={width} onClick={props.onClick}>

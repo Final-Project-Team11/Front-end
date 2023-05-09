@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+// 스타일, 인터페이스
 import * as UI from './style';
 import { AddCategoryProps, SentCategory } from '../interfaces';
+// 서버 요청
 import { usePostCategory } from '../../../api/hooks/Feed/usePostCategory';
+// 라이브러리
 import { recoilTabState } from '../../../states/recoilTabState';
 import { useRecoilValue } from 'recoil';
 
@@ -15,6 +18,7 @@ const AddCategory = ({ value, setValue, onChange, inputHandler }: AddCategoryPro
     }
   }, []);
 
+  // 카테고리 등록 요청, payload
   const { postCategory } = usePostCategory();
   const category: SentCategory = {
     category: value,

@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import apis from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import { AxiosError } from 'axios';
-import { Mention } from '../../../components/Tag/interfaces';
+import { Mention } from '../../../components/MyPage/Tag/interfaces';
 
 export interface PageData {
   mention: Mention[];
@@ -10,7 +10,7 @@ export interface PageData {
 }
 
 export const useMentionedSchedules = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     PageData,
     AxiosError,
     PageData
@@ -31,5 +31,5 @@ export const useMentionedSchedules = () => {
     },
   });
 
-  return { data, fetchNextPage, hasNextPage: hasNextPage || false };
+  return { data, fetchNextPage, hasNextPage: hasNextPage || false, isLoading };
 };

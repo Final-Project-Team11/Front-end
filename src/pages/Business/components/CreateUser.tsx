@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dropdown from '../../../components/Atoms/Dropdown/Dropdown';
 import { useUserIdValidation } from '../hooks/useUserIdValidation';
 import CustomLabel from '../../../components/Atoms/Label/CustomLabel';
@@ -8,8 +8,10 @@ import { useForm } from 'react-hook-form';
 import Wrapper_Row from '../../../components/Atoms/Wrapper_Row/Wrapper_Row';
 import Swal from 'sweetalert2';
 import { useSignup } from '../hooks/useSignup';
-import { StFrom, StH1, VaildP } from '../styles';
+import { StFrom, StH1 } from '../styles';
 import Wrapper_Column from '../../../components/Atoms/Wrapper_Column/Wrapper_Column';
+import { COLOR } from '../../../styles/colors';
+import { ErrorP } from '../../MasterSignup/styles';
 
 type UserSignupInfoPlus = {
   userName: string;
@@ -20,6 +22,7 @@ type UserSignupInfoPlus = {
   joinDay: string;
   authLevel: number | string;
   userId: string;
+  auth: number | string;
 };
 
 const CreateUser = () => {
@@ -28,7 +31,9 @@ const CreateUser = () => {
     register,
     handleSubmit,
     getValues,
+    watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<UserSignupInfoPlus>({ mode: 'onChange' });
 
@@ -49,6 +54,11 @@ const CreateUser = () => {
       });
     }
   };
+
+  const userIdCheck = watch('userId');
+  useEffect(() => {
+    setUserIdValidation(false);
+  }, [userIdCheck]);
   // <-----------------------------------권한----------------------------------->
   type Auth = {
     auth: number | string;
@@ -56,6 +66,7 @@ const CreateUser = () => {
   const [auth, setAuth] = React.useState<Auth>({ auth: '' });
   const selecteAuthHandler = (value: number | string) => {
     setAuth({ auth: value });
+    setValue('auth', value, { shouldValidate: true });
   };
 
   // 권한 드롭 다운 배열
@@ -63,6 +74,12 @@ const CreateUser = () => {
     { name: '관리자', value: 2 },
     { name: '직원', value: 3 },
   ];
+
+  useEffect(() => {
+    register('auth', {
+      required: '필수 선택 값입니다',
+    });
+  }, [register]);
   // <-----------------------------------유저 생성----------------------------------->
   const { signup } = useSignup();
   const submitSignInfoHandler = (data: UserSignupInfoPlus) => {
@@ -94,62 +111,70 @@ const CreateUser = () => {
       <StH1 style={{ width: '500px' }}>유저 생성</StH1>
       {/* <------------------------------이름-----------------------------> */}
       <CustomLabel>
-        이름
+        <Wrapper_Row>
+          이름&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+        </Wrapper_Row>
         <CustomInput
           inputType="login"
           style={{ width: '500px' }}
           placeholder="직원의 이름을 입력해주세요"
           {...register('userName', {
-            required: '필수 입력값 입니다',
+            required: '필수 입력값입니다',
           })}
         />
       </CustomLabel>
-      {errors.userName && <VaildP>{errors.userName.message}</VaildP>}
+      {errors.userName && <ErrorP>{errors.userName.message}</ErrorP>}
       {/* <----------------------------------부서----------------------------------> */}
       <CustomLabel>
-        팀
+        <Wrapper_Row>
+          팀&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+        </Wrapper_Row>
         <CustomInput
           inputType="login"
           style={{ width: '500px' }}
           placeholder="직원의 팀을 입력해주세요"
           {...register('team', {
-            required: '필수 입력값 입니다',
+            required: '필수 입력값입니다',
           })}
         />
       </CustomLabel>
-      {errors.team && <VaildP>{errors.team.message}</VaildP>}
+      {errors.team && <ErrorP>{errors.team.message}</ErrorP>}
       {/* <-----------------------------직급&직무-----------------------------> */}
       <Wrapper_Row style={{ gap: '20px' }}>
         <Wrapper_Column>
           <CustomLabel>
-            직급
+            <Wrapper_Row>
+              직급&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+            </Wrapper_Row>
             <CustomInput
               inputType="login"
               style={{ width: '240px' }}
               placeholder="직원의 직급을 입력해주세요"
               {...register('rank', {
-                required: '필수 입력값 입니다',
+                required: '필수 입력값입니다',
               })}
             />
           </CustomLabel>
           {errors.rank && (
-            <VaildP style={{ margin: '15px 0' }}>{errors.rank.message}</VaildP>
+            <ErrorP style={{ margin: '15px 0 -15px' }}>{errors.rank.message}</ErrorP>
           )}
         </Wrapper_Column>
         <Wrapper_Column>
           <CustomLabel>
-            직무
+            <Wrapper_Row>
+              직무&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+            </Wrapper_Row>
             <CustomInput
               inputType="login"
               style={{ width: '240px' }}
               placeholder="직원의 직무를 입력해주세요"
               {...register('job', {
-                required: '필수 입력값 입니다',
+                required: '필수 입력값입니다',
               })}
             />
           </CustomLabel>
           {errors.job && (
-            <VaildP style={{ margin: '15px 0' }}>{errors.job.message}</VaildP>
+            <ErrorP style={{ margin: '15px 0 -15px' }}>{errors.job.message}</ErrorP>
           )}
         </Wrapper_Column>
       </Wrapper_Row>
@@ -157,36 +182,44 @@ const CreateUser = () => {
       <Wrapper_Row style={{ gap: '20px' }}>
         <Wrapper_Column>
           <CustomLabel>
-            월급일
+            <Wrapper_Row>
+              월급일&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+            </Wrapper_Row>
             <CustomInput
               inputType="login"
               style={{ width: '240px' }}
               placeholder="직원의 월급일을 입력해주세요"
               maxLength={2}
               {...register('salaryDay', {
-                required: '필수 입력값 입니다',
+                required: '필수 입력값입니다',
+                pattern: {
+                  value: /^(0?[1-9]|[12][0-8])$/,
+                  message: '1~28의 숫자만 입력 가능합니다',
+                },
               })}
             />
           </CustomLabel>
           {errors.salaryDay && (
-            <VaildP style={{ margin: '15px 0 -15px' }}>{errors.salaryDay.message}</VaildP>
+            <ErrorP style={{ margin: '15px 0 -15px' }}>{errors.salaryDay.message}</ErrorP>
           )}
         </Wrapper_Column>
         <Wrapper_Column>
           <CustomLabel>
-            입사일
+            <Wrapper_Row>
+              입사일&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+            </Wrapper_Row>
             <CustomInput
               inputType="login"
               style={{ width: '240px' }}
               type="date"
               placeholder="직원의 입사일을 입력해주세요"
               {...register('joinDay', {
-                required: '필수 입력값 입니다',
+                required: '필수 입력값입니다',
               })}
             />
           </CustomLabel>
           {errors.joinDay && (
-            <VaildP style={{ margin: '15px 0 -15px' }}>{errors.joinDay.message}</VaildP>
+            <ErrorP style={{ margin: '15px 0 -15px' }}>{errors.joinDay.message}</ErrorP>
           )}
         </Wrapper_Column>
       </Wrapper_Row>
@@ -207,18 +240,23 @@ const CreateUser = () => {
           color: '#484240',
         }}
       >
-        권한&nbsp;(필수)
+        권한<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
       </Dropdown>
       {/* <-----------------------------아이디-----------------------------> */}
       <Wrapper_Row style={{ alignItems: 'center', gap: '20px', marginTop: '-30px' }}>
         <CustomLabel>
-          아이디
+          {errors.auth && (
+            <ErrorP style={{ marginBottom: '0px' }}>{errors.auth.message}</ErrorP>
+          )}
+          <Wrapper_Row>
+            아이디&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+          </Wrapper_Row>
           <CustomInput
             inputType="login"
             style={{ width: '336px' }}
             placeholder="영문과 숫자를 조합해 5자 이상 입력해 주세요"
             {...register('userId', {
-              required: '필수 입력값 입니다',
+              required: '필수 입력값입니다',
               pattern: {
                 value: /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,}$/,
                 message: '영문과 숫자를 조합해 5자 이상 입력해 주세요',
@@ -226,16 +264,30 @@ const CreateUser = () => {
             })}
           />
         </CustomLabel>
-        <CustomButton
-          buttonType="cUser"
-          type="button"
-          style={{ margin: '30px 0 0 15px' }}
-          onClick={checkUserIdHandler}
-        >
-          중복 확인
-        </CustomButton>
+        {userIdValidation ? (
+          <CustomButton
+            type="button"
+            buttonType="cUser"
+            style={{
+              margin: '30px 0 0 15px',
+              background: `${COLOR.FONT_COLOR}`,
+              color: '#fff',
+            }}
+          >
+            ✔
+          </CustomButton>
+        ) : (
+          <CustomButton
+            buttonType="cUser"
+            type="button"
+            style={{ margin: '30px 0 0 15px' }}
+            onClick={checkUserIdHandler}
+          >
+            중복 확인
+          </CustomButton>
+        )}
       </Wrapper_Row>
-      {errors.userId && <VaildP>{errors.userId.message}</VaildP>}
+      {errors.userId && <ErrorP>{errors.userId.message}</ErrorP>}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '68px' }}>
         <CustomButton buttonType="blackBackground">생성</CustomButton>
       </div>

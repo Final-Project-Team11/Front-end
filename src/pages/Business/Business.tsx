@@ -38,9 +38,7 @@ const Business = () => {
 
   return (
     <Wrapper>
-      <ViewUserArea>
-        <ViewUser />
-      </ViewUserArea>
+      <ViewUser />
       <CreateUser />
     </Wrapper>
   );

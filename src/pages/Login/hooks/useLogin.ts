@@ -2,27 +2,38 @@ import apis from '../../../api/axios/api';
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from '../../../api/auth/CookieUtils';
 import { useNavigate } from 'react-router-dom';
-import { AdminLoginInfo } from '../components/AdminLoginForm';
-import { UserLoginInfo } from '../components/UserLoginForm';
 import Swal from 'sweetalert2';
+import React from 'react';
 
-export type LoginResponse = {
+type LoginResponse = {
   token: string;
   message: string;
+  isFirst: boolean;
 };
-// hook에 uri와 콜백함수를 인수로 전달
+
+type UserLoginInfo = {
+  companyId: string;
+  userId: string;
+  password: string;
+};
+
 export const useLogin = (loginUri: string) => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = React.useState(false);
 
-  const login = useMutation<LoginResponse, Error, AdminLoginInfo | UserLoginInfo>({
-    mutationFn: async (item: AdminLoginInfo | UserLoginInfo) => {
+  const login = useMutation<LoginResponse, Error, UserLoginInfo>({
+    mutationFn: async (item: UserLoginInfo) => {
       const data = await apis.post<LoginResponse>(loginUri, item);
       return data.data;
     },
     onSuccess: data => {
       const token = data.token;
-      setCookie('token', token);
-      navigate('/main');
+      if (data.isFirst) {
+        setShowModal(true);
+      } else {
+        setCookie('token', token);
+        navigate('/main');
+      }
     },
     onError() {
       Swal.fire({
@@ -31,9 +42,9 @@ export const useLogin = (loginUri: string) => {
       });
     },
   });
-  const loginHandler = (data: AdminLoginInfo | UserLoginInfo) => {
+  const loginHandler = async (data: UserLoginInfo) => {
     login.mutate(data);
   };
 
-  return { loginHandler };
+  return { loginHandler, showModal, setShowModal };
 };

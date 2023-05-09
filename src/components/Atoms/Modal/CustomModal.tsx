@@ -7,9 +7,16 @@ export interface ModalProps {
   children?: React.ReactNode;
   name?: string;
   closeModal: () => void;
+  disableClickOutside?: boolean;
 }
 
-const CustomModal = ({ style, children, name, closeModal }: ModalProps) => {
+const CustomModal = ({
+  style,
+  children,
+  name,
+  closeModal,
+  disableClickOutside,
+}: ModalProps) => {
   // esc키 입력 시 모달 닫힘 함수
   const keyDown = (e: KeyboardEvent) => {
     if (e.keyCode === 27) {
@@ -36,7 +43,7 @@ const CustomModal = ({ style, children, name, closeModal }: ModalProps) => {
 
   const modalContent = (
     <>
-      <StModalBackground onClick={() => closeModal()} />
+      <StModalBackground onClick={disableClickOutside ? undefined : () => closeModal()} />
       <StModal name={name} style={style}>
         {children}
       </StModal>

@@ -22,6 +22,14 @@ const StContainer = styled.div<CalendarProps>`
   cursor: pointer;
 `;
 
+const LoadingBlock = styled.div`
+  width: 910px;
+  height: 116px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StWeekBlock = styled.div`
   display: flex;
   padding-bottom: 5px;
@@ -76,4 +84,5 @@ export {
   StLine,
   StEventBlock,
   StEventContainer,
+  LoadingBlock,
 };
