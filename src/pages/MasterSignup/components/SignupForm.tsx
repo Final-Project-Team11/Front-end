@@ -13,6 +13,8 @@ import { COLOR } from '../../../styles/colors';
 import { useCompanyIdValidation } from '../hooks/useCompanyIdValidation';
 import { useNavigate } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup';
+import { useSendEmail } from '../hooks/useSendEmail';
+import { useEmailValidation } from '../hooks/useEmailValidation';
 
 export type AdminSignupInfoPlus = {
   companyId: string;
@@ -22,10 +24,11 @@ export type AdminSignupInfoPlus = {
   ceoName: string;
   ceoNum: string;
   companyNum: string;
+  companyEmail: string;
   // 필요없는
   confirmPassword: string;
   detailAddress: string;
-  companyEmail: string;
+  confirmCompanyEmail: string;
 };
 
 const SignupForm = () => {
@@ -36,19 +39,11 @@ const SignupForm = () => {
     register,
     getValues,
     handleSubmit,
-    setValue,
     watch,
     formState: { errors },
     trigger,
+    setValue,
   } = useForm<AdminSignupInfoPlus>({ mode: 'onChange' });
-
-  const waiting = () => {
-    Swal.fire({
-      icon: 'info',
-      title: '준비 중인 기능입니다.',
-      text: '현재는 이메일 유효성에 대한 검사만 제공합니다',
-    });
-  };
 
   // <-----------------------사업자 번호 유효성 체크 ----------------------->
   const { checkCompanyNum, isValid, setIsValid } = useCompanyNumCheck();
@@ -71,6 +66,36 @@ const SignupForm = () => {
   };
 
   const address = watch('address');
+  // <--------------------------------------------------Email-------------------------------------------------->
+  const [authEmailInput, setAuthEmailInput] = React.useState(false);
+  const emailValue = watch('companyEmail');
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailValid = emailRegex.test(emailValue);
+
+  const { emailAuthentication, authNumber } = useSendEmail();
+  const { emailValidate, emailValidation, setEmailValidation } = useEmailValidation();
+
+  const sendEmail = () => {
+    if (emailValid === true) {
+      emailAuthentication.mutate(emailValue);
+      setAuthEmailInput(true);
+      setValue('confirmCompanyEmail', '');
+      setEmailValidation(false);
+    } else {
+      Swal.fire({
+        icon: 'error',
+      });
+    }
+  };
+
+  const companyEmailCheck = () => {
+    const confirmCompanyEmail = getValues('confirmCompanyEmail');
+    const emailCheck = {
+      authNumber: authNumber,
+      checkNumber: confirmCompanyEmail,
+    };
+    emailValidate.mutate(emailCheck);
+  };
   // <-------------------------아이디 유효성&중복체크------------------------->
   const { validcompanyId, companyIdValidation, setCompanyIdValidation } =
     useCompanyIdValidation();
@@ -89,7 +114,9 @@ const SignupForm = () => {
   const password = watch('password');
 
   const reValidPasswordCheck = () => {
-    trigger('confirmPassword');
+    if (password) {
+      trigger('confirmPassword');
+    }
   };
 
   const useDebouncedEffect = (effect: () => void, delay: number, deps: string[]) => {
@@ -110,7 +137,7 @@ const SignupForm = () => {
   };
 
   useDebouncedEffect(reValidPasswordCheck, 300, [password]);
-  // <-------------------------회원가입------------------------->
+  // <--------------------------------------------------회원가입-------------------------------------------------->
   const { signup } = useSignup();
   const submit = (data: AdminSignupInfoPlus) => {
     const fullAdress = data.address + ' ' + data.detailAddress;
@@ -122,6 +149,7 @@ const SignupForm = () => {
       ceoName: data.ceoName,
       ceoNum: data.ceoNum,
       companyNum: data.companyNum,
+      email: data.companyEmail,
     };
     signup.mutate(newData);
   };
@@ -241,7 +269,7 @@ const SignupForm = () => {
       {errors.ceoNum && <ErrorP>{errors.ceoNum.message}</ErrorP>}
       {/* <------------------핸드폰 번호------------------> */}
 
-      {/* <-----------------------이메일-----------------------> */}
+      {/* <--------------------------------------------------Email--------------------------------------------------> */}
       <Wrapper_Row style={{ alignItems: 'center' }}>
         <CustomLabel>
           <Wrapper_Row>
@@ -254,7 +282,7 @@ const SignupForm = () => {
             {...register('companyEmail', {
               required: '이메일은 필수 입력값입니다',
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                value: emailRegex,
                 message: '이메일 형식이 올바르지 않습니다',
               },
             })}
@@ -263,13 +291,55 @@ const SignupForm = () => {
         <CustomButton
           buttonType="valid"
           type="button"
-          onClick={waiting}
+          onClick={sendEmail}
           style={{ margin: '30px 0 0 15px' }}
         >
           인증 하기
         </CustomButton>
       </Wrapper_Row>
-      {errors.companyEmail && <ErrorP>{errors.companyEmail.message}</ErrorP>}
+      {/* <--------------------------------------------------Email 인증--------------------------------------------------> */}
+      {authEmailInput && (
+        <Wrapper_Row style={{ alignItems: 'center' }}>
+          <CustomLabel>
+            <Wrapper_Row>
+              인증번호&nbsp;<span style={{ color: `${COLOR.POINT_C}` }}>*</span>
+            </Wrapper_Row>
+            <CustomInput
+              inputType="signup"
+              maxLength={6}
+              placeholder="인증번호를 입력해주세요"
+              {...register('confirmCompanyEmail', {
+                required: '인증번호를 입력해주세요',
+              })}
+            />
+          </CustomLabel>
+          {emailValidation ? (
+            <CustomButton
+              buttonType="valid"
+              type="button"
+              style={{
+                margin: '30px 0 0 15px',
+                background: `${COLOR.SUB}`,
+                color: '#fff',
+              }}
+            >
+              ✔
+            </CustomButton>
+          ) : (
+            <CustomButton
+              buttonType="valid"
+              type="button"
+              onClick={companyEmailCheck}
+              style={{ margin: '30px 0 0 15px', background: '#fff' }}
+            >
+              인증 하기
+            </CustomButton>
+          )}
+        </Wrapper_Row>
+      )}
+      {errors.confirmCompanyEmail && (
+        <ErrorP>{errors.confirmCompanyEmail.message}</ErrorP>
+      )}
       {/* <-----------------------이메일-----------------------> */}
 
       {/* <-----------------------아이디-----------------------> */}
