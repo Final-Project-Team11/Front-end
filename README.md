@@ -612,12 +612,10 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     </aside>
     
 ---	
-	
-    <aside>
 	    
 ## ❓ 궁금했던 부분
-    
-     ****`useEffect`로 `modalOpen state`가 바뀔 시 상태값을 `Log`로 찍었는데,  상태변화 (false→true→false) 가 찍혀야 되지않나?
+<aside>
+'useEffect`로 `modalOpen state`가 바뀔 시 상태값을 `Log`로 찍었는데,  상태변화 (false→true→false) 가 찍혀야 되지않나?
     
     답 :
      `setState`는 비동기 함수이기 때문에 `state`의 변화는 렌더링이 일어난 이후에 바뀌게 된다. 현재 상황은 렌더링 되기전에 일어나는 상황이기 때문에, `state`상태 변화는 버블링의 마지막 부분인
@@ -627,7 +625,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     `button의 onClick이벤트인 closeModal이 비동기로 동작` → `상위 div의 openModal도 비동기로 동작` → `비동기로 실행된 결과값인 true만 돌아오게됨.`
     
     - modalOpen 의 상태 업데이트가 일어나기 전에 비동기로 false로 만들고 다시 true로 만들어서 내보냈으니 true인 결과만 보게 된다.
-    </aside>
+</aside>
 
 </details>
    
