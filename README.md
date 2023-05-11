@@ -412,11 +412,11 @@ try {
 }
 ```
 
-**문제점 2**
+ **문제점 2**
 
 - 3 layer architecture pattern 을 적용해 준 이후에 다시 트랜잭션을 적용하려고 service 단에서 트랜잭션을 설정해주었다.service 단에서 try-catch 구문을 사용해서 정리를 해줬더니 에러가 생겼을 때 **Executing (690518fe-dd6b-406b-90eb-57ee0b951f0c): ROLLBACK;** 이라는 쿼리문이 날아가는 것을 확인할 수 있었다.하지만!!! 쿼리문만 날아가고 실제로 롤백이 되지 않고 있었다.
 
-**해결 방법 2**
+ **해결 방법 2**
 
 - 코드의 흐름이 route → controller → service → repository → service → controller → route 방향으로 움직이기 때문에 아무리 트렌젝션 설정을 service에서 해줘도 repository 에서 실행이 되버린것이다. repository 에서 해당 메소드들에 { transaction: t } 설정을 해주었더니 repository 의 메소드들도 다 트랜젝션으로 묶여서 정상 작동하는 것을 확인할 수 있었다
   </details>
@@ -472,7 +472,7 @@ schedules.map((schedule) => {
         })
 ```
 
-**해결방법**
+ **해결방법**
 
 1. 첫 번째로 떠오른 해결 방법은 문자열의 제한을 없애거나 엄청 큰 숫자로 만들어주는 것이었다. 하지만 **변수의 값이 클수록 메모리 사용량도 증가**하기 때문에 적절한 방법은 아니라는 판단으로 다른 방법을 찾기로 했다.
 2. **JSON_OBJECT** 함수를 사용하면 지정된 키와 값을 가진 JSON 객체를 생성할 수 있다. 해당 함수를 이용해서 배열을 만들면 될 것 같았다.
