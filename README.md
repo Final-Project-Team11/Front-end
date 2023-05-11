@@ -533,7 +533,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     
 	
  <aside>    
- 🚫 **문제 분석**
+ 🚫 문제 분석
     
  - Modal의 Open/Close 관련된 내용에 Log를 찍어 전반적인 흐름 파악
 	 - **closeModal**에 **console.log**(’test’) 를 넣어줘서, closeModal이 실행된다면 콘솔에서 확인할 수 있게 세팅했다.
@@ -546,7 +546,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     
 	
  <aside>
- ⚙ **시도**
+ ⚙ 시도
     
  - closeModal을 실행시키는 이벤트를 onClick이 아닌 onMouseDown 으로 바꿔봄
 	 - closeModal이 실행되고, setModalOpen(false)도 실행되며 모달이 정상적으로 닫힘.
@@ -557,7 +557,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     	
 <aside>
 	
-🛠 **해결**
+🛠 해결
 	
 이벤트 버블링 - Event Bubbling
    
@@ -565,7 +565,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     
 ![https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png](https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png)
     
-**해결 코드 1**
+해결 코드 1
     
     - `stopPropagation()` 메서드로 이벤트의 전파를 방지한다.
     
@@ -576,7 +576,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     };
     ```
     
-    **해결 코드 2**
+    해결 코드 2
     
     - `Modal` 은 `StUploadedFileBlock` 안에 들어가 있을 필요가 없으니 따로 빼준다.
     - 더이상 `StUploadedFileBlock`는 `Modal`의 상위태그가 아니기 때문에 이벤트 전파가 일어나지 않는다.
@@ -608,11 +608,11 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 	
 	
     <aside>
-    ❓ **궁금했던 부분** 
+    ❓ 궁금했던 부분
     
      ****`useEffect`로 `modalOpen state`가 바뀔 시 상태값을 `Log`로 찍었는데,  상태변화 (false→true→false) 가 찍혀야 되지않나?
     
-    **답** :
+    답 :
      `setState`는 비동기 함수이기 때문에 `state`의 변화는 렌더링이 일어난 이후에 바뀌게 된다. 현재 상황은 렌더링 되기전에 일어나는 상황이기 때문에, `state`상태 변화는 버블링의 마지막 부분인
     `true` 값이 되는것이고 `useEffect`는 상태값이 변화가 일어나지 않아 `Log`가 남지 않았다. 
     
@@ -628,7 +628,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 <details>
 <summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>		
 <aside>
-💡 **문제 인식**
+💡 문제 인식
     
 - **조건**
 	- `todo 탭`에서 `category`, `todo` 를 추가하기 위해서 `+` 버튼을 누르면 `input`이 생긴다.
@@ -686,16 +686,16 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 </aside>
     
 <aside>
- 🚫 **시도, 문제 원인**
+ 🚫 시도, 문제 원인
     
-- **시도**
+- 시도
         - `input`을 열고 닫는 `state`를 콘솔로 찍어보니, `input`이 열려있을 때 `+` 버튼을 누르면 `false`가 되며 `‘블러’` 가 찍히고, 곧바로 다시 `true`가 되며 `'열렸다'`가 찍히는걸 볼 수 있었다.
-- **문제 원인**
+- 문제 원인
         - 콘솔을 찍힌걸 보면 `blurHandler`가 먼저 발동해서 `input`을 닫고, 그 뒤 `onClick`이 발동하며 `input`이 닫혀있으니 다시 열어버린 걸 볼 수 있다.
 </aside>
     
 <aside>
-🛠 **해결**
+🛠 해결
     
 - `onClick`으로 등록되어있던 `+` 버튼의 기능을 `onMouseDown` 으로 바꿔주었다.
         
@@ -704,7 +704,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 </aside>
     
 <aside>
-❗ **알게 된 점**
+❗ 알게 된 점
     
  ### `onBlur` 이벤트와 `onClick`이벤트, `mousedown`, `mouseup` 이벤트
     
@@ -722,7 +722,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 </aside>
     
 <aside>
-👍 **배운 점**
+👍 배운 점
     
 ## `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가진다.
     
@@ -756,6 +756,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 </aside>
     
 <aside>
+	
 🚫 문제 분석
 - 브라우저의 변경에 따라 DropDown이 왜 변경되는지 확인
         - DropDown은 `position`을 `absolute` 로 사용중이기 때문에 브라우저가 변경될 때 마다 position 정보를 update 해줘야됨.
@@ -813,7 +814,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
             window.innerHeight : **브라우저 두께를 제외한 높이
             
     
-    - **코드 분석 & 문제 접근**
+    - 코드 분석 & 문제 접근
     
     ```tsx
     useEffect(() => {
@@ -992,7 +993,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     </aside>
     
     <aside>
-    ❓ **궁금했던 부분** 
+    ❓ 궁금했던 부분 
     
      ****현재 문제가 되고 있는 것이, `ul`태그의 `dom` 요소에 접근해서 `getBoundingClientRect()` 메서드를 통해 `ul` 태그의 높이값을 불러오고 있는데,  ****초기 태그의 높이값과 그 이후의 높이값이 다른 문제가 생겼다. 초기값의 높이값이 ul태그의 높이값만을 포함하고있는 것이 아닌, div태그와의 거리값도 포함이 되어 있어서, 
     
@@ -1007,17 +1008,17 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 <details>
 <summary>비밀번호 입력에 따른 비밀번호 확인의 유효성</summary>
 
-    ### ❗ 문제 인식
+### ❗ 문제 인식
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/909ac903-228e-4326-991d-b230a2b21592/Untitled.png)
+![image](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/124577334/d7af8a02-d70e-4bf2-badf-99757f2753ca)
     
-    비밀번호 확인을 먼저 입력하고, 비밀번호 입력 시
-    일치하는 값을 비밀번호에 입력했음에도,
-    비밀번호 확인의 유효성 메세지가 사라지지 않는 문제가 발생함
+비밀번호 확인을 먼저 입력하고, 비밀번호 입력 시
+일치하는 값을 비밀번호에 입력했음에도,
+비밀번호 확인의 유효성 메세지가 사라지지 않는 문제가 발생함
     
-    ### ❓ 원인
+### ❓ 원인
     
-    ```tsx
+```tsx
     const password = watch('password');
     
     ****(...)****
@@ -1037,25 +1038,25 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
             />
           </CustomLabel>
           {errors.confirmPassword && <ErrorP>{errors.confirmPassword.message}</ErrorP>}
-    ```
+ ```
     
-    [**React-Hook-Form 라이브러리를 사용중]**
-    순서대로 비밀번호 > 비밀번호 확인 입력 시는 문제가 없지만,
-    비밀번호 확인을 먼저 입력 시 해당 칸의 `입력된 값의 유효성 검사가 진행`되는데
-    이때는 비밀번호 입력란이 비어 있음으로 `false로 종결`된다.
-    그 후 비밀번호 입력란을 기입해도, 이미 유효성 검사는 종결되었기에,
-    동일한 값을 입력해도 에러 메세지는 사라지지 않는 것
+[**React-Hook-Form 라이브러리를 사용중]**
+순서대로 비밀번호 > 비밀번호 확인 입력 시는 문제가 없지만,
+비밀번호 확인을 먼저 입력 시 해당 칸의 `입력된 값의 유효성 검사가 진행`되는데
+이때는 비밀번호 입력란이 비어 있음으로 `false로 종결`된다.
+그 후 비밀번호 입력란을 기입해도, 이미 유효성 검사는 종결되었기에,
+동일한 값을 입력해도 에러 메세지는 사라지지 않는 것
     
-    ### 🔧 해결방안
+### 🔧 해결방안
     
-    비밀번호의 값의 변경에 따라 액션을 취해,
-    비밀번호 확인의 유효성 검사를 재진행 하도록 로직 수정이 필요
+비밀번호의 값의 변경에 따라 액션을 취해,
+비밀번호 확인의 유효성 검사를 재진행 하도록 로직 수정이 필요
     
-    ---
+---
     
-    1. 비밀번호 Input이 변경되면 비밀번호 확인 Input 초기화
+1. 비밀번호 Input이 변경되면 비밀번호 확인 Input 초기화
     
-    ```tsx
+```tsx
     const password = watch('password');
     
     const resetPasswordCheck = () => {
@@ -1064,13 +1065,13 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
      useEffect(()=> {
           resetPasswordCheck()
     },[password])
-    ```
+```
     
     추적하고 있던 비밀번호 값을, useEffect의 의존성 배열에 넣어,
     값이 변동될 때마다, 비밀번호 확인 Input을 초기화 한다.
     이때, 한 번의 타자마다, 리셋 함수를 계속 호출함으로 디바운싱을 사용하여,
     
-    ```tsx
+```tsx
     const useDebouncedEffect = (effect: () => void, delay: number, deps: string[]) => {
         const callback = React.useRef<() => void>();
         useEffect(() => {
@@ -1089,17 +1090,17 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
       };
     
       useDebouncedEffect(resetPasswordCheck , 300, [password]);
-    ```
+ ```
     
-    비밀번호 Input의 입력이 종료 되었을 때 설정 딜레이 후
-    비밀번호 확인 Input을 리셋한다.
-    하지만 비밀번호 확인 Input을 리셋하는 것이 UX를 저하시킨다고 판단되었다.
+ 비밀번호 Input의 입력이 종료 되었을 때 설정 딜레이 후
+ 비밀번호 확인 Input을 리셋한다.
+ 하지만 비밀번호 확인 Input을 리셋하는 것이 UX를 저하시킨다고 판단되었다.
     
-    ---
+ ---
     
-    1. focus 상태에 따라 유효성 검사 재실행 하도록 구현
+ 1. focus 상태에 따라 유효성 검사 재실행 하도록 구현
     
-    ```tsx
+ ```tsx
     const passwordBlur: React.FocusEventHandler<HTMLInputElement> = () => {
         trigger('confirmPassword');
     
@@ -1121,18 +1122,18 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
       };
     
       useDebouncedEffect(passwordBlur, 300, [password]);
-    ```
+ ```
     
-    Input을 리셋 시키는 것이 아닌 자연스러운 UX 형성을 위해
-    비밀번호 칸의 포커스(커서가 있는 상태)가 해제 되면(다른 영역 클릭 or tab 버튼 등)
-    비밀번호 확인의 Input 유효성 검사를 재실행해,
-    에러 메세지가 지워지는 것은 확인 했으나, 이 또한 매끄럽지 않은 느낌을 받았다.
+ Input을 리셋 시키는 것이 아닌 자연스러운 UX 형성을 위해
+ 비밀번호 칸의 포커스(커서가 있는 상태)가 해제 되면(다른 영역 클릭 or tab 버튼 등)
+ 비밀번호 확인의 Input 유효성 검사를 재실행해,
+ 에러 메세지가 지워지는 것은 확인 했으나, 이 또한 매끄럽지 않은 느낌을 받았다.
     
-    ---
+ ---
     
-    1. trigger 함수 사용
+ 1. trigger 함수 사용
     
-    ```tsx
+ ```tsx
     const password = watch('password');
     
       const reValidPasswordCheck = () => {
@@ -1157,7 +1158,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
       };
     
       useDebouncedEffect(reValidPasswordCheck, 300, [password]);
-    ```
+  ```
     
     어떤 것이 더 자연스러운 경험일까를 고민하다가 문득,
     유효성 검사만 한 번 더 실행시키면 되는 것을
@@ -1180,7 +1181,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 <details>
 <summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>	
 	
-- **Type별 디자인 지정**
+- Type별 디자인 지정
     
     ### ❗ 문제 인식
     
