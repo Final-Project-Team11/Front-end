@@ -359,6 +359,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
   <summary style="font-size: 20px;">BE</summary>
   <details>
     <summary style="font-size: 20px;">Transaction</summary>
+	  
       **문제점1**
 
 - try-catch 구문을 사용해서 트랜잭션을 적용해주었는데 commit은 잘 되지만 rollback이 적용되지 않는다
@@ -422,6 +423,7 @@ try {
   </details>
   <details>
     <summary style="font-size: 20px;">한글 제목 파일 업로드</summary>
+	  
     **문제점**
 
 업로드하려고 하는 파일의 제목이 한글일 경우 자동으로 **한글 문자열이 인코딩**되어 등록이 됩니다. 하지만 윈도우와 맥의 한글을 만드는 방식의 차이점으로 인해 맥에서 파일을 업로드하면 인코딩 할때 한글이 깨져서 아래와 같이 **인코딩 문자열이 길어지는 현상**이 있었습니다.
@@ -450,6 +452,7 @@ key(req, file, cb) {
   </details>
   <details>
     <summary style="font-size: 20px;">문자열 글자수 제한 이슈</summary>
+	  
     **문제점**
 
 기존에 fileName과 fileLocation 을 조회할 때 아래처럼 GROUP_CONCAT으로 객체 모양의 문자열을 만든 후JSON.parse()로 객체로 바꿔주었다. 하지만 이 경우 Sequelize의 **문자열 제한** 때문에 파일을 여러 개 올리게 되면 조회하는 문자열이 길어져서 뒷부분이 생략되어 조회되는 문제점이 있었다.
