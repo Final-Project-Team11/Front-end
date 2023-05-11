@@ -467,7 +467,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 	
 <aside>
 	    
-💡 문제 인식
+## 💡 문제 인식
     
 - 모달을 띄운 뒤, 모달 내부의 닫기 버튼이나 모달의 백그라운드를 누르면 모달이 닫히게 closeModal 함수를 등록해주었는데, 모달이 닫히지 않음.
 - 아래는 문제의 코드. closeModal 함수가 modal을 닫게하는 기능을 하고, 백그라운드와 닫기 버튼에 함수를 등록하였지만 동작안함.
@@ -531,9 +531,11 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 	    
  </aside>
     
+---	
 	
- <aside>    
- 🚫 문제 분석
+ <aside>  
+	 
+ ## 🚫 문제 분석
     
  - Modal의 Open/Close 관련된 내용에 Log를 찍어 전반적인 흐름 파악
 	 - **closeModal**에 **console.log**(’test’) 를 넣어줘서, closeModal이 실행된다면 콘솔에서 확인할 수 있게 세팅했다.
@@ -544,9 +546,11 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 	 `closeModal()`이 재호출되 `State` 값이 안바뀐것처럼 보이는 문제 발견
  </aside>
     
+---
 	
  <aside>
- ⚙ 시도
+	 
+ ## ⚙ 시도
     
  - closeModal을 실행시키는 이벤트를 onClick이 아닌 onMouseDown 으로 바꿔봄
 	 - closeModal이 실행되고, setModalOpen(false)도 실행되며 모달이 정상적으로 닫힘.
@@ -554,10 +558,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
  - onClick 시, 왜 부모에 있는 Click 이벤트가 작동하는지에 대한 원인파악
 	 - 이벤트 버블링 분석
  </aside>
-    	
+   
+---
+	
 <aside>
 	
-🛠 해결
+## 🛠 해결
 	
 이벤트 버블링 - Event Bubbling
    
@@ -605,10 +611,11 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     
     </aside>
     
-	
+---	
 	
     <aside>
-    ❓ 궁금했던 부분
+	    
+## ❓ 궁금했던 부분
     
      ****`useEffect`로 `modalOpen state`가 바뀔 시 상태값을 `Log`로 찍었는데,  상태변화 (false→true→false) 가 찍혀야 되지않나?
     
@@ -626,9 +633,11 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
    
 	
 <details>
-<summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>		
+<summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>	
+	
 <aside>
-💡 문제 인식
+	
+## 💡 문제 인식
     
 - **조건**
 	- `todo 탭`에서 `category`, `todo` 를 추가하기 위해서 `+` 버튼을 누르면 `input`이 생긴다.
@@ -684,27 +693,35 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
  ```
         
 </aside>
-    
+
+---
+	
 <aside>
- 🚫 시도, 문제 원인
+	
+## 🚫 시도, 문제 원인
     
 - 시도
         - `input`을 열고 닫는 `state`를 콘솔로 찍어보니, `input`이 열려있을 때 `+` 버튼을 누르면 `false`가 되며 `‘블러’` 가 찍히고, 곧바로 다시 `true`가 되며 `'열렸다'`가 찍히는걸 볼 수 있었다.
 - 문제 원인
         - 콘솔을 찍힌걸 보면 `blurHandler`가 먼저 발동해서 `input`을 닫고, 그 뒤 `onClick`이 발동하며 `input`이 닫혀있으니 다시 열어버린 걸 볼 수 있다.
 </aside>
-    
+
+---
+	
 <aside>
-🛠 해결
+	
+## 🛠 해결
     
 - `onClick`으로 등록되어있던 `+` 버튼의 기능을 `onMouseDown` 으로 바꿔주었다.
         
 `<UI.StPlusSpan *onMouseDown*={clickFn}>+</UI.StPlusSpan>`
         
 </aside>
-    
+
+---
+	
 <aside>
-❗ 알게 된 점
+## ❗ 알게 된 점
     
  ### `onBlur` 이벤트와 `onClick`이벤트, `mousedown`, `mouseup` 이벤트
     
@@ -720,9 +737,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
         - 다른 위치에서 클릭을 하고, 클릭을 유지한 상태에서 `mouseup` 이벤트가 등록된 요소에 커서를 위치시키고 마우스를 떼도 `mouseup` 이벤트는 발생하지 않는다.
         - 드래그 앤 드롭 기능등을 이용할 때 `mousedown` 이벤트와 함께 사용한다.
 </aside>
-    
+
+---
+	
 <aside>
-👍 배운 점
+	
+## 👍 배운 점
     
 ## `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가진다.
     
@@ -742,9 +762,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 <summary>DropDown hooks 구현하기</summary>
    
 ## DropDown hooks 만들기
-    
+
+---
+	
 <aside>
-💡 문제 인식
+	
+## 💡 문제 인식
     
 - DropDown hooks 사용시 발생하는 문제
 	- DropDown 사용 중, 화면을 움직이면 DropDown 위치가 변경된다.
@@ -754,10 +777,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
         - DropDown이 브라우저 범위를 벗어나게 된다면 list가 보이지 않는다.
         - DropDown position값은 어떻게 설정할것인가?
 </aside>
-    
+ 
+---
+	
 <aside>
 	
-🚫 문제 분석
+## 🚫 문제 분석
 - 브라우저의 변경에 따라 DropDown이 왜 변경되는지 확인
         - DropDown은 `position`을 `absolute` 로 사용중이기 때문에 브라우저가 변경될 때 마다 position 정보를 update 해줘야됨.
 - Modal 창에서 DropDown 안뜨는 이유 확인
@@ -774,7 +799,8 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 </aside>
     
 <aside>
-⚙ 시도한 것
+	
+## ⚙ 시도한 것
     
 - 브라우저의 상대좌표 / 절대좌표 구하는 방법 알아보기
 	- 상대좌표 / 절대좌표
@@ -814,9 +840,9 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
             window.innerHeight : **브라우저 두께를 제외한 높이
             
     
-    - 코드 분석 & 문제 접근
+- 코드 분석 & 문제 접근
     
-    ```tsx
+```tsx
     useEffect(() => {
         //input 태그를 감싸는 div
         const { current } = divRef;
@@ -839,22 +865,24 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
           }
         }
       }, [isOpen, width]);
-    ```
+ ```
     
-    1. 화면에 넘어갔냐 안넘어갔냐를 판별할 조건 필요.
-    2. 화면이 넘어갔다면, DropList를 위로 펼쳐야됨.(가로로 펼치는경우는 못봤음)
-    3. 넘어가지 않는다면, 그대로 아래로 내려오게 해야된다.
-    4. 화면에서 좌측 스크롤이 있을 경우도 있으니, 좌측 스크롤을 고려해서 left를 설정한다.
-    </aside>
+ 1. 화면에 넘어갔냐 안넘어갔냐를 판별할 조건 필요.
+ 2. 화면이 넘어갔다면, DropList를 위로 펼쳐야됨.(가로로 펼치는경우는 못봤음)
+ 3. 넘어가지 않는다면, 그대로 아래로 내려오게 해야된다.
+ 4. 화면에서 좌측 스크롤이 있을 경우도 있으니, 좌측 스크롤을 고려해서 left를 설정한다.
+ </aside>
+ 
+---
+	
+ <aside>
+ ## 🛠 해결
     
-    <aside>
-    🛠 해결
+### 1️⃣ 브라우저 크기 변경에 따른 DropDown position 값 reset 
     
-    1️⃣ 브라우저 크기 변경에 따른 DropDown position 값 reset 
+### 해결 코드 
     
-    해결 코드 
-    
-    ```tsx
+```tsx
     const [width, setWidth] = useState(window.innerWidth);
     
       const resizeHandler = () => {
@@ -873,58 +901,58 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     useEffect(() => {
     ...
     }, [isOpen, width]);
-    ```
+ ```
     
-    1. addEventListener()를 통해서 ‘resize’ 크기 변화를 감지한다. 
-    2. 변화값을 useState에 넣는다.
-    3. useState값을 position 값을 세팅해주는 useEffect dependency array에 넣어서
-    값 변경에 따라 position 값을 reset 해주도록 한다. 
+ 1. addEventListener()를 통해서 ‘resize’ 크기 변화를 감지한다. 
+ 2. 변화값을 useState에 넣는다.
+ 3. useState값을 position 값을 세팅해주는 useEffect dependency array에 넣어서
+ 값 변경에 따라 position 값을 reset 해주도록 한다. 
     
-    2️⃣ scroll을 고려한 DropDown position 값 설정하기 
+ ### 2️⃣ scroll을 고려한 DropDown position 값 설정하기 
     
-    ```tsx
+ ```tsx
     const { top, left, height, width } = current.getBoundingClientRect();
     const absoluteTop = window.pageYOffset + current.getBoundingClientRect().top;
     const absoluteLeft = window.pageXOffset + current.getBoundingClientRect().left;
-    ```
+ ```
     
-    1. 스크롤 x, y 로 2가지 경우가 생길 수 있다는 것을 인지한다.
-    2. 스크롤 변화값에 따른 좌표값을 `window.pageYOffset` 로 불러온다.
-    3. 내가 기준이 잡은 좌표 top 값과 left 값에 scroll에 따른 offset값을 더해준다. 
+ 1. 스크롤 x, y 로 2가지 경우가 생길 수 있다는 것을 인지한다.
+ 2. 스크롤 변화값에 따른 좌표값을 `window.pageYOffset` 로 불러온다.
+ 3. 내가 기준이 잡은 좌표 top 값과 left 값에 scroll에 따른 offset값을 더해준다. 
     
-    3️⃣ Modal 창에서 DropDown, 사용 시, DropDown이 보이지 않는다.
-    DropDown에서 Ul태그의 z-index 값을 2000 으로 설정함으로써, Modal 보다 높게 설정한다.
+ ### 3️⃣ Modal 창에서 DropDown, 사용 시, DropDown이 보이지 않는다.
+	 DropDown에서 Ul태그의 z-index 값을 2000 으로 설정함으로써, Modal 보다 높게 설정한다.
     
-    4️⃣ DropDown이 브라우저 범위를 벗어나게 된다면 list가 보이지 않는다. 
+ ### 4️⃣ DropDown이 브라우저 범위를 벗어나게 된다면 list가 보이지 않는다. 
     1. 브라우저의 범위를 벗어났을 때 예외처리를 생각한다.
     - 브라우저의 범위를 벗어나게 되면 DropDown 된 List를 기준 div의 아래가 아닌 위로 나타나게 한다.
     - 계산 방식은, 현재 브라우저의 높이값을 구한 뒤, 기준 div의 top + height 값에 list의 height 값을 
     더 했을 때, 브라우저의 높이값보다 큰지를 확인하는 조건을 형성한다.
     
-    ```tsx
+ ```tsx
     if (top + height + ulCurrent.getBoundingClientRect().height > window.innerHeight
-    ```
+ ```
     
-    - 조건이 true 일 경우
+ - 조건이 true 일 경우
     
-    ```tsx
+ ```tsx
      const ulHeight = ulCurrent.getBoundingClientRect().height;
      const newTop = absoluteTop - height - ulHeight;
      setInputPosition({ top: newTop, left: absoluteLeft, height, width });
-    ```
+ ```
     
     조건이 true가 된다면, list가 기준 div의 아래가 아닌 위로 나타나게 해야되기 때문에 기준 top 값에서
     높이값과 list의 높이값을 빼줌으로써  위로 나타나게 한다.
     
-    - 조건이 false 일 경우
+ - 조건이 false 일 경우
     
-    ```tsx
+ ```tsx
     setInputPosition({ top: absoluteTop, left: absoluteLeft, height, width });
-    ```
+ ```
     
-    5️⃣ DropDown position값은 어떻게 설정할것인가
+ ### 5️⃣ DropDown position값은 어떻게 설정할것인가
     
-    ```tsx
+ ```tsx
     const [divRef, ulRef, setIsOpen, isOpen, inputPosition] = useDropDown();
     
     ... 
@@ -953,13 +981,13 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
               disabled={props.disable}
             />
           </styles.StInputBlock>
-    ```
+  ```
     
-    기준이 되는 div태그의 DOM 요소에 접근할 수 있게 Ref값을 설정해 주고, 
+  기준이 되는 div태그의 DOM 요소에 접근할 수 있게 Ref값을 설정해 주고, 
     
-    list가 되는 ul태그도 ref값을 설정해준다. 
+  list가 되는 ul태그도 ref값을 설정해준다. 
     
-    ```tsx
+  ```tsx
     //item list 값이 바뀔때마다, 위치를 재확인한다.
       //포탈은 position을 이용하기 때문에 위치 정보값이 필요하다.
       // getBoundingClientRect은 해당 요소의 상태좌표값을 가져오고,
@@ -986,14 +1014,17 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
           }
         }
       }, [isOpen, width]);
-    ```
+  ```
     
-    그다음 Ref로 설정한 요소들의 `top`,`left`,`width`,`height` 값을 가져와 `position` 값을 setting 해준 뒤 그 값을 `return` 해준다.
+  그다음 Ref로 설정한 요소들의 `top`,`left`,`width`,`height` 값을 가져와 `position` 값을 setting 해준 뒤 그 값을 `return` 해준다.
     
-    </aside>
-    
-    <aside>
-    ❓ 궁금했던 부분 
+  </aside>
+	 
+ ---
+	 
+<aside>
+	    
+## ❓ 궁금했던 부분 
     
      ****현재 문제가 되고 있는 것이, `ul`태그의 `dom` 요소에 접근해서 `getBoundingClientRect()` 메서드를 통해 `ul` 태그의 높이값을 불러오고 있는데,  ****초기 태그의 높이값과 그 이후의 높이값이 다른 문제가 생겼다. 초기값의 높이값이 ul태그의 높이값만을 포함하고있는 것이 아닌, div태그와의 거리값도 포함이 되어 있어서, 
     
@@ -1007,7 +1038,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 
 <details>
 <summary>비밀번호 입력에 따른 비밀번호 확인의 유효성</summary>
-
+	
 ### ❗ 문제 인식
     
 ![image](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/124577334/d7af8a02-d70e-4bf2-badf-99757f2753ca)
