@@ -12,7 +12,7 @@
 ### Meer : [캣린더 Notion](https://magical-puppy-b7f.notion.site/Final_Project_Team11-Meer-71cb657348d24b188150a5e12df42b86)
 ### Meer : [캣린더 Domain](https://meercatlendar.store)
 ---
-## Github
+## 🔗 Github
 
 > FE : https://github.com/Final-Project-Team11/Meer_catlender_FE 
 
