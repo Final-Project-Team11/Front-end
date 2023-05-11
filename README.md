@@ -176,7 +176,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 
 ---
 
-# 💻ERD
+# 💻 ERD
 <details>
 <summary style="font-size: 20px;">ERD</summary>
 
@@ -186,7 +186,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 
 ---
 
-# 🔫TroubleShooting
+# 🔫 TroubleShooting
  <details>
 <summary>FE</summary> 
   
@@ -527,15 +527,18 @@ schedules.map((schedule) => {
 
 **수정 전**
 
-![mypage-1.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5c5912d2-5f21-4c3d-9688-e7a93726ad2d/mypage-1.jpg)
+![mypage-1](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/70690690/6264b2ae-6359-4534-a77d-65a90acb6c79)
 
-![mypage-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/63dbdbb2-a992-4523-a965-4d6faacdfaab/mypage-3.png)
+![mypage-3 PNG](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/70690690/39c43450-d5ef-4872-bb9c-92b6ed4a6ffc)
+
 
 **수정 후**
 
-![mypage-1_코드수정 후.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/61d960e1-c32c-4310-8ebe-b2ef4c2c2823/mypage-1_%EC%BD%94%EB%93%9C%EC%88%98%EC%A0%95_%ED%9B%84.png)
+![mypage-1_코드수정 후 PNG](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/70690690/fc2eb977-2d99-4d00-a26d-5f8fb910ff52)
 
-![mypage-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8deabd36-b638-406c-ba19-025da9cb3441/mypage-3.png)
+![mypage-3 PNG (1)](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/70690690/a75403d7-3b02-4e16-8489-d093fd501e6c)
+
+
   </details>
 
 </details>
