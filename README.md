@@ -170,7 +170,6 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
   
 <details>
 <summary>TypeScript</summary> 
-
     1. JavaScript는 모든 타입을 받을 수 있어 비교적 빠른 작업이 가능하지만, 가독성과 유지 보수 측면에서 단점이 존재
     2. TypeScript는 JavaScript의 상위 집합 언어로, 정적 타입 검사와 코드 어시스트 기능 등을 제공하여 코드의 안정성과 가독성을 높여주는 장점을 가짐
         - TypeScript의 정적 타입 검사로 인해 코드가 더 안정적이며, 개발자들이 이해하기 쉬운 코드 작성 가능
@@ -186,9 +185,10 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     7. TypeScript는 커뮤니티 지원이 강함
         - 많은 개발자들이 사용하고 지원하므로, 문제 해결이나 새로운 정보를 얻기 쉬움
         - 많은 라이브러리들이 TypeScript 지원을 제공하며, 타입 정의 파일이 다양하게 존재함
-  </details>
- 
-  <details>
+</details>
+  
+  
+<details>
 <summary>tanstack@react-query</summary> 
     
     1. 데이터 동기화 및 배경 업데이트
