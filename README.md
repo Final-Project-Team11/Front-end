@@ -197,7 +197,7 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 
 ---
 
-# 🧠 
+# 🧠 기술적 의사 
  <details>
 <summary>FE</summary> 
   
@@ -465,107 +465,107 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
 <details>
 <summary>이벤트 버블링</summary>		
 	
-    <aside>
+<aside>
 	    
-    💡 문제 인식
+💡 문제 인식
     
-    - 모달을 띄운 뒤, 모달 내부의 닫기 버튼이나 모달의 백그라운드를 누르면 모달이 닫히게 closeModal 함수를 등록해주었는데, 모달이 닫히지 않음.
-    - 아래는 문제의 코드. closeModal 함수가 modal을 닫게하는 기능을 하고, 백그라운드와 닫기 버튼에 함수를 등록하였지만 동작안함.
-        - code(문제가 발생한 곳)
+- 모달을 띄운 뒤, 모달 내부의 닫기 버튼이나 모달의 백그라운드를 누르면 모달이 닫히게 closeModal 함수를 등록해주었는데, 모달이 닫히지 않음.
+- 아래는 문제의 코드. closeModal 함수가 modal을 닫게하는 기능을 하고, 백그라운드와 닫기 버튼에 함수를 등록하였지만 동작안함.
+- code(문제가 발생한 곳)
             
-            ```tsx
-            return (
-                  <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}> // modal 내에서 click 이벤트 발생시, 해당위치의 click 이벤트도 발생
-            					{modalOpen && (
-            		        <Modal closeModal={closeModal}>
-            		          <UploadedDetail
-            		            data={data}
-            		            isLoading={isLoading}
-            		            type={type}
-            		            closeModal={closeModal}
-            		          />
-            		        </Modal>
-            			      )}
-                    <UI.StNameDateBlock>
-                      <UI.StContentSpan>😵‍💫 | {file.userName}</UI.StContentSpan>
-                      <UI.StDateSpan className="date"> {file.enrollDay}</UI.StDateSpan>
+```tsx
+    return (
+       <UI.StUploadedFileBlock key={file.eventId} onClick={modalOpenHandler}> // modal 내에서 click 이벤트 발생시, 해당위치의 click 이벤트도 발생
+            {modalOpen && (
+            	<Modal closeModal={closeModal}>
+            	<UploadedDetail
+            		 data={data}
+            		 isLoading={isLoading}
+            		 type={type}
+            		 closeModal={closeModal}
+            	/>
+            	</Modal>
+            	)}
+                <UI.StNameDateBlock>
+                    <UI.StContentSpan>😵‍💫 | {file.userName}</UI.StContentSpan>
+                    UI.StDateSpan className="date"> {file.enrollDay}</UI.StDateSpan>
                     </UI.StNameDateBlock>
                     <UI.StContentSpan>📎 | {file.fileName}</UI.StContentSpan>
-                  </UI.StUploadedFileBlock>
-              );
-            ```
+               </UI.StUploadedFileBlock>
+    );
+```
             
-        - Modal Open/Close 관련 코드
-            1. `closeModal`, `Modal` 나오는 조건
+- Modal Open/Close 관련 코드
+	1. `closeModal`, `Modal` 나오는 조건
                 
-                ```tsx
-                const closeModal = () => {
-                    setModalOpen(false);
-                    console.log('test');
-                  };
+ ```tsx
+    const closeModal = () => {
+    setModalOpen(false);
+    console.log('test');
+    };
                 
-                {modalOpen && (
-                        <Modal closeModal={closeModal}>
-                          <UploadedDetail
-                            data={data}
-                            isLoading={isLoading}
-                            type={type}
-                            closeModal={closeModal}
-                          />
-                        </Modal>
-                      )}
-                ```
+    {modalOpen && (
+          <Modal closeModal={closeModal}>
+          <UploadedDetail
+                data={data}
+                isLoading={isLoading}
+                type={type}
+                closeModal={closeModal}
+           />
+           </Modal>
+    )}
+ ```
                 
             
-            2. `Modal` 컴포넌트내에서  백그라운드 클릭 시 `closeModal()` 호출
+ 2. `Modal` 컴포넌트내에서  백그라운드 클릭 시 `closeModal()` 호출
             
-            ```tsx
-            <StModalBackground
-                    background={background}
-                    onClick={() => closeModal()}
-            ></StModalBackground>
-            ```
+ ```tsx
+    <StModalBackground
+          background={background}
+          onClick={() => closeModal()}
+    ></StModalBackground>
+ ```
             
-            - `Modal` 은 `UploadedDetail` 을 `children`으로 받아서 모달에서 보여준다.
-            - `UploadedDetail`에서 `props`로 `closeModal`을 받아서 `button` 의 `onClick`에 넣어주었다.
+ - `Modal` 은 `UploadedDetail` 을 `children`으로 받아서 모달에서 보여준다.
+ - `UploadedDetail`에서 `props`로 `closeModal`을 받아서 `button` 의 `onClick`에 넣어주었다.
 	    
-    </aside>
+ </aside>
     
 	
-    <aside>    
-    🚫 **문제 분석**
+ <aside>    
+ 🚫 **문제 분석**
     
-    - Modal의 Open/Close 관련된 내용에 Log를 찍어 전반적인 흐름 파악
-        - **closeModal**에 **console.log**(’test’) 를 넣어줘서, closeModal이 실행된다면 콘솔에서 확인할 수 있게 세팅했다.
-    - 문제가 되는 부분 분석
-        - `onMouseClick()`(백그라운트 클릭)으로 인한 `closeModal` 시 정상 작동 확인
-        - `button` 으로 인한 `closeModal()` 시, `modalOpen` `State` 값이 변경되지 않아, `Modal`이 `Close` 되지 않는 현상 파악
-        - 실제적으로 `button`으로 `Click`으로 `closeModal()`을 해서 `State`의 변화를 일으켰지만, **부모**에 있는 `onClick()`이 실행되서
-        `closeModal()`이 재호출되 `State` 값이 안바뀐것처럼 보이는 문제 발견
-    </aside>
+ - Modal의 Open/Close 관련된 내용에 Log를 찍어 전반적인 흐름 파악
+	 - **closeModal**에 **console.log**(’test’) 를 넣어줘서, closeModal이 실행된다면 콘솔에서 확인할 수 있게 세팅했다.
+ - 문제가 되는 부분 분석
+	 - `onMouseClick()`(백그라운트 클릭)으로 인한 `closeModal` 시 정상 작동 확인
+	 - `button` 으로 인한 `closeModal()` 시, `modalOpen` `State` 값이 변경되지 않아, `Modal`이 `Close` 되지 않는 현상 파악
+	 - 실제적으로 `button`으로 `Click`으로 `closeModal()`을 해서 `State`의 변화를 일으켰지만, **부모**에 있는 `onClick()`이 실행되서
+	 `closeModal()`이 재호출되 `State` 값이 안바뀐것처럼 보이는 문제 발견
+ </aside>
     
 	
-    <aside>
-    ⚙ **시도**
+ <aside>
+ ⚙ **시도**
     
-    - closeModal을 실행시키는 이벤트를 onClick이 아닌 onMouseDown 으로 바꿔봄
-        - closeModal이 실행되고, setModalOpen(false)도 실행되며 모달이 정상적으로 닫힘.
+ - closeModal을 실행시키는 이벤트를 onClick이 아닌 onMouseDown 으로 바꿔봄
+	 - closeModal이 실행되고, setModalOpen(false)도 실행되며 모달이 정상적으로 닫힘.
         
-    - onClick 시, 왜 부모에 있는 Click 이벤트가 작동하는지에 대한 원인파악
-        - 이벤트 버블링 분석
-    </aside>
-    
+ - onClick 시, 왜 부모에 있는 Click 이벤트가 작동하는지에 대한 원인파악
+	 - 이벤트 버블링 분석
+ </aside>
+    	
+<aside>
 	
+🛠 **해결**
 	
-    <aside>
-    🛠 **해결**
-    이벤트 버블링 - Event Bubbling
+이벤트 버블링 - Event Bubbling
+   
+이벤트 버블링은 특정 화면 요소에서 이벤트가 발생했을 때 해당 이벤트가 더 상위의 화면 요소들로 전달되어 가는 특성을 의미한다.
     
-    이벤트 버블링은 특정 화면 요소에서 이벤트가 발생했을 때 해당 이벤트가 더 상위의 화면 요소들로 전달되어 가는 특성을 의미한다.
+![https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png](https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png)
     
-    ![https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png](https://user-images.githubusercontent.com/122278657/233428841-b58f5dc6-1aa2-4fce-9b70-4a3e3cbb3c4f.png)
-    
-    **해결 코드 1**
+**해결 코드 1**
     
     - `stopPropagation()` 메서드로 이벤트의 전파를 방지한다.
     
@@ -623,163 +623,160 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     </aside>
 
 </details>
-    
+   
 	
-	
-- **onClick이벤트와 onMouseDown이벤트, onBlur이벤트**
+<details>
+<summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>		
+<aside>
+💡 **문제 인식**
     
-    <aside>
-    💡 **문제 인식**
-    
-    - **조건**
-        - `todo 탭`에서 `category`, `todo` 를 추가하기 위해서 `+` 버튼을 누르면 `input`이 생긴다.
+- **조건**
+	- `todo 탭`에서 `category`, `todo` 를 추가하기 위해서 `+` 버튼을 누르면 `input`이 생긴다.
         - `input`에 내용물이 있을 때 `+` 버튼을 누르면 `input`의 내용이 `category` 또는 `todo`에 저장된다.
         - `input`에서 `focus`가 사라질 시 `input`은 사라져야 한다.
-    - **문제**
+- **문제**
         - `input`이 열려있을 때 `+` 버튼을 누르면 `input`이 닫혔다가 곧바로 다시 열린다.
-    - 코드
+- 코드
+
+ ```tsx
+       const categoryPlusHandler = () => {
+        // input이 닫혀있다면 열림
+        if (openCategoryInput === false) {
+             setOpenCategoryInput(true);
+             console.log('열렸다');
+           }
+       // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
+        else if (openCategoryInput && categoryState.length !== 0) {
+            setCategoryState('');
+            setOpenCategoryInput(false);
+            console.log('닫히냐?');
+          }
+       // 인풋이 열려있지만, 비어있다면 인풋 닫음
+       else {
+      setOpenCategoryInput(false);
+      console.log('닫혀라');
+    }
+   };
+ ```
         
-        ```tsx
-        const categoryPlusHandler = () => {
-            // input이 닫혀있다면 열림
-            if (openCategoryInput === false) {
-              setOpenCategoryInput(true);
-              console.log('열렸다');
-            }
-            // 인풋이 열려있고, input이 비어있지 않다면 post 동작, input 비움
-            else if (openCategoryInput && categoryState.length !== 0) {
-              setCategoryState('');
-              setOpenCategoryInput(false);
-              console.log('닫히냐?');
-            }
-            // 인풋이 열려있지만, 비어있다면 인풋 닫음
-            else {
-              setOpenCategoryInput(false);
-              console.log('닫혀라');
-            }
-          };
-        ```
+```tsx
+// 인풋에서 포커스 사라지면 input 닫힘
+    const blurHandler = () => {
+      setValue('');
+      console.log('블러');
+      inputHandler(false);
+   };
         
-        ```tsx
-        // 인풋에서 포커스 사라지면 input 닫힘
-          const blurHandler = () => {
-            setValue('');
-            console.log('블러');
-            inputHandler(false);
-          };
+    return (
+     <UI.StCategoryInputBlock>
+     <UI.StCircleBlock />
+     <UI.StCategoryInput
+          ref={inputRef}
+          type="text"
+          maxLength={10}
+          value={value}
+          onChange={onChange}
+          onKeyPress={handleKeyPress}
+          onBlur={blurHandler}
+     />
+     </UI.StCategoryInputBlock>
+  );
+ ```
         
-          return (
-            <UI.StCategoryInputBlock>
-              <UI.StCircleBlock />
-              <UI.StCategoryInput
-                ref={inputRef}
-                type="text"
-                maxLength={10}
-                value={value}
-                onChange={onChange}
-                onKeyPress={handleKeyPress}
-                onBlur={blurHandler}
-              />
-            </UI.StCategoryInputBlock>
-          );
-        ```
-        
-    </aside>
+</aside>
     
-    <aside>
-    🚫 **시도, 문제 원인**
+<aside>
+ 🚫 **시도, 문제 원인**
     
-    - **시도**
+- **시도**
         - `input`을 열고 닫는 `state`를 콘솔로 찍어보니, `input`이 열려있을 때 `+` 버튼을 누르면 `false`가 되며 `‘블러’` 가 찍히고, 곧바로 다시 `true`가 되며 `'열렸다'`가 찍히는걸 볼 수 있었다.
-    - **문제 원인**
+- **문제 원인**
         - 콘솔을 찍힌걸 보면 `blurHandler`가 먼저 발동해서 `input`을 닫고, 그 뒤 `onClick`이 발동하며 `input`이 닫혀있으니 다시 열어버린 걸 볼 수 있다.
-    </aside>
+</aside>
     
-    <aside>
-    🛠 **해결**
+<aside>
+🛠 **해결**
     
-    - `onClick`으로 등록되어있던 `+` 버튼의 기능을 `onMouseDown` 으로 바꿔주었다.
+- `onClick`으로 등록되어있던 `+` 버튼의 기능을 `onMouseDown` 으로 바꿔주었다.
         
-        `<UI.StPlusSpan *onMouseDown*={clickFn}>+</UI.StPlusSpan>`
+`<UI.StPlusSpan *onMouseDown*={clickFn}>+</UI.StPlusSpan>`
         
-    </aside>
+</aside>
     
-    <aside>
-    ❗ **알게 된 점**
+<aside>
+❗ **알게 된 점**
     
-    ### `onBlur` 이벤트와 `onClick`이벤트, `mousedown`, `mouseup` 이벤트
+ ### `onBlur` 이벤트와 `onClick`이벤트, `mousedown`, `mouseup` 이벤트
     
-    - **onBlur**
-        - `onBlur` 이벤트는 어떠한 요소가 `focus` 를 잃을 때 발동한다. 마우스를 클릭하든 탭을 누르든 `focus`만 잃으면 그 순간 바로 발동한다.
-    - **onClick**
+- **onBlur**
+	- `onBlur` 이벤트는 어떠한 요소가 `focus` 를 잃을 때 발동한다. 마우스를 클릭하든 탭을 누르든 `focus`만 잃으면 그 순간 바로 발동한다.
+- **onClick**
         - `onClick` 이벤트는 `mousedown` 이벤트와 `mouseup` 이벤트를 합친 이벤트의 형태로, `onClick` 이벤트가 적용된 요소의 위에서 마우스를 누르는 것과 떼는 것이 이루어 져야 발동하는 이벤트이다.
-    - **mousedown**
+- **mousedown**
         - `mousedown` 이벤트가 등록된 요소의 위에서 마우스를 누르면 발동하는 이벤트. 드래그 앤 드롭, 마우스 상호작용 추적 기능을 위해 이용되는 경우가 많으며, 마우스를 떼는것에 대한 조건은 없다.
-    - **mouseup**
+- **mouseup**
         - `mouseup` 이벤트가 등록된 요소 위에서 커서를 떼기만 하면 될 것 같지만, 아니다.
         - `onClick`과 같이 요소 위에서 마우스를 누르고, 떼는 동작을 해야한다.
         - 다른 위치에서 클릭을 하고, 클릭을 유지한 상태에서 `mouseup` 이벤트가 등록된 요소에 커서를 위치시키고 마우스를 떼도 `mouseup` 이벤트는 발생하지 않는다.
         - 드래그 앤 드롭 기능등을 이용할 때 `mousedown` 이벤트와 함께 사용한다.
-    </aside>
+</aside>
     
-    <aside>
-    👍 **배운 점**
+<aside>
+👍 **배운 점**
     
-    ## `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가진다.
+## `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가진다.
     
-    - `onBlur` 이벤트는 `focus`가 사라지는 순간에 동작한다.
-    - `focus`가 사라지는 이유는 마우스가 클릭되었기 때문이다.
-    - 위와 같은 인과관계를 볼 때 `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가지게된다.
+- `onBlur` 이벤트는 `focus`가 사라지는 순간에 동작한다.
+- `focus`가 사라지는 이유는 마우스가 클릭되었기 때문이다.
+- 위와 같은 인과관계를 볼 때 `mousedown` 이벤트는 `onBlur` 이벤트보다 우선순위를 가지게된다.
     
-    ## `onClick` 이벤트의 발생 시점
+## `onClick` 이벤트의 발생 시점
     
-    - `onClick` 이벤트는 `mousedown` 과 `mouseup` 이벤트의 조합이다.
-    - 따라서 한 요소에 세 개의 이벤트가 모두 등록되어 있다면 `mousedown` → `mouseup` → `onClick` 순으로 이벤트가 동작한다.
-    </aside>
+- `onClick` 이벤트는 `mousedown` 과 `mouseup` 이벤트의 조합이다.
+- 따라서 한 요소에 세 개의 이벤트가 모두 등록되어 있다면 `mousedown` → `mouseup` → `onClick` 순으로 이벤트가 동작한다.
+	
+</aside>
+</details>
+
+<details>
+<summary>DropDown hooks 구현하기</summary>
+   
+## DropDown hooks 만들기
     
-- **DropDown hooks 구현하기**
+<aside>
+💡 문제 인식
     
-    ## DropDown hooks 만들기
-    
-    <aside>
-    💡 문제 인식
-    
-    - DropDown hooks 사용시 발생하는 문제
-        - DropDown 사용 중, 화면을 움직이면 DropDown 위치가 변경된다.
+- DropDown hooks 사용시 발생하는 문제
+	- DropDown 사용 중, 화면을 움직이면 DropDown 위치가 변경된다.
         - DropDown 사용 중, 화면을 확대 축소하게 되면 DropDown 위치가 변경된다.
         - scroll에 따른 DropDown 위치 변경
         - Modal 창에서 DropDown, 사용 시, DropDown이 보이지 않는다.
         - DropDown이 브라우저 범위를 벗어나게 된다면 list가 보이지 않는다.
         - DropDown position값은 어떻게 설정할것인가?
-    </aside>
+</aside>
     
-    <aside>
-    🚫 문제 분석
-    
-    - 브라우저의 변경에 따라 DropDown이 왜 변경되는지 확인
-        - DropDown은 `position`을 `absolute` 로 사용중이기 때문에 브라우저가 변경될 때 마다
-        position 정보를 update 해줘야됨.
-    - Modal 창에서 DropDown 안뜨는 이유 확인
+<aside>
+🚫 문제 분석
+- 브라우저의 변경에 따라 DropDown이 왜 변경되는지 확인
+        - DropDown은 `position`을 `absolute` 로 사용중이기 때문에 브라우저가 변경될 때 마다 position 정보를 update 해줘야됨.
+- Modal 창에서 DropDown 안뜨는 이유 확인
         - Modal 생성 방식 분석
         - 현재 Modal은 `position` 을 `fixed` 로 사용하고 있고 `z-index`를 `1500`을 주고 있는 상태
         - DropDown은 `position` 을 `absolute` 를 쓰고 있지만, `z-index` 값이 없기 때문에 
         현재는 Modal 창 뒤쪽으로 나타나고 있는 상황
-    - DropDown이 브라우저 범위를 벗어나는 문제
+- DropDown이 브라우저 범위를 벗어나는 문제
         - DropDown에게 position 정보를 넘겨 줄때, 브라우저의 높이값을 고려하지 않고 주었기 때문에 브라우저 범위를 벗어나게 됨
         - DropDown이 브라우저 범위를 벗어나게 될 상황에 대한 예외처리 필요
-    - DropDown position 문제
-        - useRef를 사용해 내가 DropDown으로 사용할 Dom 요소에 접근해서 해당 요소의
-        position 값을 불러온다.
-        - 값은 2가지를 가져올 것이고, input창을 감싸고있는 div 태그와 
-        li 태그를 감싸고 있는 ul태그를 가져온다.
-    </aside>
+- DropDown position 문제
+        - useRef를 사용해 내가 DropDown으로 사용할 Dom 요소에 접근해서 해당 요소의 position 값을 불러온다.
+        - 값은 2가지를 가져올 것이고, input창을 감싸고있는 div 태그와 li 태그를 감싸고 있는 ul태그를 가져온다.
+</aside>
     
-    <aside>
-    ⚙ 시도한 것
+<aside>
+⚙ 시도한 것
     
-    - 브라우저의 상대좌표 / 절대좌표 구하는 방법 알아보기
-        - 상대좌표 / 절대좌표
-            
+- 브라우저의 상대좌표 / 절대좌표 구하는 방법 알아보기
+	- 상대좌표 / 절대좌표
             > **screent 객체 화면 크기 구하기**
             > 
             
@@ -1004,9 +1001,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     문제는 해결방안을 찾고 있고, 해결하는 즉시 내용을 공유할 예정이다.
     
     </aside>
-    
-- **비밀번호 입력에 따른 비밀번호 확인의 유효성**
-    
+	    
+ </details>
+
+<details>
+<summary>비밀번호 입력에 따른 비밀번호 확인의 유효성</summary>
+
     ### ❗ 문제 인식
     
     ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/909ac903-228e-4326-991d-b230a2b21592/Untitled.png)
@@ -1174,6 +1174,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     - 문제에 대해서 가볍게 접근하는 시선 역시 필요하다고 느껴짐
     - React-Hook-Form에는 아직 경험하지 못한 수많은 유용한 기능이 더 남아있어
     한 번 손을 댄 이상 더 깊은 탐구가 필요하다고 느껴짐
+
+</details>
+	  
+<details>
+<summary>onClick이벤트와 onMouseDown이벤트, onBlur이벤트</summary>	
+	
 - **Type별 디자인 지정**
     
     ### ❗ 문제 인식
@@ -1310,10 +1316,12 @@ Meer : 캣린더는 팀원들이 회사를 다니며 겪었던 불편했던 경�
     - 라이브러리마다 내장하고 있는 기능들에 대해서 다시 생각해보는 계기가 되었고
     styled-component를 더 탐구하는 계기가 되었습니다.
     - 재사용성과 코드 간소화에 대해서 고민해보는 계기가 되었습니다.
-- **성능개선**
-</details>    
+	
+</details>
+	
+<summary>성능개선</summary>	
+</details>	
 	    
-
 <details>
   <summary style="font-size: 20px;">BE</summary>
   <details>
@@ -1497,7 +1505,5 @@ schedules.map((schedule) => {
 
 ![mypage-3 PNG (1)](https://github.com/Final-Project-Team11/Meer_catlender_FE/assets/70690690/a75403d7-3b02-4e16-8489-d093fd501e6c)
 
-
-  </details>
-
+</details>
 </details>
