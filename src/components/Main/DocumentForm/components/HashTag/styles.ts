@@ -103,6 +103,8 @@ const StInput = styled.input`
 `;
 
 const StUlBlock = styled.ul<UlStyleProps>`
+  height: 150px;
+  overflow-y: scroll;
   position: absolute;
   z-index: 2000;
   background-color: white;

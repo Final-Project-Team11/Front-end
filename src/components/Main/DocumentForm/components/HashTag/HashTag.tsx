@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import useGetTeamInfo from '../../../../../api/hooks/Main/useGetTeamInfo';
 import * as styles from './styles';
@@ -9,7 +9,7 @@ import useDropDown from '../../../../../hooks/common/useDropDown';
 interface HashTagProps {
   mention?: string[];
   disable?: boolean;
-  mentionHandler?: any;
+  mentionHandler?: React.Dispatch<React.SetStateAction<string[] | undefined>>;
 }
 
 const HashTag = (props: HashTagProps) => {
@@ -41,7 +41,7 @@ const HashTag = (props: HashTagProps) => {
         name && newTagList.push(name);
         setTagList(newTagList);
         setIsOpen(!isOpen);
-        props.mentionHandler(newTagList);
+        props.mentionHandler && props.mentionHandler(newTagList);
       }
     }
   };
@@ -56,7 +56,7 @@ const HashTag = (props: HashTagProps) => {
         if (istags === undefined) {
           newTtagList.push(inputValue);
           setTagList(newTtagList);
-          props.mentionHandler(newTtagList);
+          props.mentionHandler && props.mentionHandler(newTtagList);
           setInputValue('');
         } else {
           alert('언급된 이름이 있습니다.');
@@ -76,7 +76,7 @@ const HashTag = (props: HashTagProps) => {
 
     const newTagList = tagList.filter(item => item !== clickedElementId);
     setTagList(newTagList);
-    props.mentionHandler(newTagList);
+    props.mentionHandler && props.mentionHandler(newTagList);
   };
 
   return (
@@ -111,9 +111,9 @@ const HashTag = (props: HashTagProps) => {
       {props.disable === false &&
         isOpen &&
         createPortal(
-          <styles.StUlBlock className="tags" ref={ulRef} pos={inputPosition}>
+          <styles.StUlBlock ref={ulRef} className="tags" pos={inputPosition}>
             <styles.StTeamMark className="tags">Team A :</styles.StTeamMark>
-            {data?.map((item, index) => {
+            {data?.map(item => {
               return (
                 <styles.StLiBlock
                   className="tags"

@@ -1,32 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import * as UI from './styles';
-import { recoilReportState } from '../../../../states/recoilReportState';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { recoilClickEventState } from '../../../../states/recoilClickEventState';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useForm } from 'react-hook-form';
-import CustomInput from '../../../Atoms/Input/CustomInput';
-import CustomButton from '../../../Atoms/Button/CustomButton';
-import FileUpload from '../../DocumentForm/components/FileUpload/FileUpload';
-import HashTag from '../../DocumentForm/components/HashTag/HashTag';
-import usePostReport from '../../../../api/hooks/Main/usePostReport';
-import usePostMeetingReport from '../../../../api/hooks/Main/usePostMeetingReport';
-import Swal from 'sweetalert2';
-import { ToastContainer, toast } from 'react-toastify';
-import { AxiosError } from 'axios';
-import { ErrorData } from '../../DocumentForm/commonInterface';
 import DatePickerComponent from '../../DocumentForm/components/DatePicker/DatePickerComponent';
-export type ReportInfo = {
-  title: string;
-  body: string;
-  location: string;
-  author: string;
-};
+import usePostMeetingReport from '../../../../api/hooks/Main/usePostMeetingReport';
+import { recoilClickEventState } from '../../../../states/recoilClickEventState';
+import FileUpload from '../../DocumentForm/components/FileUpload/FileUpload';
+import usePostReport from '../../../../api/hooks/Main/usePostReport';
+import HashTag from '../../DocumentForm/components/HashTag/HashTag';
+import { ErrorData } from '../../DocumentForm/commonInterface';
+import CustomButton from '../../../Atoms/Button/CustomButton';
+import { ReportInfo, ReportModalProps } from './interfaces';
+import CustomInput from '../../../Atoms/Input/CustomInput';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from 'react';
 
-type ReportModalProps = {
-  value?: string | number;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import { AxiosError } from 'axios';
+import Swal from 'sweetalert2';
+import * as UI from './styles';
 
 const ReportModal = ({ value, setOpen }: ReportModalProps) => {
   const { register, handleSubmit, reset } = useForm<ReportInfo>();
