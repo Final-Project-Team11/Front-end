@@ -8,7 +8,7 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { recoilClickEventState } from '../../states/recoilClickEventState';
 import { useGetCardInfo } from '../../api/hooks/Card/useGetCardInfo';
 import { recoilTabState } from '../../states/recoilTabState';
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Calendar from '../../components/ToastCalendar/Calendar';
 import { getScheduleColor, initCalendar } from './utils';
 import { getCookie } from '../../api/auth/CookieUtils';
@@ -21,7 +21,6 @@ import Feed from '../../components/Feed/Feed';
 import { CalendarProps } from './interfaces';
 import type { MouseEvent } from 'react';
 import { theme } from './theme';
-import Swal from 'sweetalert2';
 import * as UI from './styles';
 import Header from './Header';
 import './subMain.css';
@@ -32,11 +31,11 @@ export default function SubMain({ view }: { view: ViewType }) {
   const calendarRef = useRef<typeof Calendar>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const tab = useRecoilValue(recoilTabState);
-  const user = useGetCardInfo();
 
+  const user = useGetCardInfo(); //렌더링 1번
   const setSelectedDateRangeText = useSetRecoilState(recoilSelectedDateState);
   const [initialEvents, setInitialEvents] = useState<Partial<EventObject>[]>();
-  const [event, setEvent] = useRecoilState(recoilClickEventState);
+  const setEvent = useSetRecoilState(recoilClickEventState);
   const [clickDetail, setClickDetail] = useState<boolean>(false);
   const [createSchedule, setCreateShedule] = useState<boolean>(false);
   const [clickData, setClickData] = useState<CalendarProps>();

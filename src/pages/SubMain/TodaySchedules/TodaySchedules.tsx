@@ -12,14 +12,17 @@ const TodaySchedules = () => {
   const today = new Date().getDate();
 
   // <-------------------------오늘에 해당되는 날짜만 Filter------------------------->
-  const filterSchedules = () =>
-    schedules?.filter(item => {
+  const filterSchedules = () => {
+    const events = schedules?.filter(item => {
       const startDay = item.start && new Date(item.start);
       const endDay = item.end && new Date(item.end);
 
       if (startDay !== undefined && endDay !== undefined)
         return startDay.getDate() <= today && endDay.getDate() >= today;
     });
+
+    return events;
+  };
 
   return (
     <styles.StWrap>

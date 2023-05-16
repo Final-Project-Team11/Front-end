@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { settingSchedule, settingVacation } from '../pages/SubMain/utils';
 import { CalendarInfo, CalendarProps } from '../pages/SubMain/interfaces';
 
-function useFilterData(data: CalendarInfo, tab: boolean) {
+function useFilterData(data: CalendarInfo, tab: boolean): Partial<EventObject>[] {
   const [filterData, setFilterData] = useState<Partial<EventObject>[]>([]);
 
   useEffect(() => {
