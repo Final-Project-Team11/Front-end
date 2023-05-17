@@ -101,7 +101,7 @@ const HashTag = (props: HashTagProps) => {
           );
         })}
         <styles.StInput
-          onMouseDown={mouseDownHandler}
+          onClick={mouseDownHandler}
           onKeyPress={onInputKeyDownHandler}
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
