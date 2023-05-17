@@ -57,8 +57,6 @@ export const StLi = styled.li<interfaces.CssProps>`
 `;
 
 export const StUlBlock = styled.ul<UlStyleProps>`
-  height: 150px;
-  overflow-y: scroll;
   position: absolute;
   z-index: 2000;
   background-color: white;
