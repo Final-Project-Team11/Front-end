@@ -6,10 +6,9 @@ import useTextarea from '../../../../hooks/common/useTextarea';
 import Period from '../components/Period/Period';
 import { RiArrowLeftSLine } from '@react-icons/all-files/ri/RiArrowLeftSLine';
 import { ToastContainer, toast } from 'react-toastify';
-import { AxiosError } from 'axios';
 import usePostVacation from '../../../../api/hooks/Main/usePostVacation';
-import { ErrorData, ScheduleProps } from '../commonInterface';
-import Swal from 'sweetalert2';
+import { ScheduleProps } from '../commonInterface';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 import CustomButton from '../../../Atoms/Button/CustomButton';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
 import { recoilTabState } from '../../../../states/recoilTabState';
@@ -37,7 +36,7 @@ const VacationFormat = ({
         confirmButtonText: '네,추가하겠습니다!',
         cancelButtonText: '아니요, 취소할게요!',
         reverseButtons: true,
-      }).then(result => {
+      }).then((result: SweetAlertResult) => {
         if (result.isConfirmed) {
           const newProps = {
             ...props,
@@ -63,10 +62,8 @@ const VacationFormat = ({
                 theme: 'light',
               });
             },
-            onError: error => {
-              const errorData: AxiosError = error as AxiosError;
-              const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-              toast.error(`❌ ${errorOjbect.errorMessage}`, {
+            onError: (error: any) => {
+              toast.error(`❌ ${error.message}`, {
                 position: 'top-right',
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -120,7 +117,7 @@ const VacationFormat = ({
           confirmButtonText: '네,취소하겠습니다!',
           cancelButtonText: '아니요, 작성할게요!',
           reverseButtons: true,
-        }).then(result => {
+        }).then((result: SweetAlertResult) => {
           if (result.isConfirmed) {
             Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
             onCancelHandler(props.id, props.calendarId);
@@ -144,7 +141,7 @@ const VacationFormat = ({
       confirmButtonText: '네,취소하겠습니다!',
       cancelButtonText: '아니요, 작성할게요!',
       reverseButtons: true,
-    }).then(result => {
+    }).then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
         Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
         onCancelHandler(props.id, props.calendarId);

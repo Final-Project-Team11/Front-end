@@ -15,8 +15,9 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { AxiosError } from 'axios';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 import * as UI from './styles';
+import { ConvertError } from '../../../../api/axios/api';
 
 const ReportModal = ({ value, setOpen }: ReportModalProps) => {
   const { register, handleSubmit, reset } = useForm<ReportInfo>();
@@ -36,9 +37,8 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
     setOpen(false);
   };
 
-  const errorHandler = (error: AxiosError) => {
-    const errorOjbect: ErrorData = error.response?.data as ErrorData;
-    setErrorMessage(errorOjbect.errorMessage);
+  const errorHandler = (error: ConvertError) => {
+    setErrorMessage(error.message);
     setSuccess(1);
   };
 
@@ -87,7 +87,7 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
       confirmButtonText: '네,추가하겠습니다!',
       cancelButtonText: '아니요, 취소할게요!',
       reverseButtons: true,
-    }).then(result => {
+    }).then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
         const payload = {
           title: item.title,
@@ -104,9 +104,8 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
               onSuccess: () => {
                 successHandler();
               },
-              onError: error => {
-                const errorData: AxiosError = error as AxiosError;
-                errorHandler(errorData);
+              onError: (error: any) => {
+                errorHandler(error);
               },
             });
             break;
@@ -122,9 +121,8 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
                 onSuccess: () => {
                   successHandler();
                 },
-                onError: error => {
-                  const errorData: AxiosError = error as AxiosError;
-                  errorHandler(errorData);
+                onError: (error: any) => {
+                  errorHandler(error);
                 },
               });
             }
@@ -135,9 +133,8 @@ const ReportModal = ({ value, setOpen }: ReportModalProps) => {
               onSuccess: () => {
                 successHandler();
               },
-              onError: error => {
-                const errorData: AxiosError = error as AxiosError;
-                errorHandler(errorData);
+              onError: (error: any) => {
+                errorHandler(error);
               },
             });
             break;
