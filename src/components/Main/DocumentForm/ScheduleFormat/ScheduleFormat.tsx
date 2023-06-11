@@ -5,7 +5,7 @@ import usePostschedule from '../../../../api/hooks/Main/usePostschedule';
 import useMoveScroll from '../../../../api/hooks/Main/useMoveScroll';
 import { recoilTabState } from '../../../../states/recoilTabState';
 import useTextarea from '../../../../hooks/common/useTextarea';
-import { ErrorData, ScheduleProps } from '../commonInterface';
+import { ScheduleProps } from '../commonInterface';
 import CustomButton from '../../../Atoms/Button/CustomButton';
 import { getCookie } from '../../../../api/auth/CookieUtils';
 import FileUpload from '../components/FileUpload/FileUpload';
@@ -17,8 +17,7 @@ import Period from '../components/Period/Period';
 import 'react-toastify/dist/ReactToastify.css';
 import * as UI from '../commonStyles';
 import { useRecoilValue } from 'recoil';
-import { AxiosError } from 'axios';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 import ReportModal from '../../Modal/ReportModal/ReportModal';
 import CustomModal from '../../../Atoms/Modal/CustomModal';
 
@@ -77,7 +76,7 @@ const ScheduleFormat = ({
         confirmButtonText: '네,추가하겠습니다!',
         cancelButtonText: '아니요, 취소할게요!',
         reverseButtons: true,
-      }).then(result => {
+      }).then((result: SweetAlertResult) => {
         if (result.isConfirmed) {
           const newProps = {
             ...props,
@@ -104,10 +103,8 @@ const ScheduleFormat = ({
                 theme: 'light',
               });
             },
-            onError: error => {
-              const errorData: AxiosError = error as AxiosError;
-              const errorOjbect: ErrorData = errorData.response?.data as ErrorData;
-              toast.error(`❌ ${errorOjbect.errorMessage}`, {
+            onError: (error: any) => {
+              toast.error(`❌ ${error.message}`, {
                 position: 'top-right',
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -148,7 +145,7 @@ const ScheduleFormat = ({
           confirmButtonText: '네,취소하겠습니다!',
           cancelButtonText: '아니요, 작성할게요!',
           reverseButtons: true,
-        }).then(result => {
+        }).then((result: SweetAlertResult) => {
           if (result.isConfirmed) {
             setCreateShedule(false);
             Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
@@ -173,7 +170,7 @@ const ScheduleFormat = ({
       confirmButtonText: '네,취소하겠습니다!',
       cancelButtonText: '아니요, 작성할게요!',
       reverseButtons: true,
-    }).then(result => {
+    }).then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
         setCreateShedule(false);
         Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');
@@ -198,7 +195,7 @@ const ScheduleFormat = ({
       confirmButtonText: '네,취소하겠습니다!',
       cancelButtonText: '아니요, 작성할게요!',
       reverseButtons: true,
-    }).then(result => {
+    }).then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
         setCreateShedule(false);
         Swal.fire('취소되었습니다!', '해당 일정이 삭제되었습니다.', 'success');

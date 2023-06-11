@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import apis from '../../axios/api';
+import apis, { ConvertError } from '../../axios/api';
 import { keys } from '../../utils/createQueryKey';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AxiosError } from 'axios';
@@ -48,10 +48,10 @@ export const usePutDecision = () => {
     },
 
     // 요청 실패 시
-    onError: (error: AxiosError<ErrorData>, payload) => {
+    onError: (error: ConvertError, payload) => {
       // 에러메세지 세팅
-      if (error.response?.data.errorMessage === '남은 연차 일수가 부족합니다.') {
-        const errorMessage = `<div style="font-size: 20px;">${payload.userName}님의 ${error.response?.data.errorMessage}</div> <div style="font-size: 20px;">휴가가 자동으로 반려됩니다.</div>`;
+      if (error.message === '남은 연차 일수가 부족합니다.') {
+        const errorMessage = `<div style="font-size: 20px;">${payload.userName}님의 ${error.message}</div> <div style="font-size: 20px;">휴가가 자동으로 반려됩니다.</div>`;
 
         const errorDeny: VacationPayload = {
           status: 'deny',
@@ -70,7 +70,7 @@ export const usePutDecision = () => {
           mutate(errorDeny);
         });
       } else if (!shouldSkipErrorAlert.current) {
-        const errorMessage = error.response?.data.errorMessage;
+        const errorMessage = error.message;
         // 요청 실패 알럿
         Swal.fire({
           position: 'center',
