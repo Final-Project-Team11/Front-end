@@ -27,41 +27,44 @@ const CustomCalendar = (props: CalendarProps) => {
   };
 
   const width = props.width.split('px')[0];
-
   const { data, isLoading } = useGetWeeklyInfo();
-
   const widthPercent = (100 / 7).toString() + '%';
 
-  const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
+  const [events, setEvents] = useState<IWeeklyInfo[]>();
 
-    return { ...item, start: start, end: end };
-  });
-  const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
+  useEffect(() => {
+    const issue: IWeeklyInfo[] = data?.issue?.map((item: IWeeklyInfo) => {
+      const start = new Date(item.start);
+      const end = new Date(item.end);
 
-    return { ...item, start: start, end: end };
-  });
-  const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
+      return { ...item, start: start, end: end };
+    });
+    const other: IWeeklyInfo[] = data?.other?.map((item: IWeeklyInfo) => {
+      const start = new Date(item.start);
+      const end = new Date(item.end);
 
-    return { ...item, start: start, end: end };
-  });
-  const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
+      return { ...item, start: start, end: end };
+    });
+    const schedule: IWeeklyInfo[] = data?.schedule?.map((item: IWeeklyInfo) => {
+      const start = new Date(item.start);
+      const end = new Date(item.end);
 
-    return { ...item, start: start, end: end };
-  });
+      return { ...item, start: start, end: end };
+    });
+    const meeting: IWeeklyInfo[] = data?.meeting?.map((item: IWeeklyInfo) => {
+      const start = new Date(item.start);
+      const end = new Date(item.end);
 
-  const events: IWeeklyInfo[] = [];
-  issue !== undefined && events.push(...issue);
-  other !== undefined && events.push(...other);
-  schedule !== undefined && events.push(...schedule);
-  meeting !== undefined && events.push(...meeting);
+      return { ...item, start: start, end: end };
+    });
+    const newEvent: IWeeklyInfo[] = [];
+
+    issue !== undefined && newEvent.push(...issue);
+    other !== undefined && newEvent.push(...other);
+    schedule !== undefined && newEvent.push(...schedule);
+    meeting !== undefined && newEvent.push(...meeting);
+    setEvents(newEvent);
+  }, [data]);
 
   const week = ['SUN', 'MON', 'TUE', 'WEN', 'THU', 'FRI', 'SAT']; //일주일
   const [selectedYear, setSelectedYear] = useState(today.year); //현재 선택된 연도
@@ -118,47 +121,47 @@ const CustomCalendar = (props: CalendarProps) => {
     }
 
     return dayArr;
-  }, [selectedYear, selectedMonth, dateTotalCount]);
+  }, [selectedYear, selectedMonth, dateTotalCount, data]);
 
   const returnEvent = useCallback(() => {
     const calendarDays = Array.from({ length: 32 }, () => [false, false, false]);
     const resultArr = [];
+    if (events !== undefined) {
+      for (let i = 0; i < events.length; i++) {
+        const value = events[i].end.getDate() - events[i].start.getDate();
+        const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
 
-    for (let i = 0; i < events.length; i++) {
-      const value = events[i].end.getDate() - events[i].start.getDate();
-      const blockCount = value >= 0 ? value : Number(dateTotalCount + value);
+        for (let view = 0; view < 3; view++) {
+          const day = events[i].start.getDate();
 
-      for (let view = 0; view < 3; view++) {
-        const day = events[i].start.getDate();
+          if (calendarDays[day][view] === false) {
+            for (let i = 0; i < blockCount + 1; i++) {
+              calendarDays[day + i][view] = true;
+            }
 
-        if (calendarDays[day][view] === false) {
-          for (let i = 0; i < blockCount + 1; i++) {
-            calendarDays[day + i][view] = true;
+            const top = (100 / 4) * (view + 1) + '%';
+            const leftValue = events[i].start.getDate() - selectedDate;
+            const leftCount = leftValue >= 0 ? leftValue : leftValue + dateTotalCount;
+            const leftPercent = (100 / 7) * leftCount + 0.35 + '%';
+            const widthPercent = (100 / 7) * (blockCount + 1) - 2 + '%';
+            const backgroundColor = getScheduleColor(false, events[i].calendarId);
+
+            resultArr.push(
+              <StEventBlock
+                key={`eventblock-${i}`}
+                top={top}
+                width={widthPercent}
+                left={leftPercent}
+                backgroundColor={backgroundColor}
+              >
+                {events[i].title}
+              </StEventBlock>
+            );
+            break;
           }
-
-          const top = (100 / 4) * (view + 1) + '%';
-          const leftValue = events[i].start.getDate() - selectedDate;
-          const leftCount = leftValue >= 0 ? leftValue : leftValue + dateTotalCount;
-          const leftPercent = (100 / 7) * leftCount + 0.35 + '%';
-          const widthPercent = (100 / 7) * (blockCount + 1) - 2 + '%';
-          const backgroundColor = getScheduleColor(false, events[i].calendarId);
-
-          resultArr.push(
-            <StEventBlock
-              key={`eventblock-${i}`}
-              top={top}
-              width={widthPercent}
-              left={leftPercent}
-              backgroundColor={backgroundColor}
-            >
-              {events[i].title}
-            </StEventBlock>
-          );
-          break;
         }
       }
     }
-
     return resultArr;
   }, [selectedYear, selectedMonth, events]);
 
